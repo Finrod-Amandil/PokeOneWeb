@@ -9,6 +9,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string PokeApiName { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -19,7 +21,7 @@ namespace PokeOneWeb.Data.Entities
         public List<PokemonForm> Forms { get; set; }
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
-        public int DefaultFormId { get; set; }
+        public int? DefaultFormId { get; set; }
 
         [ForeignKey("BaseStatsId")]
         public Stats BaseStats { get; set; }
@@ -31,7 +33,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("ElementalTypeCombinationId")]
         public ElementalTypeCombination ElementalTypeCombination { get; set; }
-        public int ElementalTypeCombinationId { get; set; }
+        public int? ElementalTypeCombinationId { get; set; }
 
         /// <summary>
         /// Every Pokémon species belongs to exactly one Evolution Chain. Species which do not evolve will
@@ -39,7 +41,7 @@ namespace PokeOneWeb.Data.Entities
         /// </summary>
         [ForeignKey("EvlutionChainId")]
         public EvolutionChain EvolutionChain { get; set; }
-        public int EvolutionChainId { get; set; }
+        public int EvlutionChainId { get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
@@ -52,6 +54,8 @@ namespace PokeOneWeb.Data.Entities
         [ForeignKey("HiddenAbilityId")]
         public Ability HiddenAbility { get; set; }
         public int? HiddenAbilityId { get; set; }
+
+        public bool DoInclude { get; set; }
 
         public List<PokemonHeldItem> HeldItems { get; set; }
         public List<LearnableMove> LearnableMoves { get; set; }

@@ -13,7 +13,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("SecondaryTypeId")]
         public ElementalType SecondaryType { get; set; }
-        public int SecondaryTypeId { get; set; }
+        public int? SecondaryTypeId { get; set; }
 
         public List<PokemonVariety> PokemonVarieties { get; set; }
     }
