@@ -14,6 +14,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string PokeApiName { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -21,8 +23,8 @@ namespace PokeOneWeb.Data.Entities
 
         public string EffectShortDescription { get; set; }
 
-        public List<PokemonVariety> PokemonVarietiesAsPrimaryAbility { get; set; }
-        public List<PokemonVariety> PokemonVarietiesAsSecondaryAbility { get; set; }
-        public List<PokemonVariety> PokemonVarietiesAsHiddenAbility { get; set; }
+        public List<PokemonVariety> PokemonVarietiesAsPrimaryAbility { get; set; } = new List<PokemonVariety>();
+        public List<PokemonVariety> PokemonVarietiesAsSecondaryAbility { get; set; } = new List<PokemonVariety>();
+        public List<PokemonVariety> PokemonVarietiesAsHiddenAbility { get; set; } = new List<PokemonVariety>();
     }
 }

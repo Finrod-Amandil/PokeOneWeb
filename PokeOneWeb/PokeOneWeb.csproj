@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -20,6 +20,20 @@
     <Compile Remove="Data\Migrations\20200603165425_CreateP1Entities.Designer.cs" />
     <Compile Remove="Data\Migrations\20200603165722_CreateP1Entities.cs" />
     <Compile Remove="Data\Migrations\20200603165722_CreateP1Entities.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200613201939_additional_abbility_flags.cs" />
+    <Compile Remove="Data\Migrations\20200613201939_additional_abbility_flags.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200613202225_additional_ability_flags.cs" />
+    <Compile Remove="Data\Migrations\20200613202225_additional_ability_flags.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200614081550_fix_evolutionchain_fk_typo.cs" />
+    <Compile Remove="Data\Migrations\20200614081550_fix_evolutionchain_fk_typo.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200614081932_fix_evolutionchain_typo_1.cs" />
+    <Compile Remove="Data\Migrations\20200614081932_fix_evolutionchain_typo_1.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200614082508_fix_evolutionchain_typo_2.cs" />
+    <Compile Remove="Data\Migrations\20200614082508_fix_evolutionchain_typo_2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200614083019_fix_evolutionchain_typo_2.cs" />
+    <Compile Remove="Data\Migrations\20200614083019_fix_evolutionchain_typo_2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200617155316_evolution_stage.cs" />
+    <Compile Remove="Data\Migrations\20200617155316_evolution_stage.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +45,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="PokeApi.NET" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\GoogleSpreadsheetImport\" />
   </ItemGroup>
 
 </Project>

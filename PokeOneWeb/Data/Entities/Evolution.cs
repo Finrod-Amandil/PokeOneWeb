@@ -20,7 +20,10 @@ namespace PokeOneWeb.Data.Entities
         public PokemonVariety EvolvedPokemonVariety { get; set; }
         public int EvolvedPokemonVarietyId { get; set; }
 
-        [Required]
         public string EvolutionTrigger { get; set; }
+
+        public int Stage { get; set; }
+
+        public bool Available { get; set; }
     }
 }

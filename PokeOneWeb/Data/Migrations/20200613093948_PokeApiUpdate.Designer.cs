@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200613093948_PokeApiUpdate")]
+    partial class PokeApiUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,7 +336,7 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("PrimaryTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SecondaryTypeId")
+                    b.Property<int>("SecondaryTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -360,6 +362,9 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("DefendingTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DefendingTypeIdId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -405,9 +410,6 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit");
-
                     b.Property<int>("BasePokemonVarietyId")
                         .HasColumnType("int");
 
@@ -415,12 +417,10 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("EvolutionTrigger")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EvolvedPokemonVarietyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stage")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -461,12 +461,6 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Effect")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -598,13 +592,10 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("DamageClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Effect")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ElementalTypeId")
+                    b.Property<int>("ElementalTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -743,7 +734,7 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AvailabilityId")
+                    b.Property<int>("AvailabilityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -794,7 +785,7 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DefaultVarietyId")
+                    b.Property<int>("DefaultVarietyId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -824,19 +815,19 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int?>("BaseStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DefaultFormId")
+                    b.Property<int>("DefaultFormId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("DoInclude")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ElementalTypeCombinationId")
+                    b.Property<int>("ElementalTypeCombinationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EvYieldId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EvlutionChainId")
+                    b.Property<int?>("EvlutionChainId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EvolutionChainId")
                         .HasColumnType("int");
 
                     b.Property<int?>("HiddenAbilityId")
@@ -1293,7 +1284,8 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.HasOne("PokeOneWeb.Data.Entities.ElementalType", "SecondaryType")
                         .WithMany("ElementalTypeCombinationsAsSecondaryType")
-                        .HasForeignKey("SecondaryTypeId");
+                        .HasForeignKey("SecondaryTypeId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.ElementalTypeRelation", b =>
@@ -1406,7 +1398,9 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.HasOne("PokeOneWeb.Data.Entities.ElementalType", "ElementalType")
                         .WithMany("Moves")
-                        .HasForeignKey("ElementalTypeId");
+                        .HasForeignKey("ElementalTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.MoveLearnMethodLocation", b =>
@@ -1443,7 +1437,9 @@ namespace PokeOneWeb.Data.Migrations
                 {
                     b.HasOne("PokeOneWeb.Data.Entities.PokemonAvailability", "Availability")
                         .WithMany()
-                        .HasForeignKey("AvailabilityId");
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PokeOneWeb.Data.Entities.PokemonVariety", "PokemonVariety")
                         .WithMany("Forms")
@@ -1471,7 +1467,8 @@ namespace PokeOneWeb.Data.Migrations
                 {
                     b.HasOne("PokeOneWeb.Data.Entities.PokemonVariety", "DefaultVariety")
                         .WithMany()
-                        .HasForeignKey("DefaultVarietyId");
+                        .HasForeignKey("DefaultVarietyId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.PokemonVariety", b =>
@@ -1482,11 +1479,14 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.HasOne("PokeOneWeb.Data.Entities.PokemonForm", "DefaultForm")
                         .WithMany()
-                        .HasForeignKey("DefaultFormId");
+                        .HasForeignKey("DefaultFormId")
+                        .IsRequired();
 
                     b.HasOne("PokeOneWeb.Data.Entities.ElementalTypeCombination", "ElementalTypeCombination")
                         .WithMany("PokemonVarieties")
-                        .HasForeignKey("ElementalTypeCombinationId");
+                        .HasForeignKey("ElementalTypeCombinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PokeOneWeb.Data.Entities.Stats", "EvYield")
                         .WithMany()
@@ -1494,8 +1494,7 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.HasOne("PokeOneWeb.Data.Entities.EvolutionChain", "EvolutionChain")
                         .WithMany()
-                        .HasForeignKey("EvlutionChainId")
-                        .IsRequired();
+                        .HasForeignKey("EvlutionChainId");
 
                     b.HasOne("PokeOneWeb.Data.Entities.Ability", "HiddenAbility")
                         .WithMany("PokemonVarietiesAsHiddenAbility")

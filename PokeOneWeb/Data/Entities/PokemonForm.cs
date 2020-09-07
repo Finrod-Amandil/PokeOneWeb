@@ -9,8 +9,10 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string PokeApiName { get; set; }
+
         [Required]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
@@ -18,7 +20,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("AvailabilityId")]
         public PokemonAvailability Availability { get; set; }
-        public int AvailabilityId { get; set; }
+        public int? AvailabilityId { get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; }
     }
