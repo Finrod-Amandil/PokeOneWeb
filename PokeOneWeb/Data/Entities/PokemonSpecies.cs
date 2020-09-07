@@ -9,6 +9,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string PokeApiName { get; set; }
+
         public int PokedexNumber { get; set; }
 
         [Required]
@@ -18,6 +20,6 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("DefaultVarietyId")]
         public PokemonVariety DefaultVariety { get; set; }
-        public int DefaultVarietyId { get; set; }
+        public int? DefaultVarietyId { get; set; }
     }
 }

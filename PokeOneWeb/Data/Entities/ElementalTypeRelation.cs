@@ -11,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
         public ElementalType AttackingType { get; set; }
         public int AttackingTypeId { get; set; }
 
-        [ForeignKey("DefendingTypeIdId")]
+        [ForeignKey("DefendingTypeId")]
         public ElementalType DefendingType { get; set; }
         public int DefendingTypeId { get; set; }
 

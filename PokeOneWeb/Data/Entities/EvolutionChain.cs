@@ -8,6 +8,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public int PokeApiId { get; set; }
+
         public List<Evolution> Evolutions { get; set; }
     }
 }

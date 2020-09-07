@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200617155742_evolution_available")]
+    partial class evolution_available
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,9 +467,6 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<string>("Effect")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -826,9 +825,6 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.Property<int?>("DefaultFormId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("DoInclude")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("ElementalTypeCombinationId")
                         .HasColumnType("int");

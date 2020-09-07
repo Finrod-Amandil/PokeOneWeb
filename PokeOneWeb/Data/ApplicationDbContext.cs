@@ -103,6 +103,12 @@ namespace PokeOneWeb.Data
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
+                .HasOne(p => p.EvolutionChain)
+                .WithMany()
+                .HasForeignKey(p => p.EvlutionChainId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<PokemonVariety>()
                 .HasOne(p => p.BaseStats)
                 .WithMany()
                 .HasForeignKey(p => p.BaseStatsId)

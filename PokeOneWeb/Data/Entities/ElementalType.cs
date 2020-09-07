@@ -9,13 +9,15 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string PokeApiName { get; set; }
+        
         [Required]
         public string Name { get; set; }
 
-        public List<ElementalTypeRelation> AttackingDamageRelations { get; set; }
-        public List<ElementalTypeRelation> DefendingDamageRelations { get; set; }
-        public List<ElementalTypeCombination> ElementalTypeCombinationsAsPrimaryType { get; set; }
-        public List<ElementalTypeCombination> ElementalTypeCombinationsAsSecondaryType { get; set; }
+        public List<ElementalTypeRelation> AttackingDamageRelations { get; set; } = new List<ElementalTypeRelation>();
+        public List<ElementalTypeRelation> DefendingDamageRelations { get; set; } = new List<ElementalTypeRelation>();
+        public List<ElementalTypeCombination> ElementalTypeCombinationsAsPrimaryType { get; set; } = new List<ElementalTypeCombination>();
+        public List<ElementalTypeCombination> ElementalTypeCombinationsAsSecondaryType { get; set; } = new List<ElementalTypeCombination>();
         public List<Move> Moves { get; set; }
     }
 }
