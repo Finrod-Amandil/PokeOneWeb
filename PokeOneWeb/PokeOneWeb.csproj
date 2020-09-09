@@ -49,10 +49,4 @@
     <PackageReference Include="PokeApi.NET" Version="1.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Services\GoogleSpreadsheet\credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>
