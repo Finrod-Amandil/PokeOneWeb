@@ -15,6 +15,12 @@ using Microsoft.Extensions.Hosting;
 using PokeOneWeb.Services.PokeApi;
 using PokeOneWeb.Services.PokeApi.Impl;
 using PokeOneWeb.Configuration;
+using PokeOneWeb.Services.GoogleSpreadsheet;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Location;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawn;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItem;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb
 {
@@ -37,8 +43,17 @@ namespace PokeOneWeb
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<PokeApiSettings>(options => Configuration.GetSection("PokeApiSettings").Bind(options));
-
+            
             services.AddTransient<IPokeApiService, PokeApiService>();
+            services.AddTransient<IGoogleSpreadsheetService, GoogleSpreadsheetService>();
+            services.AddTransient<ISpreadsheetLoader, SpreadsheetLoader>();
+            services.AddTransient<ISpreadsheetReader<LocationDto>, LocationReader>();
+            services.AddTransient<ISpreadsheetReader<PlacedItemDto>, PlacedItemReader>();
+            services.AddTransient<ISpreadsheetReader<SpawnDto>, SpawnReader>();
+            services.AddTransient<ISpreadsheetMapper<LocationDto, Location>, LocationMapper>();
+            services.AddTransient<ISpreadsheetMapper<PlacedItemDto, PlacedItem>, PlacedItemMapper>();
+            services.AddTransient<ISpreadsheetMapper<SpawnDto, Spawn>, SpawnMapper>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

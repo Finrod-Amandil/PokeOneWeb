@@ -12,11 +12,16 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public int SortIndex { get; set; }
+
         [ForeignKey("LocationGroupId")]
         public LocationGroup LocationGroup { get; set; }
         public int LocationGroupId { get; set; }
 
         public bool IsDiscoverable { get; set; }
+
+        public string Notes { get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; }
     }

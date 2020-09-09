@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Models;
+using PokeOneWeb.Services.GoogleSpreadsheet;
 using PokeOneWeb.Services.PokeApi;
 
 namespace PokeOneWeb.Controllers
@@ -14,15 +15,18 @@ namespace PokeOneWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPokeApiService _pokeApiService;
+        private readonly IGoogleSpreadsheetService _googleSpreadsheetService;
         private readonly ApplicationDbContext _dbContext;
 
         public HomeController(
             ILogger<HomeController> logger,
             IPokeApiService pokeApiService,
+            IGoogleSpreadsheetService googleSpreadsheetService,
             ApplicationDbContext dbContext)
         {
             _logger = logger;
             _pokeApiService = pokeApiService;
+            _googleSpreadsheetService = googleSpreadsheetService;
             _dbContext = dbContext;
         }
 
@@ -44,8 +48,11 @@ namespace PokeOneWeb.Controllers
 
         public async Task<IActionResult> GetData()
         {
+            var data = await _googleSpreadsheetService.ReadLocations();
+
             return Ok();
 
+            /*
             var data = await _pokeApiService.DownloadData();
 
             _dbContext.PokemonSpecies.AddRange(data.PokemonSpecies.Values);
@@ -61,7 +68,7 @@ namespace PokeOneWeb.Controllers
                 e.ToString();
             }
 
-            return Ok();
+            return Ok();*/
         }
     }
 }
