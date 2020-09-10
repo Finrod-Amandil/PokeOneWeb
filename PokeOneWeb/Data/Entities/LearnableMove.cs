@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// Information, on a specific Move that can be learnt by a specific Pokémon.
+    /// Information, on a specific Move that can be learned by a specific Pokémon.
     /// </summary>
     [Table("LearnableMove")]
     public class LearnableMove
@@ -17,7 +17,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
-        public int ProkemonVarietyId { get; set; }
+        public int PokemonVarietyId { get; set; }
 
         public bool IsAvailable { get; set; }
 

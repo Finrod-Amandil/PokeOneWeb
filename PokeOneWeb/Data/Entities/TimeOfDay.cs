@@ -12,6 +12,9 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string Abbreviation { get; set; }
+
         public DateTime? StartTime { get; set; }
 
         public DateTime? EndTime { get; set; }
