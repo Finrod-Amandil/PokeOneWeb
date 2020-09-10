@@ -10,5 +10,8 @@ namespace PokeOneWeb.Data.Entities
 
         [Required]
         public string Name { get; set; }
+
+        [Required] 
+        public string Abbreviation { get; set; }
     }
 }

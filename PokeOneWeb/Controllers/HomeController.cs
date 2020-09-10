@@ -48,7 +48,7 @@ namespace PokeOneWeb.Controllers
 
         public async Task<IActionResult> GetData()
         {
-            var data = await _googleSpreadsheetService.ReadLocations();
+            //var data = await _googleSpreadsheetService.ReadLocations();
 
             return Ok();
 

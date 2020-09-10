@@ -17,7 +17,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl
         private static string[] Scopes = { SheetsService.Scope.Spreadsheets };
         private static string ApplicationName = "PokeOneWeb Guide Import Service";
 
-        public async Task<List<Location>> ReadLocations()
+        /*public async Task<List<Location>> ReadLocations()
         {
             UserCredential credential;
 
@@ -40,6 +40,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl
             var spreadsheet = request.Execute();
 
             
+        }*/
+        public Task SynchronizeSpreadsheetData()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

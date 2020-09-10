@@ -39,9 +39,9 @@ namespace PokeOneWeb.Data.Entities
         /// Every Pokémon species belongs to exactly one Evolution Chain. Species which do not evolve will
         /// belong to an Evolution Chain with no Evolutions.
         /// </summary>
-        [ForeignKey("EvlutionChainId")]
+        [ForeignKey("EvolutionChainId")]
         public EvolutionChain EvolutionChain { get; set; }
-        public int EvlutionChainId { get; set; }
+        public int EvolutionChainId { get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
