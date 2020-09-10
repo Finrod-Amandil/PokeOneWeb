@@ -7,7 +7,7 @@ namespace PokeOneWeb.Data.Entities
     /// <summary>
     /// An Ability is a passive effect every Pokémon has. Every Pokémon has exactly one Ability, but a PokémonSpecies may have multiple
     /// Abilities available, out of which the Ability of a Pokémon is chosen. A PokémonSpecies may have up to 3 Abilities.
-    /// These Abilities are labelled Primary, Secondary and Hidden Ability. The latter two may not exist on certain species.
+    /// These Abilities are labeled Primary, Secondary and Hidden Ability. The latter two may not exist on certain species.
     /// </summary>
     [Table("Ability")]
     public class Ability

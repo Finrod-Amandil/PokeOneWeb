@@ -105,7 +105,7 @@ namespace PokeOneWeb.Data
             builder.Entity<PokemonVariety>()
                 .HasOne(p => p.EvolutionChain)
                 .WithMany()
-                .HasForeignKey(p => p.EvlutionChainId)
+                .HasForeignKey(p => p.EvolutionChainId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
@@ -131,6 +131,50 @@ namespace PokeOneWeb.Data
                 .WithMany()
                 .HasForeignKey(e => e.EvolvedPokemonVarietyId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Region>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
+
+            builder.Entity<LocationGroup>()
+                .HasIndex(lg => lg.Name)
+                .IsUnique();
+
+            builder.Entity<Location>()
+                .HasIndex(l => l.Name)
+                .IsUnique();
+
+            builder.Entity<Item>()
+                .HasIndex(i => i.Name)
+                .IsUnique();
+
+            builder.Entity<Season>()
+                .HasIndex(s => s.Abbreviation)
+                .IsUnique();
+
+            builder.Entity<TimeOfDay>()
+                .HasIndex(tod => tod.Abbreviation)
+                .IsUnique();
+
+            builder.Entity<SpawnType>()
+                .HasIndex(st => st.Name)
+                .IsUnique();
+
+            builder.Entity<PokemonForm>()
+                .HasIndex(pf => pf.Name)
+                .IsUnique();
+
+            builder.Entity<PokemonVariety>()
+                .HasIndex(pv => pv.Name)
+                .IsUnique();
+
+            builder.Entity<PokemonSpecies>()
+                .HasIndex(ps => ps.Name)
+                .IsUnique();
+
+            builder.Entity<PokemonSpecies>()
+                .HasIndex(ps => ps.PokedexNumber)
+                .IsUnique();
         }
     }
 }

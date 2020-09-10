@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// PokéOne specific categorisation of items.
+    /// PokéOne specific categorization of items.
     /// </summary>
     [Table("BagCategory")]
     public class BagCategory
