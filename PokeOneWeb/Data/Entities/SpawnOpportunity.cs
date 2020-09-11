@@ -5,6 +5,8 @@ namespace PokeOneWeb.Data.Entities
     [Table("SpawnOpportunity")]
     public class SpawnOpportunity
     {
+        public static readonly string UNKNOWN_COMMONALITY = "?";
+
         public int Id { get; set; }
 
         [ForeignKey("PokemonSpawnId")]

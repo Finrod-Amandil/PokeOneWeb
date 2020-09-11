@@ -17,5 +17,9 @@
         public string SpawnProbability { get; set; }
 
         public int? EncounterCount { get; set; }
+
+        public bool IsConfirmed { get; set; }
+
+        public string Notes { get; set; }
     }
 }
