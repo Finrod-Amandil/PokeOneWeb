@@ -20,5 +20,7 @@ namespace PokeOneWeb.Data.Entities
         public string Notes { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public bool IsConfirmed { get; set; }
     }
 }

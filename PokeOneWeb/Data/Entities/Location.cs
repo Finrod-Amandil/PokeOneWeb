@@ -23,6 +23,8 @@ namespace PokeOneWeb.Data.Entities
 
         public string Notes { get; set; }
 
-        public List<Spawn> PokemonSpawns { get; set; }
+        public List<Spawn> PokemonSpawns { get; set; } = new List<Spawn>();
+
+        public List<PlacedItem> PlacedItems { get; set; } = new List<PlacedItem>();
     }
 }

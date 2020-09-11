@@ -16,6 +16,6 @@ namespace PokeOneWeb.Data.Entities
         public Region Region { get; set; }
         public int RegionId { get; set; }
 
-        public List<Location> Locations { get; set; }
+        public List<Location> Locations { get; set; } = new List<Location>();
     }
 }

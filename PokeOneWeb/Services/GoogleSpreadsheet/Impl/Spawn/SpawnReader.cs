@@ -53,6 +53,16 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawn
                 value.EncounterCount = (int?)rowData.Values[7]?.EffectiveValue?.NumberValue;
             }
 
+            if (rowData.Values.Count > 8)
+            {
+                value.IsConfirmed = rowData.Values[8]?.EffectiveValue?.BoolValue ?? false;
+            }
+
+            if (rowData.Values.Count > 9)
+            {
+                value.Notes = rowData.Values[9]?.EffectiveValue?.StringValue;
+            }
+
             return value;
         }
     }

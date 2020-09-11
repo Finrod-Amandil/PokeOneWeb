@@ -34,6 +34,8 @@
     <Compile Remove="Data\Migrations\20200614083019_fix_evolutionchain_typo_2.Designer.cs" />
     <Compile Remove="Data\Migrations\20200617155316_evolution_stage.cs" />
     <Compile Remove="Data\Migrations\20200617155316_evolution_stage.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.cs" />
+    <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
