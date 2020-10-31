@@ -24,6 +24,6 @@ namespace PokeOneWeb.Data.Entities
 
         public string Notes { get; set; }
 
-        public List<SpawnOpportunity> SpawnOpportunities { get; set; }
+        public List<SpawnOpportunity> SpawnOpportunities { get; set; } = new List<SpawnOpportunity>();
     }
 }

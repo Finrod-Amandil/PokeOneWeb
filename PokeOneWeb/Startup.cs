@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,27 @@ using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.WebApi.Services.Api;
 using PokeOneWeb.WebApi.Services.Api.Impl;
+=======
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using PokeOneWeb.Configuration;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.DataUpdate;
+using PokeOneWeb.Services.DataUpdate.Impl;
+using PokeOneWeb.Services.GoogleSpreadsheet;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Locations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItems;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawns;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.TutorMoves;
+using PokeOneWeb.Services.PokeApi;
+using PokeOneWeb.Services.PokeApi.Impl;
+>>>>>>> e9c6583 (Bulk commit - model refinements, migrations, dataupdateservices, spreasheet import)
 
 namespace PokeOneWeb.WebApi
 {
@@ -24,6 +46,7 @@ namespace PokeOneWeb.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+<<<<<<< HEAD
             ConfigureDatabases(services);
 
             services.AddLogging(loggingBuilder =>
@@ -47,6 +70,37 @@ namespace PokeOneWeb.WebApi
                     .AllowCredentials()
                     .SetIsOriginAllowed(host => true));
             });
+=======
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.Configure<PokeApiSettings>(options => Configuration.GetSection("PokeApiSettings").Bind(options));
+            
+            services.AddTransient<IPokeApiService, PokeApiService>();
+            services.AddTransient<IGoogleSpreadsheetService, GoogleSpreadsheetService>();
+            services.AddTransient<ISpreadsheetLoader, SpreadsheetLoader>();
+
+            services.AddTransient<ISpreadsheetReader<LocationDto>, LocationReader>();
+            services.AddTransient<ISpreadsheetReader<PlacedItemDto>, PlacedItemReader>();
+            services.AddTransient<ISpreadsheetReader<SpawnDto>, SpawnReader>();
+            services.AddTransient<ISpreadsheetReader<TutorMoveDto>, TutorMoveReader>();
+            services.AddTransient<ISpreadsheetReader<LearnableMoveLearnMethodDto>, LearnableMoveLearnMethodReader>();
+
+            services.AddTransient<ISpreadsheetMapper<LocationDto, Location>, LocationMapper>();
+            services.AddTransient<ISpreadsheetMapper<PlacedItemDto, PlacedItem>, PlacedItemMapper>();
+            services.AddTransient<ISpreadsheetMapper<SpawnDto, Spawn>, SpawnMapper>();
+            services.AddTransient<ISpreadsheetMapper<TutorMoveDto, TutorMove>, TutorMoveMapper>();
+            services.AddTransient<ISpreadsheetMapper<LearnableMoveLearnMethodDto, LearnableMove>, LearnableMoveLearnMethodMapper>();
+
+            services.AddTransient<IDataUpdateService<Location>, LocationUpdateService>();
+            services.AddTransient<IDataUpdateService<Spawn>, SpawnUpdateService>();
+            services.AddTransient<IDataUpdateService<PlacedItem>, PlacedItemUpdateService>();
+            services.AddTransient<IDataUpdateService<TutorMove>, TutorMoveUpdateService>();
+            services.AddTransient<IDataUpdateService<LearnableMove>, LearnableMoveUpdateService>();
+>>>>>>> e9c6583 (Bulk commit - model refinements, migrations, dataupdateservices, spreasheet import)
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

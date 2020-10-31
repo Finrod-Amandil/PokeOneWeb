@@ -20,5 +20,9 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         public IDictionary<string, Move> Moves { get; set; }
 
         public IDictionary<string, Item> Items { get; set; }
+
+        public IDictionary<string, MoveLearnMethod> MoveLearnMethods { get; set; }
+
+        public IDictionary<string, VersionGroup> VersionGroups { get; set; }
     }
 }

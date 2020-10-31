@@ -17,6 +17,8 @@ namespace PokeOneWeb.Data.Entities
 
         public string PlacementDescription { get; set; }
 
+        public int Quantity { get; set; }
+
         public string Notes { get; set; }
 
         public bool IsHidden { get; set; }

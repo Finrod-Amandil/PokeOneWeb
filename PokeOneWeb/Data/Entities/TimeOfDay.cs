@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,8 +19,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Abbreviation { get; set; }
 
-        public DateTime? StartTime { get; set; }
-
-        public DateTime? EndTime { get; set; }
+        public List<SeasonTimeOfDay> SeasonTimes { get; set; } = new List<SeasonTimeOfDay>();
     }
 }

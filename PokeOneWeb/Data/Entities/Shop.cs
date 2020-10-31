@@ -16,7 +16,7 @@ namespace PokeOneWeb.Data.Entities
         public Location Location { get; set; }
         public int? LocationId { get; set; }
 
-        public List<ShopSoldItem> SoldItems { get; set; }
-        public List<ShopBoughtItem> BoughtItems { get; set; }
+        public List<ShopSoldItem> SoldItems { get; set; } = new List<ShopSoldItem>();
+        public List<ShopBoughtItem> BoughtItems { get; set; } = new List<ShopBoughtItem>();
     }
 }

@@ -27,6 +27,6 @@ namespace PokeOneWeb.Data.Entities
         public QuestType QuestType { get; set; }
         public int QuestTypeId { get; set; }
 
-        public List<QuestItemReward> ItemRewards { get; set; }
+        public List<QuestItemReward> ItemRewards { get; set; } = new List<QuestItemReward>();
     }
 }

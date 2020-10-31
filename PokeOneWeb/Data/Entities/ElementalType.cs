@@ -18,6 +18,6 @@ namespace PokeOneWeb.Data.Entities
         public List<ElementalTypeRelation> DefendingDamageRelations { get; set; } = new List<ElementalTypeRelation>();
         public List<ElementalTypeCombination> ElementalTypeCombinationsAsPrimaryType { get; set; } = new List<ElementalTypeCombination>();
         public List<ElementalTypeCombination> ElementalTypeCombinationsAsSecondaryType { get; set; } = new List<ElementalTypeCombination>();
-        public List<Move> Moves { get; set; }
+        public List<Move> Moves { get; set; } = new List<Move>();
     }
 }

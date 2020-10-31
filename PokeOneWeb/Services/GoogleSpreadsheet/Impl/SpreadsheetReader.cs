@@ -14,11 +14,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl
             _logger = logger;
         }
 
-        public IEnumerable<T> Read(Spreadsheet spreadsheet, string sheetPrefix)
+        public virtual IEnumerable<T> Read(Spreadsheet spreadsheet, string sheetPrefix)
         {
-            _logger.LogDebug($"Reading data of type {typeof(T).FullName} from Google Spreadsheet.");
             var sheets = spreadsheet.Sheets
-                .Where(s => s.Properties.Title?.ToLowerInvariant().StartsWith(sheetPrefix.ToLowerInvariant()) ?? false);
+                .Where(s => s.Properties.Title?.ToLowerInvariant().StartsWith(sheetPrefix.ToLowerInvariant()) ?? false)
+                .ToList();
+
+            _logger.LogDebug($"Reading data of type {typeof(T).FullName} from Google Spreadsheet. Sheets: {string.Join(',', sheets.Select(s => s.Properties.Title))}");
 
             var records = new List<T>();
 

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Models;
@@ -48,16 +49,14 @@ namespace PokeOneWeb.Controllers
 
         public async Task<IActionResult> GetData()
         {
-            //var data = await _googleSpreadsheetService.ReadLocations();
+            await _googleSpreadsheetService.SynchronizeSpreadsheetData();
 
-            return Ok();
+            
+            /*var data = await _pokeApiService.DownloadData();
 
-            /*
-            var data = await _pokeApiService.DownloadData();
-
-            _dbContext.PokemonSpecies.AddRange(data.PokemonSpecies.Values);
-            _dbContext.Moves.AddRange(data.Moves.Values);
-            _dbContext.Items.AddRange(data.Items.Values);
+            _dbContext.LearnableMoveApis.RemoveRange(_dbContext.LearnableMoveApis);
+            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.LearnableMoveApis',RESEED, 0)");
+            _dbContext.LearnableMoveApis.AddRange(data.LearnableMoveApis);
 
             try
             {
@@ -66,9 +65,9 @@ namespace PokeOneWeb.Controllers
             catch (Exception e)
             {
                 e.ToString();
-            }
-
-            return Ok();*/
+            }*/
+            
+            return Ok();
         }
     }
 }
