@@ -10,6 +10,6 @@ namespace PokeOneWeb.Data.Entities
 
         public int PokeApiId { get; set; }
 
-        public List<Evolution> Evolutions { get; set; }
+        public List<Evolution> Evolutions { get; set; } = new List<Evolution>();
     }
 }

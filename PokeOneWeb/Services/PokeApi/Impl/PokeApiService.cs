@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using PokeOneWeb.Configuration;
 using System.Threading.Tasks;
+using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Services.PokeApi.Impl
 {
@@ -9,10 +10,10 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         private readonly PokeApiLoader _loader;
         private readonly PokeApiMapper _mapper;
 
-        public PokeApiService(IOptions<PokeApiSettings> pokeApiSettings)
+        public PokeApiService(IOptions<PokeApiSettings> pokeApiSettings, ApplicationDbContext dbContext)
         {
             _loader = new PokeApiLoader(pokeApiSettings);
-            _mapper = new PokeApiMapper(pokeApiSettings);
+            _mapper = new PokeApiMapper(pokeApiSettings, dbContext);
         }
 
         public async Task<MappedPokeApiData> DownloadData()

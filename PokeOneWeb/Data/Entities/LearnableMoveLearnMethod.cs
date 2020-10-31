@@ -21,9 +21,13 @@ namespace PokeOneWeb.Data.Entities
         /// </summary>
         public Item RequiredItem { get; set; }
 
+        public int? LevelLearnedAt { get; set; }
+
+        public bool IsAvailable { get; set; }
+
         /// <summary>
-        /// The Price to teach this move from a tutor. May required multiple currencies at once.
+        /// The Price to teach this move from a tutor. May require multiple currencies at once.
         /// </summary>
-        public List<CurrencyAmount> Price { get; set; }
+        public List<LearnableMoveLearnMethodPrice> Price { get; set; } = new List<LearnableMoveLearnMethodPrice>();
     }
 }

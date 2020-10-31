@@ -14,7 +14,7 @@ namespace PokeOneWeb.Data.Entities
         /// <summary>
         /// Only used, if Item is unused.
         /// </summary>
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Used, if the currency is an Item.

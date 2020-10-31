@@ -18,9 +18,6 @@ namespace PokeOneWeb.Data.Entities
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
         public int PokemonVarietyId { get; set; }
-
-        public bool IsAvailable { get; set; }
-
-        public List<LearnableMoveLearnMethod> LearnMethods { get; set; }
+        public List<LearnableMoveLearnMethod> LearnMethods { get; set; } = new List<LearnableMoveLearnMethod>();
     }
 }

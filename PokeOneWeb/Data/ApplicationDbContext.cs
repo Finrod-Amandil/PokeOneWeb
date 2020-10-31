@@ -11,6 +11,8 @@ namespace PokeOneWeb.Data
 
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<CurrencyAmount> CurrencyAmounts { get; set; }
         public DbSet<ElementalType> ElementalTypes { get; set; }
         public DbSet<ElementalTypeRelation> ElementalTypeRelations { get; set; }
         public DbSet<ElementalTypeCombination> ElementalTypeCombinations { get; set; }
@@ -18,6 +20,7 @@ namespace PokeOneWeb.Data
         public DbSet<Evolution> Evolutions { get; set; }
         public DbSet<EvolutionChain> EvolutionChains { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<LearnableMove> LearnableMoves { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationGroup> LocationGroups { get; set; }
         public DbSet<Move> Moves { get; set; }
@@ -29,10 +32,16 @@ namespace PokeOneWeb.Data
         public DbSet<PokemonVariety> PokemonVarieties { get; set; }
         public DbSet<Quest> Quests { get; set; }
         public DbSet<QuestType> QuestTypes { get; set; }
-        public DbSet<Region> Region { get; set; }
+        public DbSet<Region> Regions { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Spawn> Spawns { get; set; }
         public DbSet<SpawnType> SpawnTypes { get; set; }
+        public DbSet<Season> Seasons { get; set; }
+        public DbSet<TimeOfDay> TimesOfDay { get; set; }
+
+        public DbSet<LearnableMoveApi> LearnableMoveApis { get; set; }
+
+        public DbSet<TutorMove> TutorMoves { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -131,6 +140,35 @@ namespace PokeOneWeb.Data
                 .WithMany()
                 .HasForeignKey(e => e.EvolvedPokemonVarietyId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<SeasonTimeOfDay>()
+                .HasOne(st => st.TimeOfDay)
+                .WithMany(t => t.SeasonTimes)
+                .HasForeignKey(st => st.TimeOfDayId);
+
+            builder.Entity<PlacedItem>()
+                .HasOne(pi => pi.Location)
+                .WithMany(l => l.PlacedItems)
+                .HasForeignKey(pi => pi.LocationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SpawnOpportunity>()
+                .HasOne(so => so.PokemonSpawn)
+                .WithMany(s => s.SpawnOpportunities)
+                .HasForeignKey(so => so.PokemonSpawnId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Spawn>()
+                .HasOne(s => s.Location)
+                .WithMany(l => l.PokemonSpawns)
+                .HasForeignKey(s => s.LocationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Shop>()
+                .HasOne(s => s.Location)
+                .WithMany()
+                .HasForeignKey(s => s.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Region>()
                 .HasIndex(r => r.Name)

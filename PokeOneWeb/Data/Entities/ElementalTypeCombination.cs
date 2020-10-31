@@ -15,6 +15,6 @@ namespace PokeOneWeb.Data.Entities
         public ElementalType SecondaryType { get; set; }
         public int? SecondaryTypeId { get; set; }
 
-        public List<PokemonVariety> PokemonVarieties { get; set; }
+        public List<PokemonVariety> PokemonVarieties { get; set; } = new List<PokemonVariety>();
     }
 }

@@ -14,12 +14,6 @@ namespace PokeOneWeb.Data.Entities
         public int HitPoints { get; set; }
 
         [NotMapped]
-        public int Total
-        {
-            get
-            {
-                return Attack + Defense + SpecialAttack + SpecialDefense + Speed + HitPoints;
-            }
-        }
+        public int Total => Attack + Defense + SpecialAttack + SpecialDefense + Speed + HitPoints;
     }
 }

@@ -16,5 +16,7 @@ namespace PokeOneWeb.Data.Entities
         public int LocationId { get; set; }
 
         public string PlacementDescription { get; set; }
+
+        public string NpcName { get; set; }
     }
 }

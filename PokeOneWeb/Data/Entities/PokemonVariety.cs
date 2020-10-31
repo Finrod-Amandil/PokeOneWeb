@@ -57,7 +57,7 @@ namespace PokeOneWeb.Data.Entities
 
         public bool DoInclude { get; set; }
 
-        public List<PokemonHeldItem> HeldItems { get; set; }
-        public List<LearnableMove> LearnableMoves { get; set; }
+        public List<PokemonHeldItem> HeldItems { get; set; } = new List<PokemonHeldItem>();
+        public List<LearnableMove> LearnableMoves { get; set; } = new List<LearnableMove>();
     }
 }

@@ -1,49 +1,92 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
-using Google.Apis.Util.Store;
-using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
+﻿using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Locations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItems;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawns;
 using System.Threading.Tasks;
+using PokeOneWeb.Services.DataUpdate;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.TutorMoves;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl
 {
     public class GoogleSpreadsheetService : IGoogleSpreadsheetService
     {
-        private static string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        private static string ApplicationName = "PokeOneWeb Guide Import Service";
+        private readonly ISpreadsheetLoader _spreadsheetLoader;
+        private readonly ISpreadsheetReader<LocationDto> _locationReader;
+        private readonly ISpreadsheetReader<SpawnDto> _spawnReader;
+        private readonly ISpreadsheetReader<PlacedItemDto> _placedItemReader;
+        private readonly ISpreadsheetReader<TutorMoveDto> _tutorMoveReader;
+        private readonly ISpreadsheetReader<LearnableMoveLearnMethodDto> _learnableMoveReader;
+        private readonly ISpreadsheetMapper<LocationDto, Location> _locationMapper;
+        private readonly ISpreadsheetMapper<SpawnDto, Spawn> _spawnMapper;
+        private readonly ISpreadsheetMapper<PlacedItemDto, PlacedItem> _placedItemMapper;
+        private readonly ISpreadsheetMapper<TutorMoveDto, TutorMove> _tutorMoveMapper;
+        private readonly ISpreadsheetMapper<LearnableMoveLearnMethodDto, LearnableMove> _learnableMoveMapper;
+        private readonly IDataUpdateService<Location> _locationDataUpdateService;
+        private readonly IDataUpdateService<Spawn> _spawnDataUpdateService;
+        private readonly IDataUpdateService<PlacedItem> _placedItemDataUpdateService;
+        private readonly IDataUpdateService<TutorMove> _tutorMoveUpdateService;
+        private readonly IDataUpdateService<LearnableMove> _learnableMoveUpdateService;
 
-        /*public async Task<List<Location>> ReadLocations()
+        public GoogleSpreadsheetService(
+            ISpreadsheetLoader spreadsheetLoader,
+            ISpreadsheetReader<LocationDto> locationReader,
+            ISpreadsheetReader<SpawnDto> spawnReader,
+            ISpreadsheetReader<PlacedItemDto> placedItemReader,
+            ISpreadsheetReader<TutorMoveDto> tutorMoveReader,
+            ISpreadsheetReader<LearnableMoveLearnMethodDto> learnableMoveReader,
+            ISpreadsheetMapper<LocationDto, Location> locationMapper,
+            ISpreadsheetMapper<SpawnDto, Spawn> spawnMapper,
+            ISpreadsheetMapper<PlacedItemDto, PlacedItem> placedItemMapper,
+            ISpreadsheetMapper<TutorMoveDto, TutorMove> tutorMoveMapper,
+            ISpreadsheetMapper<LearnableMoveLearnMethodDto, LearnableMove> learnableMoveMapper,
+            IDataUpdateService<Location> locationDataUpdateService,
+            IDataUpdateService<Spawn> spawnDataUpdateService,
+            IDataUpdateService<PlacedItem> placedItemDataUpdateService,
+            IDataUpdateService<TutorMove> tutorMoveUpdateService,
+            IDataUpdateService<LearnableMove> learnableMoveUpdateService)
         {
-            UserCredential credential;
+            _spreadsheetLoader = spreadsheetLoader;
+            _locationReader = locationReader;
+            _spawnReader = spawnReader;
+            _placedItemReader = placedItemReader;
+            _tutorMoveReader = tutorMoveReader;
+            _learnableMoveReader = learnableMoveReader;
+            _locationMapper = locationMapper;
+            _spawnMapper = spawnMapper;
+            _placedItemMapper = placedItemMapper;
+            _tutorMoveMapper = tutorMoveMapper;
+            _learnableMoveMapper = learnableMoveMapper;
+            _locationDataUpdateService = locationDataUpdateService;
+            _spawnDataUpdateService = spawnDataUpdateService;
+            _placedItemDataUpdateService = placedItemDataUpdateService;
+            _tutorMoveUpdateService = tutorMoveUpdateService;
+            _learnableMoveUpdateService = learnableMoveUpdateService;
+        }
 
-            using (var stream = new FileStream("Services/GoogleSpreadsheet/credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "Services/GoogleSpreadsheet/token.json";
-                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(credPath, true));
-            }
-
-            var service = new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName
-            });
-
-            var spreadsheetId = "1MDHewtqu5ABMW1oi7SEIXwxsZ_gtooDsA4f6l85R3w8";
-            var request = service.Spreadsheets.Get(spreadsheetId);
-            request.IncludeGridData = true;
-
-            var spreadsheet = request.Execute();
-
-            
-        }*/
-        public Task SynchronizeSpreadsheetData()
+        public async Task SynchronizeSpreadsheetData()
         {
-            throw new System.NotImplementedException();
+            var spreadsheet = await _spreadsheetLoader.LoadSpreadsheet(Constants.SPREADSHEET_ID);
+
+            /*var locationDtos = _locationReader.Read(spreadsheet, Constants.SHEET_PREFIX_LOCATIONS);
+            var mappedLocations = _locationMapper.Map(locationDtos);
+            _locationDataUpdateService.Update(mappedLocations);
+
+            var spawnDtos = _spawnReader.Read(spreadsheet, Constants.SHEET_PREFIX_SPAWNS);
+            var mappedSpawns = _spawnMapper.Map(spawnDtos);
+            _spawnDataUpdateService.Update(mappedSpawns);
+
+            var placedItemDtos = _placedItemReader.Read(spreadsheet, Constants.SHEET_PREFIX_PLACEDITEMS);
+            var mappedPlacedItems = _placedItemMapper.Map(placedItemDtos);
+            _placedItemDataUpdateService.Update(mappedPlacedItems);
+
+            var tutorMoveDtos = _tutorMoveReader.Read(spreadsheet, Constants.SHEET_PREFIX_TUTOR_MOVES);
+            var mappedTutorMoves = _tutorMoveMapper.Map(tutorMoveDtos);
+            _tutorMoveUpdateService.Update(mappedTutorMoves);*/
+
+            var learnableMoveDtos = _learnableMoveReader.Read(spreadsheet, Constants.SHEET_PREFIX_LEARNABLE_MOVES);
+            var mappedLearnableMoves = _learnableMoveMapper.Map(learnableMoveDtos);
+            _learnableMoveUpdateService.Update(mappedLearnableMoves);
         }
     }
 }
