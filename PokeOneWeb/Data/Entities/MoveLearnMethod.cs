@@ -20,6 +20,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public List<MoveLearnMethodLocation> Locations { get; set; }
+        public List<MoveLearnMethodLocation> Locations { get; set; } = new List<MoveLearnMethodLocation>();
     }
 }

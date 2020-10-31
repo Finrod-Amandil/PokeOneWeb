@@ -18,14 +18,16 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         {
             var data = new PokeApiData();
 
-            data.PokemonSpecies = await LoadPokemonSpecies();
+            //data.PokemonSpecies = await LoadPokemonSpecies();
             data.PokemonVarieties = await LoadPokemonVarieties();
-            data.PokemonForms = await LoadPokemonForms();
-            data.EvolutionChains = await LoadEvolutionChains();
-            data.Types = await LoadTypes();
-            data.Abilities = await LoadAbilities();
-            data.Moves = await LoadMoves();
-            data.Items = await LoadItems();
+            //data.PokemonForms = await LoadPokemonForms();
+            //data.EvolutionChains = await LoadEvolutionChains();
+            //data.Types = await LoadTypes();
+            //data.Abilities = await LoadAbilities();
+            //data.Moves = await LoadMoves();
+            //data.Items = await LoadItems();
+            data.MoveLearnMethods = await LoadMoveLearnMethods();
+            data.VersionGroups = await LoadVersionGroups();
 
             return data;
         }
@@ -140,6 +142,34 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             }
 
             return items;
+        }
+
+        private async Task<IDictionary<string, MoveLearnMethod>> LoadMoveLearnMethods()
+        {
+            var moveLearnMethods = new Dictionary<string, MoveLearnMethod>();
+            var moveLearnMethodResources = await DataFetcher.GetResourceList<NamedApiResource<MoveLearnMethod>, MoveLearnMethod>(int.MaxValue);
+
+            foreach (var resource in moveLearnMethodResources)
+            {
+                var moveLearnMethod = await DataFetcher.GetNamedApiObject<MoveLearnMethod>(resource.Name);
+                moveLearnMethods.Add(moveLearnMethod.Name, moveLearnMethod);
+            }
+
+            return moveLearnMethods;
+        }
+
+        private async Task<IDictionary<string, VersionGroup>> LoadVersionGroups()
+        {
+            var versionGroups = new Dictionary<string, VersionGroup>();
+            var versionGroupResources = await DataFetcher.GetResourceList<NamedApiResource<VersionGroup>, VersionGroup>(int.MaxValue);
+
+            foreach (var resource in versionGroupResources)
+            {
+                var versionGroup = await DataFetcher.GetNamedApiObject<VersionGroup>(resource.Name);
+                versionGroups.Add(versionGroup.Name, versionGroup);
+            }
+
+            return versionGroups;
         }
     }
 }

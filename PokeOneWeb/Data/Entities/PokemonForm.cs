@@ -22,6 +22,6 @@ namespace PokeOneWeb.Data.Entities
         public PokemonAvailability Availability { get; set; }
         public int? AvailabilityId { get; set; }
 
-        public List<Spawn> PokemonSpawns { get; set; }
+        public List<Spawn> PokemonSpawns { get; set; } = new List<Spawn>();
     }
 }

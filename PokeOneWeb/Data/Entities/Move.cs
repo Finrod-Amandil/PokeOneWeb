@@ -32,5 +32,7 @@ namespace PokeOneWeb.Data.Entities
         public int Priority { get; set; }
 
         public string Effect { get; set; }
+
+        public bool DoInclude { get; set; }
     }
 }

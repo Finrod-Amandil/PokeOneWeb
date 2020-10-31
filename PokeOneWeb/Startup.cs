@@ -1,26 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PokeOneWeb.Services.PokeApi;
-using PokeOneWeb.Services.PokeApi.Impl;
 using PokeOneWeb.Configuration;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.DataUpdate;
+using PokeOneWeb.Services.DataUpdate.Impl;
 using PokeOneWeb.Services.GoogleSpreadsheet;
 using PokeOneWeb.Services.GoogleSpreadsheet.Impl;
-using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Location;
-using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawn;
-using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItem;
-using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Locations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItems;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawns;
+using PokeOneWeb.Services.GoogleSpreadsheet.Impl.TutorMoves;
+using PokeOneWeb.Services.PokeApi;
+using PokeOneWeb.Services.PokeApi.Impl;
 
 namespace PokeOneWeb
 {
@@ -47,13 +45,24 @@ namespace PokeOneWeb
             services.AddTransient<IPokeApiService, PokeApiService>();
             services.AddTransient<IGoogleSpreadsheetService, GoogleSpreadsheetService>();
             services.AddTransient<ISpreadsheetLoader, SpreadsheetLoader>();
+
             services.AddTransient<ISpreadsheetReader<LocationDto>, LocationReader>();
             services.AddTransient<ISpreadsheetReader<PlacedItemDto>, PlacedItemReader>();
             services.AddTransient<ISpreadsheetReader<SpawnDto>, SpawnReader>();
+            services.AddTransient<ISpreadsheetReader<TutorMoveDto>, TutorMoveReader>();
+            services.AddTransient<ISpreadsheetReader<LearnableMoveLearnMethodDto>, LearnableMoveLearnMethodReader>();
+
             services.AddTransient<ISpreadsheetMapper<LocationDto, Location>, LocationMapper>();
             services.AddTransient<ISpreadsheetMapper<PlacedItemDto, PlacedItem>, PlacedItemMapper>();
             services.AddTransient<ISpreadsheetMapper<SpawnDto, Spawn>, SpawnMapper>();
+            services.AddTransient<ISpreadsheetMapper<TutorMoveDto, TutorMove>, TutorMoveMapper>();
+            services.AddTransient<ISpreadsheetMapper<LearnableMoveLearnMethodDto, LearnableMove>, LearnableMoveLearnMethodMapper>();
 
+            services.AddTransient<IDataUpdateService<Location>, LocationUpdateService>();
+            services.AddTransient<IDataUpdateService<Spawn>, SpawnUpdateService>();
+            services.AddTransient<IDataUpdateService<PlacedItem>, PlacedItemUpdateService>();
+            services.AddTransient<IDataUpdateService<TutorMove>, TutorMoveUpdateService>();
+            services.AddTransient<IDataUpdateService<LearnableMove>, LearnableMoveUpdateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

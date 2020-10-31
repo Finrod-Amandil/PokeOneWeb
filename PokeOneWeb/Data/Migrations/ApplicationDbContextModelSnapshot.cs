@@ -270,8 +270,8 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int?>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -293,14 +293,9 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LearnableMoveLearnMethodId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
-
-                    b.HasIndex("LearnableMoveLearnMethodId");
 
                     b.ToTable("CurrencyAmount");
                 });
@@ -475,6 +470,9 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<string>("PokeApiName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PokeoneItemId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BagCategoryId");
@@ -492,9 +490,6 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<int>("MoveId")
                         .HasColumnType("int");
 
@@ -510,6 +505,81 @@ namespace PokeOneWeb.Data.Migrations
                     b.ToTable("LearnableMove");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveApi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BFBPPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BigMushrooms")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BlueShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Generations")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("GreenShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HeartScales")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LearnMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LevelLearnedAt")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MoveName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PWTBPPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PokeDollarPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PokeGoldPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PokemonSpeciesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PokemonVarietyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RedShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RequiredItem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TutorLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TutorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TutorPlacementDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("YellowShardPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LearnableMoveApis");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethod", b =>
                 {
                     b.Property<int>("Id")
@@ -517,7 +587,13 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LearnableMoveId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LevelLearnedAt")
                         .HasColumnType("int");
 
                     b.Property<int>("MoveLearnMethodId")
@@ -535,6 +611,28 @@ namespace PokeOneWeb.Data.Migrations
                     b.HasIndex("RequiredItemId");
 
                     b.ToTable("LearnableMoveLearnMethod");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LearnableMoveLearnMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LearnableMoveLearnMethodId");
+
+                    b.HasIndex("PriceId");
+
+                    b.ToTable("LearnableMoveLearnMethodPrice");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>
@@ -613,6 +711,9 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("DoInclude")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Effect")
                         .HasColumnType("nvarchar(max)");
 
@@ -686,6 +787,9 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("MoveLearnMethodId")
                         .HasColumnType("int");
 
+                    b.Property<string>("NpcName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PlacementDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -722,6 +826,9 @@ namespace PokeOneWeb.Data.Migrations
 
                     b.Property<string>("PlacementDescription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1031,6 +1138,34 @@ namespace PokeOneWeb.Data.Migrations
                     b.ToTable("Season");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.SeasonTimeOfDay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("SeasonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TimeOfDayId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("TimeOfDayId");
+
+                    b.ToTable("SeasonTimeOfDay");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Shop", b =>
                 {
                     b.Property<int>("Id")
@@ -1241,15 +1376,9 @@ namespace PokeOneWeb.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("StartTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -1257,6 +1386,63 @@ namespace PokeOneWeb.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("TimeOfDay");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.TutorMove", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BFBPPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BigMushrooms")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BlueShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GreenShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HeartScales")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LocationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoveName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PWTBPPrice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlacementDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PokeDollarPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PokeGoldPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RedShardPrice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TutorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TutorType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("YellowShardPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TutorMoves");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1324,10 +1510,6 @@ namespace PokeOneWeb.Data.Migrations
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PokeOneWeb.Data.Entities.LearnableMoveLearnMethod", null)
-                        .WithMany("Price")
-                        .HasForeignKey("LearnableMoveLearnMethodId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.ElementalTypeCombination", b =>
@@ -1427,6 +1609,21 @@ namespace PokeOneWeb.Data.Migrations
                         .HasForeignKey("RequiredItemId");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodPrice", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.LearnableMoveLearnMethod", "LearnableMoveLearnMethod")
+                        .WithMany("Price")
+                        .HasForeignKey("LearnableMoveLearnMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PokeOneWeb.Data.Entities.CurrencyAmount", "Price")
+                        .WithMany()
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>
                 {
                     b.HasOne("PokeOneWeb.Data.Entities.LocationGroup", "LocationGroup")
@@ -1482,7 +1679,7 @@ namespace PokeOneWeb.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("PokeOneWeb.Data.Entities.Location", "Location")
-                        .WithMany()
+                        .WithMany("PlacedItems")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1593,11 +1790,23 @@ namespace PokeOneWeb.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.SeasonTimeOfDay", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.Season", "Season")
+                        .WithMany()
+                        .HasForeignKey("SeasonId");
+
+                    b.HasOne("PokeOneWeb.Data.Entities.TimeOfDay", "TimeOfDay")
+                        .WithMany("SeasonTimes")
+                        .HasForeignKey("TimeOfDayId");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Shop", b =>
                 {
                     b.HasOne("PokeOneWeb.Data.Entities.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId");
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.ShopBoughtItem", b =>

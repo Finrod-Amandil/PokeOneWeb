@@ -16,5 +16,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         public IDictionary<string, Move> Moves { get; set; } = new Dictionary<string, Move>();
 
         public IDictionary<string, Item> Items { get; set; } = new Dictionary<string, Item>();
+
+        public IEnumerable<LearnableMoveApi> LearnableMoveApis { get; set; } = new List<LearnableMoveApi>();
     }
 }

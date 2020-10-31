@@ -11,6 +11,8 @@ namespace PokeOneWeb.Data.Entities
 
         public string PokeApiName { get; set; }
 
+        public int? PokeoneItemId { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -24,10 +26,10 @@ namespace PokeOneWeb.Data.Entities
         public BagCategory BagCategory { get; set; }
         public int BagCategoryId { get; set; }
 
-        public List<ShopSoldItem> SoldItems { get; set; }
-        public List<ShopBoughtItem> BoughtItems { get; set; }
-        public List<PlacedItem> PlacedItems { get; set; }
-        public List<QuestItemReward> QuestRewardItems { get; set; }
-        public List<PokemonHeldItem> HeldItems { get; set; }
+        public List<ShopSoldItem> SoldItems { get; set; } = new List<ShopSoldItem>();
+        public List<ShopBoughtItem> BoughtItems { get; set; } = new List<ShopBoughtItem>();
+        public List<PlacedItem> PlacedItems { get; set; } = new List<PlacedItem>();
+        public List<QuestItemReward> QuestRewardItems { get; set; } = new List<QuestItemReward>();
+        public List<PokemonHeldItem> HeldItems { get; set; } = new List<PokemonHeldItem>();
     }
 }
