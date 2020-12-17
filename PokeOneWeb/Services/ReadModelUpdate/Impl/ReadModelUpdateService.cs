@@ -11,17 +11,20 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private readonly IReadModelMapper<PokemonReadModel> _pokemonReadModelMapper;
         private readonly IReadModelMapper<MoveReadModel> _moveReadModelMapper;
         private readonly IReadModelMapper<SimpleLearnableMoveReadModel> _simpleLearnableMoveReadModelMapper;
+        private readonly IReadModelMapper<EntityTypeReadModel> _entityTypeReadModelMapper;
 
         public ReadModelUpdateService(
             ReadModelDbContext readModelDbContext,
             IReadModelMapper<PokemonReadModel> pokemonReadModelMapper,
             IReadModelMapper<MoveReadModel> moveReadModelMapper,
-            IReadModelMapper<SimpleLearnableMoveReadModel> simpleLearnableMoveReadModelMapper)
+            IReadModelMapper<SimpleLearnableMoveReadModel> simpleLearnableMoveReadModelMapper,
+            IReadModelMapper<EntityTypeReadModel> entityTypeReadModelMapper)
         {
             _readModelDbContext = readModelDbContext;
             _pokemonReadModelMapper = pokemonReadModelMapper;
             _moveReadModelMapper = moveReadModelMapper;
             _simpleLearnableMoveReadModelMapper = simpleLearnableMoveReadModelMapper;
+            _entityTypeReadModelMapper = entityTypeReadModelMapper;
         }
 
         public void UpdateReadModel()
@@ -50,6 +53,12 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             _readModelDbContext.SimpleLearnableMoveReadModels.AddRange(simpleLearnableMoveReadModels);
             _readModelDbContext.SaveChanges();
             simpleLearnableMoveTransaction.Commit();
+
+            var entityTypeReadModels = _entityTypeReadModelMapper.MapFromDatabase();
+            using var entityTypeTransaction = _readModelDbContext.Database.BeginTransaction();
+            _readModelDbContext.EntityTypeReadModels.AddRange(entityTypeReadModels);
+            _readModelDbContext.SaveChanges();
+            entityTypeTransaction.Commit();
         }
     }
 }

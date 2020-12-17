@@ -76,6 +76,7 @@ namespace PokeOneWeb
             services.AddTransient<IReadModelMapper<PokemonReadModel>, PokemonReadModelMapper>();
             services.AddTransient<IReadModelMapper<MoveReadModel>, MoveReadModelMapper>();
             services.AddTransient<IReadModelMapper<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelMapper>();
+            services.AddTransient<IReadModelMapper<EntityTypeReadModel>, EntityTypeReadModelMapper>();
 
             services.AddCors(options =>
             {
