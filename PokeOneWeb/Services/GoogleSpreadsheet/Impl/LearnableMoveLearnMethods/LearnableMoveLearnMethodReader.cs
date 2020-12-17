@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Apis.Sheets.v4.Data;
 using Microsoft.Extensions.Logging;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Services.GoogleSpreadsheet.Impl.TutorMoves;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods
 {
     public class LearnableMoveLearnMethodReader : SpreadsheetReader<LearnableMoveLearnMethodDto>
     {
+        private readonly List<TutorMove> _tutorMoves;
         private readonly ISpreadsheetReader<TutorMoveDto> _tutorMoveReader;
 
-        public LearnableMoveLearnMethodReader(ILogger<LearnableMoveLearnMethodReader> logger, ISpreadsheetReader<TutorMoveDto> tutorMoveReader) : base(logger)
+        public LearnableMoveLearnMethodReader(
+            ILogger<LearnableMoveLearnMethodReader> logger, 
+            ApplicationDbContext dbContext) : base(logger)
         {
-            _tutorMoveReader = tutorMoveReader;
-        }
-
-        public override IEnumerable<LearnableMoveLearnMethodDto> Read(Spreadsheet spreadsheet, string sheetPrefix)
-        {
-            var dtos = base.Read(spreadsheet, sheetPrefix).ToList();
-
-            dtos = AddPricesToMoves(dtos, spreadsheet);
-
-            return dtos;
+            _tutorMoves = dbContext.TutorMoves.ToList();
         }
 
         protected override LearnableMoveLearnMethodDto ReadRow(RowData rowData)
@@ -115,55 +111,69 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods
                 value.Comments = rowData.Values[10]?.EffectiveValue?.StringValue;
             }
 
+            value = AddPricesToMove(value);
+
             return value;
         }
 
-        private List<LearnableMoveLearnMethodDto> AddPricesToMoves(List<LearnableMoveLearnMethodDto> dtos, Spreadsheet spreadsheet)
+        private LearnableMoveLearnMethodDto AddPricesToMove(LearnableMoveLearnMethodDto dto)
         {
-            var tutorMoves = _tutorMoveReader.Read(spreadsheet, Constants.SHEET_PREFIX_TUTOR_MOVES).ToList();
-
-            foreach (var dto in dtos)
+            if (!dto.IsAvailable)
             {
-                if (!dto.IsAvailable)
-                {
-                    continue;
-                }
-
-                var matchingTutorMoves = new List<TutorMoveDto>();
-
-                switch (dto.LearnMethod)
-                {
-                    case LearnMethod.LevelUp:
-                        matchingTutorMoves = tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.LEVELUP)).ToList();
-                        break;
-
-                    case LearnMethod.EggMove:
-                        matchingTutorMoves = tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.EGG)).ToList();
-                        break;
-
-                    case LearnMethod.Tutor:
-                        matchingTutorMoves = tutorMoves.Where(tm =>
-                            tm.MoveName != null &&
-                            tm.MoveName.Equals(dto.MoveName) &&
-                            tm.TutorName.Equals(dto.TutorName) &&
-                            tm.LocationName.Equals(dto.TutorLocation)).ToList();
-                        break;
-
-                    case LearnMethod.Machine:
-                        continue; //Machine does not need a tutor / has no price
-
-                    case LearnMethod.PreEvolutionMove:
-                        matchingTutorMoves = tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.PREEVOLUTION)).ToList();
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                dto.TutorMoveDtos = matchingTutorMoves;
+                return dto;
             }
 
-            return dtos;
+            var matchingTutorMoves = new List<TutorMove>();
+
+            switch (dto.LearnMethod)
+            {
+                case LearnMethod.LevelUp:
+                    matchingTutorMoves = _tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.LEVELUP)).ToList();
+                    break;
+
+                case LearnMethod.EggMove:
+                    matchingTutorMoves = _tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.EGG)).ToList();
+                    break;
+
+                case LearnMethod.Tutor:
+                    matchingTutorMoves = _tutorMoves.Where(tm =>
+                        tm.MoveName != null &&
+                        tm.MoveName.Equals(dto.MoveName) &&
+                        tm.TutorName.Equals(dto.TutorName) &&
+                        tm.LocationName.Equals(dto.TutorLocation)).ToList();
+                    break;
+
+                case LearnMethod.Machine:
+                    break; //Machine does not need a tutor / has no price
+
+                case LearnMethod.PreEvolutionMove:
+                    matchingTutorMoves = _tutorMoves.Where(tm => tm.TutorType.Equals(LearnableMoveConstants.TutorName.PREEVOLUTION)).ToList();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            dto.TutorMoveDtos = matchingTutorMoves.Select(tm => new TutorMoveDto
+            {
+                TutorType = tm.TutorType,
+                TutorName = tm.TutorName,
+                LocationName = tm.LocationName,
+                PlacementDescription = tm.PlacementDescription,
+                MoveName = tm.MoveName,
+                RedShardPrice = tm.RedShardPrice,
+                BlueShardPrice = tm.BlueShardPrice,
+                GreenShardPrice = tm.GreenShardPrice,
+                YellowShardPrice = tm.YellowShardPrice,
+                PWTBPPrice = tm.PWTBPPrice,
+                BFBPPrice = tm.BFBPPrice,
+                PokeDollarPrice = tm.PokeDollarPrice,
+                PokeGoldPrice = tm.PokeGoldPrice,
+                BigMushrooms = tm.BigMushrooms,
+                HeartScales = tm.HeartScales
+            }).ToList();
+
+            return dto;
         }
     }
 }
