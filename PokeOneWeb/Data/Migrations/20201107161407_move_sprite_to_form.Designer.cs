@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201107161407_move_sprite_to_form")]
+    partial class move_sprite_to_form
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -878,7 +880,7 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("PokemonVarietyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SpriteName")
+                    b.Property<string>("SmallSprite")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -976,17 +978,8 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("EvolutionChainId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Generation")
-                        .HasColumnType("int");
-
                     b.Property<int?>("HiddenAbilityId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFullyEvolved")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMega")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

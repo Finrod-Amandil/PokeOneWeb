@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201107073114_more_pokemon_data")]
+    partial class more_pokemon_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -878,9 +880,6 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("PokemonVarietyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SpriteName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AvailabilityId");
@@ -976,32 +975,14 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("EvolutionChainId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Generation")
-                        .HasColumnType("int");
-
                     b.Property<int?>("HiddenAbilityId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFullyEvolved")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMega")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokeOneCommunityUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokemonDbUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokemonShowDownUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PokemonSpeciesId")
@@ -1019,10 +1000,10 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int?>("SecondaryAbilityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SerebiiUrl")
+                    b.Property<string>("SmogonUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SmogonUrl")
+                    b.Property<string>("Sprite")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
