@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Models;
 using PokeOneWeb.Services.GoogleSpreadsheet;
 using PokeOneWeb.Services.PokeApi;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Controllers
 {
@@ -51,13 +52,6 @@ namespace PokeOneWeb.Controllers
         {
             await _googleSpreadsheetService.SynchronizeSpreadsheetData();
 
-            
-            /*var data = await _pokeApiService.DownloadData();
-
-            _dbContext.LearnableMoveApis.RemoveRange(_dbContext.LearnableMoveApis);
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.LearnableMoveApis',RESEED, 0)");
-            _dbContext.LearnableMoveApis.AddRange(data.LearnableMoveApis);
-
             try
             {
                 _dbContext.SaveChanges();
@@ -65,7 +59,7 @@ namespace PokeOneWeb.Controllers
             catch (Exception e)
             {
                 e.ToString();
-            }*/
+            }
             
             return Ok();
         }
