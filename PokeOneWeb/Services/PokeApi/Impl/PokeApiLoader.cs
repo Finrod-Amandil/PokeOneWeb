@@ -18,18 +18,18 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         {
             var data = new PokeApiData();
 
-            //data.PokemonSpecies = await LoadPokemonSpecies();
+            data.PokemonSpecies = await LoadPokemonSpecies();
             data.PokemonVarieties = await LoadPokemonVarieties();
-            //data.PokemonForms = await LoadPokemonForms();
+            data.PokemonForms = await LoadPokemonForms();
             //data.EvolutionChains = await LoadEvolutionChains();
-            //data.Types = await LoadTypes();
+            data.Types = await LoadTypes();
             //data.Abilities = await LoadAbilities();
             //data.Moves = await LoadMoves();
             //data.Items = await LoadItems();
-            data.MoveLearnMethods = await LoadMoveLearnMethods();
-            data.VersionGroups = await LoadVersionGroups();
+            //data.MoveLearnMethods = await LoadMoveLearnMethods();
+            //data.VersionGroups = await LoadVersionGroups();
 
-            return data;
+             return data;
         }
 
         private async Task<IDictionary<string, PokemonSpecies>> LoadPokemonSpecies()
