@@ -349,8 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /PokeOneWeb/Services/GoogleSpreadsheet/credentials.json
-<<<<<<< HEAD
 PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
-=======
-/PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
->>>>>>> 6e6c9ed (update gitignore)
