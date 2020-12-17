@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /PokeOneWeb/Services/GoogleSpreadsheet/credentials.json
+/PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
