@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201107151139_serebii_pokemondb_url")]
+    partial class serebii_pokemondb_url
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -878,9 +880,6 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("PokemonVarietyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SpriteName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AvailabilityId");
@@ -976,17 +975,8 @@ namespace PokeOneWeb.Data.Migrations
                     b.Property<int>("EvolutionChainId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Generation")
-                        .HasColumnType("int");
-
                     b.Property<int?>("HiddenAbilityId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsFullyEvolved")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMega")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1023,6 +1013,9 @@ namespace PokeOneWeb.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SmogonUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sprite")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
