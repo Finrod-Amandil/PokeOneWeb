@@ -198,7 +198,7 @@ namespace PokeAPI
         {
             public bool Deserialize(JsonData j, Type t /* float? */, out object value)
             {
-                if (j.JsonType != JsonType.Int)
+                if (j?.JsonType != JsonType.Int)
                 {
                     value = null;
                     return false;
