@@ -14,6 +14,8 @@ namespace PokeOneWeb.Data
 
         public DbSet<SimpleLearnableMoveReadModel> SimpleLearnableMoveReadModels { get; set; }
 
+        public DbSet<EntityTypeReadModel> EntityTypeReadModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PokemonReadModel>()
@@ -25,6 +27,10 @@ namespace PokeOneWeb.Data
 
             modelBuilder.Entity<SimpleLearnableMoveReadModel>()
                 .HasIndex(lm => lm.MoveName);
+
+            modelBuilder.Entity<EntityTypeReadModel>()
+                .HasIndex(e => e.ResourceName)
+                .IsUnique();
         }
     }
 }

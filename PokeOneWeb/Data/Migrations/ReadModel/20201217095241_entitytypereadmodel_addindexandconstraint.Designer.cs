@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.Data.Migrations.ReadModel
 {
     [DbContext(typeof(ReadModelDbContext))]
-    partial class ReadModelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201217095241_entitytypereadmodel_addindexandconstraint")]
+    partial class entitytypereadmodel_addindexandconstraint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

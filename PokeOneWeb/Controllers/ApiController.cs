@@ -2,6 +2,7 @@
 using PokeOneWeb.Data;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data.ReadModels;
 
 namespace PokeOneWeb.Controllers
 {
@@ -27,6 +28,18 @@ namespace PokeOneWeb.Controllers
         public IActionResult GetAllMoveNames()
         {
             return Json(_dbContext.MoveReadModels.Select(m => m.Name));
+        }
+
+        public IActionResult GetEntityTypeForPath([FromQuery] string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return Json(new {EntityType = EntityType.Unknown});
+            }
+
+            var matchingMapping = _dbContext.EntityTypeReadModels.SingleOrDefault(e => e.ResourceName.Equals(path));
+
+            return Json(matchingMapping is null ? new { EntityType = EntityType.Unknown } : new { matchingMapping.EntityType });
         }
 
         public IActionResult GetAllPokemonForMoveSet(
