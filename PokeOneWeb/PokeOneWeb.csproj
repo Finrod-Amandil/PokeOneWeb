@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-PokeOneWeb-11FA8A64-1367-4EAD-B8F6-309CFAA4DADB</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;3009;3002;3001;3003</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Data\Migrations\20200603151101_CreateP1Entities.cs" />
     <Compile Remove="Data\Migrations\20200603151101_CreateP1Entities.Designer.cs" />
@@ -36,6 +40,10 @@
     <Compile Remove="Data\Migrations\20200617155316_evolution_stage.Designer.cs" />
     <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.cs" />
     <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.cs" />
+    <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.Designer.cs" />
+    <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.cs" />
+    <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
