@@ -1,4 +1,5 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Locations;
 using PokeOneWeb.Services.GoogleSpreadsheet.Impl.PlacedItems;
 using PokeOneWeb.Services.GoogleSpreadsheet.Impl.Spawns;
@@ -68,25 +69,46 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl
         {
             var spreadsheet = await _spreadsheetLoader.LoadSpreadsheet(Constants.SPREADSHEET_ID);
 
-            /*var locationDtos = _locationReader.Read(spreadsheet, Constants.SHEET_PREFIX_LOCATIONS);
+            var locationDtos = _locationReader.Read(spreadsheet, Constants.SHEET_PREFIX_LOCATIONS);
             var mappedLocations = _locationMapper.Map(locationDtos);
             _locationDataUpdateService.Update(mappedLocations);
+            locationDtos = null;
+            mappedLocations = null;
+            GC.Collect();
 
             var spawnDtos = _spawnReader.Read(spreadsheet, Constants.SHEET_PREFIX_SPAWNS);
             var mappedSpawns = _spawnMapper.Map(spawnDtos);
             _spawnDataUpdateService.Update(mappedSpawns);
+            spawnDtos = null;
+            mappedSpawns = null;
+            GC.Collect();
 
             var placedItemDtos = _placedItemReader.Read(spreadsheet, Constants.SHEET_PREFIX_PLACEDITEMS);
             var mappedPlacedItems = _placedItemMapper.Map(placedItemDtos);
             _placedItemDataUpdateService.Update(mappedPlacedItems);
+            placedItemDtos = null;
+            mappedPlacedItems = null;
+            GC.Collect();
 
             var tutorMoveDtos = _tutorMoveReader.Read(spreadsheet, Constants.SHEET_PREFIX_TUTOR_MOVES);
             var mappedTutorMoves = _tutorMoveMapper.Map(tutorMoveDtos);
-            _tutorMoveUpdateService.Update(mappedTutorMoves);*/
+            _tutorMoveUpdateService.Update(mappedTutorMoves);
+            tutorMoveDtos = null;
+            mappedTutorMoves = null;
 
-            var learnableMoveDtos = _learnableMoveReader.Read(spreadsheet, Constants.SHEET_PREFIX_LEARNABLE_MOVES);
-            var mappedLearnableMoves = _learnableMoveMapper.Map(learnableMoveDtos);
-            _learnableMoveUpdateService.Update(mappedLearnableMoves);
+            spreadsheet = null;
+            GC.Collect();
+
+            bool isFirstRun = true;
+            foreach (var learnableMovesSpreadsheetId in Constants.LEARNABLE_MOVES_SPREADSHEET_IDS)
+            {
+                var learnableMovesSpreadsheet = await _spreadsheetLoader.LoadSpreadsheet(learnableMovesSpreadsheetId);
+                var learnableMoveDtos = _learnableMoveReader.Read(learnableMovesSpreadsheet, Constants.SHEET_PREFIX_LEARNABLE_MOVES);
+                var mappedLearnableMoves = _learnableMoveMapper.Map(learnableMoveDtos);
+                _learnableMoveUpdateService.Update(mappedLearnableMoves, isFirstRun);
+                isFirstRun = false;
+                GC.Collect();
+            }
         }
     }
 }
