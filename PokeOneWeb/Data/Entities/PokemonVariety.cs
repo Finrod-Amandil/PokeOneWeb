@@ -9,6 +9,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public string ResourceName { get; set; }
+
         public string PokeApiName { get; set; }
 
         [Required]
@@ -55,9 +57,31 @@ namespace PokeOneWeb.Data.Entities
         public Ability HiddenAbility { get; set; }
         public int? HiddenAbilityId { get; set; }
 
-        public bool DoInclude { get; set; }
-
         public List<PokemonHeldItem> HeldItems { get; set; } = new List<PokemonHeldItem>();
         public List<LearnableMove> LearnableMoves { get; set; } = new List<LearnableMove>();
+
+        [ForeignKey("PvpTierId")]
+        public PvpTier PvpTier { get; set; }
+        public int? PvpTierId { get; set; }
+
+        public bool DoInclude { get; set; }
+
+        public bool IsFullyEvolved { get; set; }
+
+        public bool IsMega { get; set; }
+
+        public int Generation { get; set; }
+
+        public string SmogonUrl { get; set; }
+
+        public string BulbapediaUrl { get; set; }
+
+        public string PokeOneCommunityUrl { get; set; }
+
+        public string PokemonShowDownUrl { get; set; }
+
+        public string SerebiiUrl { get; set; }
+
+        public string PokemonDbUrl { get; set; }
     }
 }
