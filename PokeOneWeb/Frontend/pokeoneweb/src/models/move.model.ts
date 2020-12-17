@@ -1,6 +1,7 @@
 import { IBaseModel } from './base.model'
 
 export interface IMoveModel extends IBaseModel<IMoveModel> {
+    id: number;
     name: string;
     damageClass: string;
     type: string;

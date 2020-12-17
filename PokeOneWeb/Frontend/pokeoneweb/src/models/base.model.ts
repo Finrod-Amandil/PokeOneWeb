@@ -1,3 +1,1 @@
-export interface IBaseModel<T> {
-    id: number;
-}
+export interface IBaseModel<T> { }
