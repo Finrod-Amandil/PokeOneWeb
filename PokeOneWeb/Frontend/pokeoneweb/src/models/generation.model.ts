@@ -1,6 +1,7 @@
 import { IBaseModel } from './base.model'
 
 export interface IGenerationModel extends IBaseModel<IGenerationModel> {
+    id: number;
     name: string;
 }
 

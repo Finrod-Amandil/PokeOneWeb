@@ -1,6 +1,7 @@
 import { IBaseModel } from './base.model'
 
 export interface IListPokemonModel extends IBaseModel<IListPokemonModel> {
+    id: number;
     resourceName: string;
     pokedexNumber: number;
     name: string;
