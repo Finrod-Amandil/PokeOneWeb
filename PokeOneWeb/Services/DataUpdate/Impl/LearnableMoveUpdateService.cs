@@ -25,17 +25,20 @@ namespace PokeOneWeb.Services.DataUpdate.Impl
             _logger = logger;
         }
 
-        public void Update(IEnumerable<LearnableMove> learnableMoves)
+        public void Update(IEnumerable<LearnableMove> learnableMoves, bool deleteExisting)
         {
-            //Delete all existing learnable move data
-            _dbContext.MoveLearnMethods.RemoveRange(_dbContext.MoveLearnMethods);
-            _dbContext.CurrencyAmounts.RemoveRange(_dbContext.CurrencyAmounts);
-            _dbContext.LearnableMoves.RemoveRange(_dbContext.LearnableMoves);
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.MoveLearnMethod',RESEED, 0)");
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.CurrencyAmount',RESEED, 0)");
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.LearnableMove',RESEED, 0)");
+            if (deleteExisting)
+            {
+                //Delete all existing learnable move data
+                _dbContext.MoveLearnMethods.RemoveRange(_dbContext.MoveLearnMethods);
+                _dbContext.CurrencyAmounts.RemoveRange(_dbContext.CurrencyAmounts);
+                _dbContext.LearnableMoves.RemoveRange(_dbContext.LearnableMoves);
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.MoveLearnMethod',RESEED, 0)");
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.CurrencyAmount',RESEED, 0)");
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.LearnableMove',RESEED, 0)");
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
 
             _items = _dbContext.Items.ToList();
             _locations = _dbContext.Locations.ToList();
