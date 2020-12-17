@@ -95,7 +95,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Impl.LearnableMoveLearnMethods
             var learnableMove = existingLearnableMove ?? new LearnableMove
             {
                 Move = move,
-                PokemonVariety = pokemonVariety
+                PokemonVariety = pokemonVariety,
             };
 
             if (existingLearnableMove is null)
