@@ -3,7 +3,11 @@ using PokeOneWeb.Configuration;
 using PokeOneWeb.Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using PokeAPI;
@@ -35,9 +39,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
         {
             var mappedData = new MappedPokeApiData();
 
-            mappedData.LearnableMoveApis = MapLearnableMoves(data);
-
-            return mappedData;
+            //mappedData.LearnableMoveApis = MapLearnableMoves(data);
 
             IDictionary<string, PokemonVariety> mappedVarieties = new Dictionary<string, PokemonVariety>();
 
@@ -55,9 +57,14 @@ namespace PokeOneWeb.Services.PokeApi.Impl
 
                 mappedData.PokemonSpecies.Add(mappedSpecies.PokeApiName, mappedSpecies);
 
-                mappedSpecies.Name = species.Names.Single(name => 
+                mappedSpecies.Name = species.Names.SingleOrDefault(name => 
                     name.Language.Name.Equals(_settings.Language, StringComparison.OrdinalIgnoreCase))
                     .Name;
+
+                if (mappedSpecies.Name is null)
+                {
+                    var x = 0;
+                }
 
                 mappedSpecies.PokedexNumber = species.PokedexNumbers.SingleOrDefault(number =>
                         number.Pokedex.Name.Equals(_settings.PokedexName, StringComparison.OrdinalIgnoreCase))
@@ -71,6 +78,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 mappedSpecies.Varieties = mappedVarieties.Values.ToList();
             }
 
+            /*
             //Evolution chains (separate loop as all species need to be already mapped)
             foreach (var species in data.PokemonSpecies.Values)
             {
@@ -108,7 +116,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             catch (Exception e)
             {
                 e.ToString();
-            }
+            }*/
             
 
             return mappedData;
@@ -205,7 +213,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
 
                 mappedVariety.Forms = mappedForms.Values.ToList();
 
-                mappedVariety.BaseStats = GetBaseStats(variety.Stats);
+                /*mappedVariety.BaseStats = GetBaseStats(variety.Stats);
                 mappedVariety.EvYield = GetEvYield(variety.Stats);
 
                 var primaryAbility = variety.Abilities.SingleOrDefault(a => a.Slot == 1);
@@ -232,7 +240,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 {
                     mappedVariety.HiddenAbility = mappedHiddenAbility;
                     mappedHiddenAbility.PokemonVarietiesAsHiddenAbility.Add(mappedVariety);
-                }
+                }*/
 
                 index++;
             }
