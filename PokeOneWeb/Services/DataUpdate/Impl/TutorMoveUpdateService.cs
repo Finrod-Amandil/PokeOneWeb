@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.Services.DataUpdate.Impl
 {
@@ -18,14 +14,16 @@ namespace PokeOneWeb.Services.DataUpdate.Impl
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<TutorMove> newTutorMoves)
+        public void Update(IEnumerable<TutorMove> newTutorMoves, bool deleteExisting = true)
         {
-            //Delete all existing placed items
-            _dbContext.TutorMoves.RemoveRange(_dbContext.TutorMoves);
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.TutorMoves',RESEED, 0)");
+            if (deleteExisting)
+            {
+                //Delete all existing placed items
+                _dbContext.TutorMoves.RemoveRange(_dbContext.TutorMoves);
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.TutorMoves',RESEED, 0)");
 
-            _dbContext.SaveChanges();
-
+                _dbContext.SaveChanges();
+            }
             _dbContext.AddRange(newTutorMoves);
 
             _dbContext.SaveChanges();

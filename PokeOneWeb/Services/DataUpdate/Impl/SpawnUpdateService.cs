@@ -19,16 +19,19 @@ namespace PokeOneWeb.Services.DataUpdate.Impl
             _logger = logger;
         }
 
-        public void Update(IEnumerable<Spawn> newSpawns)
+        public void Update(IEnumerable<Spawn> newSpawns, bool deleteExisting = true)
         {
-            //Remove all spawns (and SpawnOpportunities, by cascade), and spawn types.
-            _dbContext.Spawns.RemoveRange(_dbContext.Spawns);
-            _dbContext.SpawnTypes.RemoveRange(_dbContext.SpawnTypes);
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.Spawn',RESEED, 0)");
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.SpawnOpportunity',RESEED, 0)");
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.SpawnType',RESEED, 0)");
+            if (deleteExisting)
+            {
+                //Remove all spawns (and SpawnOpportunities, by cascade), and spawn types.
+                _dbContext.Spawns.RemoveRange(_dbContext.Spawns);
+                _dbContext.SpawnTypes.RemoveRange(_dbContext.SpawnTypes);
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.Spawn',RESEED, 0)");
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.SpawnOpportunity',RESEED, 0)");
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.SpawnType',RESEED, 0)");
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
 
             var locations = _dbContext.Locations.ToList();
             var pokemonForms = _dbContext.PokemonForms.ToList();

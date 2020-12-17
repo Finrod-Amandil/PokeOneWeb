@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.DataUpdate.Impl
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<Location> newLocations)
+        public void Update(IEnumerable<Location> newLocations, bool deleteExisting = false)
         {
             newLocations = newLocations.ToList();
 

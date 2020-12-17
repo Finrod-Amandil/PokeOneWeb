@@ -18,13 +18,16 @@ namespace PokeOneWeb.Services.DataUpdate.Impl
             _logger = logger;
         }
 
-        public void Update(IEnumerable<PlacedItem> newPlacedItems)
+        public void Update(IEnumerable<PlacedItem> newPlacedItems, bool deleteExisting = true)
         {
-            //Delete all existing placed items
-            _dbContext.PlacedItems.RemoveRange(_dbContext.PlacedItems);
-            _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.PlacedItem',RESEED, 0)");
+            if (deleteExisting)
+            {
+                //Delete all existing placed items
+                _dbContext.PlacedItems.RemoveRange(_dbContext.PlacedItems);
+                _dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('PokeOneWeb.dbo.PlacedItem',RESEED, 0)");
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
 
             var locations = _dbContext.Locations.ToList();
             var items = _dbContext.Items.ToList();
