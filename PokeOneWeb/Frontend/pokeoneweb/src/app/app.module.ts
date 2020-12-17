@@ -16,6 +16,10 @@ import { VerticalStatBarComponent } from './shared/vertical-stat-bar/vertical-st
 import { TypeBadgeComponent } from './shared/type-badge/type-badge.component';
 import { HomeComponent } from './features/home/home.component';
 import { PokemonDetailComponent } from './features/pokemon-detail/pokemon-detail.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
+import { LocationDetailComponent } from './features/location-detail/location-detail.component';
+import { ItemDetailComponent } from './features/item-detail/item-detail.component';
+import { LoadingComponent } from './features/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { PokemonDetailComponent } from './features/pokemon-detail/pokemon-detail
     VerticalStatBarComponent,
     TypeBadgeComponent,
     HomeComponent,
-    PokemonDetailComponent
+    PokemonDetailComponent,
+    NotFoundComponent,
+    LocationDetailComponent,
+    ItemDetailComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
