@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import;
 
 namespace PokeOneWeb.Controllers
 {
@@ -17,18 +18,18 @@ namespace PokeOneWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPokeApiService _pokeApiService;
-        private readonly IGoogleSpreadsheetService _googleSpreadsheetService;
+        private readonly IGoogleSpreadsheetImportService _googleSpreadsheetImportService;
         private readonly ApplicationDbContext _dbContext;
 
         public HomeController(
             ILogger<HomeController> logger,
             IPokeApiService pokeApiService,
-            IGoogleSpreadsheetService googleSpreadsheetService,
+            IGoogleSpreadsheetImportService googleSpreadsheetImportService,
             ApplicationDbContext dbContext)
         {
             _logger = logger;
             _pokeApiService = pokeApiService;
-            _googleSpreadsheetService = googleSpreadsheetService;
+            _googleSpreadsheetImportService = googleSpreadsheetImportService;
             _dbContext = dbContext;
         }
 
@@ -50,7 +51,7 @@ namespace PokeOneWeb.Controllers
 
         public async Task<IActionResult> GetData()
         {
-            await _googleSpreadsheetService.SynchronizeSpreadsheetData();
+            await _googleSpreadsheetImportService.ImportSpreadsheetData();
 
             try
             {
