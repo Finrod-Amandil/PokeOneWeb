@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,53 @@ namespace PokeOneWeb.Controllers
 
         public IActionResult GetAllPokemon()
         {
-            return Json(_dbContext.PokemonReadModels);
+            return Json(_dbContext.PokemonReadModels
+                .Select(p => new 
+                {
+                    p.Id, p.ResourceName, p.PokedexNumber, p.Name, p.SpriteName,
+                    p.Type1, 
+                    p.Type2, p.Atk, p.Spa, p.Def, p.Spd, p.Spe, p.Hp, p.StatTotal,
+                    p.PrimaryAbility, p.PrimaryAbilityEffect,
+                    p.SecondaryAbility, p.SecondaryAbilityEffect,
+                    p.HiddenAbility, p.HiddenAbilityEffect,
+                    p.Availability, p.PvpTier, p.PvpTierSortIndex,
+                    p.Generation, p.IsFullyEvolved, p.IsMega,
+                    p.SmogonUrl, p.BulbapediaUrl, p.PokeOneCommunityUrl,
+                    p.PokemonShowDownUrl, p.SerebiiUrl, p.PokemonDbUrl
+                }));
+        }
+
+        public IActionResult GetPokemon([FromQuery] string resourceName)
+        {
+            var pokemon = _dbContext.PokemonReadModels
+                .SingleOrDefault(p => p.ResourceName.Equals(resourceName, StringComparison.Ordinal));
+
+            if (pokemon is null)
+            {
+                return NotFound();
+            }
+            return Json(pokemon);
+        }
+
+        public IActionResult GetBaseStatsForPokemon([FromQuery] string resourceName)
+        {
+            var pokemon = _dbContext.PokemonReadModels
+                .SingleOrDefault(p => p.ResourceName.Equals(resourceName, StringComparison.Ordinal));
+
+            if (pokemon is null)
+            {
+                return NotFound();
+            }
+            return Json(new
+            {
+                pokemon.Atk,
+                pokemon.Spa,
+                pokemon.Def,
+                pokemon.Spd,
+                pokemon.Spe,
+                pokemon.Hp,
+                pokemon.StatTotal
+            });
         }
 
         public IActionResult GetAllMoves()
