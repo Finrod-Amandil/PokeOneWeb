@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-item-detail',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemDetailComponent implements OnInit {
 
-  constructor() { }
+  public itemName: string = '';
+
+  constructor(private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.data.subscribe(result => this.itemName = result["resourceName"]);
   }
 
 }

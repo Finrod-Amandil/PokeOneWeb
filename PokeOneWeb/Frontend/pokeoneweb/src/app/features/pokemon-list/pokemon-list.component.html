@@ -830,7 +830,7 @@
         </tr>
     </thead>
     <tbody #container>
-        <tr *ngFor="let pokemon of scroll.viewPortItems; trackBy: trackById">
+        <tr *ngFor="let pokemon of scroll.viewPortItems; trackBy: trackById" (click)="navigateToDetailPage(pokemon.resourceName);">
             <td class="col-availability" [ngClass]="
             {
                 'availability-obtainable': pokemon.availability === 'Obtainable',
