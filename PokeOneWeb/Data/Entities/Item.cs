@@ -9,18 +9,25 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
-        public string PokeApiName { get; set; }
-
-        public int? PokeoneItemId { get; set; }
+        [Required]
+        public string ResourceName { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        public string PokeApiName { get; set; }
+
+        public int? PokeoneItemId { get; set; }
 
         public string Description { get; set; }
 
         public string Effect { get; set; }
 
         public bool IsAvailable { get; set; }
+
+        public bool DoInclude { get; set; }
+
+        public int SortIndex { get; set; }
 
         [ForeignKey("BagCategoryId")]
         public BagCategory BagCategory { get; set; }

@@ -15,9 +15,5 @@ namespace PokeOneWeb.Data.Entities
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
-
-        [ForeignKey("EventRegionId")]
-        public Region EventRegion { get; set; }
-        public int? EventRegionId { get; set; }
     }
 }

@@ -12,6 +12,9 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string ResourceName { get; set; }
+
         [ForeignKey("RegionId")]
         public Region Region { get; set; }
         public int RegionId { get; set; }

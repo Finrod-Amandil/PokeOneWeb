@@ -8,12 +8,13 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        [Required]
+        public string ResourceName { get; set; }
+
         public string PokeApiName { get; set; }
 
         [Required]
         public string Name { get; set; }
-
-        public string Description { get; set; }
 
         [ForeignKey("DamageClassId")]
         public MoveDamageClass DamageClass { get; set; }

@@ -14,6 +14,10 @@ namespace PokeOneWeb.Data.Entities
 
         public bool IsEventRegion { get; set; }
 
+        [ForeignKey("EventId")]
+        public Event Event { get; set; }
+        public int? EventId { get; set; }
+
         public List<LocationGroup> LocationGroups { get; set; } = new List<LocationGroup>();
     }
 }

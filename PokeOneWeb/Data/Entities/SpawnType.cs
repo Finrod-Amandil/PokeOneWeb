@@ -10,5 +10,9 @@ namespace PokeOneWeb.Data.Entities
 
         [Required]
         public string Name { get; set; }
+
+        public bool IsSyncable { get; set; }
+
+        public bool IsInfinite { get; set; }
     }
 }
