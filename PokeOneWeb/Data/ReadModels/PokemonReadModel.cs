@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.ReadModels
 {
@@ -48,5 +49,22 @@ namespace PokeOneWeb.Data.ReadModels
         public string PokemonShowDownUrl { get; set; }
         public string SerebiiUrl { get; set; }
         public string PokemonDbUrl { get; set; }
+
+        public List<AbilityTurnsIntoReadModel> PrimaryAbilityTurnsInto { get; set; }
+        public List<AbilityTurnsIntoReadModel> SecondaryAbilityTurnsInto { get; set; }
+        public List<AbilityTurnsIntoReadModel> HiddenAbilityTurnsInto { get; set; }
+        public int CatchRate { get; set; }
+        public List<HuntingConfigurationReadModel> HuntingConfigurations { get; set; }
+        public int AtkEv { get; set; }
+        public int SpaEv { get; set; }
+        public int DefEv { get; set; }
+        public int SpdEv { get; set; }
+        public int SpeEv { get; set; }
+        public int HpEv { get; set; }
+        public List<AttackEffectivityReadModel> DefenseAttackEffectivities { get; set; }
+        public List<SpawnReadModel> Spawns { get; set; }
+        public List<MoveReadModel> LearnableMoves { get; set; }
+        public List<MoveReadModel> UnavailableLearnableMoves { get; set; }
+        public List<BuildReadModel> Builds { get; set; }
     }
 }
