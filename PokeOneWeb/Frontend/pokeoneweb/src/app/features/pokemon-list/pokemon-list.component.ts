@@ -18,6 +18,7 @@ import {
   SELECT_OPTION_NONE
 } from '../../common/string.constants';
 import { PokemonListColumn } from './pokemon-list-column.enum'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pokeone-pokemon-list',
@@ -111,7 +112,8 @@ export class PokemonListComponent implements OnInit {
   constructor(
     private pokemonListService: PokemonListService,
     private movesService: MovesService,
-    private learnableMovesService: LearnableMovesService
+    private learnableMovesService: LearnableMovesService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -265,6 +267,10 @@ export class PokemonListComponent implements OnInit {
 
   public trackById(index: number, item: IListPokemonModel): number {
     return item.id;
+  }
+
+  public navigateToDetailPage(pokemonResourceName: string) {
+    this.router.navigate([pokemonResourceName]);
   }
 
   public sortNumber(sortDirection: number) {

@@ -19,6 +19,7 @@ export class DynamicRouteGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    //At this point, only routes with a single path element are considered valid routes.
     if (route.url.length != 1) {
       this.router.navigate(['not-found']);
       return false;
@@ -26,29 +27,30 @@ export class DynamicRouteGuard implements CanActivate {
 
     let path = route.url[0].toString();
 
+    //Ask backend, what kind of entity the requested path matches to
     this.entityTypeService.getEntityTypeForPath(path).subscribe(response => {
       let entityTypeModel = response as IEntityTypeModel;
 
-      console.log("got response");
-      console.log(entityTypeModel);
-
+      //If backend did not recognize path --> redirect to page not found component.
       if (entityTypeModel.entityType === EntityType.Unknown) {
         this.router.navigate(['not-found']);
       }
 
+      //Build a new routes array. Slicing is required as wildcard route needs to stay at the
+      //bottom of the list.
       let routes = this.router.config;
       let newRoutes = routes.slice(0, routes.length - 1);
 
+      //Add a new route for the requested path to the correct component.
       switch(entityTypeModel.entityType) {
         case EntityType.PokemonVariety:
-          console.log(path);
-          newRoutes.push({ path: path, component: PokemonDetailComponent });
+          newRoutes.push({ path: path, component: PokemonDetailComponent, data: { resourceName: path } });
           break;
         case EntityType.Location:
-          newRoutes.push({ path: path, component: LocationDetailComponent });
+          newRoutes.push({ path: path, component: LocationDetailComponent, data: { resourceName: path } });
           break;
         case EntityType.Item:
-          newRoutes.push({ path: path, component: ItemDetailComponent });
+          newRoutes.push({ path: path, component: ItemDetailComponent, data: { resourceName: path } });
           break;
         default:
           this.router.navigate(['not-found']);
@@ -57,12 +59,12 @@ export class DynamicRouteGuard implements CanActivate {
 
       newRoutes.push(routes[routes.length - 1])
 
-      console.log(newRoutes);
-
+      //Reload routes and navigate.
       this.router.resetConfig(newRoutes);
       this.router.navigate([path]);
     });
 
+    //Guard always returns true and loads LoadingComponent while API request is being executed.
     return true;
   }
 }
