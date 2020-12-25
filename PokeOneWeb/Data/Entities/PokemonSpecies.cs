@@ -11,6 +11,7 @@ namespace PokeOneWeb.Data.Entities
 
         public string PokeApiName { get; set; }
 
+        [Required]
         public int PokedexNumber { get; set; }
 
         [Required]

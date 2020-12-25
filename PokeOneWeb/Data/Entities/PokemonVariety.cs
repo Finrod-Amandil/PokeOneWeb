@@ -9,6 +9,7 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        [Required]
         public string ResourceName { get; set; }
 
         public string PokeApiName { get; set; }
@@ -21,6 +22,7 @@ namespace PokeOneWeb.Data.Entities
         public int PokemonSpeciesId { get; set; }
 
         public List<PokemonForm> Forms { get; set; }
+
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
         public int? DefaultFormId { get; set; }
@@ -33,17 +35,13 @@ namespace PokeOneWeb.Data.Entities
         public Stats EvYield { get; set; }
         public int? EvYieldId { get; set; }
 
-        [ForeignKey("ElementalTypeCombinationId")]
-        public ElementalTypeCombination ElementalTypeCombination { get; set; }
-        public int? ElementalTypeCombinationId { get; set; }
+        [ForeignKey("PrimaryTypeId")]
+        public ElementalType PrimaryType { get; set; }
+        public int PrimaryTypeId { get; set; }
 
-        /// <summary>
-        /// Every Pokémon species belongs to exactly one Evolution Chain. Species which do not evolve will
-        /// belong to an Evolution Chain with no Evolutions.
-        /// </summary>
-        [ForeignKey("EvolutionChainId")]
-        public EvolutionChain EvolutionChain { get; set; }
-        public int EvolutionChainId { get; set; }
+        [ForeignKey("SecondaryTypeId")]
+        public ElementalType SecondaryType { get; set; }
+        public int? SecondaryTypeId { get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
@@ -71,6 +69,12 @@ namespace PokeOneWeb.Data.Entities
         public bool IsMega { get; set; }
 
         public int Generation { get; set; }
+
+        public int CatchRate { get; set; }
+
+        public List<HuntingConfiguration> HuntingConfigurations { get; set; }
+
+        public List<Build> Builds { get; set; }
 
         public string SmogonUrl { get; set; }
 

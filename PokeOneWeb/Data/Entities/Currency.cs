@@ -11,14 +11,6 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
-        /// <summary>
-        /// Only used, if Item is unused.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Used, if the currency is an Item.
-        /// </summary>
         [ForeignKey("ItemId")]
         public Item Item { get; set; }
         public int? ItemId { get; set; }
