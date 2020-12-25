@@ -15,6 +15,9 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        public int SortIndex { get; set; }
+
+
         public List<Item> Items { get; set; } = new List<Item>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,9 +7,9 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
-        [ForeignKey("EvolutionChainId")]
-        public EvolutionChain EvolutionChain { get; set; }
-        public int EvolutionChainId { get; set; }
+        [ForeignKey("BasePokemonSpeciesId")]
+        public PokemonSpecies BasePokemonSpecies { get; set; }
+        public int BasePokemonSpeciesId { get; set; }
 
         [ForeignKey("BasePokemonVarietyId")]
         public PokemonVariety BasePokemonVariety { get; set; }
@@ -22,8 +21,14 @@ namespace PokeOneWeb.Data.Entities
 
         public string EvolutionTrigger { get; set; }
 
-        public int Stage { get; set; }
+        public int BaseStage { get; set; }
 
-        public bool Available { get; set; }
+        public int EvolvedStage { get; set; }
+
+        public bool IsReversible { get; set; }
+
+        public bool IsAvailable { get; set; }
+
+        public bool DoInclude { get; set; }
     }
 }
