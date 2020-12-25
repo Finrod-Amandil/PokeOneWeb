@@ -15,10 +15,8 @@ namespace PokeOneWeb.Data
         public DbSet<CurrencyAmount> CurrencyAmounts { get; set; }
         public DbSet<ElementalType> ElementalTypes { get; set; }
         public DbSet<ElementalTypeRelation> ElementalTypeRelations { get; set; }
-        public DbSet<ElementalTypeCombination> ElementalTypeCombinations { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Evolution> Evolutions { get; set; }
-        public DbSet<EvolutionChain> EvolutionChains { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -30,6 +28,8 @@ namespace PokeOneWeb.Data
         public DbSet<PokemonHeldItem> PokemonHeldItems { get; set; }
         public DbSet<PokemonSpecies> PokemonSpecies { get; set; }
         public DbSet<PokemonVariety> PokemonVarieties { get; set; }
+        public DbSet<PokemonAvailability> PokemonAvailabilities { get; set; }
+        public DbSet<PvpTier> PvpTiers { get; set; }
         public DbSet<Quest> Quests { get; set; }
         public DbSet<QuestType> QuestTypes { get; set; }
         public DbSet<Region> Regions { get; set; }
@@ -38,6 +38,11 @@ namespace PokeOneWeb.Data
         public DbSet<SpawnType> SpawnTypes { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
+        public DbSet<SeasonTimeOfDay> SeasonTimesOfDay { get; set; }
+        public DbSet<Build> Builds { get; set; }
+        public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
+        public DbSet<Nature> Natures { get; set; }
+        public DbSet<Stats> Stats { get; set; }
 
         public DbSet<LearnableMoveApi> LearnableMoveApis { get; set; }
 
@@ -77,16 +82,16 @@ namespace PokeOneWeb.Data
                 .HasForeignKey(etr => etr.DefendingTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Entity<ElementalTypeCombination>()
-                .HasOne(etc => etc.PrimaryType)
-                .WithMany(et => et.ElementalTypeCombinationsAsPrimaryType)
-                .HasForeignKey(etc => etc.PrimaryTypeId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.PrimaryType)
+                .WithMany()
+                .HasForeignKey(p => p.PrimaryTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Entity<ElementalTypeCombination>()
-                .HasOne(etc => etc.SecondaryType)
-                .WithMany(et => et.ElementalTypeCombinationsAsSecondaryType)
-                .HasForeignKey(etc => etc.SecondaryTypeId)
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.SecondaryType)
+                .WithMany()
+                .HasForeignKey(p => p.SecondaryTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
@@ -112,12 +117,6 @@ namespace PokeOneWeb.Data
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
-                .HasOne(p => p.EvolutionChain)
-                .WithMany()
-                .HasForeignKey(p => p.EvolutionChainId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            builder.Entity<PokemonVariety>()
                 .HasOne(p => p.BaseStats)
                 .WithMany()
                 .HasForeignKey(p => p.BaseStatsId)
@@ -139,6 +138,12 @@ namespace PokeOneWeb.Data
                 .HasOne(e => e.EvolvedPokemonVariety)
                 .WithMany()
                 .HasForeignKey(e => e.EvolvedPokemonVarietyId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Evolution>()
+                .HasOne(e => e.BasePokemonSpecies)
+                .WithMany()
+                .HasForeignKey(e => e.BasePokemonSpeciesId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<SeasonTimeOfDay>()
@@ -168,7 +173,23 @@ namespace PokeOneWeb.Data
                 .HasOne(s => s.Location)
                 .WithMany()
                 .HasForeignKey(s => s.LocationId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Nature>()
+                .HasOne(n => n.StatBoost)
+                .WithMany()
+                .HasForeignKey(n => n.StatBoostId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Build>()
+                .HasOne(b => b.EvDistribution)
+                .WithMany()
+                .HasForeignKey(b => b.EvDistributionId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Event>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
 
             builder.Entity<Region>()
                 .HasIndex(r => r.Name)
@@ -176,6 +197,10 @@ namespace PokeOneWeb.Data
 
             builder.Entity<LocationGroup>()
                 .HasIndex(lg => lg.Name)
+                .IsUnique();
+
+            builder.Entity<LocationGroup>()
+                .HasIndex(lg => lg.ResourceName)
                 .IsUnique();
 
             builder.Entity<Location>()
@@ -186,12 +211,28 @@ namespace PokeOneWeb.Data
                 .HasIndex(i => i.Name)
                 .IsUnique();
 
+            builder.Entity<Item>()
+                .HasIndex(i => i.ResourceName)
+                .IsUnique();
+
+            builder.Entity<BagCategory>()
+                .HasIndex(bc => bc.Name)
+                .IsUnique();
+
             builder.Entity<Season>()
                 .HasIndex(s => s.Abbreviation)
                 .IsUnique();
 
+            builder.Entity<Season>()
+                .HasIndex(s => s.Name)
+                .IsUnique();
+
             builder.Entity<TimeOfDay>()
                 .HasIndex(tod => tod.Abbreviation)
+                .IsUnique();
+
+            builder.Entity<TimeOfDay>()
+                .HasIndex(tod => tod.Name)
                 .IsUnique();
 
             builder.Entity<SpawnType>()
@@ -206,12 +247,56 @@ namespace PokeOneWeb.Data
                 .HasIndex(pv => pv.Name)
                 .IsUnique();
 
+            builder.Entity<PokemonVariety>()
+                .HasIndex(pv => pv.ResourceName)
+                .IsUnique();
+
             builder.Entity<PokemonSpecies>()
                 .HasIndex(ps => ps.Name)
                 .IsUnique();
 
             builder.Entity<PokemonSpecies>()
                 .HasIndex(ps => ps.PokedexNumber)
+                .IsUnique();
+
+            builder.Entity<PokemonSpecies>()
+                .HasIndex(ps => ps.PokedexNumber)
+                .IsUnique();
+
+            builder.Entity<Ability>()
+                .HasIndex(a => a.Name)
+                .IsUnique();
+
+            builder.Entity<PokemonAvailability>()
+                .HasIndex(a => a.Name)
+                .IsUnique();
+
+            builder.Entity<PvpTier>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<Nature>()
+                .HasIndex(n => n.Name)
+                .IsUnique();
+
+            builder.Entity<ElementalType>()
+                .HasIndex(t => t.Name)
+                .IsUnique();
+
+            builder.Entity<Move>()
+                .HasIndex(m => m.Name)
+                .IsUnique();
+
+            builder.Entity<Move>()
+                .HasIndex(m => m.ResourceName)
+                .IsUnique();
+
+            builder.Entity<MoveDamageClass>()
+                .HasIndex(d => d.Name)
+                .IsUnique();
+
+            builder.Entity<MoveLearnMethod>()
+                .HasIndex(l => l.Name)
                 .IsUnique();
         }
     }
