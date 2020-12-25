@@ -25,10 +25,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .Include(v => v.PrimaryAbility)
                 .Include(v => v.SecondaryAbility)
                 .Include(v => v.HiddenAbility)
-                .Include(v => v.ElementalTypeCombination)
-                .ThenInclude(e => e.PrimaryType)
-                .Include(v => v.ElementalTypeCombination)
-                .ThenInclude(e => e.SecondaryType)
+                .Include(v => v.PrimaryType)
+                .Include(v => v.SecondaryType)
                 .Include(v => v.BaseStats)
                 .Include(v => v.EvYield)
                 .Where(v => v.DoInclude)
@@ -50,8 +48,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
                     SpriteName = variety.DefaultForm.SpriteName,
 
-                    Type1 = variety.ElementalTypeCombination.PrimaryType.Name,
-                    Type2 = variety.ElementalTypeCombination.SecondaryType?.Name,
+                    Type1 = variety.PrimaryType.Name,
+                    Type2 = variety.SecondaryType?.Name,
 
                     Atk = variety.BaseStats.Attack,
                     Spa = variety.BaseStats.SpecialAttack,
