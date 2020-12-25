@@ -1,19 +1,12 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PokeOneWeb.Configuration;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using PokeAPI;
-using PokeOneWeb.Data;
 using Ability = PokeOneWeb.Data.Entities.Ability;
-using EvolutionChain = PokeOneWeb.Data.Entities.EvolutionChain;
 using Item = PokeOneWeb.Data.Entities.Item;
 using Move = PokeOneWeb.Data.Entities.Move;
 using MoveDamageClass = PokeOneWeb.Data.Entities.MoveDamageClass;
@@ -145,43 +138,6 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 };
 
                 mappedTypes.Add(pokeApiName, type);
-            }
-
-            //Calculate damage relations and type combinations
-            foreach (var type in mappedTypes.Values)
-            {
-                foreach (var otherType in mappedTypes.Values)
-                {
-                    //Attack effectivity
-                    var attackingType = pokeApiTypes.Single(t => t.Name.Equals(type.PokeApiName));
-                    var defendingType = pokeApiTypes.Single(t => t.Name.Equals(otherType.PokeApiName));
-                    var attackEffectivity = PokeAPI.PokemonType.CalculateDamageMultiplier(attackingType, defendingType);
-
-                    var relation = new ElementalTypeRelation()
-                    {
-                        AttackingType = type,
-                        DefendingType = otherType,
-                        AttackEffectivity = (decimal)attackEffectivity
-                    };
-
-                    type.AttackingDamageRelations.Add(relation);
-                    otherType.DefendingDamageRelations.Add(relation);
-
-                    //Type combination
-                    //Double types, i.e. "Dragon Dragon" are reduced to "Dragon -null-".
-                    var combination = new ElementalTypeCombination()
-                    {
-                        PrimaryType = type,
-                        SecondaryType = otherType != type ? otherType : null
-                    };
-
-                    type.ElementalTypeCombinationsAsPrimaryType.Add(combination);
-
-                    if (combination.SecondaryType != null)
-                    {
-                        otherType.ElementalTypeCombinationsAsSecondaryType.Add(combination);
-                    }
-                }
             }
 
             return mappedTypes;
@@ -370,9 +326,6 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 mappedMove.PowerPoints = move.PP ?? 0;
                 mappedMove.Priority = move.Priority;
                 mappedMove.Effect = move.Effects.Single(effect => effect.Language.Name.Equals(_settings.Language, StringComparison.OrdinalIgnoreCase)).Effect;
-                mappedMove.Description = move.FlavorTextEntries.SingleOrDefault(flavourText =>
-                    flavourText.Language.Name.Equals(_settings.Language, StringComparison.OrdinalIgnoreCase) &&
-                    flavourText.VersionGroup.Name.Equals(_settings.FlavourTextVersionGroup, StringComparison.OrdinalIgnoreCase)).Text?.Replace("\n", " ");
             }
 
             return mappedMoves;

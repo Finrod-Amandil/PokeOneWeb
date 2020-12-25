@@ -42,6 +42,16 @@
     <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.Designer.cs" />
     <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.cs" />
     <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201219165146_add_builds_and_huntingconfigurations.cs" />
+    <Compile Remove="Data\Migrations\20201219165146_add_builds_and_huntingconfigurations.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201224140504_refactoring_extension.cs" />
+    <Compile Remove="Data\Migrations\20201224140504_refactoring_extension.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201224143255_refactoring_extension.cs" />
+    <Compile Remove="Data\Migrations\20201224143255_refactoring_extension.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201225061030_remove_cyclic_cascade_path_evolution.cs" />
+    <Compile Remove="Data\Migrations\20201225061030_remove_cyclic_cascade_path_evolution.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201225061304_remove_cyclic_cascade_path_evolution.cs" />
+    <Compile Remove="Data\Migrations\20201225061304_remove_cyclic_cascade_path_evolution.Designer.cs" />
     <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.cs" />
     <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.Designer.cs" />
   </ItemGroup>

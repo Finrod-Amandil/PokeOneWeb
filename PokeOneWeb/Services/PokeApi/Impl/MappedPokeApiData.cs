@@ -7,8 +7,6 @@ namespace PokeOneWeb.Services.PokeApi.Impl
     {
         public IDictionary<string, PokemonSpecies> PokemonSpecies { get; set; } = new Dictionary<string, PokemonSpecies>();
 
-        public IDictionary<int, EvolutionChain> EvolutionChains { get; set; } = new Dictionary<int, EvolutionChain>();
-
         public IDictionary<string, ElementalType> ElementalTypes { get; set; } = new Dictionary<string, ElementalType>();
 
         public IDictionary<string, Ability> Abilities { get; set; } = new Dictionary<string, Ability>();
