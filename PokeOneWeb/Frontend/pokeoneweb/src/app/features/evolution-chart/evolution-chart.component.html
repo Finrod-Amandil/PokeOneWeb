@@ -1,0 +1,99 @@
+<svg class="evolution-chart" [attr.width]="getTotalWidth()" [attr.height]="getTotalHeight()">
+    <defs>
+        <marker 
+            id="end_arrow" class="evolution-link-arrow"
+            [attr.markerWidth]="arrowLength" [attr.markerHeight]="arrowWidth" 
+            [attr.refX]="arrowLength - 1.5" [attr.refY]="arrowWidth / 2" orient="auto">
+            <polygon 
+                [attr.points]="'0 0,' + arrowLength + ' ' + (arrowWidth / 2) + ',0 ' + arrowWidth" >
+            </polygon>
+        </marker>
+        <marker 
+            id="start_arrow" class="evolution-link-arrow"
+            [attr.markerWidth]="arrowLength" [attr.markerHeight]="arrowWidth" 
+            [attr.refX]="1.5" [attr.refY]="arrowWidth / 2" orient="auto">
+            <polygon 
+                [attr.points]="arrowLength + ' 0,' + arrowLength + ' ' + arrowWidth + ',0 ' + (arrowWidth / 2)" >
+            </polygon>
+        </marker>
+    </defs>
+
+    <g class="evolution-links">
+        <g *ngFor="let link of evolutionLinks" class="evolution-link">
+            <polyline
+                *ngIf="!link.isReversible"
+                [attr.points]="link.x0 + ',' + link.y0 + ' ' + link.x1 + ',' + link.y1 + ' ' + link.x2 + ',' + link.y2 + ' ' + link.x3 + ',' + link.y3" 
+                marker-end="url(#end_arrow)">
+            </polyline>
+            <polyline
+                *ngIf="link.isReversible"
+                [attr.points]="link.x0 + ',' + link.y0 + ' ' + link.x1 + ',' + link.y1 + ' ' + link.x2 + ',' + link.y2 + ' ' + link.x3 + ',' + link.y3"
+                marker-end="url(#end_arrow)"
+                marker-start="url(#start_arrow)">
+            </polyline>
+            <line
+                class="evolution-link-unavailable"
+                *ngIf="!link.isAvailable"
+                [attr.x1]="link.unavailableX - 8"
+                [attr.y1]="link.unavailableY - 8"
+                [attr.x2]="link.unavailableX + 8"
+                [attr.y2]="link.unavailableY + 8">
+            </line>
+            <line
+                class="evolution-link-unavailable"
+                *ngIf="!link.isAvailable"
+                [attr.x1]="link.unavailableX - 8"
+                [attr.y1]="link.unavailableY + 8"
+                [attr.x2]="link.unavailableX + 8"
+                [attr.y2]="link.unavailableY - 8">
+            </line>
+            <foreignObject
+                [attr.x]="link.textX"
+                [attr.y]="link.textY"
+                [attr.width]="link.textWidth"
+                [attr.height]="link.textHeight">
+                <div class="evolution-link-trigger" xmlns="http://www.w3.org/1999/xhtml">
+                    <pokeone-resource-text [rawText]="link.evolutionTrigger"></pokeone-resource-text>
+                </div>
+            </foreignObject>
+        </g>
+    </g>
+
+    <g class="evolution-nodes">
+        <g *ngFor="let node of evolutionNodes" class="evolution-node">
+            <a (click)="navigate('/' + node.resourceName)"
+               [attr.href]="'/' + node.resourceName">
+                <circle 
+                    class="evolution-node-background"
+                    [attr.cx]="node.cx"
+                    [attr.cy]="node.cy"
+                    [attr.r]="node.r">
+                </circle>
+                <image 
+                    class="evolution-node-image"
+                    [attr.xlink:href]="'./assets/img/sprites/pokemon/medium/' + node.spriteName"
+                    [attr.x]="node.cx - node.r"
+                    [attr.y]="node.cy - node.r"
+                    [attr.width]="baseSize"
+                    [attr.height]="baseSize">
+                </image>
+                <foreignObject
+                    [attr.x]="node.cx - baseSize"
+                    [attr.y]="node.cy + node.r"
+                    [attr.width]="2 * baseSize"
+                    [attr.height]="verticalSpacing">
+                    <div class="evolution-node-text" xmlns="http://www.w3.org/1999/xhtml">
+                        <p>{{node.name}}</p>
+                        <pokeone-type-badge 
+                            [typeName]="node.type1">
+                        </pokeone-type-badge>
+                        <pokeone-type-badge 
+                            *ngIf="node.type2"
+                            [typeName]="node.type2">
+                        </pokeone-type-badge>
+                    </div>
+                </foreignObject>
+            </a>
+        </g>
+    </g>
+</svg>

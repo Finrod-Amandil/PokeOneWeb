@@ -1,1 +1,528 @@
-<p>{{pokemonName}}</p>
+<div id="content_title_container">
+    <div id="content_title">
+        {{model ? model.name : pokemonName}}
+    </div>
+</div>
+
+<div id="content_main_container">
+<div *ngIf="!model">Loading...</div>
+<div *ngIf="model">
+
+    <h2 name="stats">Stats</h2>
+    <div class="no-table-container-outer">
+        <div class="no-table-container-inner">
+            <pokeone-advanced-stat-chart
+                [pokemon]="model"> 
+            </pokeone-advanced-stat-chart>
+        </div>
+    </div>
+
+    <h2 name="effective">Type defense</h2>
+    <table class="main-table" id="type_defense_table">
+        <thead>
+            <tr>
+                <th><p>4x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+                <th><p>2x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+                <th><p>1x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+                <th><p>0.5x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+                <th><p>0.25x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+                <th><p>0x</p><p class="type-defense-th-subtitle">damage taken</p></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(4)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(2)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(1)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(0.5)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(0.25)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+                <td>
+                    <pokeone-type-badge 
+                        *ngFor="let type of getDefenseEffectivities(0)" 
+                        [typeName]="type.typeName">
+                    </pokeone-type-badge>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2 name="evolution">Evolution</h2>
+    <div class="no-table-container-outer">
+        <div class="no-table-container-inner">
+            <pokeone-evolution-chart 
+                *ngIf="model.evolutions.length > 0"
+                [evolutions]="model.evolutions">
+            </pokeone-evolution-chart>
+            <p *ngIf="model.evolutions.length === 0"
+                class="empty">
+                This Pokémon does not evolve
+            </p>
+        </div>
+    </div>
+
+    <h2 name="abilities">Abilities</h2>
+    <table class="main-table" id="ability_table">
+        <thead>
+            <tr>
+                <th class="col-ability-slot">Slot</th>
+                <th class="col-ability-name">Name</th>
+                <th class="col-ability-effect">Effect</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col-ability-slot">
+                    Primary
+                </td>
+                <td class="col-ability-name">
+                    {{model.primaryAbility}}
+                </td>
+                <td class="col-ability-effect">
+                    <p>{{model.primaryAbilityEffect}}</p>
+                    <p *ngIf="model.primaryAbilityTurnsInto && model.primaryAbilityTurnsInto.length > 0"
+                        class="ability-turns-into">
+                        On Evolution, this ability turns into:
+                        <span *ngFor="let turnsInto of sortAbilityTurnsInto(model.primaryAbilityTurnsInto); let $last=last">
+                            {{turnsInto.abilityName}}&nbsp;(<a [routerLink]="'/' + turnsInto.pokemonResourceName">{{turnsInto.pokemonName}}</a>)<span *ngIf="!$last">, </span>
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-ability-slot">
+                    Secondary
+                </td>
+                <td class="col-ability-name">
+                    {{model.secondaryAbility ? model.secondaryAbility : "-"}}
+                </td>
+                <td class="col-ability-effect">
+                    <p>{{model.secondaryAbilityEffect}}</p>
+                    <p *ngIf="model.secondaryAbilityTurnsInto && model.secondaryAbilityTurnsInto.length > 0"
+                        class="ability-turns-into">
+                        On Evolution, this ability turns into:
+                        <span *ngFor="let turnsInto of sortAbilityTurnsInto(model.secondaryAbilityTurnsInto); let $last=last">
+                            {{turnsInto.abilityName}}&nbsp;(<a [routerLink]="'/' + turnsInto.pokemonResourceName">{{turnsInto.pokemonName}}</a>)<span *ngIf="!$last">, </span>
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-ability-slot">
+                    Hidden
+                </td>
+                <td class="col-ability-name">
+                    {{model.hiddenAbility ? model.hiddenAbility : "-"}}
+                </td>
+                <td class="col-ability-effect">
+                    <p>{{model.hiddenAbilityEffect}}</p>
+                    <p *ngIf="model.hiddenAbilityTurnsInto && model.hiddenAbilityTurnsInto.length > 0"
+                        class="ability-turns-into">
+                        On Evolution, this ability turns into:
+                        <span *ngFor="let turnsInto of sortAbilityTurnsInto(model.hiddenAbilityTurnsInto); let $last=last">
+                            {{turnsInto.abilityName}}&nbsp;(<a [routerLink]="'/' + turnsInto.pokemonResourceName">{{turnsInto.pokemonName}}</a>)<span *ngIf="!$last">, </span>
+                        </span>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 name="spawns">Spawns</h2>
+    <div *ngIf="model.spawns.length === 0" class="no-table-container-outer">
+        <div class="no-table-container-inner">
+            <p
+                class="empty">
+                This Pokémon does not have any known spawns in PokéOne.
+            </p>
+        </div>
+    </div>
+    <table *ngIf="model.spawns.length > 0" class="main-table table-compact" id="spawn_table">
+        <thead>
+            <tr>
+                <th class="col-pokemon" colspan="2">
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Pokemon && spawnsSortDirection == 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByPokemon(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Pokemon</div>
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Pokemon && spawnsSortDirection == -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByPokemon(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-pokemon" colspan="2">
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Location && spawnsSortDirection == 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByLocation(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Location</div>
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Location && spawnsSortDirection == -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByLocation(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-pokemon">
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.SpawnType && spawnsSortDirection == 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsBySpawnType(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Method</div>
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.SpawnType && spawnsSortDirection == -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsBySpawnType(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-season">Season</th>
+                <th class="col-time">Time</th>
+                <th class="col-pokemon">
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Rarity && spawnsSortDirection == 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByRarity(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Rarity</div>
+                    <div 
+                        [ngClass]="
+                            (spawnsSortedByColumn == spawnsColumn.Rarity && spawnsSortDirection == -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortSpawnsByRarity(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-syncable">
+                    <div class="has-tooltip">
+                        <img src="./assets/img/sprites/pokemon/small/63.png" />
+                        <span class="tooltip">Synchronize possible?</span>
+                    </div>
+                    
+                </th>
+                <th class="col-event">
+                    <div class="has-tooltip">
+                        <i class="material-icons md-24">date_range</i>
+                        <span class="tooltip">Event-exclusive spawn</span>
+                    </div>
+                </th>
+                <th class="col-notes">Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let spawn of model.spawns">
+                <td class="col-sprite">
+                    <a [routerLink]="'/'+spawn.pokemonResourceName">
+                        <img *ngIf="spawn.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + spawn.spriteName" />
+                    </a>
+                </td>
+                <td class="col-pokemon">
+                    <a [routerLink]="'/'+spawn.pokemonResourceName">{{spawn.pokemonName}}</a>
+                </td>
+                <td class="col-region" [style]="'background-color: ' + spawn.regionColor">
+                    {{spawn.regionName}}
+                </td>
+                <td class="col-location">
+                    <a [routerLink]="'/'+spawn.locationResourceName">{{spawn.locationName}}</a>
+                </td>
+                <td class="col-method" [style]="'background-color: ' + spawn.spawnTypeColor">
+                    {{spawn.spawnType}}
+                </td>
+                <td class="col-season">
+                    <pokeone-time-badge [times]="spawn.seasons"></pokeone-time-badge>
+                </td>
+                <td class="col-time">
+                    <pokeone-time-badge [times]="spawn.times"></pokeone-time-badge>
+                </td>
+                <td class="col-rarity">
+                    {{spawn.rarityString}}
+                </td>
+                <td class="col-syncable" [ngClass]="
+                {
+                    'sync-true': spawn.isSyncable,
+                    'sync-false': !spawn.isSyncable
+                }">
+                    <i *ngIf="spawn.isSyncable" class="material-icons md-24">check</i>
+                    <i *ngIf="!spawn.isSyncable" class="material-icons md-24">clear</i>
+                </td>
+                <td class="col-event" [ngClass]="{ 'availability-event': spawn.isEvent }">
+                    <div *ngIf="spawn.isEvent" class="has-tooltip">
+                        <i class="material-icons md-24">grade</i>
+                        <span class="tooltip">{{spawn.eventName}}<br />({{spawn.eventDateRange}})</span>
+                    </div>
+                    
+                </td>
+                <td class="col-notes">
+                    {{spawn.notes}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 name="moves">Learnset</h2>
+    <div *ngIf="availableLearnableMoves.length === 0" class="no-table-container-outer">
+        <div class="no-table-container-inner">
+            <p
+                class="empty">
+                This Pokémon does not have any known learnable moves in PokéOne.
+            </p>
+        </div>
+    </div>
+    <table *ngIf="availableLearnableMoves.length > 0" class="main-table table-compact" id="learnset_table">
+        <thead>
+            <tr>
+                <th class="col-move-name">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Name && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByName(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Name</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Name && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByName(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-move-type">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Type && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByType(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Type</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Type && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByType(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-move-class">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Class && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByClass(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Cat.</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Class && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByClass(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-power">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Power && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByPower(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Pow.</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Power && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByPower(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-accuracy">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Accuracy && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByAccuracy(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">Acc.</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.Accuracy && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByAccuracy(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-power-points">
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.PowerPoints && movesSortDirection === 1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByPowerPoints(1)"
+                        class="table-header-sort">⮝</div>
+                    <div class="table-header-label">PP</div>
+                    <div 
+                        [ngClass]="
+                            (movesSortedByColumn === movesColumn.PowerPoints && movesSortDirection === -1) ? 
+                            'sorted' : 'unsorted'" 
+                        (click)="sortMovesByPowerPoints(-1)"
+                        class="table-header-sort">⮟</div>
+                </th>
+                <th class="col-move-effect">Effect</th>
+                <th class="col-move-learn-methods">Learn methods</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let move of availableLearnableMoves; let i = index">
+                <td class="col-move-name">
+                    {{move.name}}
+                </td>
+                <td class="col-move-type">
+                    <pokeone-type-badge [typeName]="move.type"></pokeone-type-badge>
+                </td>
+                <td class="col-move-class">
+                    <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
+                </td>
+                <td [style]="move.attackPower !== 0 ? 
+                    'background-color: hsl(' + getHueForMoveStrength(move) + ',100%,70%); color: black;' : ''" 
+                    class="col-power"
+                    [ngClass]="{'stab-power': hasStab(move)}">
+                    <p>{{move.attackPower !== 0 ? move.attackPower : '-'}}</p>
+                    <p *ngIf="hasStab(move)" class="stab">{{(move.attackPower * 1.5).toFixed()}}</p>
+                    <p *ngIf="hasStab(move)" class="stab stab-label">(STAB)</p>
+                </td>
+                <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'" 
+                    class="col-accuracy">
+                    {{move.accuracy}}
+                </td>
+                <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
+                    class="col-power-points">
+                    {{move.powerPoints}}
+                </td>
+                <td class="col-move-effect" (mouseover)="hoverMoveDescription(i)" (mouseout)="hoverMoveDescription(-1)">
+                    <div *ngIf="i !== moveHoverIndex">
+                        {{getAbbreviatedMoveDescription(move)}}
+                    </div>
+                    <div *ngIf="i === moveHoverIndex">
+                        {{move.effectDescription}}
+                    </div>
+                </td>
+                <td class="col-move-learn-methods">
+                    <div *ngFor="let learnMethod of move.learnMethods">
+                        <div 
+                            *ngIf="learnMethod.isAvailable" 
+                            [ngClass]="{'has-tooltip': learnMethod.description}" 
+                            class="learnmethod-available nobr">
+                            <p><i class="material-icons">check</i>{{learnMethod.learnMethodName}}</p>
+                            <span *ngIf="learnMethod.description" class="tooltip">
+                                {{learnMethod.description}}<br />{{learnMethod.price}}
+                            </span>
+                        </div>
+                        <div *ngIf="!learnMethod.isAvailable" class="learnmethod-unavailable nobr">
+                            <p><i class="material-icons ">clear</i>{{learnMethod.learnMethodName}}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-container *ngIf="unavailableLearnableMoves.length > 0">
+    <h3 name="unavailable_moves">Unavailable moves</h3>
+    <p class="subtitle">Moves which this Pokémon can learn in other games, but are currently unavailable for this Pokémon in PokéOne</p>
+    <table class="main-table table-compact" id="unavailable_moves_table">
+        <thead>
+            <tr>
+                <th class="col-move-name">Name</th>
+                <th class="col-move-type">Type</th>
+                <th class="col-move-class">Cat.</th>
+                <th class="col-power">Pow.</th>
+                <th class="col-accuracy">Acc.</th>
+                <th class="col-power-points">PP</th>
+                <th class="col-move-effect">Effect</th>
+                <th class="col-move-learn-methods">Learn methods</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let move of unavailableLearnableMoves; let i = index">
+                <td class="col-move-name">
+                    {{move.name}}
+                </td>
+                <td class="col-move-type">
+                    <pokeone-type-badge [typeName]="move.type"></pokeone-type-badge>
+                </td>
+                <td class="col-move-class">
+                    <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
+                </td>
+                <td [style]="move.attackPower !== 0 ? 
+                    'background-color: hsl(' + getHueForMoveStrength(move) + ',100%,70%); color: black;' : ''" 
+                    class="col-power"
+                    [ngClass]="{'stab-power': hasStab(move)}">
+                    <p>{{move.attackPower !== 0 ? move.attackPower : '-'}}</p>
+                    <p *ngIf="hasStab(move)" class="stab">{{(move.attackPower * 1.5).toFixed()}}</p>
+                    <p *ngIf="hasStab(move)" class="stab stab-label">(STAB)</p>
+                </td>
+                <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'" 
+                    class="col-accuracy">
+                    {{move.accuracy}}
+                </td>
+                <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
+                    class="col-power-points">
+                    {{move.powerPoints}}
+                </td>
+                <td class="col-move-effect" (mouseover)="hoverMoveDescription(i)" (mouseout)="hoverMoveDescription(-1)">
+                    <div *ngIf="i !== moveHoverIndex">
+                        {{getAbbreviatedMoveDescription(move)}}
+                    </div>
+                    <div *ngIf="i === moveHoverIndex">
+                        {{move.effectDescription}}
+                    </div>
+                </td>
+                <td class="col-move-learn-methods">
+                    <div *ngFor="let learnMethod of move.learnMethods">
+                        <div 
+                            *ngIf="learnMethod.isAvailable" 
+                            [ngClass]="{'has-tooltip': learnMethod.description}" 
+                            class="learnmethod-available nobr">
+                            <p><i class="material-icons">check</i>{{learnMethod.learnMethodName}}</p>
+                            <span *ngIf="learnMethod.description" class="tooltip">
+                                {{learnMethod.description}}<br />{{learnMethod.price}}
+                            </span>
+                        </div>
+                        <div *ngIf="!learnMethod.isAvailable" class="learnmethod-unavailable nobr">
+                            <p><i class="material-icons ">clear</i>{{learnMethod.learnMethodName}}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </ng-container>
+</div>
+</div>
