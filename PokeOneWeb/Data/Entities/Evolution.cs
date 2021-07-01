@@ -30,5 +30,10 @@ namespace PokeOneWeb.Data.Entities
         public bool IsAvailable { get; set; }
 
         public bool DoInclude { get; set; }
+
+        public override string ToString()
+        {
+            return BasePokemonVariety.Name + " --> " + EvolvedPokemonVariety.Name;
+        }
     }
 }

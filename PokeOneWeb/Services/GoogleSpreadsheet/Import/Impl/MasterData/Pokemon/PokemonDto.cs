@@ -4,6 +4,8 @@
     {
         public int PokedexNumber { get; set; }
 
+        public int SortIndex { get; set; }
+
         public string PokemonSpeciesName { get; set; }
 
         public string PokemonVarietyName { get; set; }
@@ -83,5 +85,7 @@
         public string PokemonVarietyPokeApiName { get; set; }
 
         public string PokemonFormPokeApiName { get; set; }
+
+        public string Notes { get; set; }
     }
 }

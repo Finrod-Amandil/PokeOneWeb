@@ -87,5 +87,12 @@ namespace PokeOneWeb.Data.Entities
         public string SerebiiUrl { get; set; }
 
         public string PokemonDbUrl { get; set; }
+
+        public string Notes { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace PokeOneWeb.Data.Entities
         public TimeOfDay TimeOfDay { get; set; }
         public int? TimeOfDayId { get; set; }
 
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public int StartHour { get; set; }
+        public int EndHour { get; set; }
     }
 }

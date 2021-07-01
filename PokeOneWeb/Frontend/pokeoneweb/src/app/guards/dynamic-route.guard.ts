@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { EntityTypeService } from '../../services/entity-type.service';
 import { IEntityTypeModel } from '../../models/entity-type.model';
-import { EntityType } from '../../models/entity-type.enum';
+import { EntityType } from '../../models/enums/entity-type.enum';
 import { PokemonDetailComponent } from '../features/pokemon-detail/pokemon-detail.component';
 import { LocationDetailComponent } from '../features/location-detail/location-detail.component';
 import { ItemDetailComponent } from '../features/item-detail/item-detail.component';

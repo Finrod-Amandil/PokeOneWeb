@@ -7,7 +7,9 @@ namespace PokeOneWeb.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
@@ -43,6 +45,7 @@ namespace PokeOneWeb.Data
         public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
         public DbSet<Nature> Natures { get; set; }
         public DbSet<Stats> Stats { get; set; }
+        public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
 
         public DbSet<LearnableMoveApi> LearnableMoveApis { get; set; }
 
@@ -142,7 +145,7 @@ namespace PokeOneWeb.Data
 
             builder.Entity<Evolution>()
                 .HasOne(e => e.BasePokemonSpecies)
-                .WithMany()
+                .WithMany(s => s.Evolutions)
                 .HasForeignKey(e => e.BasePokemonSpeciesId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
@@ -293,10 +296,6 @@ namespace PokeOneWeb.Data
 
             builder.Entity<MoveDamageClass>()
                 .HasIndex(d => d.Name)
-                .IsUnique();
-
-            builder.Entity<MoveLearnMethod>()
-                .HasIndex(l => l.Name)
                 .IsUnique();
         }
     }

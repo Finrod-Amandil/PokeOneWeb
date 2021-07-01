@@ -1,0 +1,189 @@
+<div class="stat-input-col stat-input-col-1">
+    <h4>Pokémon</h4>
+    <ng-select 
+        *ngIf="pokemonChoosable"
+        [id]="'input_stat_pokemon_' + index"
+        [(ngModel)]="model.pokemon"
+        (change)="onPokemonChanged()"
+        placeholder="Select..."
+        [virtualScroll]="true"
+        [clearable]="false">
+        <ng-option *ngFor="let pokemonName of pokemonNames" [value]="pokemonName">{{pokemonName.name}}</ng-option>
+    </ng-select>
+    <p *ngIf="!pokemonChoosable">
+        {{model.pokemon.name}}
+    </p>
+    <img 
+        *ngIf="model.pokemon && model.pokemon.spriteName" 
+        [src]="'./assets/img/sprites/pokemon/medium/' + model.pokemon.spriteName" />
+</div>
+
+<div class="stat-input-col stat-input-col-2">
+    <h4>General</h4>
+    <div>
+        <label [for]="'input_stat_level_' + index">Level: </label>
+        <input 
+            [(ngModel)]="model.level" 
+            (input)="onSelectionChanged()"
+            [id]="'input_stat_level_' + index" 
+            class="text-input"
+            type="number"
+            value="model.level"
+            min="minLevel"
+            max="maxLevel">
+    </div>
+    <div>
+        <label [for]="'input_stat_nature_' + index">Nature: </label>
+        <ng-select 
+            [id]="'input_stat_nature_' + index"
+            [items]="natures"
+            [(ngModel)]="model.nature"
+            (change)="onSelectionChanged()"
+            bindLabel="name"
+            placeholder="None">
+            <ng-template
+                ng-option-tmp
+                let-item="item">
+                <div>
+                    {{item.name}} <span>{{item.effect}}</span>
+                </div>
+           </ng-template>
+        </ng-select>
+    </div>
+    <div>
+        <label [for]="'input_stat_item_' + index">Item (with stat change): </label>
+        <ng-select 
+            [id]="'input_stat_item_' + index"
+            class="input-stat-item"
+            [items]="itemBoosts"
+            [(ngModel)]="model.item"
+            (change)="onSelectionChanged()"
+            bindLabel="itemName"
+            placeholder="None">
+            <ng-template
+                ng-option-tmp
+                let-item="item">
+                <div class="item-option">
+                    <p class="item-option-title">{{item.itemName}}</p>
+                    <p class="item-option-description">{{item.itemEffect}}</p>
+                </div>
+           </ng-template>
+        </ng-select>
+    </div>
+</div>
+
+<div class="stat-input-col stat-input-col-3">
+    <h4>Effort Values (EV)</h4>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_atk_' + index">ATK</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_atk_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.atk"
+            (valueChange)="onEvValueChanged(stat.Atk, $event)">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_spa_' + index">SPA</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_spa_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.spa"
+            (valueChange)="onEvValueChanged(stat.Spa, $event)">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_def_' + index">DEF</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_def_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.def"
+            (valueChange)="onEvValueChanged(stat.Def, $event)">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_spd_' + index">SPD</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_spd_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.spd"
+            (valueChange)="onEvValueChanged(stat.Spd, $event)">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_spe_' + index">SPE</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_spe_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.spe"
+            (valueChange)="onEvValueChanged(stat.Spe, $event)">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_ev_hp_' + index">HP</label>
+        <pokeone-slider-input
+            [id]="'input_stat_ev_hp_' + index"
+            [min]="minEv" [max]="maxEv"
+            [value]="model.ev.hp"
+            (valueChange)="onEvValueChanged(stat.Hp, $event)">
+        </pokeone-slider-input>
+    </div>
+</div>
+
+<div class="stat-input-col stat-input-col-4">
+    <h4>Individual Values (IV)</h4>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_atk_' + index">ATK</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_atk_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.atk"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_spa_' + index">SPA</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_spa_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.spa"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_def_' + index">DEF</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_def_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.def"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_spd_' + index">SPD</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_spd_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.spd"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_spe_' + index">SPE</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_spe_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.spe"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+    <div class="slider-container">
+        <label [for]="'input_stat_iv_hp_' + index">HP</label>
+        <pokeone-slider-input
+            [id]="'input_stat_iv_hp_' + index"
+            [min]="minIv" [max]="maxIv"
+            [(value)]="model.iv.hp"
+            (valueChange)="onSelectionChanged()">
+        </pokeone-slider-input>
+    </div>
+</div>

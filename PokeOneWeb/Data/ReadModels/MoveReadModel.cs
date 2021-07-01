@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.ReadModels
 {
@@ -21,7 +20,5 @@ namespace PokeOneWeb.Data.ReadModels
         public int PowerPoints { get; set; }
 
         public string EffectDescription { get; set; }
-
-        public List<LearnMethodReadModel> LearnMethods { get; set; }
     }
 }

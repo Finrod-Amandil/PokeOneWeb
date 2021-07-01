@@ -32,6 +32,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Regions
                 var region = new Region
                 {
                     Name = dto.RegionName,
+                    Color = dto.Color,
                     IsEventRegion = dto.IsEventRegion,
                 };
 

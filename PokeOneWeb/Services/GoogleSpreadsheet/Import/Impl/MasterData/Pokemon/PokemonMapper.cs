@@ -119,7 +119,8 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Pokemon
                         PokeOneCommunityUrl = dto.PokeoneCommunityUrl,
                         PokemonShowDownUrl = dto.PokemonShowdownUrl,
                         SerebiiUrl = dto.SerebiiUrl,
-                        PokemonDbUrl = dto.PokemonDbUrl
+                        PokemonDbUrl = dto.PokemonDbUrl,
+                        Notes = dto.Notes
                     };
                     _varieties.Add(dto.PokemonVarietyName, variety);
                 }
@@ -127,6 +128,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Pokemon
                 pokemonForms.Add(new PokemonForm
                 {
                     PokeApiName = dto.PokemonFormPokeApiName,
+                    SortIndex = dto.SortIndex,
                     Name = dto.PokemonFormName,
                     PokemonVariety = variety,
                     Availability = availability,

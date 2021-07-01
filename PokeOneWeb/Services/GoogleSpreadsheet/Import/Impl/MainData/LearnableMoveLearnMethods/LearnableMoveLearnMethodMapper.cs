@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMoveLearnMethods
@@ -9,6 +11,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMo
     public class LearnableMoveLearnMethodMapper : ISpreadsheetEntityMapper<LearnableMoveLearnMethodDto, LearnableMove>
     {
         private readonly ILogger<LearnableMoveLearnMethodMapper> _logger;
+        private readonly ApplicationDbContext _dbContext;
 
         private Dictionary<string, Currency> _currencies;
         private List<MoveLearnMethod> _learnMethods;
@@ -18,8 +21,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMo
         private Dictionary<string, Item> _items;
         private List<LearnableMove> _learnableMoves;
 
-        public LearnableMoveLearnMethodMapper(ILogger<LearnableMoveLearnMethodMapper> logger) {
+        public LearnableMoveLearnMethodMapper(
+            ILogger<LearnableMoveLearnMethodMapper> logger,
+            ApplicationDbContext dbContext)
+        {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IEnumerable<LearnableMove> Map(IEnumerable<LearnableMoveLearnMethodDto> dtos)
@@ -30,7 +37,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMo
             }
 
             _currencies = new Dictionary<string, Currency>();
-            _learnMethods = new List<MoveLearnMethod>();
+
+            //Load potential existing learn methods from previous sheet imports to avoid duplicates
+            _learnMethods = _dbContext.MoveLearnMethods
+                .Include(lm => lm.Locations)
+                .ThenInclude(lml => lml.Location)
+                .ToList();
+
             _pokemonVarieties = new Dictionary<string, PokemonVariety>();
             _moves = new Dictionary<string, Move>();
             _locations = new Dictionary<string, Location>();
@@ -130,6 +143,15 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMo
                         l.Locations.Any(loc => 
                             string.Equals(loc.NpcName, tutorName, StringComparison.Ordinal)))
                         .ToList();
+
+                //If learn method is Tutor, but no name is given --> Move is unavailable move tutor without locations
+                if (tutorName is null)
+                {
+                    matchingLearnMethods = _learnMethods
+                        .Where(l => l.Name.Equals(learnMethodName, StringComparison.Ordinal))
+                        .Where(l => !l.Locations.Any())
+                        .ToList();
+                }
             }
 
             if (matchingLearnMethods.Count > 1)

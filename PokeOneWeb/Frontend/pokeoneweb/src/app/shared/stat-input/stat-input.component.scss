@@ -1,0 +1,85 @@
+label, p, h4 {
+    color: var(--light-gray);
+}
+
+label {
+    margin-bottom: 0px;
+    margin-top: 4px;
+}
+
+h4 {
+    font-size: 20px;
+    text-shadow: 1px 1px black;
+}
+
+.stat-input-col {
+    margin-right: 20px;
+}
+
+.stat-input-col:last-child {
+    margin-right: 0px;
+}
+
+.stat-input-col-1 {
+    min-width: 250px;
+}
+
+.stat-input-col-1 img {
+    width: 96px;
+    height: 96px;
+}
+
+.stat-input-col-2 {
+    min-width: 200px;
+}
+
+.stat-input-col-2 input.text-input {
+    margin-left: 5px;
+}
+
+.stat-input-col-2 div {
+    margin-bottom: 6px;
+}
+
+.input-stat-item ::ng-deep ng-dropdown-panel {
+    width: 500px;
+}
+
+.input-stat-item ::ng-deep div.ng-option {
+    white-space: normal;
+}
+
+.item-option p {
+    margin: 0;
+}
+
+.item-option-title {
+    font-weight: 700;
+    color: black;
+}
+
+.item-option-description {
+    font-weight: 300;
+    color: var(--medium-dark-gray);
+    font-size: 12px;
+}
+
+.stat-input-col-3,
+.stat-input-col-4 {
+    flex-grow: 1;
+}
+
+.stat-input-col-3 label,
+.stat-input-col-4 label {
+    width: 30px;
+    margin-right: 5px;
+}
+
+.slider-container {
+    display: flex;
+}
+
+.slider-container pokeone-slider-input {
+    display: flex;
+    flex-grow: 1;
+}

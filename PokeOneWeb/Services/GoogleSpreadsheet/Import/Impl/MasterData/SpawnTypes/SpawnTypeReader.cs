@@ -9,7 +9,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.SpawnType
 
         protected override SpawnTypeDto ReadRow(RowData rowData)
         {
-            if (rowData is null || rowData.Values.Count < 3)
+            if (rowData is null || rowData.Values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
@@ -17,8 +17,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.SpawnType
             var value = new SpawnTypeDto
             {
                 Name = rowData.Values[0]?.EffectiveValue?.StringValue,
-                IsSyncable = rowData.Values[1]?.EffectiveValue?.BoolValue ?? false,
-                IsInfinite = rowData.Values[2]?.EffectiveValue?.BoolValue ?? false
+                SortIndex = (int?)rowData.Values[1]?.EffectiveValue?.NumberValue ?? 0,
+                IsSyncable = rowData.Values[2]?.EffectiveValue?.BoolValue ?? false,
+                IsInfinite = rowData.Values[3]?.EffectiveValue?.BoolValue ?? false,
+                Color = rowData.Values[4]?.EffectiveValue?.StringValue
             };
 
             if (value.Name is null)

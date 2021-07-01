@@ -1,0 +1,12 @@
+<mat-slider
+    [value]="value"
+    (input)="sliderDragged($event)"
+    [min]="min"
+    [max]="max">
+</mat-slider>
+<input 
+    [value]="value"
+    (input)="inputFieldTyped($event)"
+    type="number"
+    [min]="min"
+    [max]="max"/>

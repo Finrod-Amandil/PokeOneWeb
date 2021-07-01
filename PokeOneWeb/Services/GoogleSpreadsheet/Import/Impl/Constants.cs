@@ -11,10 +11,16 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
         {
             "1V9MnS7U8YQwEja4QI59_-DV5zG0JJXrl6If7zR6PMYE",
             "1lrK8DVf8LNV0wsG-SQLzURgpW8a1B4CTFa_8gtS9tys",
+            "1k-PtJlUTzjlITzlonDqkPJbIaXFeOYy27B1y-Ukwggw",
+            "1aSZhojRfsNo0H__jUyX7JhZUUkNCaO8J6MXZQyNCRDU",
+            "1EvF_jDtOWJscFw3-Olq8HT5ZMLzuLRzJIOXHLSCIy98",
+            "12DwR9eHQjs1NWn-HDgfTQ_ASxCXaAR_rT0xcAxtupUA",
+            "11yzl-ABf3QneaBECYfVeu_E-5Vu0YybHpgYx3Y4sbjk",
         };
 
         //Master data
         public static readonly string SHEET_PREFIX_ITEMS = "items";
+        public static readonly string SHEET_PREFIX_ITEM_STAT_BOOSTS = "item_stat_boosts";
         public static readonly string SHEET_PREFIX_ABILITIES = "abilities";
         public static readonly string SHEET_PREFIX_ELEMENTAL_TYPES = "elemental_types";
         public static readonly string SHEET_PREFIX_ELEMENTAL_TYPE_RELATIONS = "elemental_type_relations";

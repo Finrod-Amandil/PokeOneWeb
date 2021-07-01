@@ -12,19 +12,25 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private readonly IReadModelMapper<MoveReadModel> _moveReadModelMapper;
         private readonly IReadModelMapper<SimpleLearnableMoveReadModel> _simpleLearnableMoveReadModelMapper;
         private readonly IReadModelMapper<EntityTypeReadModel> _entityTypeReadModelMapper;
+        private readonly IReadModelMapper<ItemStatBoostReadModel> _itemStatBoostReadModelMapper;
+        private readonly IReadModelMapper<NatureReadModel> _natureReadModelMapper;
 
         public ReadModelUpdateService(
             ReadModelDbContext readModelDbContext,
             IReadModelMapper<PokemonReadModel> pokemonReadModelMapper,
             IReadModelMapper<MoveReadModel> moveReadModelMapper,
             IReadModelMapper<SimpleLearnableMoveReadModel> simpleLearnableMoveReadModelMapper,
-            IReadModelMapper<EntityTypeReadModel> entityTypeReadModelMapper)
+            IReadModelMapper<EntityTypeReadModel> entityTypeReadModelMapper,
+            IReadModelMapper<ItemStatBoostReadModel> itemStatBoostReadModelMapper,
+            IReadModelMapper<NatureReadModel> natureReadModelMapper)
         {
             _readModelDbContext = readModelDbContext;
             _pokemonReadModelMapper = pokemonReadModelMapper;
             _moveReadModelMapper = moveReadModelMapper;
             _simpleLearnableMoveReadModelMapper = simpleLearnableMoveReadModelMapper;
             _entityTypeReadModelMapper = entityTypeReadModelMapper;
+            _itemStatBoostReadModelMapper = itemStatBoostReadModelMapper;
+            _natureReadModelMapper = natureReadModelMapper;
         }
 
         public void UpdateReadModel()
@@ -59,6 +65,18 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             _readModelDbContext.EntityTypeReadModels.AddRange(entityTypeReadModels);
             _readModelDbContext.SaveChanges();
             entityTypeTransaction.Commit();
+
+            var itemStatBoostReadModels = _itemStatBoostReadModelMapper.MapFromDatabase();
+            using var itemStatBoostTransaction = _readModelDbContext.Database.BeginTransaction();
+            _readModelDbContext.ItemStatBoostReadModels.AddRange(itemStatBoostReadModels);
+            _readModelDbContext.SaveChanges();
+            itemStatBoostTransaction.Commit();
+
+            var natureReadModels = _natureReadModelMapper.MapFromDatabase();
+            using var natureTransaction = _readModelDbContext.Database.BeginTransaction();
+            _readModelDbContext.NatureReadModels.AddRange(natureReadModels);
+            _readModelDbContext.SaveChanges();
+            natureTransaction.Commit();
         }
     }
 }

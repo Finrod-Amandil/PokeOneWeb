@@ -10,6 +10,8 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string ResourceName { get; set; }
 
+        public int SortIndex { get; set; }
+
         public int PokedexNumber { get; set; }
 
         public string Name { get; set; }
@@ -63,8 +65,9 @@ namespace PokeOneWeb.Data.ReadModels
         public int HpEv { get; set; }
         public List<AttackEffectivityReadModel> DefenseAttackEffectivities { get; set; }
         public List<SpawnReadModel> Spawns { get; set; }
-        public List<MoveReadModel> LearnableMoves { get; set; }
-        public List<MoveReadModel> UnavailableLearnableMoves { get; set; }
+        public List<EvolutionReadModel> Evolutions { get; set; }
+        public List<LearnableMoveReadModel> LearnableMoves { get; set; }
         public List<BuildReadModel> Builds { get; set; }
+        public string Notes { get; set; }
     }
 }

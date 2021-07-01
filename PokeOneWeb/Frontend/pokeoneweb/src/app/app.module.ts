@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,13 @@ import { NotFoundComponent } from './features/not-found/not-found.component';
 import { LocationDetailComponent } from './features/location-detail/location-detail.component';
 import { ItemDetailComponent } from './features/item-detail/item-detail.component';
 import { LoadingComponent } from './features/loading/loading.component';
+import { TimeSeasonBadgeComponent } from './shared/time-season-badge/time-season-badge.component';
+import { EvolutionChartComponent } from './features/evolution-chart/evolution-chart.component';
+import { ResourceTextComponent } from './shared/resource-text/resource-text.component';
+import { ScrollToTopComponent } from './shared/scroll-to-top/scroll-to-top.component';
+import { AdvancedStatChartComponent } from './features/advanced-stat-chart/advanced-stat-chart.component';
+import { SliderInputComponent } from './shared/slider-input/slider-input.component';
+import { StatInputComponent } from './shared/stat-input/stat-input.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +42,14 @@ import { LoadingComponent } from './features/loading/loading.component';
     NotFoundComponent,
     LocationDetailComponent,
     ItemDetailComponent,
-    LoadingComponent
+    LoadingComponent,
+    TimeSeasonBadgeComponent,
+    EvolutionChartComponent,
+    ResourceTextComponent,
+    ScrollToTopComponent,
+    AdvancedStatChartComponent,
+    SliderInputComponent,
+    StatInputComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +59,8 @@ import { LoadingComponent } from './features/loading/loading.component';
     BrowserAnimationsModule,
     VirtualScrollerModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

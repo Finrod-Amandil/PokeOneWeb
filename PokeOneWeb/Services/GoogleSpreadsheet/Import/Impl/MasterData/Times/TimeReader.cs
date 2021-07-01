@@ -9,19 +9,23 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Times
 
         protected override TimeDto ReadRow(RowData rowData)
         {
-            if (rowData is null || rowData.Values.Count < 6)
+            if (rowData is null || rowData.Values.Count < 10)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
             var value = new TimeDto
             {
-                SeasonName = rowData.Values[0]?.EffectiveValue?.StringValue,
-                SeasonAbbreviation = rowData.Values[1]?.EffectiveValue?.StringValue,
-                TimeName = rowData.Values[2]?.EffectiveValue?.StringValue,
-                TimeAbbreviation = rowData.Values[3]?.EffectiveValue?.StringValue,
-                StartHour = (int?) rowData.Values[4]?.EffectiveValue?.NumberValue ?? 0,
-                EndHour = (int?) rowData.Values[5]?.EffectiveValue?.NumberValue ?? 0
+                SeasonSortIndex = (int?)rowData.Values[0]?.EffectiveValue?.NumberValue ?? 0,
+                SeasonName = rowData.Values[1]?.EffectiveValue?.StringValue,
+                SeasonAbbreviation = rowData.Values[2]?.EffectiveValue?.StringValue,
+                SeasonColor = rowData.Values[3]?.EffectiveValue?.StringValue,
+                TimeSortIndex = (int?)rowData.Values[4]?.EffectiveValue?.NumberValue ?? 0,
+                TimeName = rowData.Values[5]?.EffectiveValue?.StringValue,
+                TimeAbbreviation = rowData.Values[6]?.EffectiveValue?.StringValue,
+                TimeColor = rowData.Values[7]?.EffectiveValue?.StringValue,
+                StartHour = (int?) rowData.Values[8]?.EffectiveValue?.NumberValue ?? 0,
+                EndHour = (int?) rowData.Values[9]?.EffectiveValue?.NumberValue ?? 0
             };
 
             if (value.SeasonName is null)

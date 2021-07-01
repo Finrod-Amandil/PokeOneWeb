@@ -9,6 +9,8 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public int SortIndex { get; set; }
+
         public string PokeApiName { get; set; }
 
         [Required]

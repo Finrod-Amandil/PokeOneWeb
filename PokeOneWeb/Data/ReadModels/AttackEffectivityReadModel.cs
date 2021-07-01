@@ -8,6 +8,8 @@ namespace PokeOneWeb.Data.ReadModels
         public int Id { get; set; }
 
         public string TypeName { get; set; }
-        public int Effectivity { get; set; }
+
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal Effectivity { get; set; }
     }
 }
