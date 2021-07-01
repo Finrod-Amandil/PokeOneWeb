@@ -1,11 +1,6 @@
-import { IBaseModel } from './base.model'
+import { IPokemonNameModel, PokemonNameModel } from "./pokemon-name.model";
 
-export interface IListPokemonModel extends IBaseModel<IListPokemonModel> {
-    id: number;
-    resourceName: string;
-    pokedexNumber: number;
-    name: string;
-    spriteName: string;
+export interface IBasicPokemonModel extends IPokemonNameModel {
     type1: string;
     type2: string;
 
@@ -24,8 +19,6 @@ export interface IListPokemonModel extends IBaseModel<IListPokemonModel> {
     hiddenAbility: string;
     hiddenAbilityEffect: string;
 
-    availability: string;
-
     pvpTier: string;
     pvpTierSortIndex: number;
 
@@ -39,14 +32,11 @@ export interface IListPokemonModel extends IBaseModel<IListPokemonModel> {
     pokemonShowDownUrl: string;
     serebiiUrl: string;
     pokemonDbUrl: string;
+
+    notes: string;
 }
 
-export class ListPokemonModel implements IListPokemonModel {
-    id = 0;
-    resourceName = '';
-    pokedexNumber = 0;
-    name = '';
-    spriteName = '';
+export class BasicPokemonModel extends PokemonNameModel implements IBasicPokemonModel {
     type1 = '';
     type2 = '';
 
@@ -74,10 +64,12 @@ export class ListPokemonModel implements IListPokemonModel {
     isFullyEvolved = false;
     isMega = false;
 
-    smogonUrl= '';
+    smogonUrl = '';
     bulbapediaUrl = '';
     pokeOneCommunityUrl = '';
     pokemonShowDownUrl = '';
     serebiiUrl = '';
     pokemonDbUrl = '';
+
+    notes = '';
 }
