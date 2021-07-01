@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PokemonListService } from '../../../services/pokemonlist.service';
-import { IListPokemonModel, ListPokemonModel } from '../../../models/listpokemon.model';
 import { PvpTierModel } from '../../../models/pvp-tier.model';
 import { GenerationModel } from '../../../models/generation.model';
 import { MovesService } from '../../../services/moves.service';
-import { LearnableMovesService } from '../../../services/learnable-moves-service';
 import { 
   SMOGON_BASE_URL, 
   BULBAPEDIA_BASE_URL, 
@@ -19,6 +16,10 @@ import {
 } from '../../common/string.constants';
 import { PokemonListColumn } from './pokemon-list-column.enum'
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { IBasicPokemonModel } from 'src/models/basic-pokemon.model';
+import { PokemonService } from 'src/services/pokemon.service';
+import { IMoveNameModel } from 'src/models/move-name.model';
 
 @Component({
   selector: 'pokeone-pokemon-list',
@@ -26,8 +27,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent implements OnInit {
-  public listPokemonModels: ListPokemonModel[] = [];
-  public moves: string[] = [];
+  public pokemonModels: IBasicPokemonModel[] = [];
+  public moves: IMoveNameModel[] = [];
 
   public maxAtk: number = 1;
   public maxSpa: number = 1;
@@ -72,27 +73,27 @@ export class PokemonListComponent implements OnInit {
   public selectedMaxHp: any = 1;
   public selectedMinTotal: any = 0;
   public selectedMaxTotal: any = 1;
-  public selectedMove1Option1: string | null = null;
-  public selectedMove1Option2: string | null = null;
-  public selectedMove1Option3: string | null = null;
-  public selectedMove1Option4: string | null = null;
-  public selectedMove2Option1: string | null = null;
-  public selectedMove2Option2: string | null = null;
-  public selectedMove2Option3: string | null = null;
-  public selectedMove2Option4: string | null = null;
-  public selectedMove3Option1: string | null = null;
-  public selectedMove3Option2: string | null = null;
-  public selectedMove3Option3: string | null = null;
-  public selectedMove3Option4: string | null = null;
-  public selectedMove4Option1: string | null = null;
-  public selectedMove4Option2: string | null = null;
-  public selectedMove4Option3: string | null = null;
-  public selectedMove4Option4: string | null = null;
+  public selectedMove1Option1: IMoveNameModel | null = null;
+  public selectedMove1Option2: IMoveNameModel | null = null;
+  public selectedMove1Option3: IMoveNameModel | null = null;
+  public selectedMove1Option4: IMoveNameModel | null = null;
+  public selectedMove2Option1: IMoveNameModel | null = null;
+  public selectedMove2Option2: IMoveNameModel | null = null;
+  public selectedMove2Option3: IMoveNameModel | null = null;
+  public selectedMove2Option4: IMoveNameModel | null = null;
+  public selectedMove3Option1: IMoveNameModel | null = null;
+  public selectedMove3Option2: IMoveNameModel | null = null;
+  public selectedMove3Option3: IMoveNameModel | null = null;
+  public selectedMove3Option4: IMoveNameModel | null = null;
+  public selectedMove4Option1: IMoveNameModel | null = null;
+  public selectedMove4Option2: IMoveNameModel | null = null;
+  public selectedMove4Option3: IMoveNameModel | null = null;
+  public selectedMove4Option4: IMoveNameModel | null = null;
   public selectedGenerations: GenerationModel[] = [];
   public showMegaEvolutions: boolean = true;
   public showFullyEvolvedOnly: boolean = false;
 
-  public displayedPokemonModels: ListPokemonModel[] = [];
+  public displayedPokemonModels: IBasicPokemonModel[] = [];
   public filteredPokemonByMoveset: string[] = [];
 
   public smogonBaseUrl: string = SMOGON_BASE_URL;
@@ -110,27 +111,28 @@ export class PokemonListComponent implements OnInit {
   private timeOutDuration: number = 500;
 
   constructor(
-    private pokemonListService: PokemonListService,
+    private pokemonService: PokemonService,
+    private titleService: Title,
     private movesService: MovesService,
-    private learnableMovesService: LearnableMovesService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.pokemonListService
-      .getAll()
+    this.titleService.setTitle("Pokédex - Unofficial PokéOne Guide")
+    this.pokemonService
+      .getAllBasic()
       .subscribe(response => {
-        this.listPokemonModels = response as IListPokemonModel[];
-        this.displayedPokemonModels = this.listPokemonModels.slice();
-        this.filteredPokemonByMoveset = this.listPokemonModels.map(p => p.name);
+        this.pokemonModels = response as IBasicPokemonModel[];
+        this.displayedPokemonModels = this.pokemonModels.slice();
+        this.filteredPokemonByMoveset = this.pokemonModels.map(p => p.name);
         this.calculateGlobals();
       });
 
     this.movesService
       .getAllMoveNames()
       .subscribe(response => {
-        this.moves = response as string[];
-      })
+        this.moves = response as IMoveNameModel[];
+      });
   }
 
   public onFilterChangedDelayed() {
@@ -143,7 +145,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   public onFilterChanged() {
-    this.displayedPokemonModels = this.listPokemonModels.slice();
+    this.displayedPokemonModels = this.pokemonModels.slice();
 
     if (this.searchTerm) {
       this.displayedPokemonModels = this.displayedPokemonModels.filter(p => 
@@ -246,17 +248,17 @@ export class PokemonListComponent implements OnInit {
       !this.selectedMove2Option1 && !this.selectedMove2Option2 && !this.selectedMove2Option3 && !this.selectedMove2Option4 &&
       !this.selectedMove3Option1 && !this.selectedMove3Option2 && !this.selectedMove3Option3 && !this.selectedMove3Option4 &&
       !this.selectedMove4Option1 && !this.selectedMove4Option2 && !this.selectedMove4Option3 && !this.selectedMove4Option4) {
-        this.filteredPokemonByMoveset = this.listPokemonModels.map(p => p.name);
+        this.filteredPokemonByMoveset = this.pokemonModels.map(p => p.name);
         this.onFilterChanged();
         return;
       }
 
-    this.learnableMovesService
+    this.pokemonService
       .getAllPokemonForMoveSet(
-        this.selectedMove1Option1, this.selectedMove1Option2, this.selectedMove1Option3, this.selectedMove1Option4,
-        this.selectedMove2Option1, this.selectedMove2Option2, this.selectedMove2Option3, this.selectedMove2Option4,
-        this.selectedMove3Option1, this.selectedMove3Option2, this.selectedMove3Option3, this.selectedMove3Option4,
-        this.selectedMove4Option1, this.selectedMove4Option2, this.selectedMove4Option3, this.selectedMove4Option4
+        this.selectedMove1Option1?.name, this.selectedMove1Option2?.name, this.selectedMove1Option3?.name, this.selectedMove1Option4?.name,
+        this.selectedMove2Option1?.name, this.selectedMove2Option2?.name, this.selectedMove2Option3?.name, this.selectedMove2Option4?.name,
+        this.selectedMove3Option1?.name, this.selectedMove3Option2?.name, this.selectedMove3Option3?.name, this.selectedMove3Option4?.name,
+        this.selectedMove4Option1?.name, this.selectedMove4Option2?.name, this.selectedMove4Option3?.name, this.selectedMove4Option4?.name
       )
       .subscribe(response => {
         console.log(response);
@@ -265,7 +267,7 @@ export class PokemonListComponent implements OnInit {
       })
   }
 
-  public trackById(index: number, item: IListPokemonModel): number {
+  public trackById(index: number, item: IBasicPokemonModel): number {
     return item.id;
   }
 
@@ -403,7 +405,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   private calculateGlobals() {
-    this.listPokemonModels.forEach(pokemon => {
+    this.pokemonModels.forEach(pokemon => {
       if (this.maxAtk < pokemon.atk) this.maxAtk = pokemon.atk;
       if (this.maxSpa < pokemon.spa) this.maxSpa = pokemon.spa;
       if (this.maxDef < pokemon.def) this.maxDef = pokemon.def;

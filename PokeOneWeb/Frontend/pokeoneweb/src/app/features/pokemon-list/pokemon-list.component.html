@@ -1,4 +1,12 @@
-<table id="search_table">
+<div id="content_title_container">
+    <div id="content_title">
+        Pokédex
+    </div>
+</div>
+
+<div id="content_main_container">
+
+<table class="main-table" id="search_table">
     <thead>
         <tr>
             <th colspan="2">Search and filter</th>
@@ -13,7 +21,7 @@
                         [(ngModel)]="searchTerm" 
                         (input)="onFilterChangedDelayed()"
                         id="input_search" 
-                        class="inline" 
+                        class="inline text-input" 
                         type="text">
                 </div>
                 <div>
@@ -65,7 +73,7 @@
                                 <i class="material-icons md-24">grade</i>
                             </td>
                             <td>
-                                Event
+                                Event-exclusive
                             </td>
                             <td class="availability-explanation">
                                 The Pokémon was/is only obtainable during a certain time-limited event.
@@ -443,7 +451,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -456,7 +464,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -469,7 +477,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -482,7 +490,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                             </tr>
@@ -497,7 +505,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -510,7 +518,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -523,7 +531,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -536,7 +544,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                             </tr>
@@ -551,7 +559,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -564,7 +572,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -577,7 +585,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -590,7 +598,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                             </tr>
@@ -605,7 +613,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -618,7 +626,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -631,7 +639,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                                 <td>or</td>
@@ -644,7 +652,7 @@
                                         [virtualScroll]="true">
                                         <ng-option 
                                             *ngFor="let move of moves" 
-                                            [value]="move">{{move}}</ng-option>
+                                            [value]="move">{{move.name}}</ng-option>
                                     </ng-select>
                                 </td>
                             </tr>
@@ -704,12 +712,12 @@
     </tbody>
 </table>
 
-<p *ngIf="displayedPokemonModels.length > 0" class="pokemon-list-title">Showing {{displayedPokemonModels.length}} of {{listPokemonModels.length}} Pokémon</p>
+<p *ngIf="displayedPokemonModels.length > 0" class="pokemon-list-title">Showing {{displayedPokemonModels.length}} of {{pokemonModels.length}} Pokémon</p>
 
 <div *ngIf="displayedPokemonModels.length > 0" attr.style="height: calc({{scroll.viewPortInfo.maxScrollPosition}}px + 100vh + 200px)">
 <virtual-scroller #scroll [parentScroll]="scroll.window" [items]="displayedPokemonModels">
   
-<table id="pokemon_list">
+<table class="main-table" id="pokemon_list">
     <thead>
         <tr>
             <th class="col-availability"></th>
@@ -835,17 +843,17 @@
             {
                 'availability-obtainable': pokemon.availability === 'Obtainable',
                 'availability-unobtainable': pokemon.availability === 'Unobtainable',
-                'availability-event': pokemon.availability === 'Event',
+                'availability-event': pokemon.availability === 'Event-exclusive',
                 'availability-removed': pokemon.availability === 'Removed'
             }">
             <i *ngIf="pokemon.availability==='Obtainable'" class="material-icons md-24">check</i>
             <i *ngIf="pokemon.availability==='Unobtainable'" class="material-icons md-24">clear</i>
-            <i *ngIf="pokemon.availability==='Event'" class="material-icons md-24">grade</i>
+            <i *ngIf="pokemon.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
             <i *ngIf="pokemon.availability==='Removed'" class="material-icons md-24">delete_forever</i>
             </td>
             <td class="col-number">{{("" + pokemon.pokedexNumber).padStart(3, '0')}}</td>
             <td class="col-sprite">
-                <img *ngIf="pokemon.spriteName" [src]="'./assets/img/sprites/pokemon/' + pokemon.spriteName" />
+                <img *ngIf="pokemon.spriteName" [src]="'./assets/img/sprites/pokemon/medium/' + pokemon.spriteName" />
             </td>
             <td class="col-name">
                 {{pokemon.name}}
@@ -947,9 +955,12 @@
                     [maxValue]="maxTotal">
                 </pokeone-vertical-stat-bar>
             </td>
-            <td *ngIf="pokemon.pvpTier && pokemon.pvpTier !== 'Banned'" class="col-pvp-tier">{{pokemon.pvpTier}}</td>
-            <td *ngIf="pokemon.pvpTier === 'Banned'" class="col-pvp-tier pvp-banned">{{pokemon.pvpTier}}</td>
-            <td *ngIf="!pokemon.pvpTier" class="col-pvp-tier pvp-untiered">Untiered</td>
+            <td 
+                class="col-pvp-tier" 
+                [ngClass]="{
+                    'pvp-banned': pokemon.pvpTier === 'Banned', 
+                    'pvp-untiered': pokemon.pvpTier === 'Untiered'
+                }">{{pokemon.pvpTier}}</td>
             <td class="col-links">
                 <div *ngIf="pokemon.smogonUrl" class="favicon-container">
                     <a [href]="smogonBaseUrl + pokemon.smogonUrl" target="_blank">
@@ -1008,3 +1019,4 @@
 </div>
 
 <p *ngIf="displayedPokemonModels.length === 0" class="pokemon-list-empty">No Pokémon to display. Either no Pokémon matches your search criteria, or there was an error while loading the Pokémon data.</p>
+</div>
