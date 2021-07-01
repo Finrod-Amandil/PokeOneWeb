@@ -1,8 +1,12 @@
-import { IBaseModel } from './base.model'
+import { ILearnMethodModel } from './learn-method.model';
+import { IMoveModel, MoveModel } from './move.model';
 
-export interface ILearnableMoveModel extends IBaseModel<ILearnableMoveModel> {
-
+export interface ILearnableMoveModel extends IMoveModel {
+    isAvailable: boolean;
+    learnMethods: ILearnMethodModel[];
 }
 
-export class LearnableMoveModel implements ILearnableMoveModel {
+export class LearnableMoveModel extends MoveModel implements ILearnableMoveModel {
+    isAvailable = false;
+    learnMethods = [];
 }
