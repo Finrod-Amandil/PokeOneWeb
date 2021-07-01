@@ -44,8 +44,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Times
                 {
                     time = new TimeOfDay
                     {
+                        SortIndex = dto.TimeSortIndex,
                         Name = dto.TimeName,
-                        Abbreviation = dto.TimeAbbreviation
+                        Abbreviation = dto.TimeAbbreviation,
+                        Color = dto.TimeColor
                     };
                     _times.Add(dto.TimeName, time);
                 }
@@ -59,8 +61,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Times
                 {
                     season = new Season
                     {
+                        SortIndex = dto.SeasonSortIndex,
                         Name = dto.SeasonName,
-                        Abbreviation = dto.SeasonAbbreviation
+                        Abbreviation = dto.SeasonAbbreviation,
+                        Color = dto.SeasonColor
                     };
                     _seasons.Add(dto.SeasonName, season);
                 }
@@ -69,8 +73,8 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Times
                 {
                     Season = season,
                     TimeOfDay = time,
-                    StartTime = new DateTime(2000, 1, 1, dto.StartHour, 0, 0),
-                    EndTime = new DateTime(2000, 1, 1, dto.EndHour, 0, 0),
+                    StartHour = dto.StartHour,
+                    EndHour = dto.EndHour
                 };
             }
         }

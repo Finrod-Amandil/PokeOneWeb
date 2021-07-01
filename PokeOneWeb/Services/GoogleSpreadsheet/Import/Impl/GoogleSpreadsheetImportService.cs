@@ -18,6 +18,7 @@ using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ElementalType
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ElementalTypes;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Evolutions;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Items;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ItemStatBoosts;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Moves;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Natures;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Pokemon;
@@ -33,6 +34,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
         private readonly ISpreadsheetLoader _spreadsheetLoader;
 
         private readonly ISpreadsheetEntityImporter<ItemDto, Item> _itemImporter;
+        private readonly ISpreadsheetEntityImporter<ItemStatBoostDto, ItemStatBoost> _itemStatBoostImporter;
         private readonly ISpreadsheetEntityImporter<AbilityDto, Ability> _abilityImporter;
         private readonly ISpreadsheetEntityImporter<ElementalTypeDto, ElementalType> _elementalTypeImporter;
         private readonly ISpreadsheetEntityImporter<ElementalTypeRelationDto, ElementalTypeRelation> _elementalTypeRelationImporter;
@@ -60,6 +62,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             ISpreadsheetLoader spreadsheetLoader,
 
             ISpreadsheetEntityImporter<ItemDto, Item> itemImporter,
+            ISpreadsheetEntityImporter<ItemStatBoostDto, ItemStatBoost> itemStatBoostImporter,
             ISpreadsheetEntityImporter<AbilityDto, Ability> abilityImporter,
             ISpreadsheetEntityImporter<ElementalTypeDto, ElementalType> elementalTypeImporter,
             ISpreadsheetEntityImporter<ElementalTypeRelationDto, ElementalTypeRelation> elementalTypeRelationImporter,
@@ -85,6 +88,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             _dbContext = dbContext;
             _spreadsheetLoader = spreadsheetLoader;
             _itemImporter = itemImporter;
+            _itemStatBoostImporter = itemStatBoostImporter;
             _abilityImporter = abilityImporter;
             _elementalTypeImporter = elementalTypeImporter;
             _elementalTypeRelationImporter = elementalTypeRelationImporter;
@@ -127,6 +131,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             _pokemonImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
             _evolutionImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
             _spawnTypeImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
+            _itemStatBoostImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
 
             masterDataSpreadsheet = null;
             GC.Collect();

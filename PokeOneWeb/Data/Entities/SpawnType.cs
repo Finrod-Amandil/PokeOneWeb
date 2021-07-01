@@ -8,11 +8,15 @@ namespace PokeOneWeb.Data.Entities
     {
         public int Id { get; set; }
 
+        public int SortIndex { get; set; }
+
         [Required]
         public string Name { get; set; }
 
         public bool IsSyncable { get; set; }
 
         public bool IsInfinite { get; set; }
+
+        public string Color { get; set; }
     }
 }

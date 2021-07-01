@@ -1,24 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { IMoveModel } from 'src/models/move.model';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
+import { IMoveNameModel } from 'src/models/move-name.model';
+import { IMoveModel } from 'src/models/move.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class MovesService extends BaseService<IMoveModel> {
+export class MovesService extends BaseService {
     constructor (http: HttpClient) {
         super(http);
     }
 
     public getPathSegment(): string {
-        return 'GetAllMoves';
+        return 'move';
     }
 
-    public getAllMoveNames(): Observable<string[]> {
-        return this.http.get<string[]>(`${this.baseUrl}/GetAllMoveNames`, {
-            headers: this.httpHeaders
-        });
+    public getAll(): Observable<IMoveModel[]> {
+        return this.http.get<IMoveModel[]>(`${this.url}/getall`, this.httpOptions);
+    }
+
+    public getAllMoveNames(): Observable<IMoveNameModel[]> {
+        return this.http.get<IMoveNameModel[]>(`${this.url}/getallnames`, this.httpOptions);
     }
 }

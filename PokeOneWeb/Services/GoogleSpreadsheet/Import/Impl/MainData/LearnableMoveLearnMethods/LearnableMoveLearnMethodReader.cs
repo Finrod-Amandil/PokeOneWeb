@@ -11,18 +11,23 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMo
 {
     public class LearnableMoveLearnMethodReader : SpreadsheetEntityReader<LearnableMoveLearnMethodDto>
     {
-        private readonly List<TutorMove> _tutorMoves;
-        private readonly ISpreadsheetEntityReader<TutorMoveDto> _tutorMoveReader;
+        private readonly ApplicationDbContext _dbContext;
+        private List<TutorMove> _tutorMoves;
 
         public LearnableMoveLearnMethodReader(
             ILogger<LearnableMoveLearnMethodReader> logger, 
             ApplicationDbContext dbContext) : base(logger)
         {
-            _tutorMoves = dbContext.TutorMoves.ToList();
+            _dbContext = dbContext;
         }
 
         protected override LearnableMoveLearnMethodDto ReadRow(RowData rowData)
         {
+            if (_tutorMoves == null || !_tutorMoves.Any())
+            {
+                _tutorMoves = _dbContext.TutorMoves.ToList();
+            }
+
             if (rowData is null || rowData.Values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");

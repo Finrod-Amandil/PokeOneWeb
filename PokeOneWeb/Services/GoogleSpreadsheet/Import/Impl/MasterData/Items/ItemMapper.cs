@@ -59,6 +59,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Items
                     Effect = dto.Effect,
                     IsAvailable = dto.IsAvailable,
                     DoInclude = dto.DoInclude,
+                    SpriteName = dto.SpriteName,
                     BagCategory = bagCategory
                 };
             }

@@ -12,6 +12,8 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        public string Color { get; set; }
+
         public bool IsEventRegion { get; set; }
 
         [ForeignKey("EventId")]

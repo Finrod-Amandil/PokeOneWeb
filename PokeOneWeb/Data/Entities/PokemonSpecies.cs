@@ -22,5 +22,7 @@ namespace PokeOneWeb.Data.Entities
         [ForeignKey("DefaultVarietyId")]
         public PokemonVariety DefaultVariety { get; set; }
         public int? DefaultVarietyId { get; set; }
+
+        public List<Evolution> Evolutions { get; set; }
     }
 }

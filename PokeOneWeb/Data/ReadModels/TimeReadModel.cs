@@ -6,8 +6,10 @@ namespace PokeOneWeb.Data.ReadModels
     public class TimeReadModel
     {
         public int Id { get; set; }
+        public int SortIndex { get; set; }
         public string Abbreviation { get; set; }
         public string Name { get; set; }
+        public string Color { get; set; }
         public string Times { get; set; }
     }
 }

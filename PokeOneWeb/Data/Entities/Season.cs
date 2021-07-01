@@ -10,10 +10,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int Id { get; set; }
 
+        public int SortIndex { get; set; }
+
         [Required]
         public string Name { get; set; }
 
         [Required] 
         public string Abbreviation { get; set; }
+
+        public string Color { get; set; }
     }
 }

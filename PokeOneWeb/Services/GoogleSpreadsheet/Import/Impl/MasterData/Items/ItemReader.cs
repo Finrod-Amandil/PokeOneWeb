@@ -60,6 +60,11 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Items
                 value.Effect = rowData.Values[10]?.EffectiveValue?.StringValue;
             }
 
+            if (rowData.Values.Count > 11)
+            {
+                value.SpriteName = rowData.Values[11]?.EffectiveValue?.StringValue;
+            }
+
             return value;
         }
     }

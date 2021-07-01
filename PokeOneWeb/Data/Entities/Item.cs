@@ -38,5 +38,7 @@ namespace PokeOneWeb.Data.Entities
         public List<PlacedItem> PlacedItems { get; set; } = new List<PlacedItem>();
         public List<QuestItemReward> QuestRewardItems { get; set; } = new List<QuestItemReward>();
         public List<PokemonHeldItem> HeldItems { get; set; } = new List<PokemonHeldItem>();
+
+        public string SpriteName { get; set; }
     }
 }

@@ -32,8 +32,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.SpawnType
                 yield return new SpawnType
                 {
                     Name = dto.Name,
+                    SortIndex = dto.SortIndex,
                     IsSyncable = dto.IsSyncable,
-                    IsInfinite = dto.IsInfinite
+                    IsInfinite = dto.IsInfinite,
+                    Color = dto.Color
                 };
             }
         }

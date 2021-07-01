@@ -21,6 +21,7 @@ namespace PokeOneWeb.Data.ReadModels
         public List<NatureOptionReadModel> NatureOptions { get; set; }
         public string Ability { get; set; }
         public string AbilityDescription { get; set; }
+
         public int AtkEv { get; set; }
         public int SpaEv { get; set; }
         public int DefEv { get; set; }
