@@ -1,7 +1,6 @@
-import { IBaseModel } from './base.model'
-import { EntityType } from './entity-type.enum';
+import { EntityType } from './enums/entity-type.enum';
 
-export interface IEntityTypeModel extends IBaseModel<IEntityTypeModel> {
+export interface IEntityTypeModel {
     entityType: EntityType;
 }
 

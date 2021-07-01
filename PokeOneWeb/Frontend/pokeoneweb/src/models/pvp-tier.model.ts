@@ -1,6 +1,4 @@
-import { IBaseModel } from './base.model'
-
-export interface IPvpTierModel extends IBaseModel<IPvpTierModel> {
+export interface IPvpTierModel {
     id: number;
     name: string;
 }
