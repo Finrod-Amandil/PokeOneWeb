@@ -7,22 +7,22 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
-    [Table("Region")]
-    public class Region : IHashedEntity
+    [Table("Ability")]
+    public class MoveTutor : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
-            builder.Entity<Region>().HasIndexedHashes();
-            builder.Entity<Region>().HasIndex(r => r.Name).IsUnique();
+            builder.Entity<MoveTutor>().HasIndexedHashes();
+            builder.Entity<MoveTutor>().HasIndex(mt => mt.Name).IsUnique();
 
-            builder.Entity<Region>()
-                .HasOne(r => r.Event)
+            builder.Entity<MoveTutor>()
+                .HasOne(mt => mt.Location)
                 .WithMany()
-                .HasForeignKey(r => r.EventId)
+                .HasForeignKey(mt => mt.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 
-        [Key]
+        [Key] 
         public int Id { get; set; }
 
         //INDEXED
@@ -37,20 +37,18 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public bool IsEventRegion { get; set; }
+        public string PlacementDescription { get; set; }
 
-        public string Color { get; set; }
+        [ForeignKey("LocationId")]
+        public Location Location{ get; set; }
+        public int LocationId { get; set; }
 
-        [ForeignKey("EventId")]
-        public Event Event { get; set; }
-        public int? EventId { get; set; }
-
-        public List<LocationGroup> LocationGroups { get; set; } = new List<LocationGroup>();
+        public ICollection<MoveTutorMove> Moves { get; set; }
 
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name}@{Location.Name}";
         }
     }
 }

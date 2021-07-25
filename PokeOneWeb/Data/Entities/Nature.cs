@@ -1,18 +1,46 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
+using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("Nature")]
-    public class Nature
+    public class Nature : IHashedEntity
     {
+        public static void ConfigureForDatabase(ModelBuilder builder)
+        {
+            builder.Entity<Nature>().HasIndexedHashes();
+            builder.Entity<Nature>().HasIndex(n => n.Name).IsUnique();
+        }
+
+        [Key]
         public int Id { get; set; }
 
+        //INDEXED
+        [Required]
+        public string Hash { get; set; }
+
+        //INDEXED
+        [Required]
+        public string IdHash { get; set; }
+
+        //INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
-        [ForeignKey("StatBoostId")]
-        public Stats StatBoost { get; set; }
-        public int? StatBoostId { get; set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int SpecialAttack { get; set; }
+        public int SpecialDefense { get; set; }
+        public int Speed { get; set; }
+        public int HitPoints { get; set; }
+
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
