@@ -1,39 +1,119 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
+using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("PokemonVariety")]
-    public class PokemonVariety
+    public class PokemonVariety : IHashedEntity
     {
+        public static void ConfigureForDatabase(ModelBuilder builder)
+        {
+            builder.Entity<PokemonVariety>().HasIndexedHashes();
+            builder.Entity<PokemonVariety>().HasIndex(pv => pv.Name).IsUnique();
+            builder.Entity<PokemonVariety>().HasIndex(pv => pv.ResourceName).IsUnique();
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(v => v.PokemonSpecies)
+                .WithMany(s => s.Varieties)
+                .HasForeignKey(v => v.PokemonSpeciesId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.DefaultForm)
+                .WithMany()
+                .HasForeignKey(p => p.DefaultFormId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.PrimaryType)
+                .WithMany()
+                .HasForeignKey(p => p.PrimaryTypeId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.SecondaryType)
+                .WithMany()
+                .HasForeignKey(p => p.SecondaryTypeId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.PrimaryAbility)
+                .WithMany(a => a.PokemonVarietiesAsPrimaryAbility)
+                .HasForeignKey(p => p.PrimaryAbilityId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.SecondaryAbility)
+                .WithMany(a => a.PokemonVarietiesAsSecondaryAbility)
+                .HasForeignKey(p => p.SecondaryAbilityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.HiddenAbility)
+                .WithMany(a => a.PokemonVarietiesAsHiddenAbility)
+                .HasForeignKey(p => p.HiddenAbilityId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<PokemonVariety>()
+                .HasOne(p => p.PvpTier)
+                .WithMany()
+                .HasForeignKey(p => p.PvpTierId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        [Key]
         public int Id { get; set; }
+
+        //INDEXED
+        [Required]
+        public string Hash { get; set; }
+
+        //INDEXED
+        [Required]
+        public string IdHash { get; set; }
 
         [Required]
         public string ResourceName { get; set; }
 
-        public string PokeApiName { get; set; }
-
         [Required]
         public string Name { get; set; }
+
+        public string PokeApiName { get; set; }
+        public bool DoInclude { get; set; }
+        public bool IsMega { get; set; }
+        public bool IsFullyEvolved { get; set; }
+        public int Generation { get; set; }
+        public int CatchRate { get; set; }
+
+        //BASE STATS
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int SpecialAttack { get; set; }
+        public int SpecialDefense { get; set; }
+        public int Speed { get; set; }
+        public int HitPoints { get; set; }
+
+        //EV Yields
+        public int AttackEv { get; set; }
+        public int DefenseEv { get; set; }
+        public int SpecialAttackEv { get; set; }
+        public int SpecialDefenseEv { get; set; }
+        public int SpeedEv { get; set; }
+        public int HitPointsEv { get; set; }
+
+        public string Notes { get; set; }
 
         [ForeignKey("PokemonSpeciesId")]
         public PokemonSpecies PokemonSpecies { get; set; }
         public int PokemonSpeciesId { get; set; }
 
-        public List<PokemonForm> Forms { get; set; }
-
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
-        public int? DefaultFormId { get; set; }
-
-        [ForeignKey("BaseStatsId")]
-        public Stats BaseStats { get; set; }
-        public int? BaseStatsId { get; set; }
-
-        [ForeignKey("EvYieldId")]
-        public Stats EvYield { get; set; }
-        public int? EvYieldId { get; set; }
+        public int DefaultFormId { get; set; }
 
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
@@ -45,7 +125,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
-        public int? PrimaryAbilityId { get; set; }
+        public int PrimaryAbilityId { get; set; }
 
         [ForeignKey("SecondaryAbilityId")]
         public Ability SecondaryAbility { get; set; }
@@ -55,44 +135,21 @@ namespace PokeOneWeb.Data.Entities
         public Ability HiddenAbility { get; set; }
         public int? HiddenAbilityId { get; set; }
 
-        public List<PokemonHeldItem> HeldItems { get; set; } = new List<PokemonHeldItem>();
-        public List<LearnableMove> LearnableMoves { get; set; } = new List<LearnableMove>();
-
         [ForeignKey("PvpTierId")]
         public PvpTier PvpTier { get; set; }
-        public int? PvpTierId { get; set; }
+        public int PvpTierId { get; set; }
 
-        public bool DoInclude { get; set; }
 
-        public bool IsFullyEvolved { get; set; }
-
-        public bool IsMega { get; set; }
-
-        public int Generation { get; set; }
-
-        public int CatchRate { get; set; }
-
-        public List<HuntingConfiguration> HuntingConfigurations { get; set; }
-
+        public List<PokemonForm> Forms { get; set; }
+        public List<LearnableMove> LearnableMoves { get; set; } = new List<LearnableMove>();
         public List<Build> Builds { get; set; }
+        public List<HuntingConfiguration> HuntingConfigurations { get; set; }
+        public List<PokemonVarietyUrl> Urls { get; set; }
 
-        public string SmogonUrl { get; set; }
-
-        public string BulbapediaUrl { get; set; }
-
-        public string PokeOneCommunityUrl { get; set; }
-
-        public string PokemonShowDownUrl { get; set; }
-
-        public string SerebiiUrl { get; set; }
-
-        public string PokemonDbUrl { get; set; }
-
-        public string Notes { get; set; }
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name} ({ResourceName})";
         }
     }
 }

@@ -1,12 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("SpawnOpportunity")]
     public class SpawnOpportunity
     {
-        public static readonly string UNKNOWN_COMMONALITY = "?";
+        public static void ConfigureForDatabase(ModelBuilder builder)
+        {
+            builder.Entity<SpawnOpportunity>()
+                .HasOne(so => so.PokemonSpawn)
+                .WithMany(s => s.SpawnOpportunities)
+                .HasForeignKey(so => so.PokemonSpawnId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<SpawnOpportunity>()
+                .HasOne(so => so.Season)
+                .WithMany()
+                .HasForeignKey(so => so.SeasonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SpawnOpportunity>()
+                .HasOne(so => so.TimeOfDay)
+                .WithMany()
+                .HasForeignKey(so => so.TimeOfDayId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        [Key]
         public int Id { get; set; }
 
         [ForeignKey("PokemonSpawnId")]
@@ -21,11 +43,10 @@ namespace PokeOneWeb.Data.Entities
         public TimeOfDay TimeOfDay { get; set; }
         public int TimeOfDayId { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
-        public decimal? SpawnProbability { get; set; }
 
-        public int? EncounterCount { get; set; }
-
-        public string SpawnCommonality { get; set; }
+        public override string ToString()
+        {
+            return $"{PokemonSpawn} @ {Season} {TimeOfDay}";
+        }
     }
 }
