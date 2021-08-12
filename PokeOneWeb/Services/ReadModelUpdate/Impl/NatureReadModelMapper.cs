@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
-using Z.EntityFramework.Plus;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 {
@@ -17,8 +15,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
         public IEnumerable<NatureReadModel> MapFromDatabase()
         {
-            var natures = _dbContext.Natures
-                .IncludeOptimized(n => n.StatBoost);
+            var natures = _dbContext.Natures;
 
             foreach (var nature in natures)
             {
@@ -26,12 +23,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 {
                     Name = nature.Name,
                     Effect = CommonFormatHelper.GetNatureEffect(nature),
-                    Atk = (int)nature.StatBoost.Attack,
-                    Spa = (int)nature.StatBoost.SpecialAttack,
-                    Def = (int)nature.StatBoost.Defense,
-                    Spd = (int)nature.StatBoost.SpecialDefense,
-                    Spe = (int)nature.StatBoost.Speed,
-                    Hp = (int)nature.StatBoost.HitPoints
+                    Atk = nature.Attack,
+                    Spa = nature.SpecialAttack,
+                    Def = nature.Defense,
+                    Spd = nature.SpecialDefense,
+                    Spe = nature.Speed,
                 };
             }
         }

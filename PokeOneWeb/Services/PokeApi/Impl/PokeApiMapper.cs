@@ -30,7 +30,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
 
         public MappedPokeApiData MapPokeApiData(PokeApiData data)
         {
-            var mappedData = new MappedPokeApiData();
+            /*var mappedData = new MappedPokeApiData();
 
             //mappedData.LearnableMoveApis = MapLearnableMoves(data);
 
@@ -71,7 +71,6 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 mappedSpecies.Varieties = mappedVarieties.Values.ToList();
             }
 
-            /*
             //Evolution chains (separate loop as all species need to be already mapped)
             foreach (var species in data.PokemonSpecies.Values)
             {
@@ -109,10 +108,10 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             catch (Exception e)
             {
                 e.ToString();
-            }*/
+            }
             
-
-            return mappedData;
+            return mappedData;*/
+            return null;
         }
 
         private IDictionary<string, ElementalType> MapTypes(IEnumerable<PokeAPI.PokemonType> pokeApiTypes)
@@ -230,7 +229,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             return mappedForms;
         }
 
-        private Stats GetBaseStats(IEnumerable<PokeAPI.PokemonStats> stats)
+        /*private Stats GetBaseStats(IEnumerable<PokeAPI.PokemonStats> stats)
         {
             return new Stats()
             {
@@ -254,7 +253,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
                 SpecialDefense = stats.SingleOrDefault(s => s.Stat.Name.Equals(_settings.StatSpecialDefense, StringComparison.OrdinalIgnoreCase)).Effort,
                 Speed = stats.SingleOrDefault(s => s.Stat.Name.Equals(_settings.StatSpeed, StringComparison.OrdinalIgnoreCase)).Effort
             };
-        }
+        }*/
 
         private Ability GetAbility(PokeAPI.Ability ability, MappedPokeApiData mappedData)
         {
@@ -358,7 +357,7 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             return mappedItems;
         }
 
-        private IEnumerable<LearnableMoveApi> MapLearnableMoves(PokeApiData pokeApiData)
+        /*private IEnumerable<LearnableMoveApi> MapLearnableMoves(PokeApiData pokeApiData)
         {
             var varieties = _dbContext.PokemonVarieties.Include(v => v.PokemonSpecies).ToList();
             var moves = _dbContext.Moves.ToList();
@@ -553,6 +552,6 @@ namespace PokeOneWeb.Services.PokeApi.Impl
             }
 
             return mappedLearnableMoves;
-        }
+        }*/
     }
 }
