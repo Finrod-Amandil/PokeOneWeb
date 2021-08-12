@@ -10,71 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20200603151101_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603151101_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603155359_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603155359_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603155741_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603155741_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603164810_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603164810_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603165230_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603165230_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603165425_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603165425_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200603165722_CreateP1Entities.cs" />
-    <Compile Remove="Data\Migrations\20200603165722_CreateP1Entities.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200613201939_additional_abbility_flags.cs" />
-    <Compile Remove="Data\Migrations\20200613201939_additional_abbility_flags.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200613202225_additional_ability_flags.cs" />
-    <Compile Remove="Data\Migrations\20200613202225_additional_ability_flags.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200614081550_fix_evolutionchain_fk_typo.cs" />
-    <Compile Remove="Data\Migrations\20200614081550_fix_evolutionchain_fk_typo.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200614081932_fix_evolutionchain_typo_1.cs" />
-    <Compile Remove="Data\Migrations\20200614081932_fix_evolutionchain_typo_1.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200614082508_fix_evolutionchain_typo_2.cs" />
-    <Compile Remove="Data\Migrations\20200614082508_fix_evolutionchain_typo_2.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200614083019_fix_evolutionchain_typo_2.cs" />
-    <Compile Remove="Data\Migrations\20200614083019_fix_evolutionchain_typo_2.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200617155316_evolution_stage.cs" />
-    <Compile Remove="Data\Migrations\20200617155316_evolution_stage.Designer.cs" />
-    <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.cs" />
-    <Compile Remove="Data\Migrations\20200910105350_location_placeditems_navigation_property.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.cs" />
-    <Compile Remove="Data\Migrations\20201107073020_more_pokemon_data.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201219165146_add_builds_and_huntingconfigurations.cs" />
-    <Compile Remove="Data\Migrations\20201219165146_add_builds_and_huntingconfigurations.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201224140504_refactoring_extension.cs" />
-    <Compile Remove="Data\Migrations\20201224140504_refactoring_extension.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201224143255_refactoring_extension.cs" />
-    <Compile Remove="Data\Migrations\20201224143255_refactoring_extension.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201225061030_remove_cyclic_cascade_path_evolution.cs" />
-    <Compile Remove="Data\Migrations\20201225061030_remove_cyclic_cascade_path_evolution.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201225061304_remove_cyclic_cascade_path_evolution.cs" />
-    <Compile Remove="Data\Migrations\20201225061304_remove_cyclic_cascade_path_evolution.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201225152825_pokemonspecies_evolutions.cs" />
-    <Compile Remove="Data\Migrations\20201225152825_pokemonspecies_evolutions.Designer.cs" />
-    <Compile Remove="Data\Migrations\20201225153031_pokemonspecies_evolutions.cs" />
-    <Compile Remove="Data\Migrations\20201225153031_pokemonspecies_evolutions.Designer.cs" />
-    <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.cs" />
-    <Compile Remove="Data\Migrations\ReadModel\20201216142748_add_simplelearnablemove.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.49.0.2168" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.52.0.2371" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="5.1.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\ReadModel\" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="5.2.4" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
-using Z.EntityFramework.Plus;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 {
@@ -20,7 +19,6 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             var itemStatBoosts = _dbContext.ItemStatBoosts
                 .Include(i => i.Item)
-                .Include(i => i.StatBoost)
                 .Include(i => i.RequiredPokemon)
                 .ThenInclude(rp => rp.PokemonVariety);
 
@@ -35,12 +33,12 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                         ItemName = itemStatBoost.Item.Name,
                         ItemResourceName = itemStatBoost.Item.ResourceName,
                         ItemEffect = itemStatBoost.Item.Effect,
-                        AtkBoost = itemStatBoost.StatBoost.Attack,
-                        DefBoost = itemStatBoost.StatBoost.Defense,
-                        SpaBoost = itemStatBoost.StatBoost.SpecialAttack,
-                        SpdBoost = itemStatBoost.StatBoost.SpecialDefense,
-                        SpeBoost = itemStatBoost.StatBoost.Speed,
-                        HpBoost = itemStatBoost.StatBoost.HitPoints,
+                        AtkBoost = itemStatBoost.AttackBoost,
+                        DefBoost = itemStatBoost.DefenseBoost,
+                        SpaBoost = itemStatBoost.SpecialAttackBoost,
+                        SpdBoost = itemStatBoost.SpecialDefenseBoost,
+                        SpeBoost = itemStatBoost.SpeedBoost,
+                        HpBoost = itemStatBoost.HitPointsBoost,
                         HasRequiredPokemon = false,
                         RequiredPokemonResourceName = null,
                         RequiredPokemonName = null
@@ -55,12 +53,12 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                         ItemName = itemStatBoost.Item.Name,
                         ItemResourceName = itemStatBoost.Item.ResourceName,
                         ItemEffect = itemStatBoost.Item.Effect,
-                        AtkBoost = itemStatBoost.StatBoost.Attack,
-                        DefBoost = itemStatBoost.StatBoost.Defense,
-                        SpaBoost = itemStatBoost.StatBoost.SpecialAttack,
-                        SpdBoost = itemStatBoost.StatBoost.SpecialDefense,
-                        SpeBoost = itemStatBoost.StatBoost.Speed,
-                        HpBoost = itemStatBoost.StatBoost.HitPoints,
+                        AtkBoost = itemStatBoost.AttackBoost,
+                        DefBoost = itemStatBoost.DefenseBoost,
+                        SpaBoost = itemStatBoost.SpecialAttackBoost,
+                        SpdBoost = itemStatBoost.SpecialDefenseBoost,
+                        SpeBoost = itemStatBoost.SpeedBoost,
+                        HpBoost = itemStatBoost.HitPointsBoost,
                         HasRequiredPokemon = true,
                         RequiredPokemonResourceName = requiredPokemon.PokemonVariety.ResourceName,
                         RequiredPokemonName = requiredPokemon.PokemonVariety.Name

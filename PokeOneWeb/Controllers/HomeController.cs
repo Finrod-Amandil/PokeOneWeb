@@ -63,7 +63,7 @@ namespace PokeOneWeb.Controllers
                 e.ToString();
             }
 
-            await Task.Run(() => _readModelUpdateService.UpdateReadModel());
+            //await Task.Run(() => _readModelUpdateService.UpdateReadModel());
 
             return Ok();
         }

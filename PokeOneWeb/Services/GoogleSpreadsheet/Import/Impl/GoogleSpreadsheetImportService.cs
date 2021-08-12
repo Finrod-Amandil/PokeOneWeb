@@ -1,162 +1,184 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using PokeOneWeb.Configuration;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Builds;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.HuntingConfigurations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMoveLearnMethods;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Locations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.PlacedItems;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Regions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Spawns;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.TutorMoves;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Abilities;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Availabilities;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Currencies;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ElementalTypeRelations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ElementalTypes;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Evolutions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Items;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.ItemStatBoosts;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Moves;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Natures;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Pokemon;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.PvpTiers;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.SpawnTypes;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MasterData.Times;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 {
     public class GoogleSpreadsheetImportService : IGoogleSpreadsheetImportService
     {
+        private readonly ILogger<GoogleSpreadsheetImportService> _logger;
+        private readonly IOptions<GoogleSpreadsheetsSettings> _settings;
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISpreadsheetLoader _spreadsheetLoader;
-
-        private readonly ISpreadsheetEntityImporter<ItemDto, Item> _itemImporter;
-        private readonly ISpreadsheetEntityImporter<ItemStatBoostDto, ItemStatBoost> _itemStatBoostImporter;
-        private readonly ISpreadsheetEntityImporter<AbilityDto, Ability> _abilityImporter;
-        private readonly ISpreadsheetEntityImporter<ElementalTypeDto, ElementalType> _elementalTypeImporter;
-        private readonly ISpreadsheetEntityImporter<ElementalTypeRelationDto, ElementalTypeRelation> _elementalTypeRelationImporter;
-        private readonly ISpreadsheetEntityImporter<MoveDto, Move> _moveImporter;
-        private readonly ISpreadsheetEntityImporter<NatureDto, Nature> _natureImporter;
-        private readonly ISpreadsheetEntityImporter<TimeDto, SeasonTimeOfDay> _timeImporter;
-        private readonly ISpreadsheetEntityImporter<CurrencyDto, Currency> _currencyImporter;
-        private readonly ISpreadsheetEntityImporter<AvailabilityDto, PokemonAvailability> _availabilityImporter;
-        private readonly ISpreadsheetEntityImporter<PvpTierDto, PvpTier> _pvpTierImporter;
-        private readonly ISpreadsheetEntityImporter<PokemonDto, PokemonForm> _pokemonImporter;
-        private readonly ISpreadsheetEntityImporter<EvolutionDto, Evolution> _evolutionImporter;
-        private readonly ISpreadsheetEntityImporter<SpawnTypeDto, SpawnType> _spawnTypeImporter;
-
-        private readonly ISpreadsheetEntityImporter<RegionDto, Region> _regionImporter;
-        private readonly ISpreadsheetEntityImporter<LocationDto, Location> _locationImporter;
-        private readonly ISpreadsheetEntityImporter<SpawnDto, Spawn> _spawnImporter;
-        private readonly ISpreadsheetEntityImporter<PlacedItemDto, PlacedItem> _placedItemImporter;
-        private readonly ISpreadsheetEntityImporter<TutorMoveDto, TutorMove> _tutorMoveImporter;
-        private readonly ISpreadsheetEntityImporter<LearnableMoveLearnMethodDto, LearnableMove> _learnableMoveImporter;
-        private readonly ISpreadsheetEntityImporter<BuildDto, Build> _buildImporter;
-        private readonly ISpreadsheetEntityImporter<HuntingConfigurationDto, HuntingConfiguration> _huntingConfigurationImporter;
+        private readonly ISpreadsheetDataLoader _dataLoader;
+        private readonly ISheetNameHelper _sheetNameHelper;
+        private readonly IHashListComparator _hashListComparator;
 
         public GoogleSpreadsheetImportService(
+            ILogger<GoogleSpreadsheetImportService> logger,
+            IOptions<GoogleSpreadsheetsSettings> settings,
             ApplicationDbContext dbContext,
-            ISpreadsheetLoader spreadsheetLoader,
-
-            ISpreadsheetEntityImporter<ItemDto, Item> itemImporter,
-            ISpreadsheetEntityImporter<ItemStatBoostDto, ItemStatBoost> itemStatBoostImporter,
-            ISpreadsheetEntityImporter<AbilityDto, Ability> abilityImporter,
-            ISpreadsheetEntityImporter<ElementalTypeDto, ElementalType> elementalTypeImporter,
-            ISpreadsheetEntityImporter<ElementalTypeRelationDto, ElementalTypeRelation> elementalTypeRelationImporter,
-            ISpreadsheetEntityImporter<MoveDto, Move> moveImporter,
-            ISpreadsheetEntityImporter<NatureDto, Nature> natureImporter,
-            ISpreadsheetEntityImporter<TimeDto, SeasonTimeOfDay> timeImporter,
-            ISpreadsheetEntityImporter<CurrencyDto, Currency> currencyImporter,
-            ISpreadsheetEntityImporter<AvailabilityDto, PokemonAvailability> availabilityImporter,
-            ISpreadsheetEntityImporter<PvpTierDto, PvpTier> pvpTierImporter,
-            ISpreadsheetEntityImporter<PokemonDto, PokemonForm> pokemonImporter,
-            ISpreadsheetEntityImporter<EvolutionDto, Evolution> evolutionImporter,
-            ISpreadsheetEntityImporter<SpawnTypeDto, SpawnType> spawnTypeImporter,
-
-            ISpreadsheetEntityImporter<RegionDto, Region> regionImporter,
-            ISpreadsheetEntityImporter<LocationDto, Location> locationImporter,
-            ISpreadsheetEntityImporter<SpawnDto, Spawn> spawnImporter,
-            ISpreadsheetEntityImporter<PlacedItemDto, PlacedItem> placedItemImporter,
-            ISpreadsheetEntityImporter<TutorMoveDto, TutorMove> tutorMoveImporter,
-            ISpreadsheetEntityImporter<LearnableMoveLearnMethodDto, LearnableMove> learnableMoveImporter,
-            ISpreadsheetEntityImporter<BuildDto, Build> buildImporter,
-            ISpreadsheetEntityImporter<HuntingConfigurationDto, HuntingConfiguration> huntingConfigurationImporter)
+            ISpreadsheetDataLoader dataLoader,
+            ISheetNameHelper sheetNameHelper,
+            IHashListComparator hashListComparator)
         {
+            _logger = logger;
+            _settings = settings;
             _dbContext = dbContext;
-            _spreadsheetLoader = spreadsheetLoader;
-            _itemImporter = itemImporter;
-            _itemStatBoostImporter = itemStatBoostImporter;
-            _abilityImporter = abilityImporter;
-            _elementalTypeImporter = elementalTypeImporter;
-            _elementalTypeRelationImporter = elementalTypeRelationImporter;
-            _moveImporter = moveImporter;
-            _natureImporter = natureImporter;
-            _timeImporter = timeImporter;
-            _currencyImporter = currencyImporter;
-            _availabilityImporter = availabilityImporter;
-            _pvpTierImporter = pvpTierImporter;
-            _pokemonImporter = pokemonImporter;
-            _evolutionImporter = evolutionImporter;
-            _spawnTypeImporter = spawnTypeImporter;
-            _regionImporter = regionImporter;
-            _locationImporter = locationImporter;
-            _spawnImporter = spawnImporter;
-            _placedItemImporter = placedItemImporter;
-            _tutorMoveImporter = tutorMoveImporter;
-            _learnableMoveImporter = learnableMoveImporter;
-            _buildImporter = buildImporter;
-            _huntingConfigurationImporter = huntingConfigurationImporter;
+            _dataLoader = dataLoader;
+            _sheetNameHelper = sheetNameHelper;
+            _hashListComparator = hashListComparator;
         }
 
         public async Task ImportSpreadsheetData()
         {
-            await _dbContext.Database.EnsureDeletedAsync();
-            await _dbContext.Database.MigrateAsync();
+            var sheetsData = await _dataLoader.LoadRange(
+                _settings.Value.Import.SheetsListSpreadsheetId,
+                _settings.Value.Import.SheetsListSheetName,
+                "B2:C");
 
-            //Master data
-            var masterDataSpreadsheet = await _spreadsheetLoader.LoadSpreadsheet(Constants.MASTER_SPREADSHEET_ID);
-            _itemImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _abilityImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _elementalTypeImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _elementalTypeRelationImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _moveImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _natureImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _timeImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _currencyImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _availabilityImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _pvpTierImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _pokemonImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _evolutionImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _spawnTypeImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-            _itemStatBoostImporter.ImportFromSpreadsheet(masterDataSpreadsheet);
-
-            masterDataSpreadsheet = null;
-            GC.Collect();
-
-            //Main data
-            var mainDataSpreadsheet = await _spreadsheetLoader.LoadSpreadsheet(Constants.MAIN_SPREADSHEET_ID);
-            _regionImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _locationImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _spawnImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _placedItemImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _tutorMoveImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _buildImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-            _huntingConfigurationImporter.ImportFromSpreadsheet(mainDataSpreadsheet);
-
-            mainDataSpreadsheet = null;
-            GC.Collect();
-
-            foreach (var learnableMovesSpreadsheetId in Constants.LEARNABLE_MOVES_SPREADSHEET_IDS)
+            foreach (var sheetData in sheetsData)
             {
-                var learnableMovesSpreadsheet = await _spreadsheetLoader.LoadSpreadsheet(learnableMovesSpreadsheetId);
-                _learnableMoveImporter.ImportFromSpreadsheet(learnableMovesSpreadsheet);
+                var sheetStartTime = DateTime.UtcNow;
 
-                learnableMovesSpreadsheet = null;
+                var spreadsheetId = sheetData[0].ToString();
+                var sheetName = sheetData[1].ToString();
+
+                var sheet = GetSheet(spreadsheetId, sheetName);
+
+                var changedEntries = await ImportSheet(sheet);
+
+                _dbContext.ChangeTracker.Clear();
                 GC.Collect();
+
+                var duration = DateTime.UtcNow.Subtract(sheetStartTime);
+
+                if (changedEntries > 0 && duration.TotalMilliseconds < _settings.Value.Import.MinTimeBetweenSheets)
+                {
+                    // Ensure, that google spreadsheet requests are spread out to avoid hitting quota limit.
+                    Thread.Sleep(_settings.Value.Import.MinTimeBetweenSheets - (int)duration.TotalMilliseconds);
+                }
             }
+        }
+
+        private async Task<int> ImportSheet(ImportSheet sheet)
+        {
+            var sheetHash = await _dataLoader.LoadSheetHash(sheet.SpreadsheetId, sheet.SheetName);
+            if (!HasSheetChanged(sheet, sheetHash))
+            {
+                return 0;
+            }
+
+            var repository = _sheetNameHelper.GetSheetRepositoryForSheetName(sheet.SheetName);
+            var sheetHashes = await _dataLoader.LoadHashes(sheet.SpreadsheetId, sheet.SheetName, sheet.Id);
+            var dbHashes = repository.ReadDbHashes(sheet);
+
+            // Compare hash list of sheet and DB to find rows that need to be deleted, inserted, updated
+            var hashListComparisonResult = _hashListComparator.CompareHashLists(sheetHashes, dbHashes);
+
+            var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
+
+            var totalChangedEntries = 0;
+
+            // Delete
+            if (hashListComparisonResult.RowsToDelete.Any())
+            {
+                var deletedCount = repository.Delete(hashListComparisonResult.RowsToDelete);
+                totalChangedEntries += deletedCount;
+                _logger.LogInformation($"Deleted {deletedCount} entries for sheet {sheet.SheetName}.");
+            }
+
+            // Insert
+            if (hashListComparisonResult.RowsToInsert.Any())
+            {
+                var insertRowIndexes = GetRowIndexesForIdHashes(hashListComparisonResult.RowsToInsert.Select(rh => rh.IdHash), sheetIdHashes);
+
+                var dataToInsert = await _dataLoader.LoadRows(sheet.SpreadsheetId, sheet.SheetName, insertRowIndexes);
+                var dataToInsertForHashes = hashListComparisonResult.RowsToInsert
+                    .Zip(dataToInsert, (hash, values) => new { hash, values })
+                    .ToDictionary(x => x.hash, x => x.values);
+
+                var insertedCount = repository.Insert(dataToInsertForHashes);
+                totalChangedEntries += insertedCount;
+                _logger.LogInformation($"Inserted {insertedCount} entries for sheet {sheet.SheetName}.");
+            }
+            
+            // Update
+            if (hashListComparisonResult.RowsToUpdate.Any())
+            {
+                var updateRowIndexes = GetRowIndexesForIdHashes(hashListComparisonResult.RowsToUpdate.Select(rh => rh.IdHash), sheetIdHashes);
+
+                var dataToUpdate = await _dataLoader.LoadRows(sheet.SpreadsheetId, sheet.SheetName, updateRowIndexes);
+                var dataToUpdateForHashes = hashListComparisonResult.RowsToUpdate
+                    .Zip(dataToUpdate, (hash, values) => new { hash, values })
+                    .ToDictionary(x => x.hash, x => x.values);
+
+                var updatedCount = repository.Update(dataToUpdateForHashes);
+                totalChangedEntries += updatedCount;
+                _logger.LogInformation($"Updated {updatedCount} entries for sheet {sheet.SheetName}.");
+            }
+
+            UpdateSheetHash(sheet.SpreadsheetId, sheet.SheetName, sheetHash);
+
+            return totalChangedEntries;
+        }
+
+        private bool HasSheetChanged(ImportSheet sheet, string sheetHash)
+        {
+            return !string.Equals(sheet.SheetHash, sheetHash, StringComparison.Ordinal);
+        }
+
+        private ImportSheet GetSheet(string spreadsheetId, string sheetName)
+        {
+            var sheet = _dbContext.ImportSheets
+                .SingleOrDefault(s =>
+                    s.SpreadsheetId.Equals(spreadsheetId) &&
+                    s.SheetName.Equals(sheetName));
+
+            if (sheet is null)
+            {
+                sheet = new ImportSheet
+                {
+                    SpreadsheetId = spreadsheetId,
+                    SheetName = sheetName,
+                    SheetHash = "No successful import yet."
+                };
+
+                _dbContext.ImportSheets.Add(sheet);
+
+                _dbContext.SaveChanges();
+            }
+
+            return sheet;
+        }
+
+        private void UpdateSheetHash(string spreadsheetId, string sheetName, string sheetHash)
+        {
+            var dbSheet = _dbContext.ImportSheets
+                .SingleOrDefault(s =>
+                    s.SpreadsheetId.Equals(spreadsheetId) &&
+                    s.SheetName.Equals(sheetName));
+
+            if (dbSheet is null)
+            {
+                throw new Exception();
+            }
+            dbSheet.SheetHash = sheetHash;
+
+            _dbContext.SaveChanges();
+        }
+
+        private static List<int> GetRowIndexesForIdHashes(IEnumerable<string> selectedHashes, IList<string> allHashes)
+        {
+            var result = selectedHashes.Select(allHashes.IndexOf).OrderBy(i => i).ToList();
+
+            return result;
         }
     }
 }

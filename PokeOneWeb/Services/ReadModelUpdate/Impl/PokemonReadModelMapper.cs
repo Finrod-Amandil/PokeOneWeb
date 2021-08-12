@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.LearnableMoveLearnMethods;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -80,36 +79,40 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .Include(v => v.HiddenAbility)
                 .Include(v => v.PrimaryType)
                 .Include(v => v.SecondaryType)
-                .Include(v => v.BaseStats)
-                .Include(v => v.EvYield)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.Move.DamageClass)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.Move.ElementalType)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
-                .ThenInclude(lmlm => lmlm.Price)
-                .ThenInclude(lmp => lmp.Price.Currency.Item)
+                .ThenInclude(lmlm => lmlm.RequiredItem)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
-                .ThenInclude(lmlm => lmlm.RequiredItem)
+                .ThenInclude(lmlm => lmlm.MoveTutorMove.MoveTutor.Location)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
                 .ThenInclude(lmlm => lmlm.MoveLearnMethod.Locations)
                 .ThenInclude(mlml => mlml.Location.LocationGroup.Region)
+                .Include(v => v.LearnableMoves)
+                .ThenInclude(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.MoveLearnMethod.Locations)
+                .ThenInclude(mlml => mlml.Price)
+                .ThenInclude(mlmlp => mlmlp.CurrencyAmount.Currency.Item)
                 .Include(v => v.Builds)
                 .ThenInclude(b => b.Ability)
                 .Include(v => v.Builds)
-                .ThenInclude(b => b.EvDistribution)
+                .ThenInclude(b => b.NatureOptions)
+                .ThenInclude(no => no.Nature)
                 .Include(v => v.Builds)
-                .ThenInclude(b => b.Nature)
-                .ThenInclude(no => no.Nature.StatBoost)
-                .Include(v => v.Builds)
-                .ThenInclude(b => b.Item)
+                .ThenInclude(b => b.ItemOptions)
                 .ThenInclude(io => io.Item)
                 .Include(v => v.Builds)
-                .ThenInclude(b => b.Moves)
-                .ThenInclude(mo => mo.Move)
+                .ThenInclude(b => b.MoveOptions)
+                .ThenInclude(mo => mo.Move.DamageClass)
+                .Include(v => v.Builds)
+                .ThenInclude(b => b.MoveOptions)
+                .ThenInclude(mo => mo.Move.ElementalType)
+                .Include(v => v.Urls)
                 .AsNoTracking()
                 .Single(v => v.Id == varietyId);
         }
@@ -129,20 +132,19 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 Type1 = variety.PrimaryType.Name,
                 Type2 = variety.SecondaryType?.Name,
 
-                Atk = (int)variety.BaseStats.Attack,
-                Spa = (int)variety.BaseStats.SpecialAttack,
-                Def = (int)variety.BaseStats.Defense,
-                Spd = (int)variety.BaseStats.SpecialDefense,
-                Spe = (int)variety.BaseStats.Speed,
-                Hp = (int)variety.BaseStats.HitPoints,
-                StatTotal = (int)variety.BaseStats.Total,
+                Atk = variety.Attack,
+                Spa = variety.SpecialAttack,
+                Def = variety.Defense,
+                Spd = variety.SpecialDefense,
+                Spe = variety.Speed,
+                Hp = variety.HitPoints,
 
-                AtkEv = (int)variety.EvYield.Attack,
-                SpaEv = (int)variety.EvYield.SpecialAttack,
-                DefEv = (int)variety.EvYield.Defense,
-                SpdEv = (int)variety.EvYield.SpecialDefense,
-                SpeEv = (int)variety.EvYield.Speed,
-                HpEv = (int)variety.EvYield.HitPoints,
+                AtkEv = variety.AttackEv,
+                SpaEv = variety.SpecialAttackEv,
+                DefEv = variety.DefenseEv,
+                SpdEv = variety.SpecialDefenseEv,
+                SpeEv = variety.SpeedEv,
+                HpEv = variety.HitPointsEv,
 
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
@@ -162,12 +164,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
                 CatchRate = variety.CatchRate,
 
-                SmogonUrl = variety.SmogonUrl,
-                BulbapediaUrl = variety.BulbapediaUrl,
-                PokeOneCommunityUrl = variety.PokeOneCommunityUrl,
-                PokemonShowDownUrl = variety.PokemonShowDownUrl,
-                SerebiiUrl = variety.SerebiiUrl,
-                PokemonDbUrl = variety.PokemonDbUrl,
+                //TODO: Urls
 
                 Notes = variety.Notes
             };
@@ -292,7 +289,6 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             return _dbContext.HuntingConfigurations
                 .Include(hc => hc.Ability)
-                .Include(hc => hc.Nature.StatBoost)
                 .Include(hc => hc.PokemonVariety.DefaultForm)
                 .AsNoTracking()
                 .Where(hc => varietyIds.Contains(hc.PokemonVarietyId))
@@ -368,10 +364,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             var spawnReadModels = new List<SpawnReadModel>();
 
+            var rarityString = GetRarityAsString(spawn);
+            var rarityValue = GetRarityValue(spawn);
+
             foreach (var spawnOpportunity in spawn.SpawnOpportunities)
             {
-                var rarityString = GetRarityAsString(spawnOpportunity);
-                var rarityValue = GetRarityValue(spawnOpportunity);
                 var time = new TimeReadModel
                 {
                     SortIndex = spawnOpportunity.TimeOfDay.SortIndex,
@@ -387,26 +384,6 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                     Abbreviation = spawnOpportunity.Season.Abbreviation,
                     Color = spawnOpportunity.Season.Color
                 };
-
-                var spawnWithSameRarity = spawnReadModels.SingleOrDefault(s => 
-                    s.RarityString.Equals(rarityString, StringComparison.Ordinal));
-
-                if (spawnWithSameRarity != null)
-                {
-                    if (!spawnWithSameRarity.Times.Any(t =>
-                        t.Abbreviation.Equals(time.Abbreviation, StringComparison.Ordinal)))
-                    {
-                        spawnWithSameRarity.Times.Add(time);
-                    }
-
-                    if (!spawnWithSameRarity.Seasons.Any(s =>
-                        s.Abbreviation.Equals(season.Abbreviation, StringComparison.Ordinal)))
-                    {
-                        spawnWithSameRarity.Seasons.Add(season);
-                    }
-                    
-                    continue;
-                }
 
                 var spawnReadModel = new SpawnReadModel
                 {
@@ -489,24 +466,24 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             return $"{hour - 12}pm";
         }
 
-        private string GetRarityAsString(SpawnOpportunity spawnOpportunity)
+        private string GetRarityAsString(Spawn spawn)
         {
-            if (spawnOpportunity.SpawnProbability != null)
+            if (spawn.SpawnProbability != null)
             {
-                return $"{spawnOpportunity.SpawnProbability*100M:###.##}%";
+                return $"{spawn.SpawnProbability*100M:###.##}%";
             }
 
-            return spawnOpportunity.SpawnCommonality ?? "?";
+            return spawn.SpawnCommonality ?? "?";
         }
 
-        private decimal GetRarityValue(SpawnOpportunity spawnOpportunity)
+        private decimal GetRarityValue(Spawn spawn)
         {
-            if (spawnOpportunity.SpawnProbability != null)
+            if (spawn.SpawnProbability != null)
             {
-                return (decimal)spawnOpportunity.SpawnProbability;
+                return (decimal)spawn.SpawnProbability;
             }
 
-            switch (spawnOpportunity.SpawnCommonality.ToUpper())
+            switch (spawn.SpawnCommonality.ToUpper())
             {
                 case "COMMON": return 0.5M;
                 case "UNCOMMON": return 0.1M;
@@ -590,51 +567,51 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
             switch (learnMethod.MoveLearnMethod.Name)
             {
-                case LearnableMoveConstants.LearnMethodName.EGG:
+                case "Egg":
                     readModel.LearnMethodName = learnMethod.MoveLearnMethod.Name;
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => $"{l.Location.Name} ({l.NpcName})"));
-                    readModel.Price = GetPriceString(learnMethod.Price.Select(p => p.Price));
+                            .Select(l => 
+                                $"{l.Location.Name} ({l.NpcName}), " +
+                                $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 3;
                     break;
 
-                case LearnableMoveConstants.LearnMethodName.TUTOR:
-                    readModel.LearnMethodName = learnMethod.MoveLearnMethod.Locations.FirstOrDefault()?.NpcName ??
+                case "Tutor":
+                    readModel.LearnMethodName = learnMethod.MoveTutorMove?.MoveTutor?.Name ??
                                                 learnMethod.MoveLearnMethod.Name + " (unavailable)";
-                    readModel.Description = string.Join(", ",
-                        learnMethod.MoveLearnMethod.Locations
-                            .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => $"{l.Location.Name}"));
-                    readModel.Price = GetPriceString(learnMethod.Price.Select(p => p.Price));
+                    readModel.Description =
+                        $"{learnMethod.MoveTutorMove?.MoveTutor?.Location?.Name}, " +
+                        $"{GetPriceString(learnMethod.MoveTutorMove?.Price.Select(p => p.CurrencyAmount))}";
                     readModel.SortIndex = 2;
                     break;
 
-                case LearnableMoveConstants.LearnMethodName.PREEVOLUTION:
+                case "Pre-Evolution move tutor":
                     readModel.LearnMethodName = learnMethod.MoveLearnMethod.Name;
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => $"{l.Location.Name} ({l.NpcName})"));
-                    readModel.Price = GetPriceString(learnMethod.Price.Select(p => p.Price));
+                            .Select(l => 
+                                $"{l.Location.Name} ({l.NpcName}), " +
+                                $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 4;
                     break;
 
-                case LearnableMoveConstants.LearnMethodName.LEVELUP:
+                case "Level up":
                     readModel.LearnMethodName = $"Level {learnMethod.LevelLearnedAt} / Move Reminder";
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => $"{l.Location.Name} ({l.NpcName})"));
-                    readModel.Price = GetPriceString(learnMethod.Price.Select(p => p.Price));
+                            .Select(l => 
+                                $"{l.Location.Name} ({l.NpcName}), " +
+                                $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 0;
                     break;
 
-                case LearnableMoveConstants.LearnMethodName.MACHINE:
+                case "Machine":
                     readModel.LearnMethodName = learnMethod.RequiredItem?.Name ?? "TM/HM (unavailable)";
                     readModel.Description = "";
-                    readModel.Price = "";
                     readModel.SortIndex = 1;
                     break;
             }
@@ -655,20 +632,20 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                     PokemonName = variety.Name,
                     BuildName = build.Name,
                     BuildDescription = build.Description,
-                    Move1 = GetBuildMoveString(build.Moves, 1),
-                    Move2 = GetBuildMoveString(build.Moves, 2),
-                    Move3 = GetBuildMoveString(build.Moves, 3),
-                    Move4 = GetBuildMoveString(build.Moves, 4),
-                    ItemOptions = GetBuildItemOptions(build.Item),
-                    NatureOptions = GetBuildNatureOptions(build.Nature),
+                    Move1 = GetBuildMoveString(build.MoveOptions, 1),
+                    Move2 = GetBuildMoveString(build.MoveOptions, 2),
+                    Move3 = GetBuildMoveString(build.MoveOptions, 3),
+                    Move4 = GetBuildMoveString(build.MoveOptions, 4),
+                    ItemOptions = GetBuildItemOptions(build.ItemOptions),
+                    NatureOptions = GetBuildNatureOptions(build.NatureOptions),
                     Ability = build.Ability.Name,
                     AbilityDescription = build.Ability.EffectDescription,
-                    AtkEv = (int)build.EvDistribution.Attack,
-                    SpaEv = (int)build.EvDistribution.SpecialAttack,
-                    DefEv = (int)build.EvDistribution.Defense,
-                    SpdEv = (int)build.EvDistribution.SpecialDefense,
-                    SpeEv = (int)build.EvDistribution.Speed,
-                    HpEv = (int)build.EvDistribution.HitPoints
+                    AtkEv = build.AttackEv,
+                    SpaEv = build.SpecialAttackEv,
+                    DefEv = build.DefenseEv,
+                    SpdEv = build.SpecialDefenseEv,
+                    SpeEv = build.SpeedEv,
+                    HpEv = build.HitPointsEv
                 })
                 .ToList();
         }
