@@ -25,6 +25,11 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .HasForeignKey(mlml => mlml.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<MoveLearnMethodLocation>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -37,6 +42,10 @@ namespace PokeOneWeb.Data.Entities
         //INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+        public int ImportSheetId { get; set; }
 
         public string TutorType { get; set; }
 
@@ -52,7 +61,7 @@ namespace PokeOneWeb.Data.Entities
         public Location Location { get; set; }
         public int LocationId { get; set; }
 
-        public ICollection<MoveLearnMethodLocationPrice> Price { get; set; }
+        public List<MoveLearnMethodLocationPrice> Price { get; set; } = new ();
 
 
         public override string ToString()

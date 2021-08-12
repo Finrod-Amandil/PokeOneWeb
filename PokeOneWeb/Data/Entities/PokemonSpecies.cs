@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
-using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("PokemonSpecies")]
-    public class PokemonSpecies : IHashedEntity
+    public class PokemonSpecies
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
-            builder.Entity<PokemonSpecies>().HasIndexedHashes();
             builder.Entity<PokemonSpecies>().HasIndex(ps => ps.Name).IsUnique();
             builder.Entity<PokemonSpecies>().HasIndex(ps => ps.PokedexNumber).IsUnique();
 
@@ -20,19 +17,11 @@ namespace PokeOneWeb.Data.Entities
                 .HasOne(p => p.DefaultVariety)
                 .WithMany()
                 .HasForeignKey(p => p.DefaultVarietyId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
 
         [Key]
         public int Id { get; set; }
-
-        //INDEXED
-        [Required]
-        public string Hash { get; set; }
-
-        //INDEXED
-        [Required]
-        public string IdHash { get; set; }
 
         //INDEXED, UNIQUE
         [Required]
@@ -46,7 +35,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("DefaultVarietyId")]
         public PokemonVariety DefaultVariety { get; set; }
-        public int DefaultVarietyId { get; set; }
+        public int? DefaultVarietyId { get; set; }
 
         public List<PokemonVariety> Varieties { get; set; }
         public List<Evolution> Evolutions { get; set; }

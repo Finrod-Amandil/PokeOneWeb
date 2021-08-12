@@ -19,6 +19,11 @@ namespace PokeOneWeb.Data.Entities
         {
             builder.Entity<Ability>().HasIndexedHashes();
             builder.Entity<Ability>().HasIndex(a => a.Name).IsUnique();
+
+            builder.Entity<Ability>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -31,6 +36,10 @@ namespace PokeOneWeb.Data.Entities
         //INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+        public int ImportSheetId { get; set; }
 
         //INDEXED, UNIQUE
         [Required]

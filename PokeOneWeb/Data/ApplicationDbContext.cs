@@ -13,7 +13,6 @@ namespace PokeOneWeb.Data
         public DbSet<BagCategory> BagCategories { get; set; }
         public DbSet<Build> Builds { get; set; }
         public DbSet<Currency> Currencies { get; set; }
-        public DbSet<CurrencyAmount> CurrencyAmounts { get; set; }
         public DbSet<ElementalType> ElementalTypes { get; set; }
         public DbSet<ElementalTypeRelation> ElementalTypeRelations { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -21,7 +20,9 @@ namespace PokeOneWeb.Data
         public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
+        public DbSet<ItemStatBoostPokemon> ItemStatBoostPokemon { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
+        public DbSet<LearnableMoveLearnMethod> LearnableMoveLearnMethods { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<LocationGroup> LocationGroups { get; set; }
         public DbSet<Move> Moves { get; set; }
@@ -36,7 +37,6 @@ namespace PokeOneWeb.Data
         public DbSet<PokemonForm> PokemonForms { get; set; }
         public DbSet<PokemonSpecies> PokemonSpecies { get; set; }
         public DbSet<PokemonVariety> PokemonVarieties { get; set; }
-        public DbSet<PokemonVarietyUrl> PokemonVarietyUrls { get; set; }
         public DbSet<PvpTier> PvpTiers { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Season> Seasons { get; set; }
@@ -45,8 +45,9 @@ namespace PokeOneWeb.Data
         public DbSet<SpawnType> SpawnTypes { get; set; }
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
 
-        public DbSet<LearnableMoveApi> LearnableMoveApis { get; set; }
-        public DbSet<TutorMove> TutorMoves { get; set; }
+
+        public DbSet<ImportSheet> ImportSheets { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -101,7 +102,9 @@ namespace PokeOneWeb.Data
             NatureOption.ConfigureForDatabase(builder);
 
             ItemStatBoost.ConfigureForDatabase(builder);
-            ItemStatBoostPokemon.ConfigureForDatabase(builder);
+            Entities.ItemStatBoostPokemon.ConfigureForDatabase(builder);
+
+            ImportSheet.ConfigureForDatabase(builder);
         }
     }
 }
