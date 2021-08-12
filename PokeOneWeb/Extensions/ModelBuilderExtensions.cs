@@ -7,8 +7,8 @@ namespace PokeOneWeb.Extensions
     {
         public static EntityTypeBuilder<T> HasIndexedHashes<T>(this EntityTypeBuilder<T> builder) where T : class, IHashedEntity
         {
-            builder.HasIndex(x => x.Hash);
-            builder.HasIndex(x => x.IdHash);
+            builder.HasIndex(x => x.Hash).IsUnique();
+            builder.HasIndex(x => x.IdHash).IsUnique();
 
             return builder;
         }

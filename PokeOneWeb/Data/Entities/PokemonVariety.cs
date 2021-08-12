@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
-using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("PokemonVariety")]
-    public class PokemonVariety : IHashedEntity
+    public class PokemonVariety
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
-            builder.Entity<PokemonVariety>().HasIndexedHashes();
             builder.Entity<PokemonVariety>().HasIndex(pv => pv.Name).IsUnique();
             builder.Entity<PokemonVariety>().HasIndex(pv => pv.ResourceName).IsUnique();
 
@@ -20,13 +17,13 @@ namespace PokeOneWeb.Data.Entities
                 .HasOne(v => v.PokemonSpecies)
                 .WithMany(s => s.Varieties)
                 .HasForeignKey(v => v.PokemonSpeciesId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.Entity<PokemonVariety>()
                 .HasOne(p => p.DefaultForm)
                 .WithMany()
                 .HasForeignKey(p => p.DefaultFormId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
                 .HasOne(p => p.PrimaryType)
@@ -50,13 +47,13 @@ namespace PokeOneWeb.Data.Entities
                 .HasOne(p => p.SecondaryAbility)
                 .WithMany(a => a.PokemonVarietiesAsSecondaryAbility)
                 .HasForeignKey(p => p.SecondaryAbilityId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
                 .HasOne(p => p.HiddenAbility)
                 .WithMany(a => a.PokemonVarietiesAsHiddenAbility)
                 .HasForeignKey(p => p.HiddenAbilityId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Entity<PokemonVariety>()
                 .HasOne(p => p.PvpTier)
@@ -67,14 +64,6 @@ namespace PokeOneWeb.Data.Entities
 
         [Key]
         public int Id { get; set; }
-
-        //INDEXED
-        [Required]
-        public string Hash { get; set; }
-
-        //INDEXED
-        [Required]
-        public string IdHash { get; set; }
 
         [Required]
         public string ResourceName { get; set; }
@@ -113,7 +102,7 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
-        public int DefaultFormId { get; set; }
+        public int? DefaultFormId { get; set; }
 
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
@@ -144,7 +133,7 @@ namespace PokeOneWeb.Data.Entities
         public List<LearnableMove> LearnableMoves { get; set; } = new List<LearnableMove>();
         public List<Build> Builds { get; set; }
         public List<HuntingConfiguration> HuntingConfigurations { get; set; }
-        public List<PokemonVarietyUrl> Urls { get; set; }
+        public List<PokemonVarietyUrl> Urls { get; set; } = new List<PokemonVarietyUrl>();
 
 
         public override string ToString()

@@ -21,6 +21,11 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(bc => bc.Items)
                 .HasForeignKey(i => i.BagCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Item>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -33,6 +38,10 @@ namespace PokeOneWeb.Data.Entities
         //INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+        public int ImportSheetId { get; set; }
 
         //INDEXED, UNIQUE
         [Required]

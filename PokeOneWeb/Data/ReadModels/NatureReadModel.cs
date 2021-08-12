@@ -18,6 +18,5 @@
 
         public int Spe { get; set; }
 
-        public int Hp { get; set; }
     }
 }
