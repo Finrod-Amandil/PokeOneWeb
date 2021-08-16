@@ -1,4 +1,4 @@
-﻿namespace PokeOneWeb.Data.ReadModels
+﻿namespace PokeOneWeb.Data.ReadModels.Enums
 {
     public enum EntityType
     {

@@ -46,6 +46,12 @@ using PokeOneWeb.Services.PokeApi;
 using PokeOneWeb.Services.PokeApi.Impl;
 using PokeOneWeb.Services.ReadModelUpdate;
 using PokeOneWeb.Services.ReadModelUpdate.Impl;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.ItemStatBoostPokemon;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.Moves;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.Natures;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon;
 using Ability = PokeOneWeb.Data.Entities.Ability;
 using Item = PokeOneWeb.Data.Entities.Item;
 using Location = PokeOneWeb.Data.Entities.Location;
@@ -192,12 +198,20 @@ namespace PokeOneWeb
             services.AddScoped<TimeOfDaySheetRepository>();
 
             services.AddScoped<IReadModelUpdateService, ReadModelUpdateService>();
-            services.AddScoped<IReadModelMapper<PokemonReadModel>, PokemonReadModelMapper>();
-            services.AddScoped<IReadModelMapper<MoveReadModel>, MoveReadModelMapper>();
-            services.AddScoped<IReadModelMapper<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelMapper>();
+
             services.AddScoped<IReadModelMapper<EntityTypeReadModel>, EntityTypeReadModelMapper>();
-            services.AddScoped<IReadModelMapper<ItemStatBoostReadModel>, ItemStatBoostReadModelMapper>();
+            services.AddScoped<IReadModelMapper<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelMapper>();
+            services.AddScoped<IReadModelMapper<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelMapper>();
+            services.AddScoped<IReadModelMapper<MoveReadModel>, MoveReadModelMapper>();
             services.AddScoped<IReadModelMapper<NatureReadModel>, NatureReadModelMapper>();
+            services.AddScoped<IReadModelMapper<PokemonVarietyReadModel>, PokemonReadModelMapper>();
+
+            services.AddScoped<IReadModelRepository<EntityTypeReadModel>, EntityTypeReadModelRepository>();
+            services.AddScoped<IReadModelRepository<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelRepository>();
+            services.AddScoped<IReadModelRepository<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelRepository>();
+            services.AddScoped<IReadModelRepository<MoveReadModel>, MoveReadModelRepository>();
+            services.AddScoped<IReadModelRepository<NatureReadModel>, NatureReadModelRepository>();
+            services.AddScoped<IReadModelRepository<PokemonVarietyReadModel>, PokemonVarietyReadModelRepository>();
 
             services.AddCors(options =>
             {

@@ -1,10 +1,10 @@
 ﻿using PokeOneWeb.Data.Entities;
 
-namespace PokeOneWeb.Services.ReadModelUpdate.Impl
+namespace PokeOneWeb.Extensions
 {
-    public class CommonFormatHelper
+    public static class NatureExtensions
     {
-        public static string GetNatureEffect(Nature nature)
+        public static string GetDescription(this Nature nature)
         {
             var effect = "";
 

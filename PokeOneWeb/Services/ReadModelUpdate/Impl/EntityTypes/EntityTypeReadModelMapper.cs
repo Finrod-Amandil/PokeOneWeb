@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Data.ReadModels.Enums;
 
-namespace PokeOneWeb.Services.ReadModelUpdate.Impl
+namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
 {
     public class EntityTypeReadModelMapper : IReadModelMapper<EntityTypeReadModel>
     {
@@ -18,6 +20,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             var pokemonMappings = _dbContext.PokemonVarieties
                 .Where(p => p.DoInclude)
+                .AsNoTracking()
                 .Select(p => new EntityTypeReadModel
                 {
                     ResourceName = p.ResourceName,
@@ -25,15 +28,17 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 });
 
             var locationMappings = _dbContext.LocationGroups
+                .AsNoTracking()
                 .Select(l => new EntityTypeReadModel {
-                    ResourceName = l.Name.Replace(' ', '-').ToLower(),
+                    ResourceName = l.ResourceName,
                     EntityType = EntityType.Location
                 });
 
             var itemMappings = _dbContext.Items
+                .AsNoTracking()
                 .Select(i => new EntityTypeReadModel
                 {
-                    ResourceName = i.Name.Replace(' ', '-').ToLower(),
+                    ResourceName = i.ResourceName,
                     EntityType = EntityType.Item
                 });
 

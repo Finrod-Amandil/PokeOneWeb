@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 
-namespace PokeOneWeb.Services.ReadModelUpdate.Impl
+namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Moves
 {
     public class MoveReadModelMapper : IReadModelMapper<MoveReadModel>
     {
@@ -20,25 +20,25 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             var moves = _dbContext.Moves
                 .Include(m => m.DamageClass)
                 .Include(m => m.ElementalType)
+                .AsNoTracking()
                 .Where(m => m.DoInclude)
                 .OrderBy(m => m.Name)
                 .ToList();
 
-            var index = 0;
-
             foreach (var move in moves)
             {
-                index++;
-
                 yield return new MoveReadModel
                 {
-                    Id = index,
+                    ApplicationDbId = move.Id,
                     Name = move.Name,
+                    ResourceName = move.ResourceName,
                     DamageClass = move.DamageClass.Name,
-                    Type = move.ElementalType.Name,
+                    ElementalType = move.ElementalType.Name,
                     AttackPower = move.AttackPower,
                     Accuracy = move.Accuracy,
-                    PowerPoints = move.PowerPoints
+                    PowerPoints = move.PowerPoints,
+                    Priority = move.Priority,
+                    EffectDescription = move.Effect
                 };
             }
         }

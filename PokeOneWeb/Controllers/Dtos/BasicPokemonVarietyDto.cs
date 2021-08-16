@@ -1,6 +1,8 @@
-﻿namespace PokeOneWeb.Controllers.Dtos
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.Controllers.Dtos
 {
-    public class BasicPokemonDto
+    public class BasicPokemonVarietyDto
     {
         public int Id { get; set; }
 
@@ -14,8 +16,8 @@
 
         public string SpriteName { get; set; }
 
-        public string Type1 { get; set; }
-        public string Type2 { get; set; }
+        public string PrimaryElementalType { get; set; }
+        public string SecondaryElementalType { get; set; }
 
         public int Atk { get; set; }
         public int Spa { get; set; }
@@ -23,7 +25,6 @@
         public int Spd { get; set; }
         public int Spe { get; set; }
         public int Hp { get; set; }
-        public int StatTotal { get; set; }
 
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }
@@ -41,12 +42,7 @@
         public bool IsFullyEvolved { get; set; }
         public bool IsMega { get; set; }
 
-        public string SmogonUrl { get; set; }
-        public string BulbapediaUrl { get; set; }
-        public string PokeOneCommunityUrl { get; set; }
-        public string PokemonShowDownUrl { get; set; }
-        public string SerebiiUrl { get; set; }
-        public string PokemonDbUrl { get; set; }
+        public List<PokemonVarietyUrlDto> Urls { get; set; }
 
         public string Notes { get; set; }
     }

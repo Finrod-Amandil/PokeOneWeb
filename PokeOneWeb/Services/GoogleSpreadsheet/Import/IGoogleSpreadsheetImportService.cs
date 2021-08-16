@@ -4,6 +4,6 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import
 {
     public interface IGoogleSpreadsheetImportService
     {
-        Task ImportSpreadsheetData();
+        Task<int> ImportSpreadsheetData();
     }
 }

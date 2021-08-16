@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("LearnMethodReadModel")]
-    public class LearnMethodReadModel
+    public class LearnMethodReadModel : IReadModel
     {
         public int Id { get; set; }
 

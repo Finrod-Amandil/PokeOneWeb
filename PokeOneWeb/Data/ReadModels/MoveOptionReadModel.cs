@@ -1,18 +1,17 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
-    [Table("MoveReadModel")]
-    public class MoveReadModel : IReadModel
+    [Table("MoveOptionReadModel")]
+    public class MoveOptionReadModel : IReadModel
     {
         public int Id { get; set; }
-
         public int ApplicationDbId { get; set; }
 
-        public string Name { get; set; }
+        public int Slot { get; set; }
 
-        public string ResourceName { get; set; }
+        public string MoveName { get; set; }
 
         public string ElementalType { get; set; }
 

@@ -3,6 +3,7 @@ using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using System.Linq;
 using PokeOneWeb.Controllers.Dtos;
+using PokeOneWeb.Data.ReadModels.Enums;
 
 namespace PokeOneWeb.Controllers
 {
