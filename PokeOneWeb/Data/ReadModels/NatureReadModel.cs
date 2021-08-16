@@ -1,22 +1,28 @@
-﻿namespace PokeOneWeb.Data.ReadModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
+
+namespace PokeOneWeb.Data.ReadModels
 {
-    public class NatureReadModel
+    [Table("NatureReadModel")]
+    public class NatureReadModel : IReadModel
     {
         public int Id { get; set; }
+
+        public int ApplicationDbId { get; set; }
 
         public string Name { get; set; }
 
         public string Effect { get; set; }
 
-        public int Atk { get; set; }
+        public int Attack { get; set; }
 
-        public int Spa { get; set; }
+        public int SpecialAttack { get; set; }
 
-        public int Def { get; set; }
+        public int Defense { get; set; }
 
-        public int Spd { get; set; }
+        public int SpecialDefense { get; set; }
 
-        public int Spe { get; set; }
+        public int Speed { get; set; }
 
     }
 }

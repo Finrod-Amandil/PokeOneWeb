@@ -1,35 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.ReadModels;
-using System;
+using PokeOneWeb.Extensions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Z.EntityFramework.Plus;
 
-namespace PokeOneWeb.Services.ReadModelUpdate.Impl
+namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 {
-    public class PokemonReadModelMapper : IReadModelMapper<PokemonReadModel>
+    public class PokemonReadModelMapper : IReadModelMapper<PokemonVarietyReadModel>
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ILogger<PokemonReadModelMapper> _logger;
 
         private List<ElementalTypeRelation> _elementalTypeRelations;
         private List<ElementalType> _elementalTypes;
+        private List<Evolution> _evolutions;
 
-        public PokemonReadModelMapper(ApplicationDbContext dbContext, ILogger<PokemonReadModelMapper> logger)
+        public PokemonReadModelMapper(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _logger = logger;
         }
 
-        public IEnumerable<PokemonReadModel> MapFromDatabase()
+        public IEnumerable<PokemonVarietyReadModel> MapFromDatabase()
         {
             var varietyIds = _dbContext.PokemonVarieties
-                .Include(v => v.DefaultForm)
-                .AsNoTracking()
                 .Where(v => v.DoInclude)
+                .IncludeOptimized(v => v.DefaultForm)
+                .AsNoTracking()
                 .OrderBy(v => v.DefaultForm.SortIndex)
                 .Select(v => v.Id);
 
@@ -41,6 +40,23 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .AsNoTracking()
                 .ToList();
 
+            _evolutions = _dbContext.Evolutions
+                .Include(e => e.BasePokemonVariety.DefaultForm)
+                .Include(e => e.BasePokemonVariety.PrimaryAbility)
+                .Include(e => e.BasePokemonVariety.SecondaryAbility)
+                .Include(e => e.BasePokemonVariety.HiddenAbility)
+                .Include(e => e.BasePokemonVariety.PrimaryType)
+                .Include(e => e.BasePokemonVariety.SecondaryType)
+                .Include(e => e.EvolvedPokemonVariety.DefaultForm)
+                .Include(e => e.EvolvedPokemonVariety.PrimaryAbility)
+                .Include(e => e.EvolvedPokemonVariety.SecondaryAbility)
+                .Include(e => e.EvolvedPokemonVariety.HiddenAbility)
+                .Include(e => e.EvolvedPokemonVariety.PrimaryType)
+                .Include(e => e.EvolvedPokemonVariety.SecondaryType)
+                .Include(e => e.BasePokemonSpecies)
+                .AsNoTracking()
+                .ToList();
+
             var index = 0;
             foreach (var varietyId in varietyIds)
             {
@@ -48,21 +64,21 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 var variety = LoadVariety(varietyId);
                 
                 var readModel = GetBasicReadModel(variety, index);
+
+                AttachEvolutionAbilities(readModel, variety);
+
                 readModel.DefenseAttackEffectivities = GetAttackEffectivityReadModels(variety);
 
-                readModel.LearnableMoves = GetLearnableMoves(variety);
-
-                var evolvedVarieties = GetEvolvedVarietiesWithAbilities(variety);
-                readModel.PrimaryAbilityTurnsInto = GetPrimaryAbilityTurnsInto(variety, evolvedVarieties);
-                readModel.SecondaryAbilityTurnsInto = GetSecondaryAbilityTurnsInto(variety, evolvedVarieties);
-                readModel.HiddenAbilityTurnsInto = GetHiddenAbilityTurnsInto(variety, evolvedVarieties);
-
                 var allVarietiesOfEvolutionLine = GetVarietiesOfEvolutionLine(variety);
-                readModel.HuntingConfigurations = GetHuntingConfigurations(allVarietiesOfEvolutionLine);
                 readModel.Spawns = GetSpawnReadModels(allVarietiesOfEvolutionLine);
                 readModel.Evolutions = GetEvolutions(variety);
 
+                readModel.LearnableMoves = GetLearnableMoves(variety);
+                readModel.HuntingConfigurations = GetHuntingConfigurations(allVarietiesOfEvolutionLine);
+
                 readModel.Builds = GetBuilds(variety);
+
+                readModel.Urls = GetUrls(variety);
 
                 yield return readModel;
             }
@@ -71,6 +87,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private PokemonVariety LoadVariety(int varietyId)
         {
             return _dbContext.PokemonVarieties
+                .Where(v => v.Id == varietyId)
                 .Include(v => v.PokemonSpecies)
                 .Include(v => v.DefaultForm.Availability)
                 .Include(v => v.PvpTier)
@@ -88,11 +105,21 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .ThenInclude(lmlm => lmlm.RequiredItem)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
-                .ThenInclude(lmlm => lmlm.MoveTutorMove.MoveTutor.Location)
+                .ThenInclude(lmlm => lmlm.MoveTutorMove.MoveTutor.Location.LocationGroup.Region.Event)
+                .Include(v => v.LearnableMoves)
+                .ThenInclude(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.MoveTutorMove.Move.ElementalType)
+                .Include(v => v.LearnableMoves)
+                .ThenInclude(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.MoveTutorMove.Move.DamageClass)
+                .Include(v => v.LearnableMoves)
+                .ThenInclude(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.MoveTutorMove.Price)
+                .ThenInclude(mtmp => mtmp.CurrencyAmount.Currency.Item)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
                 .ThenInclude(lmlm => lmlm.MoveLearnMethod.Locations)
-                .ThenInclude(mlml => mlml.Location.LocationGroup.Region)
+                .ThenInclude(mlml => mlml.Location.LocationGroup.Region.Event)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.LearnMethods)
                 .ThenInclude(lmlm => lmlm.MoveLearnMethod.Locations)
@@ -112,39 +139,37 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .Include(v => v.Builds)
                 .ThenInclude(b => b.MoveOptions)
                 .ThenInclude(mo => mo.Move.ElementalType)
+                .Include(v => v.HuntingConfigurations)
+                .ThenInclude(hc => hc.Ability)
+                .Include(v => v.HuntingConfigurations)
+                .ThenInclude(hc => hc.Nature)
                 .Include(v => v.Urls)
                 .AsNoTracking()
-                .Single(v => v.Id == varietyId);
+                .Single();
         }
 
-        private PokemonReadModel GetBasicReadModel(PokemonVariety variety, int index)
+        private PokemonVarietyReadModel GetBasicReadModel(PokemonVariety variety, int index)
         {
-            return new PokemonReadModel
+            return new()
             {
-                Id = index,
+                ApplicationDbId = index,
 
                 ResourceName = variety.ResourceName,
+                SortIndex = variety.DefaultForm.SortIndex,
                 PokedexNumber = variety.PokemonSpecies.PokedexNumber,
                 Name = variety.Name,
 
                 SpriteName = variety.DefaultForm.SpriteName,
 
-                Type1 = variety.PrimaryType.Name,
-                Type2 = variety.SecondaryType?.Name,
+                PrimaryType = variety.PrimaryType.Name,
+                SecondaryType = variety.SecondaryType?.Name,
 
-                Atk = variety.Attack,
-                Spa = variety.SpecialAttack,
-                Def = variety.Defense,
-                Spd = variety.SpecialDefense,
-                Spe = variety.Speed,
-                Hp = variety.HitPoints,
-
-                AtkEv = variety.AttackEv,
-                SpaEv = variety.SpecialAttackEv,
-                DefEv = variety.DefenseEv,
-                SpdEv = variety.SpecialDefenseEv,
-                SpeEv = variety.SpeedEv,
-                HpEv = variety.HitPointsEv,
+                Attack = variety.Attack,
+                SpecialAttack = variety.SpecialAttack,
+                Defense = variety.Defense,
+                SpecialDefense = variety.SpecialDefense,
+                Speed = variety.Speed,
+                HitPoints = variety.HitPoints,
 
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
@@ -161,96 +186,95 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 Generation = variety.Generation,
                 IsFullyEvolved = variety.IsFullyEvolved,
                 IsMega = variety.IsMega,
-
                 CatchRate = variety.CatchRate,
 
-                //TODO: Urls
+                AttackEv = variety.AttackEv,
+                SpecialAttackEv = variety.SpecialAttackEv,
+                DefenseEv = variety.DefenseEv,
+                SpecialDefenseEv = variety.SpecialDefenseEv,
+                SpeedEv = variety.SpeedEv,
+                HitPointsEv = variety.HitPointsEv,
 
                 Notes = variety.Notes
             };
         }
 
-        private List<AbilityTurnsIntoReadModel> GetPrimaryAbilityTurnsInto(
-            PokemonVariety variety, List<PokemonVariety> evolvedVarieties)
+        private void AttachEvolutionAbilities(PokemonVarietyReadModel readModel, PokemonVariety variety)
         {
-            return evolvedVarieties
-                .OrderBy(v => v.DefaultForm.SortIndex)
-                .Select(v => new AbilityTurnsIntoReadModel
-                {
-                    PokemonResourceName = v.ResourceName,
-                    PokemonSortIndex = v.DefaultForm.SortIndex,
-                    PokemonName = v.Name,
-                    AbilityName = v.PrimaryAbility.Name
-                })
-                .ToList();
-        }
-
-        private List<AbilityTurnsIntoReadModel> GetSecondaryAbilityTurnsInto(
-            PokemonVariety variety, List<PokemonVariety> evolvedVarieties)
-        {
-            if (variety.SecondaryAbility is null)
-            {
-                return new List<AbilityTurnsIntoReadModel>();
-            }
-
-            return evolvedVarieties
-                .OrderBy(v => v.DefaultForm.SortIndex)
-                .Select(v => new AbilityTurnsIntoReadModel
-                {
-                    PokemonResourceName = v.ResourceName,
-                    PokemonSortIndex = v.DefaultForm.SortIndex,
-                    PokemonName = v.Name,
-                    AbilityName = v.SecondaryAbility?.Name ?? v.PrimaryAbility.Name
-                })
-                .ToList();
-        }
-
-        private List<AbilityTurnsIntoReadModel> GetHiddenAbilityTurnsInto(
-            PokemonVariety variety, List<PokemonVariety> evolvedVarieties)
-        {
-            if (variety.HiddenAbility is null)
-            {
-                return new List<AbilityTurnsIntoReadModel>();
-            }
-
-            return evolvedVarieties
-                .OrderBy(v => v.DefaultForm.SortIndex)
-                .Select(v => new AbilityTurnsIntoReadModel
-                {
-                    PokemonResourceName = v.ResourceName,
-                    PokemonSortIndex = v.DefaultForm.SortIndex,
-                    PokemonName = v.Name,
-                    AbilityName = v.HiddenAbility?.Name ?? v.PrimaryAbility.Name
-                })
-                .ToList();
-        }
-
-        private List<PokemonVariety> GetEvolvedVarietiesWithAbilities(PokemonVariety variety)
-        {
-            var evolvedVarieties = new List<int>();
-            var nextStageVarieties = new List<int> { variety.Id };
-
+            var allCoveredVarieties = new HashSet<string> { variety.ResourceName };
+            var postEvolutions = new List<PokemonVariety> { variety }; 
+            var relativeStageIndex = 0;
             do
             {
-                nextStageVarieties = _dbContext.Evolutions
-                    .AsNoTracking()
-                    .Where(e => nextStageVarieties.Contains(e.BasePokemonVarietyId))
-                    .Select(e => e.EvolvedPokemonVarietyId)
+                postEvolutions = _evolutions
+                    .Where(e => postEvolutions.Select(v => v.Id).Contains(e.BasePokemonVariety.Id))
+                    .Select(e => e.EvolvedPokemonVariety)
+                    .Where(v => !allCoveredVarieties.Contains(v.ResourceName))
+                    .DistinctBy(v => v.ResourceName) // Required for nodes with multiple pre-evos, i.e. Ultra Necrozma
                     .ToList();
 
-                nextStageVarieties.RemoveAll(v => evolvedVarieties.Contains(v));
+                postEvolutions.ForEach(v => allCoveredVarieties.Add(v.ResourceName));
 
-                evolvedVarieties.AddRange(nextStageVarieties);
-            } while (nextStageVarieties.Any());
+                relativeStageIndex++;
 
-            return _dbContext.PokemonVarieties
-                .Include(v => v.DefaultForm)
-                .Include(v => v.PrimaryAbility)
-                .Include(v => v.SecondaryAbility)
-                .Include(v => v.HiddenAbility)
-                .AsNoTracking()
-                .Where(v => evolvedVarieties.Contains(v.Id))
-                .ToList();
+                foreach (var postEvolution in postEvolutions)
+                {
+                    readModel.PrimaryEvolutionAbilities.Add(
+                        GetEvolutionAbility(postEvolution, postEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                    readModel.SecondaryEvolutionAbilities.Add(
+                        GetEvolutionAbility(postEvolution, postEvolution.SecondaryAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                    readModel.HiddenEvolutionAbilities.Add(
+                        GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                }
+
+            } while (postEvolutions.Any());
+
+            var preEvolutions = new List<PokemonVariety> { variety };
+            relativeStageIndex = 0;
+            do
+            {
+                preEvolutions = _evolutions
+                    .Where(e => preEvolutions.Select(v => v.Id).Contains(e.EvolvedPokemonVariety.Id))
+                    .Select(e => e.BasePokemonVariety)
+                    .Where(v => !allCoveredVarieties.Contains(v.ResourceName))
+                    .DistinctBy(v => v.ResourceName) // Required for nodes with multiple pre-evos, i.e. Ultra Necrozma
+                    .ToList();
+
+                preEvolutions.ForEach(v => allCoveredVarieties.Add(v.ResourceName));
+
+                relativeStageIndex--;
+
+                foreach (var preEvolution in preEvolutions)
+                {
+                    readModel.PrimaryEvolutionAbilities.Add(
+                        GetEvolutionAbility(preEvolution, preEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                    readModel.SecondaryEvolutionAbilities.Add(
+                        GetEvolutionAbility(preEvolution, preEvolution.SecondaryAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                    readModel.HiddenEvolutionAbilities.Add(
+                        GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
+                    );
+                }
+
+            } while (preEvolutions.Any());
+        }
+
+        private EvolutionAbilityReadModel GetEvolutionAbility(PokemonVariety variety, Ability ability,
+            int relativeStageIndex)
+        {
+            return new()
+            {
+                RelativeStageIndex = relativeStageIndex,
+                PokemonResourceName = variety.ResourceName,
+                PokemonSortIndex = variety.DefaultForm.SortIndex,
+                PokemonName = variety.Name,
+                SpriteName = variety.DefaultForm.SpriteName,
+                AbilityName = ability.Name
+            };
         }
 
         private List<int> GetVarietiesOfEvolutionLine(PokemonVariety variety)
@@ -260,7 +284,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
             varietyIds.Add(variety.Id);
 
-            var hasFoundNewEvolutions = false;
+            bool hasFoundNewEvolutions;
 
             do
             {
@@ -289,6 +313,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             return _dbContext.HuntingConfigurations
                 .Include(hc => hc.Ability)
+                .Include(hc => hc.Nature)
                 .Include(hc => hc.PokemonVariety.DefaultForm)
                 .AsNoTracking()
                 .Where(hc => varietyIds.Contains(hc.PokemonVarietyId))
@@ -296,16 +321,15 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .ToList()
                 .Select(hc => new HuntingConfigurationReadModel 
                     {
+                        ApplicationDbId = hc.Id,
                         PokemonResourceName = hc.PokemonVariety.ResourceName,
                         PokemonName = hc.PokemonVariety.Name,
                         Nature = hc.Nature.Name,
-                        NatureEffect = CommonFormatHelper.GetNatureEffect(hc.Nature),
+                        NatureEffect = hc.Nature.GetDescription(),
                         Ability = hc.Ability.Name
                     })
                 .ToList();
         }
-
-        
 
         private List<AttackEffectivityReadModel> GetAttackEffectivityReadModels(PokemonVariety variety)
         {
@@ -339,6 +363,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private List<SpawnReadModel> GetSpawnReadModels(List<int> varietyIds)
         {
             return _dbContext.PokemonForms
+                .Where(f => varietyIds.Contains(f.PokemonVarietyId))
                 .Include(f => f.PokemonVariety)
                 .Include(f => f.PokemonSpawns)
                 .ThenInclude(s => s.Location.LocationGroup.Region.Event)
@@ -353,78 +378,88 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .ThenInclude(t => t.SeasonTimes)
                 .ThenInclude(st => st.Season)
                 .AsNoTracking()
-                .Where(f => varietyIds.Contains(f.PokemonVarietyId))
                 .ToList()
                 .SelectMany(f => f.PokemonSpawns)
-                .SelectMany(GetSpawnReadModels)
+                .Select(GetSpawnReadModel)
                 .ToList();
         }
 
-        private List<SpawnReadModel> GetSpawnReadModels(Spawn spawn)
+        private SpawnReadModel GetSpawnReadModel(Spawn spawn)
         {
-            var spawnReadModels = new List<SpawnReadModel>();
-
             var rarityString = GetRarityAsString(spawn);
             var rarityValue = GetRarityValue(spawn);
 
-            foreach (var spawnOpportunity in spawn.SpawnOpportunities)
+            var spawnReadModel = new SpawnReadModel
             {
-                var time = new TimeReadModel
-                {
-                    SortIndex = spawnOpportunity.TimeOfDay.SortIndex,
-                    Name = spawnOpportunity.TimeOfDay.Name,
-                    Abbreviation = spawnOpportunity.TimeOfDay.Abbreviation,
-                    Color = spawnOpportunity.TimeOfDay.Color,
-                    Times = GetTimesAsString(spawnOpportunity.TimeOfDay)
-                };
-                var season = new SeasonReadModel
-                {
-                    SortIndex = spawnOpportunity.Season.SortIndex,
-                    Name = spawnOpportunity.Season.Name,
-                    Abbreviation = spawnOpportunity.Season.Abbreviation,
-                    Color = spawnOpportunity.Season.Color
-                };
+                ApplicationDbId = spawn.Id,
+                PokemonFormSortIndex = spawn.PokemonForm.SortIndex,
+                LocationSortIndex = spawn.Location.SortIndex,
+                PokemonResourceName = spawn.PokemonForm.PokemonVariety.ResourceName,
+                PokemonName = spawn.PokemonForm.Name,
+                SpriteName = spawn.PokemonForm.SpriteName,
+                LocationName = spawn.Location.Name,
+                LocationResourceName = spawn.Location.LocationGroup.ResourceName,
+                RegionName = spawn.Location.LocationGroup.Region.Name,
+                RegionColor = spawn.Location.LocationGroup.Region.Color,
+                IsEvent = spawn.Location.LocationGroup.Region.IsEventRegion,
+                EventName = spawn.Location.LocationGroup.Region.Event?.Name,
+                SpawnType = spawn.SpawnType.Name,
+                SpawnTypeSortIndex = spawn.SpawnType.SortIndex,
+                SpawnTypeColor = spawn.SpawnType.Color,
+                IsSyncable = spawn.SpawnType.IsSyncable,
+                IsInfinite = spawn.SpawnType.IsInfinite,
+                LowestLevel = spawn.LowestLevel,
+                HighestLevel = spawn.HighestLevel,
+                TimesOfDay = new List<TimeOfDayReadModel>(),
+                Seasons = new List<SeasonReadModel>(),
+                RarityString = rarityString,
+                RarityValue = rarityValue,
+                Notes = spawn.Notes
+            };
 
-                var spawnReadModel = new SpawnReadModel
-                {
-                    PokemonFormSortIndex = spawn.PokemonForm.SortIndex,
-                    LocationSortIndex = spawn.Location.SortIndex,
-                    PokemonResourceName = spawn.PokemonForm.PokemonVariety.ResourceName,
-                    PokemonName = spawn.PokemonForm.Name,
-                    SpriteName = spawn.PokemonForm.SpriteName,
-                    LocationName = spawn.Location.Name,
-                    LocationResourceName = spawn.Location.LocationGroup.ResourceName,
-                    RegionName = spawn.Location.LocationGroup.Region.Name,
-                    RegionColor = spawn.Location.LocationGroup.Region.Color,
-                    IsEvent = spawn.Location.LocationGroup.Region.IsEventRegion,
-                    EventName = spawn.Location.LocationGroup.Region.Event?.Name,
-                    SpawnType = spawn.SpawnType.Name,
-                    SpawnTypeSortIndex = spawn.SpawnType.SortIndex,
-                    SpawnTypeColor = spawn.SpawnType.Color,
-                    IsSyncable = spawn.SpawnType.IsSyncable,
-                    IsInfinite = spawn.SpawnType.IsInfinite,
-                    Times = new List<TimeReadModel> {time},
-                    Seasons = new List<SeasonReadModel> {season},
-                    RarityString = rarityString,
-                    RarityValue = rarityValue,
-                    Notes = spawn.Notes
-                };
+            var spawnEvent = spawn.Location.LocationGroup.Region.Event;
 
-                var spawnEvent = spawn.Location.LocationGroup.Region.Event;
-
-                if (spawnEvent != null)
-                {
-                    var dateTimeCulture = CultureInfo.CreateSpecificCulture("en-US");
-                    var dateTimeFormat = "MMM d, yyyy";
-                    var startDate = spawnEvent.StartDate?.ToString(dateTimeFormat, dateTimeCulture) ?? "???";
-                    var endDate = spawnEvent.EndDate?.ToString(dateTimeFormat, dateTimeCulture) ?? "???";
-                    spawnReadModel.EventDateRange = startDate + " - " + endDate;
-                }
-
-                spawnReadModels.Add(spawnReadModel);
+            if (spawnEvent != null)
+            {
+                var dateTimeCulture = CultureInfo.CreateSpecificCulture("en-US");
+                var dateTimeFormat = "MMM d, yyyy";
+                var startDate = spawnEvent.StartDate?.ToString(dateTimeFormat, dateTimeCulture);
+                var endDate = spawnEvent.EndDate?.ToString(dateTimeFormat, dateTimeCulture);
+                spawnReadModel.EventStartDate = startDate;
+                spawnReadModel.EventEndDate = endDate;
             }
 
-            return spawnReadModels;
+            foreach (var spawnOpportunity in spawn.SpawnOpportunities)
+            {
+                if (!spawnReadModel.TimesOfDay.Any(t => t.Name.EqualsExact(spawnOpportunity.TimeOfDay.Name)))
+                {
+                    var time = new TimeOfDayReadModel
+                    {
+                        SortIndex = spawnOpportunity.TimeOfDay.SortIndex,
+                        Name = spawnOpportunity.TimeOfDay.Name,
+                        Abbreviation = spawnOpportunity.TimeOfDay.Abbreviation,
+                        Color = spawnOpportunity.TimeOfDay.Color,
+                        Times = GetTimesAsString(spawnOpportunity.TimeOfDay)
+                    };
+
+                    spawnReadModel.TimesOfDay.Add(time);
+                }
+
+                if (!spawnReadModel.Seasons.Any(s => s.Name.EqualsExact(spawnOpportunity.Season.Name)))
+                {
+                    var season = new SeasonReadModel
+                    {
+                        SortIndex = spawnOpportunity.Season.SortIndex,
+                        Name = spawnOpportunity.Season.Name,
+                        Abbreviation = spawnOpportunity.Season.Abbreviation,
+                        Color = spawnOpportunity.Season.Color
+                    };
+
+                    spawnReadModel.Seasons.Add(season);
+                }
+            }
+
+            return spawnReadModel;
         }
 
         private string GetTimesAsString(TimeOfDay timeOfDay)
@@ -460,7 +495,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
             if (hour == 12)
             {
-                return "12 pm";
+                return "12pm";
             }
 
             return $"{hour - 12}pm";
@@ -470,7 +505,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             if (spawn.SpawnProbability != null)
             {
-                return $"{spawn.SpawnProbability*100M:###.##}%";
+                return $"{spawn.SpawnProbability * 100M:###.##}%";
             }
 
             return spawn.SpawnCommonality ?? "?";
@@ -483,10 +518,10 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 return (decimal)spawn.SpawnProbability;
             }
 
-            switch (spawn.SpawnCommonality.ToUpper())
+            switch (spawn.SpawnCommonality?.ToUpper())
             {
                 case "COMMON": return 0.5M;
-                case "UNCOMMON": return 0.1M;
+                case "UNCOMMON": return 0.15M;
                 case "RARE": return 0.05M;
                 case "VERY RARE": return 0.01M;
             }
@@ -497,30 +532,25 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private List<EvolutionReadModel> GetEvolutions(PokemonVariety variety)
         {
             var evolutionBaseSpecies = GetEvolutionBaseSpecies(variety);
-            var evolutions = _dbContext.Evolutions
-                .Include(e => e.BasePokemonVariety.DefaultForm)
-                .Include(e => e.BasePokemonVariety.PrimaryType)
-                .Include(e => e.BasePokemonVariety.SecondaryType)
-                .Include(e => e.EvolvedPokemonVariety.DefaultForm)
-                .Include(e => e.EvolvedPokemonVariety.PrimaryType)
-                .Include(e => e.EvolvedPokemonVariety.SecondaryType)
+            var evolutions = _evolutions
                 .Where(e => e.BasePokemonSpeciesId == evolutionBaseSpecies);
 
             return evolutions
                 .Select(e => new EvolutionReadModel
                     {
+                        ApplicationDbId = e.Id,
                         BaseName = e.BasePokemonVariety.Name,
                         BaseResourceName = e.BasePokemonVariety.ResourceName,
                         BaseSpriteName = e.BasePokemonVariety.DefaultForm.SpriteName,
-                        BaseType1 = e.BasePokemonVariety.PrimaryType.Name,
-                        BaseType2 = e.BasePokemonVariety.SecondaryType.Name,
+                        BasePrimaryElementalType = e.BasePokemonVariety.PrimaryType.Name,
+                        BaseSecondaryElementalType = e.BasePokemonVariety.SecondaryType?.Name,
                         BaseSortIndex = e.BasePokemonVariety.DefaultForm.SortIndex,
                         BaseStage = e.BaseStage,
                         EvolvedName = e.EvolvedPokemonVariety.Name,
                         EvolvedResourceName = e.EvolvedPokemonVariety.ResourceName,
                         EvolvedSpriteName = e.EvolvedPokemonVariety.DefaultForm.SpriteName,
-                        EvolvedType1 = e.EvolvedPokemonVariety.PrimaryType.Name,
-                        EvolvedType2 = e.EvolvedPokemonVariety.SecondaryType.Name,
+                        EvolvedPrimaryElementalType = e.EvolvedPokemonVariety.PrimaryType.Name,
+                        EvolvedSecondaryElementalType = e.EvolvedPokemonVariety.SecondaryType?.Name,
                         EvolvedSortIndex = e.EvolvedPokemonVariety.DefaultForm.SortIndex,
                         EvolvedStage = e.EvolvedStage,
                         EvolutionTrigger = e.EvolutionTrigger,
@@ -532,8 +562,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 
         private int GetEvolutionBaseSpecies(PokemonVariety variety)
         {
-            var anyEvolution = _dbContext.Evolutions
-                .AsNoTracking()
+            var anyEvolution = _evolutions
                 .FirstOrDefault(e =>
                     e.BasePokemonVarietyId.Equals(variety.Id) ||
                     e.EvolvedPokemonVarietyId.Equals(variety.Id));
@@ -545,9 +574,10 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             return variety.LearnableMoves.Select(learnableMove => new LearnableMoveReadModel
                 {
-                    Name = learnableMove.Move.Name,
+                    ApplicationDbId = learnableMove.Id,
+                    MoveName = learnableMove.Move.Name,
                     IsAvailable = learnableMove.LearnMethods.Any(lm => lm.IsAvailable),
-                    Type = learnableMove.Move.ElementalType.Name,
+                    ElementalType = learnableMove.Move.ElementalType.Name,
                     DamageClass = learnableMove.Move.DamageClass.Name,
                     AttackPower = learnableMove.Move.AttackPower,
                     Accuracy = learnableMove.Move.Accuracy,
@@ -581,9 +611,17 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 case "Tutor":
                     readModel.LearnMethodName = learnMethod.MoveTutorMove?.MoveTutor?.Name ??
                                                 learnMethod.MoveLearnMethod.Name + " (unavailable)";
-                    readModel.Description =
-                        $"{learnMethod.MoveTutorMove?.MoveTutor?.Location?.Name}, " +
-                        $"{GetPriceString(learnMethod.MoveTutorMove?.Price.Select(p => p.CurrencyAmount))}";
+                    if (learnMethod.MoveTutorMove != null)
+                    {
+                        readModel.Description =
+                            $"{learnMethod.MoveTutorMove?.MoveTutor?.Location?.Name}, " +
+                            $"{GetPriceString(learnMethod.MoveTutorMove?.Price.Select(p => p.CurrencyAmount))}";
+                    }
+                    else
+                    {
+                        readModel.Description = "";
+                    }
+                    
                     readModel.SortIndex = 2;
                     break;
 
@@ -628,14 +666,12 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             return variety.Builds.Select(build => new BuildReadModel
                 {
+                    ApplicationDbId = build.Id,
                     PokemonResourceName = variety.ResourceName,
                     PokemonName = variety.Name,
                     BuildName = build.Name,
                     BuildDescription = build.Description,
-                    Move1 = GetBuildMoveString(build.MoveOptions, 1),
-                    Move2 = GetBuildMoveString(build.MoveOptions, 2),
-                    Move3 = GetBuildMoveString(build.MoveOptions, 3),
-                    Move4 = GetBuildMoveString(build.MoveOptions, 4),
+                    MoveOptions = GetBuildMoveOptions(build.MoveOptions),
                     ItemOptions = GetBuildItemOptions(build.ItemOptions),
                     NatureOptions = GetBuildNatureOptions(build.NatureOptions),
                     Ability = build.Ability.Name,
@@ -650,17 +686,28 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 .ToList();
         }
 
-        private string GetBuildMoveString(List<MoveOption> moves, int slot)
+        private List<MoveOptionReadModel> GetBuildMoveOptions(List<MoveOption> moveOptions)
         {
-            return string.Join(" / ", moves
-                .Where(mo => mo.Slot == slot)
-                .Select(mo => mo.Move.Name));
+            return moveOptions.Select(mo => new MoveOptionReadModel
+            {
+                ApplicationDbId = mo.Id,
+                Slot = mo.Slot,
+                MoveName = mo.Move.Name,
+                ElementalType = mo.Move.ElementalType.Name,
+                DamageClass = mo.Move.DamageClass.Name,
+                AttackPower = mo.Move.AttackPower,
+                Accuracy = mo.Move.Accuracy,
+                PowerPoints = mo.Move.PowerPoints,
+                Priority = mo.Move.Priority,
+                EffectDescription = mo.Move.Effect
+            }).ToList();
         }
 
         private List<ItemOptionReadModel> GetBuildItemOptions(List<ItemOption> itemOptions)
         {
             return itemOptions.Select(io => new ItemOptionReadModel
             {
+                ApplicationDbId = io.Id,
                 ItemResourceName = io.Item.ResourceName,
                 ItemName = io.Item.Name
             }).ToList();
@@ -670,8 +717,19 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         {
             return natureOptions.Select(no => new NatureOptionReadModel
             {
+                ApplicationDbId = no.Id,
                 NatureName = no.Nature.Name,
-                NatureEffect = CommonFormatHelper.GetNatureEffect(no.Nature)
+                NatureEffect = no.Nature.GetDescription()
+            }).ToList();
+        }
+
+        private List<PokemonVarietyUrlReadModel> GetUrls(PokemonVariety variety)
+        {
+            return variety.Urls.Select(u => new PokemonVarietyUrlReadModel
+            {
+                ApplicationDbId = u.Id,
+                Name = u.Name,
+                Url = u.Url
             }).ToList();
         }
     }

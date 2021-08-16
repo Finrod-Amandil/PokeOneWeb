@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.ReadModels
 {
-    [Table("TimeReadModel")]
-    public class TimeReadModel
+    [Table("TimeOfDayReadModel")]
+    public class TimeOfDayReadModel : IReadModel
     {
         public int Id { get; set; }
         public int SortIndex { get; set; }

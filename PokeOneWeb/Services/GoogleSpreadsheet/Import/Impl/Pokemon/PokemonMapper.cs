@@ -261,7 +261,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 return null;
             }
 
-            ability ??= new Ability { Name = dto.PrimaryAbilityName };
+            ability ??= new Ability { Name = dto.SecondaryAbilityName };
             if (!_abilities.ContainsKey(dto.SecondaryAbilityName))
             {
                 _abilities.Add(dto.SecondaryAbilityName, ability);
@@ -281,7 +281,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 return null;
             }
 
-            ability ??= new Ability { Name = dto.PrimaryAbilityName };
+            ability ??= new Ability { Name = dto.HiddenAbilityName };
             if (!_abilities.ContainsKey(dto.HiddenAbilityName))
             {
                 _abilities.Add(dto.HiddenAbilityName, ability);

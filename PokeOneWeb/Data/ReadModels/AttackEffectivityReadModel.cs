@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("AttackEffectivityReadModel")]
-    public class AttackEffectivityReadModel
+    public class AttackEffectivityReadModel : IReadModel
     {
         public int Id { get; set; }
 

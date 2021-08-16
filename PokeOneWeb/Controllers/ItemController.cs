@@ -18,9 +18,9 @@ namespace PokeOneWeb.Controllers
 
         [Route("api/item/getitemstatboostsforpokemon")]
         [HttpGet]
-        public ActionResult<List<ItemStatBoostReadModel>> GetItemStatBoostsForPokemon([FromQuery] string name)
+        public ActionResult<List<ItemStatBoostPokemonReadModel>> GetItemStatBoostsForPokemon([FromQuery] string name)
         {
-            var itemStatBoosts = _dbContext.ItemStatBoostReadModels
+            var itemStatBoosts = _dbContext.ItemStatBoostPokemonReadModels
                 .Where(i =>
                     !i.HasRequiredPokemon ||
                     i.RequiredPokemonResourceName.Equals(name))

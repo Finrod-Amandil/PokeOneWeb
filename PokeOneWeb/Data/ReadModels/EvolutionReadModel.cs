@@ -1,8 +1,14 @@
-﻿namespace PokeOneWeb.Data.ReadModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
+
+namespace PokeOneWeb.Data.ReadModels
 {
-    public class EvolutionReadModel
+    [Table("EvolutionReadModel")]
+    public class EvolutionReadModel : IReadModel
     {
         public int Id { get; set; }
+
+        public int ApplicationDbId { get; set; }
 
         public string BaseName { get; set; }
 
@@ -10,9 +16,9 @@
 
         public string BaseSpriteName { get; set; }
 
-        public string BaseType1 { get; set; }
+        public string BasePrimaryElementalType { get; set; }
 
-        public string BaseType2 { get; set; }
+        public string BaseSecondaryElementalType { get; set; }
 
         public int BaseSortIndex { get; set; }
 
@@ -24,9 +30,9 @@
 
         public string EvolvedSpriteName { get; set; }
 
-        public string EvolvedType1 { get; set; }
+        public string EvolvedPrimaryElementalType { get; set; }
 
-        public string EvolvedType2 { get; set; }
+        public string EvolvedSecondaryElementalType { get; set; }
 
         public int EvolvedSortIndex { get; set; }
 

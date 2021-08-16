@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.Controllers.Dtos
 {
-    public class PokemonNameDto
+    public class PokemonVarietyNameDto
     {
         public int Id { get; set; }
         public string ResourceName { get; set; }

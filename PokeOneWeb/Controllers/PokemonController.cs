@@ -20,9 +20,9 @@ namespace PokeOneWeb.Controllers
 
         [Route("api/pokemon/getallbasic")]
         [HttpGet]
-        public ActionResult<List<BasicPokemonDto>> GetAllBasic()
+        public ActionResult<List<BasicPokemonVarietyDto>> GetAllBasic()
         {
-            return _dbContext.PokemonReadModels
+            return _dbContext.PokemonVarietyReadModels
                 .ToList()
                 .Select(ToBasicPokemon)
                 .ToList();
@@ -30,9 +30,9 @@ namespace PokeOneWeb.Controllers
 
         [Route("api/pokemon/getallnames")]
         [HttpGet]
-        public ActionResult<List<PokemonNameDto>> GetAllNames()
+        public ActionResult<List<PokemonVarietyNameDto>> GetAllNames()
         {
-            return _dbContext.PokemonReadModels
+            return _dbContext.PokemonVarietyReadModels
                 .ToList()
                 .Select(ToPokemonName)
                 .ToList();
@@ -40,18 +40,18 @@ namespace PokeOneWeb.Controllers
 
         [Route("api/pokemon/getbyname")]
         [HttpGet]
-        public ActionResult<PokemonReadModel> GetByName([FromQuery] string name)
+        public ActionResult<PokemonVarietyReadModel> GetByName([FromQuery] string name)
         {
-            var pokemon = _dbContext.PokemonReadModels
+            var pokemon = _dbContext.PokemonVarietyReadModels
                 .Where(p => p.ResourceName.Equals(name))
-                .IncludeOptimized(p => p.PrimaryAbilityTurnsInto)
-                .IncludeOptimized(p => p.SecondaryAbilityTurnsInto)
-                .IncludeOptimized(p => p.HiddenAbilityTurnsInto)
+                .IncludeOptimized(p => p.PrimaryEvolutionAbilities)
+                .IncludeOptimized(p => p.SecondaryEvolutionAbilities)
+                .IncludeOptimized(p => p.HiddenEvolutionAbilities)
                 .IncludeOptimized(p => p.HuntingConfigurations)
                 .IncludeOptimized(p => p.DefenseAttackEffectivities)
                 .IncludeOptimized(p => p.Spawns)
                 .IncludeOptimized(p => p.Spawns.Select(s => s.Seasons))
-                .IncludeOptimized(p => p.Spawns.Select(s => s.Times))
+                .IncludeOptimized(p => p.Spawns.Select(s => s.TimesOfDay))
                 .IncludeOptimized(p => p.Evolutions)
                 .IncludeOptimized(p => p.LearnableMoves)
                 .IncludeOptimized(p => p.LearnableMoves.Select(m => m.LearnMethods))
@@ -69,9 +69,9 @@ namespace PokeOneWeb.Controllers
 
         [Route("api/pokemon/getbasicbyname")]
         [HttpGet]
-        public ActionResult<BasicPokemonDto> GetBasicByName([FromQuery] string name)
+        public ActionResult<BasicPokemonVarietyDto> GetBasicByName([FromQuery] string name)
         {
-            var pokemon = _dbContext.PokemonReadModels
+            var pokemon = _dbContext.PokemonVarietyReadModels
                 .SingleOrDefault(p => p.ResourceName.Equals(name));
 
             if (pokemon is null)
@@ -111,7 +111,7 @@ namespace PokeOneWeb.Controllers
                 .Where(lm => !move4Options.Any() || move4Options.Contains(lm.MoveName))
                 .Select(lm => lm.PokemonName);
 
-            var matchingPokemon = _dbContext.PokemonReadModels
+            var matchingPokemon = _dbContext.PokemonVarietyReadModels
                 .Select(p => p.Name)
                 .Where(p => move1Query.Contains(p))
                 .Where(p => move2Query.Contains(p))
@@ -129,63 +129,63 @@ namespace PokeOneWeb.Controllers
             return _dbContext.NatureReadModels.ToList();
         }
 
-        private static BasicPokemonDto ToBasicPokemon(PokemonReadModel readModel)
+        private static BasicPokemonVarietyDto ToBasicPokemon(PokemonVarietyReadModel varietyReadModel)
         {
-            return new BasicPokemonDto
-            {
-                Id = readModel.Id,
-                ResourceName = readModel.ResourceName,
-                SortIndex = readModel.SortIndex,
-                PokedexNumber = readModel.PokedexNumber,
-                Name = readModel.Name,
-                SpriteName = readModel.SpriteName,
-                Type1 = readModel.Type1,
-                Type2 = readModel.Type2,
+            return new BasicPokemonVarietyDto();
+            /*{
+                Id = varietyReadModel.Id,
+                ResourceName = varietyReadModel.ResourceName,
+                SortIndex = varietyReadModel.SortIndex,
+                PokedexNumber = varietyReadModel.PokedexNumber,
+                Name = varietyReadModel.Name,
+                SpriteName = varietyReadModel.SpriteName,
+                PrimaryElementalType = varietyReadModel.PrimaryType,
+                SecondaryElementalType = varietyReadModel.SecondaryType,
 
-                Atk = readModel.Atk,
-                Spa = readModel.Spa,
-                Def = readModel.Def,
-                Spd = readModel.Spd,
-                Spe = readModel.Spe,
-                Hp = readModel.Hp,
-                StatTotal = readModel.StatTotal,
+                Atk = varietyReadModel.Attack,
+                Spa = varietyReadModel.SpecialAttack,
+                Def = varietyReadModel.Defense,
+                Spd = varietyReadModel.SpecialDefense,
+                Spe = varietyReadModel.Speed,
+                Hp = varietyReadModel.HitPoints,
+                StatTotal = varietyReadModel.StatTotal,
 
-                PrimaryAbility = readModel.PrimaryAbility,
-                PrimaryAbilityEffect = readModel.PrimaryAbilityEffect,
-                SecondaryAbility = readModel.SecondaryAbility,
-                SecondaryAbilityEffect = readModel.SecondaryAbilityEffect,
-                HiddenAbility = readModel.HiddenAbility,
-                HiddenAbilityEffect = readModel.HiddenAbilityEffect,
+                PrimaryAbility = varietyReadModel.PrimaryAbility,
+                PrimaryAbilityEffect = varietyReadModel.PrimaryAbilityEffect,
+                SecondaryAbility = varietyReadModel.SecondaryAbility,
+                SecondaryAbilityEffect = varietyReadModel.SecondaryAbilityEffect,
+                HiddenAbility = varietyReadModel.HiddenAbility,
+                HiddenAbilityEffect = varietyReadModel.HiddenAbilityEffect,
 
-                Availability = readModel.Availability,
-                PvpTier = readModel.PvpTier,
-                PvpTierSortIndex = readModel.PvpTierSortIndex,
-                Generation = readModel.Generation,
-                IsFullyEvolved = readModel.IsFullyEvolved,
-                IsMega = readModel.IsMega,
+                Availability = varietyReadModel.Availability,
+                PvpTier = varietyReadModel.PvpTier,
+                PvpTierSortIndex = varietyReadModel.PvpTierSortIndex,
+                Generation = varietyReadModel.Generation,
+                IsFullyEvolved = varietyReadModel.IsFullyEvolved,
+                IsMega = varietyReadModel.IsMega,
 
-                SmogonUrl = readModel.SmogonUrl,
-                BulbapediaUrl = readModel.BulbapediaUrl,
-                PokeOneCommunityUrl = readModel.PokeOneCommunityUrl,
-                PokemonShowDownUrl = readModel.PokemonShowDownUrl,
-                SerebiiUrl = readModel.SerebiiUrl,
-                PokemonDbUrl = readModel.PokemonDbUrl,
+                SmogonUrl = varietyReadModel.SmogonUrl,
+                BulbapediaUrl = varietyReadModel.BulbapediaUrl,
+                PokeOneCommunityUrl = varietyReadModel.PokeOneCommunityUrl,
+                PokemonShowDownUrl = varietyReadModel.PokemonShowDownUrl,
+                SerebiiUrl = varietyReadModel.SerebiiUrl,
+                PokemonDbUrl = varietyReadModel.PokemonDbUrl,
 
-                Notes = readModel.Notes
-            };
+                Notes = varietyReadModel.Notes
+            };*/
         }
 
-        private static PokemonNameDto ToPokemonName(PokemonReadModel readModel)
+        private static PokemonVarietyNameDto ToPokemonName(PokemonVarietyReadModel varietyReadModel)
         {
-            return new PokemonNameDto
+            return new PokemonVarietyNameDto
             {
-                Id = readModel.Id,
-                ResourceName = readModel.ResourceName,
-                SortIndex = readModel.SortIndex,
-                PokedexNumber = readModel.PokedexNumber,
-                Name = readModel.Name,
-                SpriteName = readModel.SpriteName,
-                Availability = readModel.Availability
+                Id = varietyReadModel.Id,
+                ResourceName = varietyReadModel.ResourceName,
+                SortIndex = varietyReadModel.SortIndex,
+                PokedexNumber = varietyReadModel.PokedexNumber,
+                Name = varietyReadModel.Name,
+                SpriteName = varietyReadModel.SpriteName,
+                Availability = varietyReadModel.Availability
             };
         }
     }

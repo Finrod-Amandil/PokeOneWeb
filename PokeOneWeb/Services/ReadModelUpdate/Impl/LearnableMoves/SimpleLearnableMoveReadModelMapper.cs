@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace PokeOneWeb.Services.ReadModelUpdate.Impl
+namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
 {
     public class SimpleLearnableMoveReadModelMapper : IReadModelMapper<SimpleLearnableMoveReadModel>
     {
@@ -20,7 +20,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             var learnableMoves = _dbContext.LearnableMoves
                 .Include(lm => lm.PokemonVariety)
                 .Include(lm => lm.Move)
-                .Include(lm => lm.LearnMethods);
+                .Include(lm => lm.LearnMethods)
+                .AsNoTracking();
 
             foreach (var learnableMove in learnableMoves)
             {
@@ -28,6 +29,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
                 {
                     yield return new SimpleLearnableMoveReadModel
                     {
+                        ApplicationDbId = learnableMove.Id,
                         PokemonName = learnableMove.PokemonVariety.Name,
                         MoveName = learnableMove.Move.Name
                     };
