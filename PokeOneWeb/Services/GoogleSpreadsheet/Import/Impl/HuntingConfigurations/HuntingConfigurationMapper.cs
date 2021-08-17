@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfigurations
 {
-    public class HuntingConfigurationMapper : ISpreadsheetEntityMapper<HuntingConfigurationDto, HuntingConfiguration>
+    public class HuntingConfigurationMapper : ISpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration>
     {
         private readonly ILogger<HuntingConfigurationMapper> _logger;
 
@@ -20,7 +20,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             _logger = logger;
         }
 
-        public IEnumerable<HuntingConfiguration> Map(IDictionary<RowHash, HuntingConfigurationDto> dtosWithHashes)
+        public IEnumerable<HuntingConfiguration> Map(IDictionary<RowHash, HuntingConfigurationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -43,7 +43,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             }
         }
 
-        public IEnumerable<HuntingConfiguration> MapOnto(IList<HuntingConfiguration> entities, IDictionary<RowHash, HuntingConfigurationDto> dtosWithHashes)
+        public IEnumerable<HuntingConfiguration> MapOnto(IList<HuntingConfiguration> entities, IDictionary<RowHash, HuntingConfigurationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -76,7 +76,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             return entities;
         }
 
-        public IEnumerable<HuntingConfiguration> Map(IEnumerable<HuntingConfigurationDto> dtos)
+        public IEnumerable<HuntingConfiguration> Map(IEnumerable<HuntingConfigurationSheetDto> dtos)
         {
             if (dtos is null)
             {
@@ -102,7 +102,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             }
         }
 
-        private static bool IsValid(HuntingConfigurationDto dto)
+        private static bool IsValid(HuntingConfigurationSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Ability) &&
@@ -111,7 +111,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
         }
 
         private HuntingConfiguration MapHuntingConfiguration(
-            HuntingConfigurationDto dto,
+            HuntingConfigurationSheetDto dto,
             RowHash rowHash,
             HuntingConfiguration huntingConfiguration = null)
         {
@@ -127,7 +127,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             return huntingConfiguration;
         }
 
-        private PokemonVariety MapPokemonVariety(HuntingConfigurationDto dto)
+        private PokemonVariety MapPokemonVariety(HuntingConfigurationSheetDto dto)
         {
             PokemonVariety pokemonVariety;
             if (!_pokemonVarieties.ContainsKey(dto.PokemonVarietyName))
@@ -143,7 +143,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             return pokemonVariety;
         }
 
-        private Nature MapNature(HuntingConfigurationDto dto)
+        private Nature MapNature(HuntingConfigurationSheetDto dto)
         {
             Nature nature;
             if (!_natures.ContainsKey(dto.Nature))
@@ -159,7 +159,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             return nature;
         }
 
-        private Ability MapAbility(HuntingConfigurationDto dto)
+        private Ability MapAbility(HuntingConfigurationSheetDto dto)
         {
             Ability ability;
             if (!_abilities.ContainsKey(dto.Ability))

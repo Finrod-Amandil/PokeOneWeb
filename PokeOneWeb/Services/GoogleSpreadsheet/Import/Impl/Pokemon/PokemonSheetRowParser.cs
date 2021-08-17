@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 {
-    public class PokemonSheetRowParser : ISheetRowParser<PokemonDto>
+    public class PokemonSheetRowParser : ISheetRowParser<PokemonSheetDto>
     {
-        public PokemonDto ReadRow(List<object> values)
+        public PokemonSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 33)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new PokemonDto
+            var value = new PokemonSheetDto
             {
                 SortIndex = int.TryParse(values[0].ToString(), out var parsedSortIndex) ? parsedSortIndex : 0,
                 PokedexNumber = int.TryParse(values[1].ToString(), out var parsedPokedexNumber) ? parsedPokedexNumber : 0,

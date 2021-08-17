@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
 {
-    public class MoveDamageClassSheetRowParser : ISheetRowParser<MoveDamageClassDto>
+    public class MoveDamageClassSheetRowParser : ISheetRowParser<MoveDamageClassSheetDto>
     {
-        public MoveDamageClassDto ReadRow(List<object> values)
+        public MoveDamageClassSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new MoveDamageClassDto
+            var value = new MoveDamageClassSheetDto
             {
                 Name = values[0] as string
             };

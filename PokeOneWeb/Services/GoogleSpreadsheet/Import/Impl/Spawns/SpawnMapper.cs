@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
 {
-    public class SpawnMapper : ISpreadsheetEntityMapper<SpawnDto, Spawn>
+    public class SpawnMapper : ISpreadsheetEntityMapper<SpawnSheetDto, Spawn>
     {
         private readonly ILogger<SpawnMapper> _logger;
 
@@ -22,7 +22,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             _logger = logger;
         }
 
-        public IEnumerable<Spawn> Map(IDictionary<RowHash, SpawnDto> dtosWithHashes)
+        public IEnumerable<Spawn> Map(IDictionary<RowHash, SpawnSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -47,7 +47,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             }
         }
 
-        public IEnumerable<Spawn> MapOnto(IList<Spawn> entities, IDictionary<RowHash, SpawnDto> dtosWithHashes)
+        public IEnumerable<Spawn> MapOnto(IList<Spawn> entities, IDictionary<RowHash, SpawnSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -82,7 +82,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return entities;
         }
 
-        private bool IsValid(SpawnDto dto)
+        private bool IsValid(SpawnSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.LocationName) &&
@@ -90,7 +90,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
                 !string.IsNullOrWhiteSpace(dto.SpawnType);
         }
 
-        private Spawn MapSpawn(SpawnDto dto, RowHash rowHash, Spawn spawn = null)
+        private Spawn MapSpawn(SpawnSheetDto dto, RowHash rowHash, Spawn spawn = null)
         {
             spawn ??= new Spawn();
 
@@ -141,7 +141,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
         }
 
         private List<SpawnOpportunity> MapSpawnOpportunities(
-            SpawnDto dto)
+            SpawnSheetDto dto)
         {
             var seasons = MapSeasons(dto);
             var timesOfDay = MapTimesOfDay(dto);
@@ -164,7 +164,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return spawnOpportunity;
         }
 
-        private List<Season> MapSeasons(SpawnDto dto)
+        private List<Season> MapSeasons(SpawnSheetDto dto)
         {
             var seasons = new List<Season>();
 
@@ -206,7 +206,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return seasons;
         }
 
-        private List<TimeOfDay> MapTimesOfDay(SpawnDto dto)
+        private List<TimeOfDay> MapTimesOfDay(SpawnSheetDto dto)
         {
             var timesOfDay = new List<TimeOfDay>();
 
@@ -248,7 +248,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return timesOfDay;
         }
 
-        private SpawnType MapSpawnType(SpawnDto dto)
+        private SpawnType MapSpawnType(SpawnSheetDto dto)
         {
             SpawnType spawnType;
             if (!_spawnTypes.ContainsKey(dto.SpawnType))
@@ -264,7 +264,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return spawnType;
         }
 
-        private Location MapLocation(SpawnDto dto)
+        private Location MapLocation(SpawnSheetDto dto)
         {
             Location location;
             if (!_locations.ContainsKey(dto.LocationName))
@@ -280,7 +280,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
             return location;
         }
 
-        private PokemonForm MapPokemonForm(SpawnDto dto)
+        private PokemonForm MapPokemonForm(SpawnSheetDto dto)
         {
             PokemonForm pokemonForm;
             if (!_pokemonForms.ContainsKey(dto.PokemonForm))

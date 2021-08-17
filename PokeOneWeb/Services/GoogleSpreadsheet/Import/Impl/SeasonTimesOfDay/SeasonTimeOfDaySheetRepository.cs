@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<SeasonTimeOfDaySheetRepository> _logger;
-        private readonly ISheetRowParser<SeasonTimeOfDayDto> _parser;
-        private readonly ISpreadsheetEntityMapper<SeasonTimeOfDayDto, SeasonTimeOfDay> _mapper;
+        private readonly ISheetRowParser<SeasonTimeOfDaySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay> _mapper;
 
         public SeasonTimeOfDaySheetRepository(
             ApplicationDbContext dbContext,
             ILogger<SeasonTimeOfDaySheetRepository> logger,
-            ISheetRowParser<SeasonTimeOfDayDto> parser,
-            ISpreadsheetEntityMapper<SeasonTimeOfDayDto, SeasonTimeOfDay> mapper)
+            ISheetRowParser<SeasonTimeOfDaySheetDto> parser,
+            ISpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, SeasonTimeOfDayDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, SeasonTimeOfDaySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

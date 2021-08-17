@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
 {
-    public class MoveSheetRowParser : ISheetRowParser<MoveDto>
+    public class MoveSheetRowParser : ISheetRowParser<MoveSheetDto>
     {
-        public MoveDto ReadRow(List<object> values)
+        public MoveSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 9)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new MoveDto
+            var value = new MoveSheetDto
             {
                 Name = values[0] as string,
                 DoInclude = bool.TryParse(values[1].ToString(), out var parsedDoInclude) && parsedDoInclude,

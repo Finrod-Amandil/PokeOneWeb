@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<HuntingConfigurationSheetRepository> _logger;
-        private readonly ISheetRowParser<HuntingConfigurationDto> _parser;
-        private readonly ISpreadsheetEntityMapper<HuntingConfigurationDto, HuntingConfiguration> _mapper;
+        private readonly ISheetRowParser<HuntingConfigurationSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration> _mapper;
 
         public HuntingConfigurationSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<HuntingConfigurationSheetRepository> logger,
-            ISheetRowParser<HuntingConfigurationDto> parser,
-            ISpreadsheetEntityMapper<HuntingConfigurationDto, HuntingConfiguration> mapper)
+            ISheetRowParser<HuntingConfigurationSheetDto> parser,
+            ISpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfiguration
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, HuntingConfigurationDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, HuntingConfigurationSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

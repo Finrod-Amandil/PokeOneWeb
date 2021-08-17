@@ -13,14 +13,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<ItemStatBoostSheetRepository> _logger;
-        private readonly ISheetRowParser<ItemStatBoostDto> _parser;
-        private readonly ISpreadsheetEntityMapper<ItemStatBoostDto, ItemStatBoostPokemon> _mapper;
+        private readonly ISheetRowParser<ItemStatBoostSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<ItemStatBoostSheetDto, ItemStatBoostPokemon> _mapper;
 
         public ItemStatBoostSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<ItemStatBoostSheetRepository> logger,
-            ISheetRowParser<ItemStatBoostDto> parser,
-            ISpreadsheetEntityMapper<ItemStatBoostDto, ItemStatBoostPokemon> mapper)
+            ISheetRowParser<ItemStatBoostSheetDto> parser,
+            ISpreadsheetEntityMapper<ItemStatBoostSheetDto, ItemStatBoostPokemon> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, ItemStatBoostDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, ItemStatBoostSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
 {
-    public class SeasonMapper : ISpreadsheetEntityMapper<SeasonDto, Season>
+    public class SeasonMapper : ISpreadsheetEntityMapper<SeasonSheetDto, Season>
     {
         private readonly ILogger _logger;
 
-        public SeasonMapper(ILogger<SeasonDto> logger)
+        public SeasonMapper(ILogger<SeasonSheetDto> logger)
         {
             _logger = logger;
         }
 
-        public IEnumerable<Season> Map(IDictionary<RowHash, SeasonDto> dtosWithHashes)
+        public IEnumerable<Season> Map(IDictionary<RowHash, SeasonSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
             }
         }
 
-        public IEnumerable<Season> MapOnto(IList<Season> entities, IDictionary<RowHash, SeasonDto> dtosWithHashes)
+        public IEnumerable<Season> MapOnto(IList<Season> entities, IDictionary<RowHash, SeasonSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,14 +64,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
             return entities;
         }
 
-        private static bool IsValid(SeasonDto dto)
+        private static bool IsValid(SeasonSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
                 !string.IsNullOrWhiteSpace(dto.Abbreviation);
         }
 
-        private Season MapSeason(SeasonDto dto, RowHash rowHash, Season season = null)
+        private Season MapSeason(SeasonSheetDto dto, RowHash rowHash, Season season = null)
         {
             season ??= new Season();
 

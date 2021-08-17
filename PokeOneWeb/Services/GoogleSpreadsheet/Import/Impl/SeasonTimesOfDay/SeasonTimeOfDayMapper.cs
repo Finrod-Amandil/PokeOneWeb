@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
 {
-    public class SeasonTimeOfDayMapper : ISpreadsheetEntityMapper<SeasonTimeOfDayDto, SeasonTimeOfDay>
+    public class SeasonTimeOfDayMapper : ISpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay>
     {
         private readonly ILogger<SeasonTimeOfDayMapper> _logger;
 
@@ -19,7 +19,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
             _logger = logger;
         }
 
-        public IEnumerable<SeasonTimeOfDay> Map(IDictionary<RowHash, SeasonTimeOfDayDto> dtosWithHashes)
+        public IEnumerable<SeasonTimeOfDay> Map(IDictionary<RowHash, SeasonTimeOfDaySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -41,7 +41,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
             }
         }
 
-        public IEnumerable<SeasonTimeOfDay> MapOnto(IList<SeasonTimeOfDay> entities, IDictionary<RowHash, SeasonTimeOfDayDto> dtosWithHashes)
+        public IEnumerable<SeasonTimeOfDay> MapOnto(IList<SeasonTimeOfDay> entities, IDictionary<RowHash, SeasonTimeOfDaySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -73,7 +73,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
             return entities;
         }
 
-        private bool IsValid(SeasonTimeOfDayDto dto)
+        private bool IsValid(SeasonTimeOfDaySheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.SeasonName) &&
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
         }
 
         private SeasonTimeOfDay MapSeasonTimeOfDay(
-            SeasonTimeOfDayDto dto,
+            SeasonTimeOfDaySheetDto dto,
             RowHash rowHash,
             SeasonTimeOfDay seasonTimeOfDay = null)
         {

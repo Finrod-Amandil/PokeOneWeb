@@ -433,8 +433,6 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                     UpdateMoveOptions(existingBuild.MoveOptions, build.MoveOptions);
                     UpdateNatureOptions(existingBuild.NatureOptions, build.NatureOptions);
                     UpdateItemOptions(existingBuild.ItemOptions, build.ItemOptions);
-
-                    UpdateAttackEffectivities(existingBuild.OffensiveCoverage, build.OffensiveCoverage);
                 }
                 else
                 {

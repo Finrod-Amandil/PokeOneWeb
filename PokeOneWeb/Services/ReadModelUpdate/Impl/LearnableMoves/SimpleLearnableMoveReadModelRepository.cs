@@ -37,8 +37,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
         private void UpdateExistingEntity(SimpleLearnableMoveReadModel existingEntity, SimpleLearnableMoveReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
-            existingEntity.PokemonName = entity.PokemonName;
-            existingEntity.MoveName = entity.MoveName;
+            existingEntity.PokemonVarietyApplicationDbId = entity.PokemonVarietyApplicationDbId;
+            existingEntity.MoveResourceName = entity.MoveResourceName;
         }
     }
 }

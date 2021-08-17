@@ -10,8 +10,8 @@ namespace PokeOneWeb.Data.ReadModels
 
         public int ApplicationDbId { get; set; }
 
-        public string PokemonName { get; set; }
+        public int PokemonVarietyApplicationDbId { get; set; }
 
-        public string MoveName { get; set; }
+        public string MoveResourceName { get; set; }
     }
 }

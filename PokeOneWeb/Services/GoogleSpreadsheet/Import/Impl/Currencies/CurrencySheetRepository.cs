@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<CurrencySheetRepository> _logger;
-        private readonly ISheetRowParser<CurrencyDto> _parser;
-        private readonly ISpreadsheetEntityMapper<CurrencyDto, Currency> _mapper;
+        private readonly ISheetRowParser<CurrencySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<CurrencySheetDto, Currency> _mapper;
 
         public CurrencySheetRepository(
             ApplicationDbContext dbContext,
             ILogger<CurrencySheetRepository> logger,
-            ISheetRowParser<CurrencyDto> parser,
-            ISpreadsheetEntityMapper<CurrencyDto, Currency> mapper)
+            ISheetRowParser<CurrencySheetDto> parser,
+            ISpreadsheetEntityMapper<CurrencySheetDto, Currency> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, CurrencyDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, CurrencySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

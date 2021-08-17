@@ -7,19 +7,19 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
 {
-    public class EvolutionMapper : ISpreadsheetEntityMapper<EvolutionDto, Evolution>
+    public class EvolutionMapper : ISpreadsheetEntityMapper<EvolutionSheetDto, Evolution>
     {
-        private readonly ILogger<EvolutionDto> _logger;
+        private readonly ILogger<EvolutionSheetDto> _logger;
 
         private IDictionary<string, PokemonVariety> _varieties;
         private IDictionary<string, PokemonSpecies> _species;
 
-        public EvolutionMapper(ILogger<EvolutionDto> logger)
+        public EvolutionMapper(ILogger<EvolutionSheetDto> logger)
         {
             _logger = logger;
         }
 
-        public IEnumerable<Evolution> Map(IDictionary<RowHash, EvolutionDto> dtosWithHashes)
+        public IEnumerable<Evolution> Map(IDictionary<RowHash, EvolutionSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -41,7 +41,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
             }
         }
 
-        public IEnumerable<Evolution> MapOnto(IList<Evolution> entities, IDictionary<RowHash, EvolutionDto> dtosWithHashes)
+        public IEnumerable<Evolution> MapOnto(IList<Evolution> entities, IDictionary<RowHash, EvolutionSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -73,7 +73,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
             return entities;
         }
 
-        private bool IsValid(EvolutionDto dto)
+        private bool IsValid(EvolutionSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.BasePokemonSpeciesName) &&
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
                 !string.IsNullOrWhiteSpace(dto.EvolvedPokemonVarietyName);
         }
 
-        private Evolution MapEvolution(EvolutionDto dto, RowHash rowHash, Evolution evolution = null)
+        private Evolution MapEvolution(EvolutionSheetDto dto, RowHash rowHash, Evolution evolution = null)
         {
             evolution ??= new Evolution();
 

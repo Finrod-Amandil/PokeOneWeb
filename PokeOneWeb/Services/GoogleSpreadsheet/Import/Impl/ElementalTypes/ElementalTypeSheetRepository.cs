@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
     public class ElementalTypeSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<ElementalTypeDto> _parser;
-        private readonly ISpreadsheetEntityMapper<ElementalTypeDto, ElementalType> _mapper;
+        private readonly ISheetRowParser<ElementalTypeSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType> _mapper;
 
         public ElementalTypeSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<ElementalTypeDto> parser,
-            ISpreadsheetEntityMapper<ElementalTypeDto, ElementalType> mapper)
+            ISheetRowParser<ElementalTypeSheetDto> parser,
+            ISpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -68,7 +68,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, ElementalTypeDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, ElementalTypeSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

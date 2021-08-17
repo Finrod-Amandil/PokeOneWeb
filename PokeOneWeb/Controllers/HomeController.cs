@@ -5,10 +5,10 @@ using PokeOneWeb.Data;
 using PokeOneWeb.Models;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import;
 using PokeOneWeb.Services.PokeApi;
+using PokeOneWeb.Services.ReadModelUpdate;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using PokeOneWeb.Services.ReadModelUpdate;
 
 namespace PokeOneWeb.Controllers
 {

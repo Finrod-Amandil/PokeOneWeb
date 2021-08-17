@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
 {
-    public class ItemSheetRowParser : ISheetRowParser<ItemDto>
+    public class ItemSheetRowParser : ISheetRowParser<ItemSheetDto>
     {
-        public ItemDto ReadRow(List<object> values)
+        public ItemSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 6)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new ItemDto
+            var value = new ItemSheetDto
             {
                 Name = values[0] as string,
                 IsAvailable = bool.TryParse(values[1].ToString(), out var parsedIsAvailable) && parsedIsAvailable,

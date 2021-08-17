@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodMapper : ISpreadsheetEntityMapper<LearnableMoveLearnMethodDto, LearnableMoveLearnMethod>
+    public class LearnableMoveLearnMethodMapper : ISpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod>
     {
         private readonly ILogger<LearnableMoveLearnMethodMapper> _logger;
 
@@ -24,7 +24,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             _logger = logger;
         }
 
-        public IEnumerable<LearnableMoveLearnMethod> Map(IDictionary<RowHash, LearnableMoveLearnMethodDto> dtosWithHashes)
+        public IEnumerable<LearnableMoveLearnMethod> Map(IDictionary<RowHash, LearnableMoveLearnMethodSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -51,7 +51,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             }
         }
 
-        public IEnumerable<LearnableMoveLearnMethod> MapOnto(IList<LearnableMoveLearnMethod> entities, IDictionary<RowHash, LearnableMoveLearnMethodDto> dtosWithHashes)
+        public IEnumerable<LearnableMoveLearnMethod> MapOnto(IList<LearnableMoveLearnMethod> entities, IDictionary<RowHash, LearnableMoveLearnMethodSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -88,7 +88,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return entities;
         }
 
-        private static bool IsValid(LearnableMoveLearnMethodDto dto)
+        private static bool IsValid(LearnableMoveLearnMethodSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.PokemonVarietyName) &&
@@ -97,7 +97,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
         }
 
         private LearnableMoveLearnMethod MapLearnableMoveLearnMethod(
-            LearnableMoveLearnMethodDto dto,
+            LearnableMoveLearnMethodSheetDto dto,
             RowHash rowHash,
             LearnableMoveLearnMethod learnableMoveLearnMethod = null)
         {
@@ -118,7 +118,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return learnableMoveLearnMethod;
         }
 
-        private LearnableMove MapLearnableMove(LearnableMoveLearnMethodDto dto)
+        private LearnableMove MapLearnableMove(LearnableMoveLearnMethodSheetDto dto)
         {
             LearnableMove learnableMove = null;
             if (_learnableMoves.ContainsKey(dto.PokemonVarietyName))
@@ -171,7 +171,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return learnableMove;
         }
 
-        private MoveLearnMethod MapMoveLearnMethod(LearnableMoveLearnMethodDto dto)
+        private MoveLearnMethod MapMoveLearnMethod(LearnableMoveLearnMethodSheetDto dto)
         {
             MoveLearnMethod moveLearnMethod;
             if (_moveLearnMethods.ContainsKey(dto.LearnMethod))
@@ -187,7 +187,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return moveLearnMethod;
         }
 
-        private Item MapItem(LearnableMoveLearnMethodDto dto)
+        private Item MapItem(LearnableMoveLearnMethodSheetDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.RequiredItemName))
             {
@@ -208,7 +208,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return item;
         }
 
-        private MoveTutorMove MapMoveTutorMove(LearnableMoveLearnMethodDto dto)
+        private MoveTutorMove MapMoveTutorMove(LearnableMoveLearnMethodSheetDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.TutorName))
             {
