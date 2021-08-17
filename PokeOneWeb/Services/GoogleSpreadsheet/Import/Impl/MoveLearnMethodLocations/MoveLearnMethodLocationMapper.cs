@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocations
 {
-    public class MoveLearnMethodLocationMapper : ISpreadsheetEntityMapper<MoveLearnMethodLocationDto, MoveLearnMethodLocation>
+    public class MoveLearnMethodLocationMapper : ISpreadsheetEntityMapper<MoveLearnMethodLocationSheetDto, MoveLearnMethodLocation>
     {
         private readonly ILogger<MoveLearnMethodLocationMapper> _logger;
 
@@ -20,7 +20,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
             _logger = logger;
         }
 
-        public IEnumerable<MoveLearnMethodLocation> Map(IDictionary<RowHash, MoveLearnMethodLocationDto> dtosWithHashes)
+        public IEnumerable<MoveLearnMethodLocation> Map(IDictionary<RowHash, MoveLearnMethodLocationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -43,7 +43,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
             }
         }
 
-        public IEnumerable<MoveLearnMethodLocation> MapOnto(IList<MoveLearnMethodLocation> entities, IDictionary<RowHash, MoveLearnMethodLocationDto> dtosWithHashes)
+        public IEnumerable<MoveLearnMethodLocation> MapOnto(IList<MoveLearnMethodLocation> entities, IDictionary<RowHash, MoveLearnMethodLocationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -76,7 +76,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
             return entities;
         }
 
-        private static bool IsValid(MoveLearnMethodLocationDto dto)
+        private static bool IsValid(MoveLearnMethodLocationSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.MoveLearnMethodName) &&
@@ -84,7 +84,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
         }
 
         private MoveLearnMethodLocation MapMoveLearnMethodLocation(
-            MoveLearnMethodLocationDto dto,
+            MoveLearnMethodLocationSheetDto dto,
             RowHash rowHash,
             MoveLearnMethodLocation moveLearnMethodLocation = null)
         {

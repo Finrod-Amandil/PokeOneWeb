@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
 {
-    public class AbilityMapper : ISpreadsheetEntityMapper<AbilityDto, Ability>
+    public class AbilityMapper : ISpreadsheetEntityMapper<AbilitySheetDto, Ability>
     {
         private readonly ILogger<AbilityMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
             _logger = logger;
         }
 
-        public IEnumerable<Ability> Map(IDictionary<RowHash, AbilityDto> dtosWithHashes)
+        public IEnumerable<Ability> Map(IDictionary<RowHash, AbilitySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
             }
         }
 
-        public IEnumerable<Ability> MapOnto(IList<Ability> entities, IDictionary<RowHash, AbilityDto> dtosWithHashes)
+        public IEnumerable<Ability> MapOnto(IList<Ability> entities, IDictionary<RowHash, AbilitySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
             return entities;
         }
 
-        private static bool IsValid(AbilityDto dto)
+        private static bool IsValid(AbilitySheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private Ability MapAbility(AbilityDto dto, RowHash rowHash, Ability ability = null)
+        private Ability MapAbility(AbilitySheetDto dto, RowHash rowHash, Ability ability = null)
         {
             ability ??= new Ability();
 

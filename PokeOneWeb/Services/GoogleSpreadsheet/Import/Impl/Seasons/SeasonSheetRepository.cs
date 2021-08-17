@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
     public class SeasonSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<SeasonDto> _parser;
-        private readonly ISpreadsheetEntityMapper<SeasonDto, Season> _mapper;
+        private readonly ISheetRowParser<SeasonSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<SeasonSheetDto, Season> _mapper;
 
         public SeasonSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<SeasonDto> parser,
-            ISpreadsheetEntityMapper<SeasonDto, Season> mapper)
+            ISheetRowParser<SeasonSheetDto> parser,
+            ISpreadsheetEntityMapper<SeasonSheetDto, Season> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, SeasonDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, SeasonSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

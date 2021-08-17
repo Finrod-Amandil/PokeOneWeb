@@ -11,14 +11,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger _logger;
-        private readonly ISheetRowParser<ElementalTypeRelationDto> _parser;
-        private readonly ISpreadsheetEntityMapper<ElementalTypeRelationDto, ElementalTypeRelation> _mapper;
+        private readonly ISheetRowParser<ElementalTypeRelationSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<ElementalTypeRelationSheetDto, ElementalTypeRelation> _mapper;
 
         public ElementalTypeRelationSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<ElementalTypeRelationSheetRepository> logger,
-            ISheetRowParser<ElementalTypeRelationDto> parser,
-            ISpreadsheetEntityMapper<ElementalTypeRelationDto, ElementalTypeRelation> mapper)
+            ISheetRowParser<ElementalTypeRelationSheetDto> parser,
+            ISpreadsheetEntityMapper<ElementalTypeRelationSheetDto, ElementalTypeRelation> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -79,7 +79,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, ElementalTypeRelationDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, ElementalTypeRelationSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

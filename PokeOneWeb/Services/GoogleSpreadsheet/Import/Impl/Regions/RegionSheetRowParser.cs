@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
 {
-    public class RegionSheetRowParser : ISheetRowParser<RegionDto>
+    public class RegionSheetRowParser : ISheetRowParser<RegionSheetDto>
     {
-        public RegionDto ReadRow(List<object> values)
+        public RegionSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new RegionDto
+            var value = new RegionSheetDto
             {
                 Name = values[0] as string
             };

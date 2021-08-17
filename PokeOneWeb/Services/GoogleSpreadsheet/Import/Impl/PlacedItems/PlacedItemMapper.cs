@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
 {
-    public class PlacedItemMapper : ISpreadsheetEntityMapper<PlacedItemDto, PlacedItem>
+    public class PlacedItemMapper : ISpreadsheetEntityMapper<PlacedItemSheetDto, PlacedItem>
     {
         private readonly ILogger<PlacedItemMapper> _logger;
 
@@ -19,7 +19,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             _logger = logger;
         }
 
-        public IEnumerable<PlacedItem> Map(IDictionary<RowHash, PlacedItemDto> dtosWithHashes)
+        public IEnumerable<PlacedItem> Map(IDictionary<RowHash, PlacedItemSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -41,7 +41,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             }
         }
 
-        public IEnumerable<PlacedItem> MapOnto(IList<PlacedItem> entities, IDictionary<RowHash, PlacedItemDto> dtosWithHashes)
+        public IEnumerable<PlacedItem> MapOnto(IList<PlacedItem> entities, IDictionary<RowHash, PlacedItemSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -73,7 +73,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             return entities;
         }
 
-        private bool IsValid(PlacedItemDto dto)
+        private bool IsValid(PlacedItemSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.ItemName) &&
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
                 dto.Index != 0;
         }
 
-        private PlacedItem MapPlacedItem(PlacedItemDto dto, RowHash rowHash, PlacedItem placedItem = null)
+        private PlacedItem MapPlacedItem(PlacedItemSheetDto dto, RowHash rowHash, PlacedItem placedItem = null)
         {
             placedItem ??= new PlacedItem();
 
@@ -103,7 +103,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             return placedItem;
         }
 
-        private Location MapLocation(PlacedItemDto dto)
+        private Location MapLocation(PlacedItemSheetDto dto)
         {
             Location location;
             if (!_locations.ContainsKey(dto.LocationName))
@@ -119,7 +119,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             return location;
         }
 
-        private Item MapItem(PlacedItemDto dto)
+        private Item MapItem(PlacedItemSheetDto dto)
         {
             Item item;
             if (!_items.ContainsKey(dto.ItemName))

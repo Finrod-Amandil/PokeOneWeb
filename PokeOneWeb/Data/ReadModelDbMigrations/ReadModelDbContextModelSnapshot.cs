@@ -801,11 +801,11 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("ApplicationDbId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MoveName")
+                    b.Property<string>("MoveResourceName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PokemonName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PokemonVarietyApplicationDbId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

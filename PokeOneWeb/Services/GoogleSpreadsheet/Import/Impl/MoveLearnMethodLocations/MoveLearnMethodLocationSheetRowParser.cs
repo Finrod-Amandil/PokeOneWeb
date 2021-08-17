@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocations
 {
-    public class MoveLearnMethodLocationSheetRowParser : ISheetRowParser<MoveLearnMethodLocationDto>
+    public class MoveLearnMethodLocationSheetRowParser : ISheetRowParser<MoveLearnMethodLocationSheetDto>
     {
-        public MoveLearnMethodLocationDto ReadRow(List<object> values)
+        public MoveLearnMethodLocationSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 4)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new MoveLearnMethodLocationDto
+            var value = new MoveLearnMethodLocationSheetDto
             {
                 MoveLearnMethodName = values[0] as string,
                 TutorType = values[1] as string,

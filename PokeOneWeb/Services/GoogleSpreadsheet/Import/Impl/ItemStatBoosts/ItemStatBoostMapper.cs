@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
 {
-    public class ItemStatBoostMapper : ISpreadsheetEntityMapper<ItemStatBoostDto, ItemStatBoostPokemon>
+    public class ItemStatBoostMapper : ISpreadsheetEntityMapper<ItemStatBoostSheetDto, ItemStatBoostPokemon>
     {
         private readonly ILogger<ItemStatBoostMapper> _logger;
 
@@ -19,7 +19,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
             _logger = logger;
         }
 
-        public IEnumerable<ItemStatBoostPokemon> Map(IDictionary<RowHash, ItemStatBoostDto> dtosWithHashes)
+        public IEnumerable<ItemStatBoostPokemon> Map(IDictionary<RowHash, ItemStatBoostSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -41,7 +41,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
             }
         }
 
-        public IEnumerable<ItemStatBoostPokemon> MapOnto(IList<ItemStatBoostPokemon> entities, IDictionary<RowHash, ItemStatBoostDto> dtosWithHashes)
+        public IEnumerable<ItemStatBoostPokemon> MapOnto(IList<ItemStatBoostPokemon> entities, IDictionary<RowHash, ItemStatBoostSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -73,13 +73,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts
             return entities;
         }
 
-        private bool IsValid(ItemStatBoostDto dto)
+        private bool IsValid(ItemStatBoostSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.ItemName);
         }
 
         private ItemStatBoostPokemon MapItemStatBoost(
-            ItemStatBoostDto dto, 
+            ItemStatBoostSheetDto dto, 
             RowHash rowHash,
             ItemStatBoostPokemon itemStatBoostPokemon = null)
         {

@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
 {
-    public class BagCategorySheetRowParser : ISheetRowParser<BagCategoryDto>
+    public class BagCategorySheetRowParser : ISheetRowParser<BagCategorySheetDto>
     {
-        public BagCategoryDto ReadRow(List<object> values)
+        public BagCategorySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new BagCategoryDto
+            var value = new BagCategorySheetDto
             {
                 Name = values[0] as string,
                 SortIndex = int.TryParse(values[1].ToString(), out var parsed) ? parsed : 0

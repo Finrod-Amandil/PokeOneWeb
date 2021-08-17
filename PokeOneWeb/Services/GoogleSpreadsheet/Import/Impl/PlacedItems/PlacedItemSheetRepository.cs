@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<PlacedItemSheetRepository> _logger;
-        private readonly ISheetRowParser<PlacedItemDto> _parser;
-        private readonly ISpreadsheetEntityMapper<PlacedItemDto, PlacedItem> _mapper;
+        private readonly ISheetRowParser<PlacedItemSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<PlacedItemSheetDto, PlacedItem> _mapper;
 
         public PlacedItemSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<PlacedItemSheetRepository> logger,
-            ISheetRowParser<PlacedItemDto> parser,
-            ISpreadsheetEntityMapper<PlacedItemDto, PlacedItem> mapper)
+            ISheetRowParser<PlacedItemSheetDto> parser,
+            ISpreadsheetEntityMapper<PlacedItemSheetDto, PlacedItem> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, PlacedItemDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, PlacedItemSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

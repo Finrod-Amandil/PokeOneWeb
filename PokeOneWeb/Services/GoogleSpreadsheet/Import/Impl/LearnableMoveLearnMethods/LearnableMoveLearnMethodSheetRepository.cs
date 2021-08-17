@@ -13,14 +13,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<LearnableMoveLearnMethodSheetRepository> _logger;
-        private readonly ISheetRowParser<LearnableMoveLearnMethodDto> _parser;
-        private readonly ISpreadsheetEntityMapper<LearnableMoveLearnMethodDto, LearnableMoveLearnMethod> _mapper;
+        private readonly ISheetRowParser<LearnableMoveLearnMethodSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod> _mapper;
 
         public LearnableMoveLearnMethodSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<LearnableMoveLearnMethodSheetRepository> logger,
-            ISheetRowParser<LearnableMoveLearnMethodDto> parser,
-            ISpreadsheetEntityMapper<LearnableMoveLearnMethodDto, LearnableMoveLearnMethod> mapper)
+            ISheetRowParser<LearnableMoveLearnMethodSheetDto> parser,
+            ISpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMe
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, LearnableMoveLearnMethodDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, LearnableMoveLearnMethodSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

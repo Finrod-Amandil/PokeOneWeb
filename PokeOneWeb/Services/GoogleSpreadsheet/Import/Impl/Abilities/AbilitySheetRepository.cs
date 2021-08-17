@@ -9,13 +9,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
     public class AbilitySheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<AbilityDto> _parser;
-        private readonly ISpreadsheetEntityMapper<AbilityDto, Ability> _mapper;
+        private readonly ISheetRowParser<AbilitySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<AbilitySheetDto, Ability> _mapper;
 
         public AbilitySheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<AbilityDto> parser,
-            ISpreadsheetEntityMapper<AbilityDto, Ability> mapper)
+            ISheetRowParser<AbilitySheetDto> parser,
+            ISpreadsheetEntityMapper<AbilitySheetDto, Ability> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, AbilityDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, AbilitySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

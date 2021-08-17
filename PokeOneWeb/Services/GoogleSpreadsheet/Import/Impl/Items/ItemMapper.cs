@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
 {
-    public class ItemMapper : ISpreadsheetEntityMapper<ItemDto, Item>
+    public class ItemMapper : ISpreadsheetEntityMapper<ItemSheetDto, Item>
     {
         private readonly ILogger<ItemMapper> _logger;
 
@@ -18,7 +18,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
             _logger = logger;
         }
 
-        public IEnumerable<Item> Map(IDictionary<RowHash, ItemDto> dtosWithHashes)
+        public IEnumerable<Item> Map(IDictionary<RowHash, ItemSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -39,7 +39,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
             }
         }
 
-        public IEnumerable<Item> MapOnto(IList<Item> entities, IDictionary<RowHash, ItemDto> dtosWithHashes)
+        public IEnumerable<Item> MapOnto(IList<Item> entities, IDictionary<RowHash, ItemSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -70,7 +70,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
             return entities;
         }
 
-        private bool IsValid(ItemDto dto)
+        private bool IsValid(ItemSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
@@ -78,7 +78,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items
                 !string.IsNullOrWhiteSpace(dto.BagCategoryName);
         }
 
-        private Item MapItem(ItemDto dto, RowHash rowHash, Item item = null)
+        private Item MapItem(ItemSheetDto dto, RowHash rowHash, Item item = null)
         {
             item ??= new Item();
 

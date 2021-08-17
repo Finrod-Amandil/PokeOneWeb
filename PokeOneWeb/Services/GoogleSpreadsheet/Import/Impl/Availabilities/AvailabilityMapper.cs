@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
 {
-    public class AvailabilityMapper : ISpreadsheetEntityMapper<AvailabilityDto, PokemonAvailability>
+    public class AvailabilityMapper : ISpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability>
     {
         private readonly ILogger<AvailabilityMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
             _logger = logger;
         }
 
-        public IEnumerable<PokemonAvailability> Map(IDictionary<RowHash, AvailabilityDto> dtosWithHashes)
+        public IEnumerable<PokemonAvailability> Map(IDictionary<RowHash, AvailabilitySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
             }
         }
 
-        public IEnumerable<PokemonAvailability> MapOnto(IList<PokemonAvailability> entities, IDictionary<RowHash, AvailabilityDto> dtosWithHashes)
+        public IEnumerable<PokemonAvailability> MapOnto(IList<PokemonAvailability> entities, IDictionary<RowHash, AvailabilitySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,7 +64,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
             return entities;
         }
 
-        private bool IsValid(AvailabilityDto dto)
+        private bool IsValid(AvailabilitySheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
@@ -72,7 +72,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
         }
 
         private PokemonAvailability MapAvailability(
-            AvailabilityDto dto, 
+            AvailabilitySheetDto dto, 
             RowHash rowHash,
             PokemonAvailability availability = null)
         {

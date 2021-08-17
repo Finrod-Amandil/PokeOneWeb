@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<EvolutionSheetRepository> _logger;
-        private readonly ISheetRowParser<EvolutionDto> _parser;
-        private readonly ISpreadsheetEntityMapper<EvolutionDto, Evolution> _mapper;
+        private readonly ISheetRowParser<EvolutionSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<EvolutionSheetDto, Evolution> _mapper;
 
         public EvolutionSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<EvolutionSheetRepository> logger,
-            ISheetRowParser<EvolutionDto> parser,
-            ISpreadsheetEntityMapper<EvolutionDto, Evolution> mapper)
+            ISheetRowParser<EvolutionSheetDto> parser,
+            ISpreadsheetEntityMapper<EvolutionSheetDto, Evolution> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, EvolutionDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, EvolutionSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

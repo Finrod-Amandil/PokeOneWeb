@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay
 {
-    public class SeasonTimeOfDaySheetRowParser : ISheetRowParser<SeasonTimeOfDayDto>
+    public class SeasonTimeOfDaySheetRowParser : ISheetRowParser<SeasonTimeOfDaySheetDto>
     {
-        public SeasonTimeOfDayDto ReadRow(List<object> values)
+        public SeasonTimeOfDaySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 4)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new SeasonTimeOfDayDto
+            var value = new SeasonTimeOfDaySheetDto
             {
                 SeasonName = values[0] as string,
                 TimeOfDayName = values[1] as string,

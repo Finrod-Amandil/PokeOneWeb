@@ -13,14 +13,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<LocationSheetRepository> _logger;
-        private readonly ISheetRowParser<LocationDto> _parser;
-        private readonly ISpreadsheetEntityMapper<LocationDto, Location> _mapper;
+        private readonly ISheetRowParser<LocationSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<LocationSheetDto, Location> _mapper;
 
         public LocationSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<LocationSheetRepository> logger,
-            ISheetRowParser<LocationDto> parser,
-            ISpreadsheetEntityMapper<LocationDto, Location> mapper)
+            ISheetRowParser<LocationSheetDto> parser,
+            ISpreadsheetEntityMapper<LocationSheetDto, Location> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -83,7 +83,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, LocationDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, LocationSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

@@ -57,13 +57,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .ToList();
 
-            var index = 0;
             foreach (var varietyId in varietyIds)
             {
-                index++;
                 var variety = LoadVariety(varietyId);
                 
-                var readModel = GetBasicReadModel(variety, index);
+                var readModel = GetBasicReadModel(variety);
 
                 AttachEvolutionAbilities(readModel, variety);
 
@@ -148,11 +146,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .Single();
         }
 
-        private PokemonVarietyReadModel GetBasicReadModel(PokemonVariety variety, int index)
+        private PokemonVarietyReadModel GetBasicReadModel(PokemonVariety variety)
         {
             return new()
             {
-                ApplicationDbId = index,
+                ApplicationDbId = variety.Id,
 
                 ResourceName = variety.ResourceName,
                 SortIndex = variety.DefaultForm.SortIndex,

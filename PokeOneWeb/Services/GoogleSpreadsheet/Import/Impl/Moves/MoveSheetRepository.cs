@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<MoveSheetRepository> _logger;
-        private readonly ISheetRowParser<MoveDto> _parser;
-        private readonly ISpreadsheetEntityMapper<MoveDto, Move> _mapper;
+        private readonly ISheetRowParser<MoveSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<MoveSheetDto, Move> _mapper;
 
         public MoveSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<MoveSheetRepository> logger,
-            ISheetRowParser<MoveDto> parser,
-            ISpreadsheetEntityMapper<MoveDto, Move> mapper)
+            ISheetRowParser<MoveSheetDto> parser,
+            ISpreadsheetEntityMapper<MoveSheetDto, Move> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -80,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, MoveDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, MoveSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

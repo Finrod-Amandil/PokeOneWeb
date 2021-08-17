@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
 {
-    public class MoveDamageClassMapper : ISpreadsheetEntityMapper<MoveDamageClassDto, MoveDamageClass>
+    public class MoveDamageClassMapper : ISpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass>
     {
         private readonly ILogger<MoveDamageClassMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
             _logger = logger;
         }
 
-        public IEnumerable<MoveDamageClass> Map(IDictionary<RowHash, MoveDamageClassDto> dtosWithHashes)
+        public IEnumerable<MoveDamageClass> Map(IDictionary<RowHash, MoveDamageClassSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
             }
         }
 
-        public IEnumerable<MoveDamageClass> MapOnto(IList<MoveDamageClass> entities, IDictionary<RowHash, MoveDamageClassDto> dtosWithHashes)
+        public IEnumerable<MoveDamageClass> MapOnto(IList<MoveDamageClass> entities, IDictionary<RowHash, MoveDamageClassSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,13 +64,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
             return entities;
         }
 
-        private static bool IsValid(MoveDamageClassDto dto)
+        private static bool IsValid(MoveDamageClassSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
         private MoveDamageClass MapMoveDamageClass(
-            MoveDamageClassDto dto, 
+            MoveDamageClassSheetDto dto, 
             RowHash rowHash, 
             MoveDamageClass moveDamageClass = null)
         {

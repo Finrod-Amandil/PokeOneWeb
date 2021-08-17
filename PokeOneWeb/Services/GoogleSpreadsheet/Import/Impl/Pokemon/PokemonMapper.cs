@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 {
-    public class PokemonMapper : ISpreadsheetEntityMapper<PokemonDto, PokemonForm>
+    public class PokemonMapper : ISpreadsheetEntityMapper<PokemonSheetDto, PokemonForm>
     {
         private readonly string SmogonUrlName = "Smogon";
         private readonly string BulbapediaUrlName = "Bulbapedia";
@@ -32,7 +32,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             _logger = logger;
         }
 
-        public IEnumerable<PokemonForm> Map(IDictionary<RowHash, PokemonDto> dtosWithHashes)
+        public IEnumerable<PokemonForm> Map(IDictionary<RowHash, PokemonSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -53,7 +53,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             }
         }
 
-        public IEnumerable<PokemonForm> MapOnto(IList<PokemonForm> entities, IDictionary<RowHash, PokemonDto> dtosWithHashes)
+        public IEnumerable<PokemonForm> MapOnto(IList<PokemonForm> entities, IDictionary<RowHash, PokemonSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -95,7 +95,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             _varieties = new Dictionary<string, PokemonVariety>();
         }
 
-        private bool IsValid(PokemonDto dto)
+        private bool IsValid(PokemonSheetDto dto)
         {
             return
                 dto.PokedexNumber != 0 &&
@@ -113,7 +113,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 dto.CatchRate != 0;
         }
 
-        private PokemonForm MapPokemonForm(PokemonDto dto, RowHash rowHash, PokemonForm form = null)
+        private PokemonForm MapPokemonForm(PokemonSheetDto dto, RowHash rowHash, PokemonForm form = null)
         {
             form ??= new PokemonForm();
 
@@ -130,7 +130,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return form;
         }
 
-        private PokemonVariety MapPokemonVariety(PokemonDto dto, PokemonVariety variety = null)
+        private PokemonVariety MapPokemonVariety(PokemonSheetDto dto, PokemonVariety variety = null)
         {
             variety ??= new PokemonVariety();
 
@@ -188,7 +188,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return variety;
         }
 
-        private PokemonSpecies MapPokemonSpecies(PokemonDto dto, PokemonSpecies species = null)
+        private PokemonSpecies MapPokemonSpecies(PokemonSheetDto dto, PokemonSpecies species = null)
         {
             species ??= new PokemonSpecies();
             if (_species.ContainsKey(dto.PokemonSpeciesName))
@@ -209,7 +209,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return species;
         }
 
-        private PokemonAvailability MapAvailability(PokemonDto dto, PokemonAvailability availability = null)
+        private PokemonAvailability MapAvailability(PokemonSheetDto dto, PokemonAvailability availability = null)
         {
             availability ??= new PokemonAvailability { Name = dto.AvailabilityName };
             if (!_availabilities.ContainsKey(dto.AvailabilityName))
@@ -224,7 +224,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return availability;
         }
 
-        private PvpTier MapPvpTier(PokemonDto dto, PvpTier pvpTier = null)
+        private PvpTier MapPvpTier(PokemonSheetDto dto, PvpTier pvpTier = null)
         {
             pvpTier ??= new PvpTier { Name = dto.PvpTierName };
             if (!_pvpTiers.ContainsKey(dto.PvpTierName))
@@ -239,7 +239,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return pvpTier;
         }
 
-        private Ability MapPrimaryAbility(PokemonDto dto, Ability ability = null)
+        private Ability MapPrimaryAbility(PokemonSheetDto dto, Ability ability = null)
         {
             ability ??= new Ability { Name = dto.PrimaryAbilityName };
             if (!_abilities.ContainsKey(dto.PrimaryAbilityName))
@@ -254,7 +254,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return ability;
         }
 
-        private Ability MapSecondaryAbility(PokemonDto dto, Ability ability = null)
+        private Ability MapSecondaryAbility(PokemonSheetDto dto, Ability ability = null)
         {
             if (string.IsNullOrWhiteSpace(dto.SecondaryAbilityName))
             {
@@ -274,7 +274,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return ability;
         }
 
-        private Ability MapHiddenAbility(PokemonDto dto, Ability ability = null)
+        private Ability MapHiddenAbility(PokemonSheetDto dto, Ability ability = null)
         {
             if (string.IsNullOrWhiteSpace(dto.HiddenAbilityName))
             {
@@ -294,7 +294,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return ability;
         }
 
-        private ElementalType MapPrimaryType(PokemonDto dto, ElementalType type = null)
+        private ElementalType MapPrimaryType(PokemonSheetDto dto, ElementalType type = null)
         {
             type ??= new ElementalType { Name = dto.Type1Name };
             if (!_types.ContainsKey(dto.Type1Name))
@@ -309,7 +309,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return type;
         }
 
-        private ElementalType MapSecondaryType(PokemonDto dto, ElementalType type = null)
+        private ElementalType MapSecondaryType(PokemonSheetDto dto, ElementalType type = null)
         {
             if (string.IsNullOrWhiteSpace(dto.Type2Name))
             {
@@ -329,17 +329,17 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return type;
         }
 
-        private PokemonForm MapDefaultForm(PokemonDto dto, PokemonForm form = null)
+        private PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
         {
             return form ?? new PokemonForm { Name = dto.DefaultFormName };
         }
 
-        private PokemonVariety MapDefaultVariety(PokemonDto dto, PokemonVariety variety = null)
+        private PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
         {
             return variety ?? new PokemonVariety { Name = dto.DefaultVarietyName };
         }
 
-        private void AddUrls(PokemonVariety variety, PokemonDto dto)
+        private void AddUrls(PokemonVariety variety, PokemonSheetDto dto)
         {
             if (!string.IsNullOrWhiteSpace(dto.SmogonUrl))
             {

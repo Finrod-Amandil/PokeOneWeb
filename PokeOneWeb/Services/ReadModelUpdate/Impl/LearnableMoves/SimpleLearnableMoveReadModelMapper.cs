@@ -30,8 +30,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
                     yield return new SimpleLearnableMoveReadModel
                     {
                         ApplicationDbId = learnableMove.Id,
-                        PokemonName = learnableMove.PokemonVariety.Name,
-                        MoveName = learnableMove.Move.Name
+                        PokemonVarietyApplicationDbId = learnableMove.PokemonVariety.Id,
+                        MoveResourceName = learnableMove.Move.ResourceName
                     };
                 }
             }

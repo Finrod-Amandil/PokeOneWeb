@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
     public class AvailabilitySheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<AvailabilityDto> _parser;
-        private readonly ISpreadsheetEntityMapper<AvailabilityDto, PokemonAvailability> _mapper;
+        private readonly ISheetRowParser<AvailabilitySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability> _mapper;
 
         public AvailabilitySheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<AvailabilityDto> parser,
-            ISpreadsheetEntityMapper<AvailabilityDto, PokemonAvailability> mapper)
+            ISheetRowParser<AvailabilitySheetDto> parser,
+            ISpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -68,7 +68,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, AvailabilityDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, AvailabilitySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

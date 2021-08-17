@@ -1,32 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Dtos;
 using System.Collections.Generic;
-using System.Linq;
+using PokeOneWeb.Services.Api;
 
 namespace PokeOneWeb.Controllers
 {
     [ApiController]
     public class ItemController : ControllerBase
     {
-        private readonly ReadModelDbContext _dbContext;
+        private readonly IItemApiService _itemApiService;
 
-        public ItemController(ReadModelDbContext dbContext)
+        public ItemController(IItemApiService itemApiService)
         {
-            _dbContext = dbContext;
+            _itemApiService = itemApiService;
         }
 
         [Route("api/item/getitemstatboostsforpokemon")]
         [HttpGet]
-        public ActionResult<List<ItemStatBoostPokemonReadModel>> GetItemStatBoostsForPokemon([FromQuery] string name)
+        public ActionResult<IEnumerable<ItemStatBoostPokemonDto>> GetItemStatBoostsForPokemon([FromQuery] string name)
         {
-            var itemStatBoosts = _dbContext.ItemStatBoostPokemonReadModels
-                .Where(i =>
-                    !i.HasRequiredPokemon ||
-                    i.RequiredPokemonResourceName.Equals(name))
-                .ToList();
-
-            return itemStatBoosts;
+            return Ok(_itemApiService.GetItemStatBoostsForPokemon(name));
         }
     }
 }

@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons
 {
-    public class SeasonSheetRowParser : ISheetRowParser<SeasonDto>
+    public class SeasonSheetRowParser : ISheetRowParser<SeasonSheetDto>
     {
-        public SeasonDto ReadRow(List<object> values)
+        public SeasonSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 3)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new SeasonDto
+            var value = new SeasonSheetDto
             {
                 SortIndex = int.TryParse(values[0].ToString(), out var parsed) ? parsed : 0,
                 Name = values[1] as string,

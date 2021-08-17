@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
     public class BagCategorySheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<BagCategoryDto> _parser;
-        private readonly ISpreadsheetEntityMapper<BagCategoryDto, BagCategory> _mapper;
+        private readonly ISheetRowParser<BagCategorySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<BagCategorySheetDto, BagCategory> _mapper;
 
         public BagCategorySheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<BagCategoryDto> parser,
-            ISpreadsheetEntityMapper<BagCategoryDto, BagCategory> mapper)
+            ISheetRowParser<BagCategorySheetDto> parser,
+            ISpreadsheetEntityMapper<BagCategorySheetDto, BagCategory> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -68,7 +68,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, BagCategoryDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, BagCategorySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })
