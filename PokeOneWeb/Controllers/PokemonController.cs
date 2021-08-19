@@ -26,14 +26,14 @@ namespace PokeOneWeb.Controllers
 
         [Route("getallbasic")]
         [HttpGet]
-        public ActionResult<List<BasicPokemonVarietyDto>> GetAllBasic()
+        public ActionResult<IEnumerable<BasicPokemonVarietyDto>> GetAllBasic()
         {
             return Ok(_pokemonApiService.GetAllBasicPokemonVarieties());
         }
 
         [Route("getbynamefull")]
         [HttpGet]
-        public ActionResult<PokemonVarietyReadModel> GetByNameFull([FromQuery] string name)
+        public ActionResult<PokemonVarietyDto> GetByNameFull([FromQuery] string name)
         {
             return Ok(_pokemonApiService.GetPokemonVarietyByName(name));
         }
@@ -47,7 +47,7 @@ namespace PokeOneWeb.Controllers
 
         [Route("getallformoveset")]
         [HttpGet]
-        public ActionResult<List<string>> GetAllForMoveSet(
+        public ActionResult<IEnumerable<PokemonVarietyNameDto>> GetAllForMoveSet(
             [FromQuery] string m11, [FromQuery] string m12, [FromQuery] string m13, [FromQuery] string m14,
             [FromQuery] string m21, [FromQuery] string m22, [FromQuery] string m23, [FromQuery] string m24,
             [FromQuery] string m31, [FromQuery] string m32, [FromQuery] string m33, [FromQuery] string m34,

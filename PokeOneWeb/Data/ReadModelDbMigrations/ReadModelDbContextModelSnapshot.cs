@@ -417,8 +417,14 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("EffectDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EffectivePower")
+                        .HasColumnType("int");
+
                     b.Property<string>("ElementalType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasStab")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");

@@ -9,14 +9,15 @@ namespace PokeOneWeb.Dtos
         public int PokedexNumber { get; set; }
         public string Name { get; set; }
         public string SpriteName { get; set; }
-        public string PrimaryType { get; set; }
-        public string SecondaryType { get; set; }
+        public string PrimaryElementalType { get; set; }
+        public string SecondaryElementalType { get; set; }
         public int Attack { get; set; }
         public int SpecialAttack { get; set; }
         public int Defense { get; set; }
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
         public int HitPoints { get; set; }
+        public int StatTotal { get; set; }
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }
         public string SecondaryAbility { get; set; }

@@ -8,7 +8,9 @@ namespace PokeOneWeb.Dtos
         public string MoveName { get; set; }
         public string ElementalType { get; set; }
         public string DamageClass { get; set; }
-        public int AttackPower { get; set; }
+        public int BaseAttackPower { get; set; }
+        public int EffectiveAttackPower { get; set; }
+        public bool HasStab { get; set; }
         public int Accuracy { get; set; }
         public int PowerPoints { get; set; }
         public int Priority { get; set; }

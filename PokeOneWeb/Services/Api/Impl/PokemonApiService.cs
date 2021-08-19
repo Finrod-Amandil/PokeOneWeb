@@ -136,8 +136,8 @@ namespace PokeOneWeb.Services.Api.Impl
                 PokedexNumber = v.PokedexNumber,
                 Name = v.Name,
                 SpriteName = v.SpriteName,
-                PrimaryType = v.PrimaryType,
-                SecondaryType = v.SecondaryType,
+                PrimaryElementalType = v.PrimaryType,
+                SecondaryElementalType = v.SecondaryType,
 
                 Attack = v.Attack,
                 SpecialAttack = v.SpecialAttack,
@@ -145,6 +145,7 @@ namespace PokeOneWeb.Services.Api.Impl
                 SpecialDefense = v.SpecialDefense,
                 Speed = v.Speed,
                 HitPoints = v.HitPoints,
+                StatTotal = v.Attack + v.SpecialAttack + v.Defense + v.SpecialDefense + v.Speed + v.HitPoints,
 
                 PrimaryAbility = v.PrimaryAbility,
                 PrimaryAbilityEffect = v.PrimaryAbilityEffect,
@@ -248,7 +249,9 @@ namespace PokeOneWeb.Services.Api.Impl
                     EvolvedSortIndex = e.EvolvedSortIndex,
                     EvolvedStage = e.EvolvedStage,
 
-                    EvolutionTrigger = e.EvolutionTrigger
+                    EvolutionTrigger = e.EvolutionTrigger,
+                    IsAvailable = e.IsAvailable,
+                    IsReversible = e.IsReversible
                 }),
 
                 LearnableMoves = v.LearnableMoves.Select(l => new LearnableMoveDto
@@ -257,7 +260,9 @@ namespace PokeOneWeb.Services.Api.Impl
                     MoveName = l.MoveName,
                     ElementalType = l.ElementalType,
                     DamageClass = l.DamageClass,
-                    AttackPower = l.AttackPower,
+                    BaseAttackPower = l.AttackPower,
+                    EffectiveAttackPower = l.EffectivePower,
+                    HasStab = l.HasStab,
                     Accuracy = l.Accuracy,
                     PowerPoints = l.PowerPoints,
                     Priority = l.Priority,
@@ -354,6 +359,7 @@ namespace PokeOneWeb.Services.Api.Impl
                 SpecialDefense = v.SpecialDefense,
                 Speed = v.Speed,
                 HitPoints = v.HitPoints,
+                StatTotal = v.Attack + v.SpecialAttack + v.Defense + v.SpecialDefense + v.Speed + v.HitPoints,
 
                 PrimaryAbility = v.PrimaryAbility,
                 PrimaryAbilityEffect = v.PrimaryAbilityEffect,
@@ -398,7 +404,8 @@ namespace PokeOneWeb.Services.Api.Impl
         {
             return v => new PokemonVarietyNameDto
             {
-                Name = v.Name
+                Name = v.Name,
+                ResourceName = v.ResourceName
             };
         }
     }

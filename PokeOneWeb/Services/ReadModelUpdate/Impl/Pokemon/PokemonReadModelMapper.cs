@@ -570,18 +570,26 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 
         private List<LearnableMoveReadModel> GetLearnableMoves(PokemonVariety variety)
         {
-            return variety.LearnableMoves.Select(learnableMove => new LearnableMoveReadModel
+            return variety.LearnableMoves.Select(learnableMove =>
                 {
-                    ApplicationDbId = learnableMove.Id,
-                    MoveName = learnableMove.Move.Name,
-                    IsAvailable = learnableMove.LearnMethods.Any(lm => lm.IsAvailable),
-                    ElementalType = learnableMove.Move.ElementalType.Name,
-                    DamageClass = learnableMove.Move.DamageClass.Name,
-                    AttackPower = learnableMove.Move.AttackPower,
-                    Accuracy = learnableMove.Move.Accuracy,
-                    PowerPoints = learnableMove.Move.PowerPoints,
-                    EffectDescription = learnableMove.Move.Effect,
-                    LearnMethods = learnableMove.LearnMethods.Select(GetLearnMethod).ToList()
+                    var hasStab = learnableMove.Move.ElementalType.Name.EqualsExact(variety.PrimaryType.Name) ||
+                                  learnableMove.Move.ElementalType.Name.EqualsExact(variety.SecondaryType?.Name ?? "");
+
+                    return new LearnableMoveReadModel
+                    {
+                        ApplicationDbId = learnableMove.Id,
+                        MoveName = learnableMove.Move.Name,
+                        IsAvailable = learnableMove.LearnMethods.Any(lm => lm.IsAvailable),
+                        ElementalType = learnableMove.Move.ElementalType.Name,
+                        DamageClass = learnableMove.Move.DamageClass.Name,
+                        AttackPower = learnableMove.Move.AttackPower,
+                        EffectivePower = hasStab ? (int)(learnableMove.Move.AttackPower * 1.5) : learnableMove.Move.AttackPower,
+                        HasStab = hasStab,
+                        Accuracy = learnableMove.Move.Accuracy,
+                        PowerPoints = learnableMove.Move.PowerPoints,
+                        EffectDescription = learnableMove.Move.Effect,
+                        LearnMethods = learnableMove.LearnMethods.Select(GetLearnMethod).ToList()
+                    };
                 })
                 .ToList();
         }

@@ -4,7 +4,6 @@ namespace PokeOneWeb.Dtos
 {
     public class PokemonVarietyListDto
     {
-        public int Id { get; set; }
         public string ResourceName { get; set; }
         public int SortIndex { get; set; }
         public int PokedexNumber { get; set; }
@@ -19,6 +18,7 @@ namespace PokeOneWeb.Dtos
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
         public int HitPoints { get; set; }
+        public int StatTotal { get; set; }
 
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }
