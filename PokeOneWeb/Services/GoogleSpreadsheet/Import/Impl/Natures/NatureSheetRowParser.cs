@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
 {
-    public class NatureSheetRowParser : ISheetRowParser<NatureDto>
+    public class NatureSheetRowParser : ISheetRowParser<NatureSheetDto>
     {
-        public NatureDto ReadRow(List<object> values)
+        public NatureSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 6)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new NatureDto
+            var value = new NatureSheetDto
             {
                 Name = values[0] as string,
                 Attack = int.TryParse(values[1].ToString(), out var parsedAtk) ? parsedAtk : 0,

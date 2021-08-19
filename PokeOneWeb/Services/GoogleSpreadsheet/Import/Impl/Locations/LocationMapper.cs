@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
 {
-    public class LocationMapper : ISpreadsheetEntityMapper<LocationDto, Location>
+    public class LocationMapper : ISpreadsheetEntityMapper<LocationSheetDto, Location>
     {
         private readonly ILogger<LocationMapper> _logger;
 
@@ -20,7 +20,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             _logger = logger;
         }
 
-        public IEnumerable<Location> Map(IDictionary<RowHash, LocationDto> dtosWithHashes)
+        public IEnumerable<Location> Map(IDictionary<RowHash, LocationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -52,7 +52,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             return _locations.Values;
         }
 
-        public IEnumerable<Location> MapOnto(IList<Location> entities, IDictionary<RowHash, LocationDto> dtosWithHashes)
+        public IEnumerable<Location> MapOnto(IList<Location> entities, IDictionary<RowHash, LocationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -92,7 +92,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             return entities;
         }
 
-        private bool IsValid(LocationDto dto)
+        private bool IsValid(LocationSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.LocationName) &&
@@ -101,7 +101,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
                 !string.IsNullOrWhiteSpace(dto.RegionName);
         }
 
-        private Location MapLocation(LocationDto dto, RowHash rowHash, Location location = null)
+        private Location MapLocation(LocationSheetDto dto, RowHash rowHash, Location location = null)
         {
             location ??= new Location();
 
@@ -117,7 +117,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             return location;
         }
 
-        private LocationGroup MapLocationGroup(LocationDto dto, LocationGroup locationGroup = null)
+        private LocationGroup MapLocationGroup(LocationSheetDto dto, LocationGroup locationGroup = null)
         {
             locationGroup ??= new LocationGroup();
             if (!_locationGroups.ContainsKey(dto.LocationGroupName))
@@ -135,7 +135,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
             return locationGroup;
         }
 
-        private Region MapRegion(LocationDto dto)
+        private Region MapRegion(LocationSheetDto dto)
         {
             Region region;
             if (!_regions.ContainsKey(dto.RegionName))

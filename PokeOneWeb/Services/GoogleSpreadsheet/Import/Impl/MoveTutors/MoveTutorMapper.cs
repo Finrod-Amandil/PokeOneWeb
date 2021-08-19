@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors
 {
-    public class MoveTutorMapper : ISpreadsheetEntityMapper<MoveTutorDto, MoveTutor>
+    public class MoveTutorMapper : ISpreadsheetEntityMapper<MoveTutorSheetDto, MoveTutor>
     {
         private readonly ILogger<MoveTutorMapper> _logger;
 
@@ -18,7 +18,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors
             _logger = logger;
         }
 
-        public IEnumerable<MoveTutor> Map(IDictionary<RowHash, MoveTutorDto> dtosWithHashes)
+        public IEnumerable<MoveTutor> Map(IDictionary<RowHash, MoveTutorSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -39,7 +39,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors
             }
         }
 
-        public IEnumerable<MoveTutor> MapOnto(IList<MoveTutor> entities, IDictionary<RowHash, MoveTutorDto> dtosWithHashes)
+        public IEnumerable<MoveTutor> MapOnto(IList<MoveTutor> entities, IDictionary<RowHash, MoveTutorSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -70,14 +70,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors
             return entities;
         }
 
-        private bool IsValid(MoveTutorDto dto)
+        private bool IsValid(MoveTutorSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
                 !string.IsNullOrWhiteSpace(dto.LocationName);
         }
 
-        private MoveTutor MapMoveTutor(MoveTutorDto dto, RowHash rowHash, MoveTutor moveTutor = null)
+        private MoveTutor MapMoveTutor(MoveTutorSheetDto dto, RowHash rowHash, MoveTutor moveTutor = null)
         {
             moveTutor ??= new MoveTutor();
 

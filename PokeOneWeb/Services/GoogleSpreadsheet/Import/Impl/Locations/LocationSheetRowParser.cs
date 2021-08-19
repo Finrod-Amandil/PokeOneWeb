@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations
 {
-    public class LocationSheetRowParser : ISheetRowParser<LocationDto>
+    public class LocationSheetRowParser : ISheetRowParser<LocationSheetDto>
     {
-        public LocationDto ReadRow(List<object> values)
+        public LocationSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 6)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new LocationDto
+            var value = new LocationSheetDto
             {
                 RegionName = values[0] as string,
                 LocationGroupName = values[1] as string,

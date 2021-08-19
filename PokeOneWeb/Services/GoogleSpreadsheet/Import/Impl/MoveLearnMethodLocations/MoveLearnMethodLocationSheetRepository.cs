@@ -13,14 +13,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<MoveLearnMethodLocationSheetRepository> _logger;
-        private readonly ISheetRowParser<MoveLearnMethodLocationDto> _parser;
-        private readonly ISpreadsheetEntityMapper<MoveLearnMethodLocationDto, MoveLearnMethodLocation> _mapper;
+        private readonly ISheetRowParser<MoveLearnMethodLocationSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<MoveLearnMethodLocationSheetDto, MoveLearnMethodLocation> _mapper;
 
         public MoveLearnMethodLocationSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<MoveLearnMethodLocationSheetRepository> logger,
-            ISheetRowParser<MoveLearnMethodLocationDto> parser,
-            ISpreadsheetEntityMapper<MoveLearnMethodLocationDto, MoveLearnMethodLocation> mapper)
+            ISheetRowParser<MoveLearnMethodLocationSheetDto> parser,
+            ISpreadsheetEntityMapper<MoveLearnMethodLocationSheetDto, MoveLearnMethodLocation> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -81,7 +81,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocat
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, MoveLearnMethodLocationDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, MoveLearnMethodLocationSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

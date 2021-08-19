@@ -1,82 +1,71 @@
 ﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 {
     public class ReadModelUpdateService : IReadModelUpdateService
     {
-        private readonly ReadModelDbContext _readModelDbContext;
-        private readonly IReadModelMapper<PokemonReadModel> _pokemonReadModelMapper;
-        private readonly IReadModelMapper<MoveReadModel> _moveReadModelMapper;
-        private readonly IReadModelMapper<SimpleLearnableMoveReadModel> _simpleLearnableMoveReadModelMapper;
-        private readonly IReadModelMapper<EntityTypeReadModel> _entityTypeReadModelMapper;
-        private readonly IReadModelMapper<ItemStatBoostReadModel> _itemStatBoostReadModelMapper;
-        private readonly IReadModelMapper<NatureReadModel> _natureReadModelMapper;
+        private readonly IReadModelMapper<EntityTypeReadModel> _entityTypeMapper;
+        private readonly IReadModelMapper<ItemStatBoostPokemonReadModel> _itemStatBoostPokemonMapper;
+        private readonly IReadModelMapper<SimpleLearnableMoveReadModel> _simpleLearnableMoveMapper;
+        private readonly IReadModelMapper<MoveReadModel> _moveMapper;
+        private readonly IReadModelMapper<NatureReadModel> _natureMapper;
+        private readonly IReadModelMapper<PokemonVarietyReadModel> _pokemonVarietyMapper;
+        private readonly IReadModelRepository<EntityTypeReadModel> _entityTypeRepository;
+        private readonly IReadModelRepository<ItemStatBoostPokemonReadModel> _itemStatBoostPokemonRepository;
+        private readonly IReadModelRepository<SimpleLearnableMoveReadModel> _simpleLearnableMoveRepository;
+        private readonly IReadModelRepository<MoveReadModel> _moveRepository;
+        private readonly IReadModelRepository<NatureReadModel> _natureRepository;
+        private readonly IReadModelRepository<PokemonVarietyReadModel> _pokemonVarietyRepository;
 
         public ReadModelUpdateService(
-            ReadModelDbContext readModelDbContext,
-            IReadModelMapper<PokemonReadModel> pokemonReadModelMapper,
-            IReadModelMapper<MoveReadModel> moveReadModelMapper,
-            IReadModelMapper<SimpleLearnableMoveReadModel> simpleLearnableMoveReadModelMapper,
-            IReadModelMapper<EntityTypeReadModel> entityTypeReadModelMapper,
-            IReadModelMapper<ItemStatBoostReadModel> itemStatBoostReadModelMapper,
-            IReadModelMapper<NatureReadModel> natureReadModelMapper)
+            IReadModelMapper<EntityTypeReadModel> entityTypeMapper,
+            IReadModelMapper<ItemStatBoostPokemonReadModel> itemStatBoostPokemonMapper,
+            IReadModelMapper<SimpleLearnableMoveReadModel> simpleLearnableMoveMapper,
+            IReadModelMapper<MoveReadModel> moveMapper,
+            IReadModelMapper<NatureReadModel> natureMapper,
+            IReadModelMapper<PokemonVarietyReadModel> pokemonVarietyMapper,
+
+            IReadModelRepository<EntityTypeReadModel> entityTypeRepository,
+            IReadModelRepository<ItemStatBoostPokemonReadModel> itemStatBoostPokemonRepository,
+            IReadModelRepository<SimpleLearnableMoveReadModel> simpleLearnableMoveRepository,
+            IReadModelRepository<MoveReadModel> moveRepository,
+            IReadModelRepository<NatureReadModel> natureRepository,
+            IReadModelRepository<PokemonVarietyReadModel> pokemonVarietyRepository)
         {
-            _readModelDbContext = readModelDbContext;
-            _pokemonReadModelMapper = pokemonReadModelMapper;
-            _moveReadModelMapper = moveReadModelMapper;
-            _simpleLearnableMoveReadModelMapper = simpleLearnableMoveReadModelMapper;
-            _entityTypeReadModelMapper = entityTypeReadModelMapper;
-            _itemStatBoostReadModelMapper = itemStatBoostReadModelMapper;
-            _natureReadModelMapper = natureReadModelMapper;
+            _entityTypeMapper = entityTypeMapper;
+            _itemStatBoostPokemonMapper = itemStatBoostPokemonMapper;
+            _simpleLearnableMoveMapper = simpleLearnableMoveMapper;
+            _moveMapper = moveMapper;
+            _natureMapper = natureMapper;
+            _pokemonVarietyMapper = pokemonVarietyMapper;
+            _entityTypeRepository = entityTypeRepository;
+            _itemStatBoostPokemonRepository = itemStatBoostPokemonRepository;
+            _simpleLearnableMoveRepository = simpleLearnableMoveRepository;
+            _moveRepository = moveRepository;
+            _natureRepository = natureRepository;
+            _pokemonVarietyRepository = pokemonVarietyRepository;
         }
 
         public void UpdateReadModel()
         {
-            _readModelDbContext.Database.EnsureDeleted();
-            _readModelDbContext.Database.Migrate();
+            var entityTypeReadModels = _entityTypeMapper.MapFromDatabase();
+            _entityTypeRepository.Update(entityTypeReadModels);
 
-            var pokemonReadModels = _pokemonReadModelMapper.MapFromDatabase();
-            using var pokemonTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT PokeOneWebReadModel.dbo.PokemonReadModel ON");
-            _readModelDbContext.PokemonReadModels.AddRange(pokemonReadModels);
-            _readModelDbContext.SaveChanges();
-            _readModelDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT PokeOneWebReadModel.dbo.PokemonReadModel OFF");
-            pokemonTransaction.Commit();
+            var itemStatBoostPokemonReadModels = _itemStatBoostPokemonMapper.MapFromDatabase();
+            _itemStatBoostPokemonRepository.Update(itemStatBoostPokemonReadModels);
 
-            var moveReadModels = _moveReadModelMapper.MapFromDatabase();
-            using var moveTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT PokeOneWebReadModel.dbo.MoveReadModel ON");
-            _readModelDbContext.MoveReadModels.AddRange(moveReadModels);
-            _readModelDbContext.SaveChanges();
-            _readModelDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT PokeOneWebReadModel.dbo.MoveReadModel OFF");
-            moveTransaction.Commit();
+            var simpleLearnableMoveReadModels = _simpleLearnableMoveMapper.MapFromDatabase();
+            _simpleLearnableMoveRepository.Update(simpleLearnableMoveReadModels);
 
-            var simpleLearnableMoveReadModels = _simpleLearnableMoveReadModelMapper.MapFromDatabase();
-            using var simpleLearnableMoveTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.SimpleLearnableMoveReadModels.AddRange(simpleLearnableMoveReadModels);
-            _readModelDbContext.SaveChanges();
-            simpleLearnableMoveTransaction.Commit();
+            var moveReadModels = _moveMapper.MapFromDatabase();
+            _moveRepository.Update(moveReadModels);
 
-            var entityTypeReadModels = _entityTypeReadModelMapper.MapFromDatabase();
-            using var entityTypeTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.EntityTypeReadModels.AddRange(entityTypeReadModels);
-            _readModelDbContext.SaveChanges();
-            entityTypeTransaction.Commit();
+            var natureReadModels = _natureMapper.MapFromDatabase();
+            _natureRepository.Update(natureReadModels);
 
-            var itemStatBoostReadModels = _itemStatBoostReadModelMapper.MapFromDatabase();
-            using var itemStatBoostTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.ItemStatBoostReadModels.AddRange(itemStatBoostReadModels);
-            _readModelDbContext.SaveChanges();
-            itemStatBoostTransaction.Commit();
-
-            var natureReadModels = _natureReadModelMapper.MapFromDatabase();
-            using var natureTransaction = _readModelDbContext.Database.BeginTransaction();
-            _readModelDbContext.NatureReadModels.AddRange(natureReadModels);
-            _readModelDbContext.SaveChanges();
-            natureTransaction.Commit();
+            var pokemonVarietyReadModels = _pokemonVarietyMapper.MapFromDatabase();
+            _pokemonVarietyRepository.Update(pokemonVarietyReadModels);
         }
     }
 }

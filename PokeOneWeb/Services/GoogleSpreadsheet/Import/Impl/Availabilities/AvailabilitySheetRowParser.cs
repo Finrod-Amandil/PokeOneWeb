@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities
 {
-    public class AvailabilitySheetRowParser : ISheetRowParser<AvailabilityDto>
+    public class AvailabilitySheetRowParser : ISheetRowParser<AvailabilitySheetDto>
     {
-        public AvailabilityDto ReadRow(List<object> values)
+        public AvailabilitySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 2)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new AvailabilityDto
+            var value = new AvailabilitySheetDto
             {
                 Name = values[0] as string,
                 Description = values[1] as string

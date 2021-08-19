@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
 {
-    public class NatureMapper : ISpreadsheetEntityMapper<NatureDto, Nature>
+    public class NatureMapper : ISpreadsheetEntityMapper<NatureSheetDto, Nature>
     {
         private readonly ILogger<NatureMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
             _logger = logger;
         }
 
-        public IEnumerable<Nature> Map(IDictionary<RowHash, NatureDto> dtosWithHashes)
+        public IEnumerable<Nature> Map(IDictionary<RowHash, NatureSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
             }
         }
 
-        public IEnumerable<Nature> MapOnto(IList<Nature> entities, IDictionary<RowHash, NatureDto> dtosWithHashes)
+        public IEnumerable<Nature> MapOnto(IList<Nature> entities, IDictionary<RowHash, NatureSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
             return entities;
         }
 
-        private bool IsValid(NatureDto dto)
+        private bool IsValid(NatureSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private Nature MapNature(NatureDto dto, RowHash rowHash, Nature nature = null)
+        private Nature MapNature(NatureSheetDto dto, RowHash rowHash, Nature nature = null)
         {
             nature ??= new Nature();
 

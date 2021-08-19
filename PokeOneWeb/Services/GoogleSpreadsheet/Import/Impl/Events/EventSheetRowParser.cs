@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
 {
-    public class EventSheetRowParser : ISheetRowParser<EventDto>
+    public class EventSheetRowParser : ISheetRowParser<EventSheetDto>
     {
-        public EventDto ReadRow(List<object> values)
+        public EventSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new EventDto
+            var value = new EventSheetDto
             {
                 Name = values[0] as string
             };

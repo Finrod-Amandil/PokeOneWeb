@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
 {
-    public class ElementalTypeMapper : ISpreadsheetEntityMapper<ElementalTypeDto, ElementalType>
+    public class ElementalTypeMapper : ISpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType>
     {
         private readonly ILogger<ElementalTypeMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
             _logger = logger;
         }
 
-        public IEnumerable<ElementalType> Map(IDictionary<RowHash, ElementalTypeDto> dtosWithHashes)
+        public IEnumerable<ElementalType> Map(IDictionary<RowHash, ElementalTypeSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
             }
         }
 
-        public IEnumerable<ElementalType> MapOnto(IList<ElementalType> entities, IDictionary<RowHash, ElementalTypeDto> dtosWithHashes)
+        public IEnumerable<ElementalType> MapOnto(IList<ElementalType> entities, IDictionary<RowHash, ElementalTypeSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
             return entities;
         }
 
-        private bool IsValid(ElementalTypeDto dto)
+        private bool IsValid(ElementalTypeSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private ElementalType MapElementalType(ElementalTypeDto dto, RowHash rowHash, ElementalType elementalType = null)
+        private ElementalType MapElementalType(ElementalTypeSheetDto dto, RowHash rowHash, ElementalType elementalType = null)
         {
             elementalType ??= new ElementalType();
 

@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
 {
-    public class PvpTierMapper : ISpreadsheetEntityMapper<PvpTierDto, PvpTier>
+    public class PvpTierMapper : ISpreadsheetEntityMapper<PvpTierSheetDto, PvpTier>
     {
         private readonly ILogger<PvpTierMapper> _logger;
 
@@ -15,7 +15,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
         {
             _logger = logger;
         } 
-        public IEnumerable<PvpTier> Map(IDictionary<RowHash, PvpTierDto> dtosWithHashes)
+        public IEnumerable<PvpTier> Map(IDictionary<RowHash, PvpTierSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -34,7 +34,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
             }
         }
 
-        public IEnumerable<PvpTier> MapOnto(IList<PvpTier> entities, IDictionary<RowHash, PvpTierDto> dtosWithHashes)
+        public IEnumerable<PvpTier> MapOnto(IList<PvpTier> entities, IDictionary<RowHash, PvpTierSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -63,12 +63,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
             return entities;
         }
 
-        private bool IsValid(PvpTierDto dto)
+        private bool IsValid(PvpTierSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private PvpTier MapPvpTier(PvpTierDto dto, RowHash rowHash, PvpTier pvpTier = null)
+        private PvpTier MapPvpTier(PvpTierSheetDto dto, RowHash rowHash, PvpTier pvpTier = null)
         {
             pvpTier ??= new PvpTier();
 

@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
 {
-    public class BagCategoryMapper : ISpreadsheetEntityMapper<BagCategoryDto, BagCategory>
+    public class BagCategoryMapper : ISpreadsheetEntityMapper<BagCategorySheetDto, BagCategory>
     {
         private readonly ILogger<BagCategoryMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
             _logger = logger;
         }
 
-        public IEnumerable<BagCategory> Map(IDictionary<RowHash, BagCategoryDto> dtosWithHashes)
+        public IEnumerable<BagCategory> Map(IDictionary<RowHash, BagCategorySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
             }
         }
 
-        public IEnumerable<BagCategory> MapOnto(IList<BagCategory> entities, IDictionary<RowHash, BagCategoryDto> dtosWithHashes)
+        public IEnumerable<BagCategory> MapOnto(IList<BagCategory> entities, IDictionary<RowHash, BagCategorySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories
             return entities;
         }
 
-        private static bool IsValid(BagCategoryDto dto)
+        private static bool IsValid(BagCategorySheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private static BagCategory MapBagCategory(BagCategoryDto dto, RowHash rowHash, BagCategory bagCategory = null)
+        private static BagCategory MapBagCategory(BagCategorySheetDto dto, RowHash rowHash, BagCategory bagCategory = null)
         {
             bagCategory ??= new BagCategory();
 

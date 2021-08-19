@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
 {
-    public class EvolutionSheetRowParser : ISheetRowParser<EvolutionDto>
+    public class EvolutionSheetRowParser : ISheetRowParser<EvolutionSheetDto>
     {
-        public EvolutionDto ReadRow(List<object> values)
+        public EvolutionSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 10)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new EvolutionDto
+            var value = new EvolutionSheetDto
             {
                 BasePokemonSpeciesPokedexNumber = int.TryParse(values[0].ToString(), out var parsedPokedexNumber) ? parsedPokedexNumber : 0,
                 BasePokemonSpeciesName = values[1] as string,

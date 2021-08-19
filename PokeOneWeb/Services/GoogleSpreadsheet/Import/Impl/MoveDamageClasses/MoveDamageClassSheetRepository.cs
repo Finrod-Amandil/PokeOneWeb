@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
     public class MoveDamageClassSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<MoveDamageClassDto> _parser;
-        private readonly ISpreadsheetEntityMapper<MoveDamageClassDto, MoveDamageClass> _mapper;
+        private readonly ISheetRowParser<MoveDamageClassSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass> _mapper;
 
         public MoveDamageClassSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<MoveDamageClassDto> parser,
-            ISpreadsheetEntityMapper<MoveDamageClassDto, MoveDamageClass> mapper)
+            ISheetRowParser<MoveDamageClassSheetDto> parser,
+            ISpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, MoveDamageClassDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, MoveDamageClassSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

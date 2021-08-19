@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelations
 {
-    public class ElementalTypeRelationSheetRowParser : ISheetRowParser<ElementalTypeRelationDto>
+    public class ElementalTypeRelationSheetRowParser : ISheetRowParser<ElementalTypeRelationSheetDto>
     {
-        public ElementalTypeRelationDto ReadRow(List<object> values)
+        public ElementalTypeRelationSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 3)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new ElementalTypeRelationDto
+            var value = new ElementalTypeRelationSheetDto
             {
                 AttackingTypeName = values[0] as string,
                 DefendingTypeName = values[1] as string,

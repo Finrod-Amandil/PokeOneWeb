@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Extensions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Builds;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
 {
@@ -13,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<BuildSheetRepository> _logger;
-        private readonly ISheetRowParser<BuildDto> _parser;
-        private readonly ISpreadsheetEntityMapper<BuildDto, Build> _mapper;
+        private readonly ISheetRowParser<BuildSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<BuildSheetDto, Build> _mapper;
 
         public BuildSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<BuildSheetRepository> logger,
-            ISheetRowParser<BuildDto> parser,
-            ISpreadsheetEntityMapper<BuildDto, Build> mapper)
+            ISheetRowParser<BuildSheetDto> parser,
+            ISpreadsheetEntityMapper<BuildSheetDto, Build> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -81,7 +80,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, BuildDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, BuildSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

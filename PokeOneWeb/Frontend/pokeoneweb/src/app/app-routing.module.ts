@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
-import { LoadingComponent } from './features/loading/loading.component';
-import { NotFoundComponent } from './features/not-found/not-found.component';
-import { PokemonListComponent } from './features/pokemon-list/pokemon-list.component';
-import { DynamicRouteGuard } from './guards/dynamic-route.guard';
+import { HomeComponent } from './pages/home/home.component';
+import { LoadingComponent } from './pages/loading/loading.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { DynamicRouteGuard } from './core/guards/dynamic-route.guard';
 
 const routes: Routes = [
   { 
@@ -13,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'p',
-    component: PokemonListComponent
+    loadChildren: () => import('./pages/pokemon-list/pokemon-list.module').then((m) => m.PokemonListModule),
   },
   {
     path: 'not-found',
@@ -23,7 +22,19 @@ const routes: Routes = [
     path: '**',
     canActivate: [ DynamicRouteGuard ],
     component: LoadingComponent,
-  }
+  },
+  {
+    path: '',
+    loadChildren: () => import('./pages/pokemon-detail/pokemon-detail.module').then((m) => m.PokemonDetailModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./pages/location-detail/location-detail.module').then((m) => m.LocationDetailModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./pages/item-detail/item-detail.module').then((m) => m.ItemDetailModule),
+  },
 ];
 
 @NgModule({

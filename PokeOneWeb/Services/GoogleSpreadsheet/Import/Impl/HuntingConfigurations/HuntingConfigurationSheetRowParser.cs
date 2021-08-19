@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfigurations
 {
-    public class HuntingConfigurationSheetRowParser : ISheetRowParser<HuntingConfigurationDto>
+    public class HuntingConfigurationSheetRowParser : ISheetRowParser<HuntingConfigurationSheetDto>
     {
-        public HuntingConfigurationDto ReadRow(List<object> values)
+        public HuntingConfigurationSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 3)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new HuntingConfigurationDto
+            var value = new HuntingConfigurationSheetDto
             {
                 PokemonVarietyName = values[0] as string,
                 Nature = values[1] as string,

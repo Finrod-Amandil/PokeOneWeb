@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems
 {
-    public class PlacedItemSheetRowParser : ISheetRowParser<PlacedItemDto>
+    public class PlacedItemSheetRowParser : ISheetRowParser<PlacedItemSheetDto>
     {
-        public PlacedItemDto ReadRow(List<object> values)
+        public PlacedItemSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new PlacedItemDto
+            var value = new PlacedItemSheetDto
             {
                 LocationName = values[0] as string,
                 Quantity = int.TryParse(values[1].ToString(), out var parsedQuantity) ? parsedQuantity : 1,

@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
     public class TimeOfDaySheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<TimeOfDayDto> _parser;
-        private readonly ISpreadsheetEntityMapper<TimeOfDayDto, TimeOfDay> _mapper;
+        private readonly ISheetRowParser<TimeOfDaySheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay> _mapper;
 
         public TimeOfDaySheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<TimeOfDayDto> parser,
-            ISpreadsheetEntityMapper<TimeOfDayDto, TimeOfDay> mapper)
+            ISheetRowParser<TimeOfDaySheetDto> parser,
+            ISpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, TimeOfDayDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, TimeOfDaySheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

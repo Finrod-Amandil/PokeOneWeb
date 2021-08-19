@@ -3,16 +3,16 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns
 {
-    public class SpawnSheetRowParser : ISheetRowParser<SpawnDto>
+    public class SpawnSheetRowParser : ISheetRowParser<SpawnSheetDto>
     {
-        public SpawnDto ReadRow(List<object> values)
+        public SpawnSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new SpawnDto
+            var value = new SpawnSheetDto
             {
                 LocationName = values[0] as string,
                 PokemonForm = values[1] as string,

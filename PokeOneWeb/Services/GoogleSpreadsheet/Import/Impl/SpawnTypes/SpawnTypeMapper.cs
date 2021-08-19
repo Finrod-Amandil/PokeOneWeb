@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
 {
-    public class SpawnTypeMapper : ISpreadsheetEntityMapper<SpawnTypeDto, SpawnType>
+    public class SpawnTypeMapper : ISpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType>
     {
         private readonly ILogger<SpawnTypeMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
             _logger = logger;
         }
 
-        public IEnumerable<SpawnType> Map(IDictionary<RowHash, SpawnTypeDto> dtosWithHashes)
+        public IEnumerable<SpawnType> Map(IDictionary<RowHash, SpawnTypeSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
             }
         }
 
-        public IEnumerable<SpawnType> MapOnto(IList<SpawnType> entities, IDictionary<RowHash, SpawnTypeDto> dtosWithHashes)
+        public IEnumerable<SpawnType> MapOnto(IList<SpawnType> entities, IDictionary<RowHash, SpawnTypeSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
             return entities;
         }
 
-        private bool IsValid(SpawnTypeDto dto)
+        private bool IsValid(SpawnTypeSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private SpawnType MapSpawnType(SpawnTypeDto dto, RowHash rowHash, SpawnType spawnType = null)
+        private SpawnType MapSpawnType(SpawnTypeSheetDto dto, RowHash rowHash, SpawnType spawnType = null)
         {
             spawnType ??= new SpawnType();
 

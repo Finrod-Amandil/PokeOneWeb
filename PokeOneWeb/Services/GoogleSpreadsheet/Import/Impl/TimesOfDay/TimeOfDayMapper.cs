@@ -7,16 +7,16 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
 {
-    public class TimeOfDayMapper : ISpreadsheetEntityMapper<TimeOfDayDto, TimeOfDay>
+    public class TimeOfDayMapper : ISpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay>
     {
         private readonly ILogger _logger;
 
-        public TimeOfDayMapper(ILogger<TimeOfDayDto> logger)
+        public TimeOfDayMapper(ILogger<TimeOfDaySheetDto> logger)
         {
             _logger = logger;
         }
 
-        public IEnumerable<TimeOfDay> Map(IDictionary<RowHash, TimeOfDayDto> dtosWithHashes)
+        public IEnumerable<TimeOfDay> Map(IDictionary<RowHash, TimeOfDaySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
             }
         }
 
-        public IEnumerable<TimeOfDay> MapOnto(IList<TimeOfDay> entities, IDictionary<RowHash, TimeOfDayDto> dtosWithHashes)
+        public IEnumerable<TimeOfDay> MapOnto(IList<TimeOfDay> entities, IDictionary<RowHash, TimeOfDaySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,14 +64,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
             return entities;
         }
 
-        private static bool IsValid(TimeOfDayDto dto)
+        private static bool IsValid(TimeOfDaySheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
                 !string.IsNullOrWhiteSpace(dto.Abbreviation);
         }
 
-        private TimeOfDay MapTimeOfDay(TimeOfDayDto dto, RowHash rowHash, TimeOfDay timeOfDay = null)
+        private TimeOfDay MapTimeOfDay(TimeOfDaySheetDto dto, RowHash rowHash, TimeOfDay timeOfDay = null)
         {
             timeOfDay ??= new TimeOfDay();
 
