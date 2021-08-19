@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
 {
-    public class RegionMapper : ISpreadsheetEntityMapper<RegionDto, Region>
+    public class RegionMapper : ISpreadsheetEntityMapper<RegionSheetDto, Region>
     {
         private readonly ILogger<RegionMapper> _logger;
 
@@ -18,7 +18,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
             _logger = logger;
         }
 
-        public IEnumerable<Region> Map(IDictionary<RowHash, RegionDto> dtosWithHashes)
+        public IEnumerable<Region> Map(IDictionary<RowHash, RegionSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -39,7 +39,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
             }
         }
 
-        public IEnumerable<Region> MapOnto(IList<Region> entities, IDictionary<RowHash, RegionDto> dtosWithHashes)
+        public IEnumerable<Region> MapOnto(IList<Region> entities, IDictionary<RowHash, RegionSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -70,12 +70,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
             return entities;
         }
 
-        private bool IsValid(RegionDto dto)
+        private bool IsValid(RegionSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private Region MapRegion(RegionDto dto, RowHash rowHash, Region region = null)
+        private Region MapRegion(RegionSheetDto dto, RowHash rowHash, Region region = null)
         {
             region ??= new Region();
 

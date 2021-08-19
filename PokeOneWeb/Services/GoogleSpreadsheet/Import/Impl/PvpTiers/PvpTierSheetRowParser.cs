@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
 {
-    public class PvpTierSheetRowParser : ISheetRowParser<PvpTierDto>
+    public class PvpTierSheetRowParser : ISheetRowParser<PvpTierSheetDto>
     {
-        public PvpTierDto ReadRow(List<object> values)
+        public PvpTierSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 2)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new PvpTierDto
+            var value = new PvpTierSheetDto
             {
                 Name = values[0] as string,
                 SortIndex = int.TryParse(values[1].ToString(), out var parsed) ? parsed : 0

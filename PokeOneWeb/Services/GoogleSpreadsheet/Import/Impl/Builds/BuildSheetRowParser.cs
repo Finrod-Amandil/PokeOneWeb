@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Builds;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
 {
-    public class BuildSheetRowParser : ISheetRowParser<BuildDto>
+    public class BuildSheetRowParser : ISheetRowParser<BuildSheetDto>
     {
-        public BuildDto ReadRow(List<object> values)
+        public BuildSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new BuildDto
+            var value = new BuildSheetDto
             {
                 PokemonVarietyName = values[0] as string
             };

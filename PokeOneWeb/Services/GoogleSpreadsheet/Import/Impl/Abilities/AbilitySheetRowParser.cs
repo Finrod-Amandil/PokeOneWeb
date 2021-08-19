@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
 {
-    public class AbilitySheetRowParser : ISheetRowParser<AbilityDto>
+    public class AbilitySheetRowParser : ISheetRowParser<AbilitySheetDto>
     {
-        public AbilityDto ReadRow(List<object> values)
+        public AbilitySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new AbilityDto
+            var value = new AbilitySheetDto
             {
                 Name = values[0] as string
             };

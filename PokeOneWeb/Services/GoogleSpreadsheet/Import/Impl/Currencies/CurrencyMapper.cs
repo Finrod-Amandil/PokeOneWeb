@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
 {
-    public class CurrencyMapper : ISpreadsheetEntityMapper<CurrencyDto, Currency>
+    public class CurrencyMapper : ISpreadsheetEntityMapper<CurrencySheetDto, Currency>
     {
         private readonly ILogger<CurrencyMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
             _logger = logger;
         }
 
-        public IEnumerable<Currency> Map(IDictionary<RowHash, CurrencyDto> dtosWithHashes)
+        public IEnumerable<Currency> Map(IDictionary<RowHash, CurrencySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
             }
         }
 
-        public IEnumerable<Currency> MapOnto(IList<Currency> entities, IDictionary<RowHash, CurrencyDto> dtosWithHashes)
+        public IEnumerable<Currency> MapOnto(IList<Currency> entities, IDictionary<RowHash, CurrencySheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
             return entities;
         }
 
-        private bool IsValid(CurrencyDto dto)
+        private bool IsValid(CurrencySheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.ItemName);
         }
 
-        private Currency MapCurrency(CurrencyDto dto, RowHash rowHash, Currency currency = null)
+        private Currency MapCurrency(CurrencySheetDto dto, RowHash rowHash, Currency currency = null)
         {
             currency ??= new Currency();
 

@@ -19,7 +19,116 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.AbilityTurnsIntoReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.AttackEffectivityReadModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BuildReadModelId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Effectivity")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<int?>("PokemonVarietyReadModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuildReadModelId");
+
+                    b.HasIndex("PokemonVarietyReadModelId");
+
+                    b.ToTable("AttackEffectivityReadModel");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.BuildReadModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Ability")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AbilityDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AtkEv")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BuildDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuildName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DefEv")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HpEv")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PokemonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PokemonResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PokemonVarietyReadModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpaEv")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpdEv")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpeEv")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.HasIndex("PokemonVarietyReadModelId");
+
+                    b.ToTable("BuildReadModel");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EntityTypeReadModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EntityType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResourceName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResourceName")
+                        .IsUnique()
+                        .HasFilter("[ResourceName] IS NOT NULL");
+
+                    b.ToTable("EntityTypeReadModel");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EvolutionAbilityReadModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,6 +156,12 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int?>("PokemonVarietyAsSecondaryAbilityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("RelativeStageIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SpriteName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PokemonVarietyAsHiddenAbilityId");
@@ -55,122 +170,7 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
                     b.HasIndex("PokemonVarietyAsSecondaryAbilityId");
 
-                    b.ToTable("AbilityTurnsIntoReadModel");
-                });
-
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.AttackEffectivityReadModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BuildReadModelId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Effectivity")
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<int?>("PokemonReadModelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TypeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuildReadModelId");
-
-                    b.HasIndex("PokemonReadModelId");
-
-                    b.ToTable("AttackEffectivityReadModel");
-                });
-
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.BuildReadModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Ability")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AbilityDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AtkEv")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BuildDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BuildName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DefEv")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HpEv")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Move1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Move2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Move3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Move4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokemonName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PokemonReadModelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PokemonResourceName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpaEv")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpdEv")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpeEv")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PokemonReadModelId");
-
-                    b.ToTable("BuildReadModel");
-                });
-
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EntityTypeReadModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EntityType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResourceName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourceName")
-                        .IsUnique()
-                        .HasFilter("[ResourceName] IS NOT NULL");
-
-                    b.ToTable("EntityTypeReadModel");
+                    b.ToTable("EvolutionAbilityReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EvolutionReadModel", b =>
@@ -180,10 +180,19 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
                     b.Property<string>("BaseName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BasePrimaryElementalType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BaseResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BaseSecondaryElementalType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("BaseSortIndex")
@@ -195,19 +204,19 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("BaseStage")
                         .HasColumnType("int");
 
-                    b.Property<string>("BaseType1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BaseType2")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("EvolutionTrigger")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EvolvedName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EvolvedPrimaryElementalType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EvolvedResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvolvedSecondaryElementalType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EvolvedSortIndex")
@@ -219,24 +228,20 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("EvolvedStage")
                         .HasColumnType("int");
 
-                    b.Property<string>("EvolvedType1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EvolvedType2")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsReversible")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PokemonReadModelId")
+                    b.Property<int?>("PokemonVarietyReadModelId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonReadModelId");
+                    b.HasIndex("ApplicationDbId");
+
+                    b.HasIndex("PokemonVarietyReadModelId");
 
                     b.ToTable("EvolutionReadModel");
                 });
@@ -251,6 +256,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("Ability")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nature")
                         .HasColumnType("nvarchar(max)");
 
@@ -260,15 +268,17 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("PokemonName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PokemonReadModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PokemonResourceName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PokemonVarietyReadModelId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonReadModelId");
+                    b.HasIndex("ApplicationDbId");
+
+                    b.HasIndex("PokemonVarietyReadModelId");
 
                     b.ToTable("HuntingConfigurationReadModel");
                 });
@@ -279,6 +289,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("BuildReadModelId")
                         .HasColumnType("int");
@@ -291,28 +304,34 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
                     b.HasIndex("BuildReadModelId");
 
                     b.ToTable("ItemOptionReadModel");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.ItemStatBoostReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.ItemStatBoostPokemonReadModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("AtkBoost")
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("AttackBoost")
                         .HasColumnType("decimal(6,2)");
 
-                    b.Property<decimal>("DefBoost")
+                    b.Property<decimal>("DefenseBoost")
                         .HasColumnType("decimal(6,2)");
 
                     b.Property<bool>("HasRequiredPokemon")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("HpBoost")
+                    b.Property<decimal>("HitPointsBoost")
                         .HasColumnType("decimal(6,2)");
 
                     b.Property<string>("ItemEffect")
@@ -330,18 +349,21 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("RequiredPokemonResourceName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SpaBoost")
+                    b.Property<decimal>("SpecialAttackBoost")
                         .HasColumnType("decimal(6,2)");
 
-                    b.Property<decimal>("SpdBoost")
+                    b.Property<decimal>("SpecialDefenseBoost")
                         .HasColumnType("decimal(6,2)");
 
-                    b.Property<decimal>("SpeBoost")
+                    b.Property<decimal>("SpeedBoost")
                         .HasColumnType("decimal(6,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ItemStatBoostReadModels");
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.ToTable("ItemStatBoostPokemonReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.LearnMethodReadModel", b =>
@@ -383,6 +405,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("Accuracy")
                         .HasColumnType("int");
 
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AttackPower")
                         .HasColumnType("int");
 
@@ -392,26 +417,88 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("EffectDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EffectivePower")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ElementalType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasStab")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("MoveName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PokemonReadModelId")
+                    b.Property<int?>("PokemonVarietyReadModelId")
                         .HasColumnType("int");
 
                     b.Property<int>("PowerPoints")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonReadModelId");
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.HasIndex("PokemonVarietyReadModelId");
 
                     b.ToTable("LearnableMoveReadModel");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveOptionReadModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Accuracy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttackPower")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BuildReadModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DamageClass")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EffectDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ElementalType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoveName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PowerPoints")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Slot")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.HasIndex("BuildReadModelId");
+
+                    b.ToTable("MoveOptionReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveReadModel", b =>
@@ -424,6 +511,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("Accuracy")
                         .HasColumnType("int");
 
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AttackPower")
                         .HasColumnType("int");
 
@@ -433,16 +523,25 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("EffectDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ElementalType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PowerPoints")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResourceName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
 
                     b.ToTable("MoveReadModel");
                 });
@@ -454,6 +553,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("BuildReadModelId")
                         .HasColumnType("int");
 
@@ -464,6 +566,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
 
                     b.HasIndex("BuildReadModelId");
 
@@ -477,10 +582,13 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Atk")
+                    b.Property<int>("ApplicationDbId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Def")
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Defense")
                         .HasColumnType("int");
 
                     b.Property<string>("Effect")
@@ -489,46 +597,49 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Spa")
+                    b.Property<int>("SpecialAttack")
                         .HasColumnType("int");
 
-                    b.Property<int>("Spd")
+                    b.Property<int>("SpecialDefense")
                         .HasColumnType("int");
 
-                    b.Property<int>("Spe")
+                    b.Property<int>("Speed")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("NatureReadModels");
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.ToTable("NatureReadModel");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Atk")
+                    b.Property<int>("ApplicationDbId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AtkEv")
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttackEv")
                         .HasColumnType("int");
 
                     b.Property<string>("Availability")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BulbapediaUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CatchRate")
                         .HasColumnType("int");
 
-                    b.Property<int>("Def")
+                    b.Property<int>("Defense")
                         .HasColumnType("int");
 
-                    b.Property<int>("DefEv")
+                    b.Property<int>("DefenseEv")
                         .HasColumnType("int");
 
                     b.Property<int>("Generation")
@@ -540,10 +651,10 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("HiddenAbilityEffect")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Hp")
+                    b.Property<int>("HitPoints")
                         .HasColumnType("int");
 
-                    b.Property<int>("HpEv")
+                    b.Property<int>("HitPointsEv")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsFullyEvolved")
@@ -558,22 +669,16 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PokeOneCommunityUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PokedexNumber")
                         .HasColumnType("int");
-
-                    b.Property<string>("PokemonDbUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokemonShowDownUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrimaryAbility")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrimaryAbilityEffect")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PvpTier")
@@ -591,46 +696,37 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("SecondaryAbilityEffect")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SerebiiUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SmogonUrl")
+                    b.Property<string>("SecondaryType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortIndex")
                         .HasColumnType("int");
 
-                    b.Property<int>("Spa")
+                    b.Property<int>("SpecialAttack")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpaEv")
+                    b.Property<int>("SpecialAttackEv")
                         .HasColumnType("int");
 
-                    b.Property<int>("Spd")
+                    b.Property<int>("SpecialDefense")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpdEv")
+                    b.Property<int>("SpecialDefenseEv")
                         .HasColumnType("int");
 
-                    b.Property<int>("Spe")
+                    b.Property<int>("Speed")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpeEv")
+                    b.Property<int>("SpeedEv")
                         .HasColumnType("int");
 
                     b.Property<string>("SpriteName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatTotal")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type2")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
 
                     b.HasIndex("Name")
                         .IsUnique()
@@ -640,7 +736,36 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .IsUnique()
                         .HasFilter("[ResourceName] IS NOT NULL");
 
-                    b.ToTable("PokemonReadModel");
+                    b.ToTable("PokemonVarietyReadModel");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonVarietyUrlReadModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PokemonVarietyReadModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
+
+                    b.HasIndex("PokemonVarietyReadModelId");
+
+                    b.ToTable("PokemonVarietyUrlReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.SeasonReadModel", b =>
@@ -679,17 +804,19 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("MoveName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PokemonName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("MoveResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PokemonVarietyApplicationDbId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MoveName");
-
-                    b.HasIndex("PokemonName");
+                    b.HasIndex("ApplicationDbId")
+                        .IsUnique();
 
                     b.ToTable("SimpleLearnableMoveReadModel");
                 });
@@ -701,11 +828,20 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("EventDateRange")
+                    b.Property<int>("ApplicationDbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EventEndDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventStartDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HighestLevel")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsEvent")
                         .HasColumnType("bit");
@@ -725,6 +861,9 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<int>("LocationSortIndex")
                         .HasColumnType("int");
 
+                    b.Property<int>("LowestLevel")
+                        .HasColumnType("int");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
@@ -734,11 +873,11 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("PokemonName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PokemonReadModelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PokemonResourceName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PokemonVarietyReadModelId")
+                        .HasColumnType("int");
 
                     b.Property<string>("RarityString")
                         .HasColumnType("nvarchar(max)");
@@ -766,12 +905,12 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonReadModelId");
+                    b.HasIndex("PokemonVarietyReadModelId");
 
                     b.ToTable("SpawnReadModel");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.TimeReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.TimeOfDayReadModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -800,25 +939,7 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
                     b.HasIndex("SpawnReadModelId");
 
-                    b.ToTable("TimeReadModel");
-                });
-
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.AbilityTurnsIntoReadModel", b =>
-                {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
-                        .WithMany("HiddenAbilityTurnsInto")
-                        .HasForeignKey("PokemonVarietyAsHiddenAbilityId")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
-
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
-                        .WithMany("PrimaryAbilityTurnsInto")
-                        .HasForeignKey("PokemonVarietyAsPrimaryAbilityId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
-                        .WithMany("SecondaryAbilityTurnsInto")
-                        .HasForeignKey("PokemonVarietyAsSecondaryAbilityId")
-                        .OnDelete(DeleteBehavior.ClientNoAction);
+                    b.ToTable("TimeOfDayReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.AttackEffectivityReadModel", b =>
@@ -827,30 +948,48 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                         .WithMany("OffensiveCoverage")
                         .HasForeignKey("BuildReadModelId");
 
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("DefenseAttackEffectivities")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.BuildReadModel", b =>
                 {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("Builds")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EvolutionAbilityReadModel", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
+                        .WithMany("HiddenEvolutionAbilities")
+                        .HasForeignKey("PokemonVarietyAsHiddenAbilityId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
+
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
+                        .WithMany("PrimaryEvolutionAbilities")
+                        .HasForeignKey("PokemonVarietyAsPrimaryAbilityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
+                        .WithMany("SecondaryEvolutionAbilities")
+                        .HasForeignKey("PokemonVarietyAsSecondaryAbilityId")
+                        .OnDelete(DeleteBehavior.ClientNoAction);
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.EvolutionReadModel", b =>
                 {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("Evolutions")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.HuntingConfigurationReadModel", b =>
                 {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("HuntingConfigurations")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.ItemOptionReadModel", b =>
@@ -869,9 +1008,16 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.LearnableMoveReadModel", b =>
                 {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("LearnableMoves")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveOptionReadModel", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.ReadModels.BuildReadModel", null)
+                        .WithMany("MoveOptions")
+                        .HasForeignKey("BuildReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.NatureOptionReadModel", b =>
@@ -879,6 +1025,13 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.HasOne("PokeOneWeb.Data.ReadModels.BuildReadModel", null)
                         .WithMany("NatureOptions")
                         .HasForeignKey("BuildReadModelId");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonVarietyUrlReadModel", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
+                        .WithMany("Urls")
+                        .HasForeignKey("PokemonVarietyReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.SeasonReadModel", b =>
@@ -890,21 +1043,23 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.SpawnReadModel", b =>
                 {
-                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonReadModel", null)
+                    b.HasOne("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", null)
                         .WithMany("Spawns")
-                        .HasForeignKey("PokemonReadModelId");
+                        .HasForeignKey("PokemonVarietyReadModelId");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.TimeReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.TimeOfDayReadModel", b =>
                 {
                     b.HasOne("PokeOneWeb.Data.ReadModels.SpawnReadModel", null)
-                        .WithMany("Times")
+                        .WithMany("TimesOfDay")
                         .HasForeignKey("SpawnReadModelId");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.BuildReadModel", b =>
                 {
                     b.Navigation("ItemOptions");
+
+                    b.Navigation("MoveOptions");
 
                     b.Navigation("NatureOptions");
 
@@ -916,7 +1071,7 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Navigation("LearnMethods");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonReadModel", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.PokemonVarietyReadModel", b =>
                 {
                     b.Navigation("Builds");
 
@@ -924,24 +1079,26 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
 
                     b.Navigation("Evolutions");
 
-                    b.Navigation("HiddenAbilityTurnsInto");
+                    b.Navigation("HiddenEvolutionAbilities");
 
                     b.Navigation("HuntingConfigurations");
 
                     b.Navigation("LearnableMoves");
 
-                    b.Navigation("PrimaryAbilityTurnsInto");
+                    b.Navigation("PrimaryEvolutionAbilities");
 
-                    b.Navigation("SecondaryAbilityTurnsInto");
+                    b.Navigation("SecondaryEvolutionAbilities");
 
                     b.Navigation("Spawns");
+
+                    b.Navigation("Urls");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.SpawnReadModel", b =>
                 {
                     b.Navigation("Seasons");
 
-                    b.Navigation("Times");
+                    b.Navigation("TimesOfDay");
                 });
 #pragma warning restore 612, 618
         }

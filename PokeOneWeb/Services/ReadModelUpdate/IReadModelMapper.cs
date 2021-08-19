@@ -2,7 +2,7 @@
 
 namespace PokeOneWeb.Services.ReadModelUpdate
 {
-    public interface IReadModelMapper<out T>
+    public interface IReadModelMapper<T>
     {
         IEnumerable<T> MapFromDatabase();
     }

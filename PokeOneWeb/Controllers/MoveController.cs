@@ -1,45 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Controllers.Dtos;
-using PokeOneWeb.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.Api;
+using System.Collections.Generic;
+using PokeOneWeb.Dtos;
 
 namespace PokeOneWeb.Controllers
 {
     [ApiController]
+    [Route("api/move")]
     public class MoveController : ControllerBase
     {
-        private readonly ReadModelDbContext _dbContext;
+        private readonly IMoveApiService _moveApiService;
 
-        public MoveController(ReadModelDbContext dbContext)
+        public MoveController(IMoveApiService moveApiService)
         {
-            _dbContext = dbContext;
+            _moveApiService = moveApiService;
         }
 
-        [Route("api/move/getall")]
+        [Route("getall")]
         [HttpGet]
-        public ActionResult<List<MoveReadModel>> GetAll()
+        public ActionResult<IEnumerable<MoveDto>> GetAll()
         {
-            return _dbContext.MoveReadModels.ToList();
+            return Ok(_moveApiService.GetAllMoves());
         }
 
-        [Route("api/move/getallnames")]
+        [Route("getallnames")]
         [HttpGet]
-        public ActionResult<List<MoveNameDto>> GetAllNames()
-        {
-            return _dbContext.MoveReadModels
-                .ToList()
-                .Select(ToMoveName)
-                .ToList();
-        }
+        public ActionResult<IEnumerable<MoveNameDto>> GetAllNames()
 
-        private static MoveNameDto ToMoveName(MoveReadModel readModel)
         {
-            return new MoveNameDto
-            {
-                Name = readModel.Name
-            };
+            return Ok(_moveApiService.GetAllMoveNames());
         }
     }
 }

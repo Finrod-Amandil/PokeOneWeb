@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes
 {
-    public class ElementalTypeSheetRowParser : ISheetRowParser<ElementalTypeDto>
+    public class ElementalTypeSheetRowParser : ISheetRowParser<ElementalTypeSheetDto>
     {
-        public ElementalTypeDto ReadRow(List<object> values)
+        public ElementalTypeSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new ElementalTypeDto
+            var value = new ElementalTypeSheetDto
             {
                 Name = values[0] as string
             };

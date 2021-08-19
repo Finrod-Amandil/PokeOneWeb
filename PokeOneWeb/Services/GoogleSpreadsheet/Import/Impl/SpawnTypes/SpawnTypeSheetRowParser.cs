@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
 {
-    public class SpawnTypeSheetRowParser : ISheetRowParser<SpawnTypeDto>
+    public class SpawnTypeSheetRowParser : ISheetRowParser<SpawnTypeSheetDto>
     {
-        public SpawnTypeDto ReadRow(List<object> values)
+        public SpawnTypeSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new SpawnTypeDto
+            var value = new SpawnTypeSheetDto
             {
                 Name = values[0] as string,
                 SortIndex = int.TryParse(values[1].ToString(), out var parsedSortIndex) ? parsedSortIndex : 0,

@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay
 {
-    public class TimeOfDaySheetRowParser : ISheetRowParser<TimeOfDayDto>
+    public class TimeOfDaySheetRowParser : ISheetRowParser<TimeOfDaySheetDto>
     {
-        public TimeOfDayDto ReadRow(List<object> values)
+        public TimeOfDaySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 3)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new TimeOfDayDto
+            var value = new TimeOfDaySheetDto
             {
                 SortIndex = int.TryParse(values[0].ToString(), out var parsed) ? parsed : 0,
                 Name = values[1] as string,

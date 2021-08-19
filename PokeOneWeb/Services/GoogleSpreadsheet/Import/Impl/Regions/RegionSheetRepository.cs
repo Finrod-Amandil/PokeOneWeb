@@ -11,14 +11,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<RegionSheetRepository> _logger;
-        private readonly ISheetRowParser<RegionDto> _parser;
-        private readonly ISpreadsheetEntityMapper<RegionDto, Region> _mapper;
+        private readonly ISheetRowParser<RegionSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<RegionSheetDto, Region> _mapper;
 
         public RegionSheetRepository(
             ApplicationDbContext dbContext,
             ILogger<RegionSheetRepository> logger,
-            ISheetRowParser<RegionDto> parser,
-            ISpreadsheetEntityMapper<RegionDto, Region> mapper)
+            ISheetRowParser<RegionSheetDto> parser,
+            ISpreadsheetEntityMapper<RegionSheetDto, Region> mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
@@ -79,7 +79,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions
             return updatedEntities.Count;
         }
 
-        private Dictionary<RowHash, RegionDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, RegionSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

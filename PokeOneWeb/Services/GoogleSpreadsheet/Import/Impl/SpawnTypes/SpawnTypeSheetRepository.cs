@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
     public class SpawnTypeSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<SpawnTypeDto> _parser;
-        private readonly ISpreadsheetEntityMapper<SpawnTypeDto, SpawnType> _mapper;
+        private readonly ISheetRowParser<SpawnTypeSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType> _mapper;
 
         public SpawnTypeSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<SpawnTypeDto> parser,
-            ISpreadsheetEntityMapper<SpawnTypeDto, SpawnType> mapper)
+            ISheetRowParser<SpawnTypeSheetDto> parser,
+            ISpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, SpawnTypeDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, SpawnTypeSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

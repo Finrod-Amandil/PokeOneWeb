@@ -36,12 +36,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             _hashListComparator = hashListComparator;
         }
 
-        public async Task ImportSpreadsheetData()
+        public async Task<int> ImportSpreadsheetData()
         {
             var sheetsData = await _dataLoader.LoadRange(
                 _settings.Value.Import.SheetsListSpreadsheetId,
                 _settings.Value.Import.SheetsListSheetName,
                 "B2:C");
+
+            var totalChangedEntries = 0;
 
             foreach (var sheetData in sheetsData)
             {
@@ -64,7 +66,11 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
                     // Ensure, that google spreadsheet requests are spread out to avoid hitting quota limit.
                     Thread.Sleep(_settings.Value.Import.MinTimeBetweenSheets - (int)duration.TotalMilliseconds);
                 }
+
+                totalChangedEntries += changedEntries;
             }
+
+            return totalChangedEntries;
         }
 
         private async Task<int> ImportSheet(ImportSheet sheet)

@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
     public class EventSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<EventDto> _parser;
-        private readonly ISpreadsheetEntityMapper<EventDto, Event> _mapper;
+        private readonly ISheetRowParser<EventSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<EventSheetDto, Event> _mapper;
 
         public EventSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<EventDto> parser,
-            ISpreadsheetEntityMapper<EventDto, Event> mapper)
+            ISheetRowParser<EventSheetDto> parser,
+            ISpreadsheetEntityMapper<EventSheetDto, Event> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, EventDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, EventSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

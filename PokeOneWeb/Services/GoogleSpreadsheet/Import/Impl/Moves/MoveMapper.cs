@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
 {
-    public class MoveMapper : ISpreadsheetEntityMapper<MoveDto, Move>
+    public class MoveMapper : ISpreadsheetEntityMapper<MoveSheetDto, Move>
     {
         private readonly ILogger<MoveMapper> _logger;
 
@@ -19,7 +19,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
             _logger = logger;
         }
 
-        public IEnumerable<Move> Map(IDictionary<RowHash, MoveDto> dtosWithHashes)
+        public IEnumerable<Move> Map(IDictionary<RowHash, MoveSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -41,7 +41,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
             }
         }
 
-        public IEnumerable<Move> MapOnto(IList<Move> entities, IDictionary<RowHash, MoveDto> dtosWithHashes)
+        public IEnumerable<Move> MapOnto(IList<Move> entities, IDictionary<RowHash, MoveSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -73,7 +73,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
             return entities;
         }
 
-        private bool IsValid(MoveDto dto)
+        private bool IsValid(MoveSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.Name) &&
@@ -82,7 +82,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves
                 !string.IsNullOrWhiteSpace(dto.TypeName);
         }
 
-        private Move MapMove(MoveDto dto, RowHash rowHash, Move move = null)
+        private Move MapMove(MoveSheetDto dto, RowHash rowHash, Move move = null)
         {
             move ??= new Move();
 

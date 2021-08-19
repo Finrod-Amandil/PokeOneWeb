@@ -1,36 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.ReadModels;
-using System.Linq;
-using PokeOneWeb.Controllers.Dtos;
+using PokeOneWeb.Dtos;
+using PokeOneWeb.Services.Api;
 
 namespace PokeOneWeb.Controllers
 {
     [ApiController]
+    [Route("api")]
     public class ApiController : ControllerBase
     {
-        private readonly ReadModelDbContext _dbContext;
+        private readonly IEntityTypeApiService _entityTypeApiService;
 
-        public ApiController(ReadModelDbContext dbContext)
+        public ApiController(IEntityTypeApiService entityTypeApiService)
         {
-            _dbContext = dbContext;
+            _entityTypeApiService = entityTypeApiService;
         }
 
-        [Route("api/getentitytypeforpath")]
+        [Route("getentitytypeforpath")]
         [HttpGet]
         public ActionResult<EntityTypeDto> GetEntityTypeForPath([FromQuery] string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                return new EntityTypeDto {EntityType = EntityType.Unknown};
-            }
-
-            var matchingMapping = _dbContext.EntityTypeReadModels
-                .SingleOrDefault(e => e.ResourceName.Equals(path));
-
-            return matchingMapping is null ? 
-                new EntityTypeDto { EntityType = EntityType.Unknown } : 
-                new EntityTypeDto { EntityType = matchingMapping.EntityType };
+            return Ok(_entityTypeApiService.GetEntityTypeForPath(path));
         }
     }
 }

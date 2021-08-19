@@ -12,14 +12,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
     {
         private readonly ILogger<PokemonSheetRepository> _logger;
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<PokemonDto> _parser;
-        private readonly ISpreadsheetEntityMapper<PokemonDto, PokemonForm> _mapper;
+        private readonly ISheetRowParser<PokemonSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<PokemonSheetDto, PokemonForm> _mapper;
 
         public PokemonSheetRepository(
             ILogger<PokemonSheetRepository> logger,
             ApplicationDbContext dbContext,
-            ISheetRowParser<PokemonDto> parser,
-            ISpreadsheetEntityMapper<PokemonDto, PokemonForm> mapper)
+            ISheetRowParser<PokemonSheetDto> parser,
+            ISpreadsheetEntityMapper<PokemonSheetDto, PokemonForm> mapper)
         {
             _logger = logger;
             _dbContext = dbContext;
@@ -283,7 +283,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             return entities.Count;
         }
 
-        private Dictionary<RowHash, PokemonDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, PokemonSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

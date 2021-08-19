@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("SeasonReadModel")]
-    public class SeasonReadModel
+    public class SeasonReadModel : IReadModel
     {
         public int Id { get; set; }
         public int SortIndex { get; set; }

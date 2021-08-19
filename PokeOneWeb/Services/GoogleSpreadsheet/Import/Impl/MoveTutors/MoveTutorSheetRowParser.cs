@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors
 {
-    public class MoveTutorSheetRowParser : ISheetRowParser<MoveTutorDto>
+    public class MoveTutorSheetRowParser : ISheetRowParser<MoveTutorSheetDto>
     {
-        public MoveTutorDto ReadRow(List<object> values)
+        public MoveTutorSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 2)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new MoveTutorDto
+            var value = new MoveTutorSheetDto
             {
                 Name = values[0] as string,
                 LocationName = values[1] as string

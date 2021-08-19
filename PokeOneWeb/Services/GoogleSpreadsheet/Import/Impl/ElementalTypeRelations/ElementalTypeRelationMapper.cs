@@ -7,7 +7,7 @@ using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelations
 {
-    public class ElementalTypeRelationMapper : ISpreadsheetEntityMapper<ElementalTypeRelationDto, ElementalTypeRelation>
+    public class ElementalTypeRelationMapper : ISpreadsheetEntityMapper<ElementalTypeRelationSheetDto, ElementalTypeRelation>
     {
         private readonly ILogger<ElementalTypeRelationMapper> _logger;
 
@@ -18,7 +18,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
             _logger = logger;
         }
 
-        public IEnumerable<ElementalTypeRelation> Map(IDictionary<RowHash, ElementalTypeRelationDto> dtosWithHashes)
+        public IEnumerable<ElementalTypeRelation> Map(IDictionary<RowHash, ElementalTypeRelationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -39,7 +39,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
             }
         }
 
-        public IEnumerable<ElementalTypeRelation> MapOnto(IList<ElementalTypeRelation> entities, IDictionary<RowHash, ElementalTypeRelationDto> dtosWithHashes)
+        public IEnumerable<ElementalTypeRelation> MapOnto(IList<ElementalTypeRelation> entities, IDictionary<RowHash, ElementalTypeRelationSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -70,7 +70,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
             return entities;
         }
 
-        private bool IsValid(ElementalTypeRelationDto dto)
+        private bool IsValid(ElementalTypeRelationSheetDto dto)
         {
             return
                 !string.IsNullOrWhiteSpace(dto.AttackingTypeName) &&
@@ -78,7 +78,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelatio
         }
 
         private ElementalTypeRelation MapElementalTypeRelation(
-            ElementalTypeRelationDto dto, 
+            ElementalTypeRelationSheetDto dto, 
             RowHash rowHash,
             ElementalTypeRelation elementalTypeRelation = null)
         {

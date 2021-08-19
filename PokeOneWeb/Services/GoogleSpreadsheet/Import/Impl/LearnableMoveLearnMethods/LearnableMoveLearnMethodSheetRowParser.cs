@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodSheetRowParser : ISheetRowParser<LearnableMoveLearnMethodDto>
+    public class LearnableMoveLearnMethodSheetRowParser : ISheetRowParser<LearnableMoveLearnMethodSheetDto>
     {
-        public LearnableMoveLearnMethodDto ReadRow(List<object> values)
+        public LearnableMoveLearnMethodSheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 5)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new LearnableMoveLearnMethodDto
+            var value = new LearnableMoveLearnMethodSheetDto
             {
                 PokemonVarietyName = values[1] as string,
                 MoveName = values[2] as string,

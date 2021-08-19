@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
     public class PvpTierSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<PvpTierDto> _parser;
-        private readonly ISpreadsheetEntityMapper<PvpTierDto, PvpTier> _mapper;
+        private readonly ISheetRowParser<PvpTierSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<PvpTierSheetDto, PvpTier> _mapper;
 
         public PvpTierSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<PvpTierDto> parser,
-            ISpreadsheetEntityMapper<PvpTierDto, PvpTier> mapper)
+            ISheetRowParser<PvpTierSheetDto> parser,
+            ISpreadsheetEntityMapper<PvpTierSheetDto, PvpTier> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, PvpTierDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, PvpTierSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

@@ -8,13 +8,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
     public class NatureSheetRepository : ISheetRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly ISheetRowParser<NatureDto> _parser;
-        private readonly ISpreadsheetEntityMapper<NatureDto, Nature> _mapper;
+        private readonly ISheetRowParser<NatureSheetDto> _parser;
+        private readonly ISpreadsheetEntityMapper<NatureSheetDto, Nature> _mapper;
 
         public NatureSheetRepository(
             ApplicationDbContext dbContext,
-            ISheetRowParser<NatureDto> parser,
-            ISpreadsheetEntityMapper<NatureDto, Nature> mapper)
+            ISheetRowParser<NatureSheetDto> parser,
+            ISpreadsheetEntityMapper<NatureSheetDto, Nature> mapper)
         {
             _dbContext = dbContext;
             _parser = parser;
@@ -69,7 +69,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures
             return updatedEntities.Count();
         }
 
-        private Dictionary<RowHash, NatureDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
+        private Dictionary<RowHash, NatureSheetDto> ReadWithHashes(Dictionary<RowHash, List<object>> rowData)
         {
             return rowData
                 .Select(row => new { hash = row.Key, values = _parser.ReadRow(row.Value) })

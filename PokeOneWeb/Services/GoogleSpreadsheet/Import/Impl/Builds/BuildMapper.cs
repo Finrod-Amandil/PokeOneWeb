@@ -4,11 +4,10 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Extensions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MainData.Builds;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
 {
-    public class BuildMapper : ISpreadsheetEntityMapper<BuildDto, Build>
+    public class BuildMapper : ISpreadsheetEntityMapper<BuildSheetDto, Build>
     {
         private static readonly string OPTION_DIVIDER = "/";
         private static readonly string STAT_ATK = "atk";
@@ -31,7 +30,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             _logger = logger;
         }
 
-        public IEnumerable<Build> Map(IDictionary<RowHash, BuildDto> dtosWithHashes)
+        public IEnumerable<Build> Map(IDictionary<RowHash, BuildSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -56,7 +55,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             }
         }
 
-        public IEnumerable<Build> MapOnto(IList<Build> entities, IDictionary<RowHash, BuildDto> dtosWithHashes)
+        public IEnumerable<Build> MapOnto(IList<Build> entities, IDictionary<RowHash, BuildSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -91,12 +90,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return entities;
         }
 
-        private bool IsValid(BuildDto dto)
+        private bool IsValid(BuildSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.PokemonVarietyName);
         }
 
-        private Build MapBuild(BuildDto dto, RowHash rowHash, Build build = null)
+        private Build MapBuild(BuildSheetDto dto, RowHash rowHash, Build build = null)
         {
             build ??= new Build();
 
@@ -119,7 +118,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return build;
         }
 
-        private PokemonVariety MapPokemonVariety(BuildDto dto)
+        private PokemonVariety MapPokemonVariety(BuildSheetDto dto)
         {
             PokemonVariety pokemonVariety;
             if (!_pokemonVarieties.ContainsKey(dto.PokemonVarietyName))
@@ -135,7 +134,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return pokemonVariety;
         }
 
-        private Ability MapAbility(BuildDto dto)
+        private Ability MapAbility(BuildSheetDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Ability))
             {
@@ -194,7 +193,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return moveOptions;
         }
 
-        private List<ItemOption> MapItems(BuildDto dto)
+        private List<ItemOption> MapItems(BuildSheetDto dto)
         {
             var itemOptions = new List<ItemOption>();
 
@@ -231,7 +230,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return itemOptions;
         }
 
-        private List<NatureOption> MapNature(BuildDto dto)
+        private List<NatureOption> MapNature(BuildSheetDto dto)
         {
             var natureOptions = new List<NatureOption>();
 
@@ -268,7 +267,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds
             return natureOptions;
         }
 
-        private void MapEvDistribution(BuildDto dto, Build build)
+        private void MapEvDistribution(BuildSheetDto dto, Build build)
         {
             if (string.IsNullOrWhiteSpace(dto.EvDistribution))
             {

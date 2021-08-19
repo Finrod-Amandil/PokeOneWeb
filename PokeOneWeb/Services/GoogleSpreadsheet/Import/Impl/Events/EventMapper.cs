@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
 {
-    public class EventMapper : ISpreadsheetEntityMapper<EventDto, Event>
+    public class EventMapper : ISpreadsheetEntityMapper<EventSheetDto, Event>
     {
         private readonly ILogger<EventMapper> _logger;
 
@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
             _logger = logger;
         }
 
-        public IEnumerable<Event> Map(IDictionary<RowHash, EventDto> dtosWithHashes)
+        public IEnumerable<Event> Map(IDictionary<RowHash, EventSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -35,7 +35,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
             }
         }
 
-        public IEnumerable<Event> MapOnto(IList<Event> entities, IDictionary<RowHash, EventDto> dtosWithHashes)
+        public IEnumerable<Event> MapOnto(IList<Event> entities, IDictionary<RowHash, EventSheetDto> dtosWithHashes)
         {
             if (dtosWithHashes is null)
             {
@@ -64,12 +64,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events
             return entities;
         }
 
-        private static bool IsValid(EventDto dto)
+        private static bool IsValid(EventSheetDto dto)
         {
             return !string.IsNullOrWhiteSpace(dto.Name);
         }
 
-        private Event MapEvent(EventDto dto, RowHash rowHash, Event eventEntity = null)
+        private Event MapEvent(EventSheetDto dto, RowHash rowHash, Event eventEntity = null)
         {
             eventEntity ??= new Event();
 

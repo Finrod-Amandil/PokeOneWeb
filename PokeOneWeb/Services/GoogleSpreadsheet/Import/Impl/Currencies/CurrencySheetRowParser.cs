@@ -2,16 +2,16 @@
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies
 {
-    public class CurrencySheetRowParser : ISheetRowParser<CurrencyDto>
+    public class CurrencySheetRowParser : ISheetRowParser<CurrencySheetDto>
     {
-        public CurrencyDto ReadRow(List<object> values)
+        public CurrencySheetDto ReadRow(List<object> values)
         {
             if (values is null || values.Count < 1)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
-            var value = new CurrencyDto
+            var value = new CurrencySheetDto
             {
                 ItemName = values[0] as string
             };
