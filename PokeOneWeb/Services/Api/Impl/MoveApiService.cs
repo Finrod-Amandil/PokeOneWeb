@@ -39,7 +39,8 @@ namespace PokeOneWeb.Services.Api.Impl
                 .AsNoTracking()
                 .Select(m => new MoveNameDto
                 {
-                    Name = m.Name
+                    Name = m.Name,
+                    ResourceName = m.ResourceName
                 });
         }
     }

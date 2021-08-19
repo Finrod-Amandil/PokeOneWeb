@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Dtos;
 using PokeOneWeb.Services.Api;
 using System.Collections.Generic;
 
@@ -14,9 +14,9 @@ namespace PokeOneWeb.Controllers
             _natureApiService = natureApiService;
         }
 
-        [Route("api/nature/getnatures")]
+        [Route("api/nature/getall")]
         [HttpGet]
-        public ActionResult<IEnumerable<NatureReadModel>> GetNatures()
+        public ActionResult<IEnumerable<NatureDto>> GetNatures()
         {
             return Ok(_natureApiService.GetAllNatures());
         }

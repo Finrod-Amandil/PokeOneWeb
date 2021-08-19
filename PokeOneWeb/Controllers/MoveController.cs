@@ -19,7 +19,7 @@ namespace PokeOneWeb.Controllers
 
         [Route("getall")]
         [HttpGet]
-        public ActionResult<IEnumerable<MoveReadModel>> GetAll()
+        public ActionResult<IEnumerable<MoveDto>> GetAll()
         {
             return Ok(_moveApiService.GetAllMoves());
         }

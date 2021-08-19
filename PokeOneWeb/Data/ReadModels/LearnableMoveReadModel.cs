@@ -21,6 +21,10 @@ namespace PokeOneWeb.Data.ReadModels
 
         public int AttackPower { get; set; }
 
+        public int EffectivePower { get; set; }
+
+        public bool HasStab { get; set; }
+
         public int Accuracy { get; set; }
 
         public int PowerPoints { get; set; }
