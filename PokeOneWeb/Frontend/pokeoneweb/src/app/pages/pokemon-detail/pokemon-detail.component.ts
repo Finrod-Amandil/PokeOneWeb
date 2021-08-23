@@ -141,6 +141,28 @@ export class PokemonDetailComponent implements OnInit {
         return (powerPoints - 5) * (120 / (30 - 5));
     }
 
+    public getPreEvolutionAbilities(allEvolutionAbilities: IEvolutionAbilityModel[]): IEvolutionAbilityModel[] {
+        return allEvolutionAbilities
+            .filter(e => e.relativeStageIndex < 0)
+            .sort((e1, e2) => {
+                if (e1.relativeStageIndex === e2.relativeStageIndex) {
+                    return e1.pokemonSortIndex - e2.pokemonSortIndex;
+                }
+                return e1.relativeStageIndex - e2.relativeStageIndex;
+            });
+    }
+
+    public getPostEvolutionAbilities(allEvolutionAbilities: IEvolutionAbilityModel[]): IEvolutionAbilityModel[] {
+        return allEvolutionAbilities
+            .filter(e => e.relativeStageIndex > 0)
+            .sort((e1, e2) => {
+                if (e1.relativeStageIndex === e2.relativeStageIndex) {
+                    return e1.pokemonSortIndex - e2.pokemonSortIndex;
+                }
+                return e1.relativeStageIndex - e2.relativeStageIndex;
+            });
+    }
+
     private applyInitialSorting() {
         if (!this.model.pokemon) return;
 

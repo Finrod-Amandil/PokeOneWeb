@@ -48,6 +48,37 @@ export interface IPokemonVarietyModel {
 
     notes: string;
 
+    previousPokemonResourceName: string;
+    previousPokemonSpriteName: string;
+    previousPokemonName: string;
+    nextPokemonResourceName: string;
+    nextPokemonSpriteName: string;
+    nextPokemonName: string;
+
+    primaryAbilityAttackBoost: number;
+    primaryAbilitySpecialAttackBoost: number;
+    primaryAbilityDefenseBoost: number;
+    primaryAbilitySpecialDefenseBoost: number;
+    primaryAbilitySpeedBoost: number;
+    primaryAbilityHitPointsBoost: number;
+    primaryAbilityBoostConditions: string;
+
+    secondaryAbilityAttackBoost: number;
+    secondaryAbilitySpecialAttackBoost: number;
+    secondaryAbilityDefenseBoost: number;
+    secondaryAbilitySpecialDefenseBoost: number;
+    secondaryAbilitySpeedBoost: number;
+    secondaryAbilityHitPointsBoost: number;
+    secondaryAbilityBoostConditions: string;
+
+    hiddenAbilityAttackBoost: number;
+    hiddenAbilitySpecialAttackBoost: number;
+    hiddenAbilityDefenseBoost: number;
+    hiddenAbilitySpecialDefenseBoost: number;
+    hiddenAbilitySpeedBoost: number;
+    hiddenAbilityHitPointsBoost: number;
+    hiddenAbilityBoostConditions: string;
+
     urls: IPokemonVarietyUrlModel[];
 
     primaryEvolutionAbilities: IEvolutionAbilityModel[];
@@ -102,6 +133,37 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     hitPointsEv = 0;
 
     notes = '';
+
+    previousPokemonResourceName = '';
+    previousPokemonSpriteName = '';
+    previousPokemonName = '';
+    nextPokemonResourceName = '';
+    nextPokemonSpriteName = '';
+    nextPokemonName = '';
+
+    primaryAbilityAttackBoost = 1;
+    primaryAbilitySpecialAttackBoost = 1;
+    primaryAbilityDefenseBoost = 1;
+    primaryAbilitySpecialDefenseBoost = 1;
+    primaryAbilitySpeedBoost = 1;
+    primaryAbilityHitPointsBoost = 1;
+    primaryAbilityBoostConditions = '';
+
+    secondaryAbilityAttackBoost = 1;
+    secondaryAbilitySpecialAttackBoost = 1;
+    secondaryAbilityDefenseBoost = 1;
+    secondaryAbilitySpecialDefenseBoost = 1;
+    secondaryAbilitySpeedBoost = 1;
+    secondaryAbilityHitPointsBoost = 1;
+    secondaryAbilityBoostConditions = '';
+
+    hiddenAbilityAttackBoost = 1;
+    hiddenAbilitySpecialAttackBoost = 1;
+    hiddenAbilityDefenseBoost = 1;
+    hiddenAbilitySpecialDefenseBoost = 1;
+    hiddenAbilitySpeedBoost = 1;
+    hiddenAbilityHitPointsBoost = 1;
+    hiddenAbilityBoostConditions = '';
 
     urls = [];
 

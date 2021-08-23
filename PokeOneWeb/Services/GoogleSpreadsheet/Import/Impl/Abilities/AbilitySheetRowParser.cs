@@ -36,6 +36,41 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
                 value.Effect = values[3] as string;
             }
 
+            if (values.Count > 4)
+            {
+                value.AtkBoost = decimal.TryParse(values[4].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 5)
+            {
+                value.SpaBoost = decimal.TryParse(values[5].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 6)
+            {
+                value.DefBoost = decimal.TryParse(values[6].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 7)
+            {
+                value.SpdBoost = decimal.TryParse(values[7].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 8)
+            {
+                value.SpeBoost = decimal.TryParse(values[8].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 9)
+            {
+                value.HpBoost = decimal.TryParse(values[9].ToString(), out var parsed) ? parsed : 1M;
+            }
+
+            if (values.Count > 10)
+            {
+                value.BoostConditions = values[10] as string;
+            }
+
             return value;
         }
     }

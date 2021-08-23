@@ -81,6 +81,14 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities
             ability.EffectDescription = dto.Effect;
             ability.EffectShortDescription = dto.ShortEffect;
 
+            ability.AttackBoost = dto.AtkBoost;
+            ability.SpecialAttackBoost = dto.SpaBoost;
+            ability.DefenseBoost = dto.DefBoost;
+            ability.SpecialDefenseBoost = dto.SpdBoost;
+            ability.SpeedBoost = dto.SpeBoost;
+            ability.HitPointsBoost = dto.HpBoost;
+            ability.BoostConditions = dto.BoostConditions;
+
             return ability;
         }
     }

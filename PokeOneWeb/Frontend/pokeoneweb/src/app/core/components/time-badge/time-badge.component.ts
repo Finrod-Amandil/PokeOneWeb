@@ -27,7 +27,6 @@ export class TimeBadgeComponent implements OnInit {
   }
 
   public sortTimes() {
-      console.log(this.times);
     this.times = this.times
       .slice()
       .sort((n1,n2) => n1.sortIndex - n2.sortIndex);

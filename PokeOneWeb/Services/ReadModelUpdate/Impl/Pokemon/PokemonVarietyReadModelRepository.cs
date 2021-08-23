@@ -91,6 +91,37 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             existingEntity.SpeedEv = updatedEntity.SpeedEv;
             existingEntity.HitPointsEv = updatedEntity.HitPointsEv;
 
+            existingEntity.PreviousPokemonResourceName = updatedEntity.PreviousPokemonResourceName;
+            existingEntity.PreviousPokemonSpriteName = updatedEntity.PreviousPokemonSpriteName;
+            existingEntity.PreviousPokemonName = updatedEntity.PreviousPokemonName;
+            existingEntity.NextPokemonResourceName = updatedEntity.NextPokemonResourceName;
+            existingEntity.NextPokemonSpriteName = updatedEntity.NextPokemonSpriteName;
+            existingEntity.NextPokemonName = updatedEntity.NextPokemonName;
+
+            existingEntity.PrimaryAbilityAttackBoost = updatedEntity.PrimaryAbilityAttackBoost;
+            existingEntity.PrimaryAbilitySpecialAttackBoost = updatedEntity.PrimaryAbilitySpecialAttackBoost;
+            existingEntity.PrimaryAbilityDefenseBoost = updatedEntity.PrimaryAbilityDefenseBoost;
+            existingEntity.PrimaryAbilitySpecialDefenseBoost = updatedEntity.PrimaryAbilitySpecialDefenseBoost;
+            existingEntity.PrimaryAbilitySpeedBoost = updatedEntity.PrimaryAbilitySpeedBoost;
+            existingEntity.PrimaryAbilityHitPointsBoost = updatedEntity.PrimaryAbilityHitPointsBoost;
+            existingEntity.PrimaryAbilityBoostConditions = updatedEntity.PrimaryAbilityBoostConditions;
+
+            existingEntity.SecondaryAbilityAttackBoost = updatedEntity.SecondaryAbilityAttackBoost;
+            existingEntity.SecondaryAbilitySpecialAttackBoost = updatedEntity.SecondaryAbilitySpecialAttackBoost;
+            existingEntity.SecondaryAbilityDefenseBoost = updatedEntity.SecondaryAbilityDefenseBoost;
+            existingEntity.SecondaryAbilitySpecialDefenseBoost = updatedEntity.SecondaryAbilitySpecialDefenseBoost;
+            existingEntity.SecondaryAbilitySpeedBoost = updatedEntity.SecondaryAbilitySpeedBoost;
+            existingEntity.SecondaryAbilityHitPointsBoost = updatedEntity.SecondaryAbilityHitPointsBoost;
+            existingEntity.SecondaryAbilityBoostConditions = updatedEntity.SecondaryAbilityBoostConditions;
+
+            existingEntity.HiddenAbilityAttackBoost = updatedEntity.HiddenAbilityAttackBoost;
+            existingEntity.HiddenAbilitySpecialAttackBoost = updatedEntity.HiddenAbilitySpecialAttackBoost;
+            existingEntity.HiddenAbilityDefenseBoost = updatedEntity.HiddenAbilityDefenseBoost;
+            existingEntity.HiddenAbilitySpecialDefenseBoost = updatedEntity.HiddenAbilitySpecialDefenseBoost;
+            existingEntity.HiddenAbilitySpeedBoost = updatedEntity.HiddenAbilitySpeedBoost;
+            existingEntity.HiddenAbilityHitPointsBoost = updatedEntity.HiddenAbilityHitPointsBoost;
+            existingEntity.HiddenAbilityBoostConditions = updatedEntity.HiddenAbilityBoostConditions;
+
             UpdateUrls(existingEntity.Urls, updatedEntity.Urls);
             UpdateEvolutionAbilities(existingEntity.PrimaryEvolutionAbilities, updatedEntity.PrimaryEvolutionAbilities);
             UpdateEvolutionAbilities(existingEntity.SecondaryEvolutionAbilities, updatedEntity.SecondaryEvolutionAbilities);

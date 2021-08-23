@@ -51,6 +51,27 @@ namespace PokeOneWeb.Data.Entities
 
         public string EffectShortDescription { get; set; }
 
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal AttackBoost { get; set; }
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal SpecialAttackBoost { get; set; }
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal DefenseBoost { get; set; }
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal SpecialDefenseBoost { get; set; }
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal SpeedBoost { get; set; }
+
+        [Column(TypeName = "decimal(4,1)")]
+        public decimal HitPointsBoost { get; set; }
+
+        public string BoostConditions { get; set; }
+
         public List<PokemonVariety> PokemonVarietiesAsPrimaryAbility { get; set; } = new List<PokemonVariety>();
         public List<PokemonVariety> PokemonVarietiesAsSecondaryAbility { get; set; } = new List<PokemonVariety>();
         public List<PokemonVariety> PokemonVarietiesAsHiddenAbility { get; set; } = new List<PokemonVariety>();

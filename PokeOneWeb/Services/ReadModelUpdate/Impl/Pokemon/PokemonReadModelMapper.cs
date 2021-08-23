@@ -30,7 +30,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .IncludeOptimized(v => v.DefaultForm)
                 .AsNoTracking()
                 .OrderBy(v => v.DefaultForm.SortIndex)
-                .Select(v => v.Id);
+                .Select(v => v.Id)
+                .ToList();
 
             _elementalTypeRelations = _dbContext.ElementalTypeRelations
                 .AsNoTracking()
@@ -57,13 +58,19 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .ToList();
 
-            foreach (var varietyId in varietyIds)
+            for (var i = 0; i < varietyIds.Count; i++)
             {
+                var varietyId = varietyIds[i];
+
                 var variety = LoadVariety(varietyId);
                 
                 var readModel = GetBasicReadModel(variety);
 
                 AttachEvolutionAbilities(readModel, variety);
+
+                int previousId = i != 0 ? varietyIds[i - 1] : varietyIds[^1];
+                int nextId = i != varietyIds.Count - 1 ? varietyIds[i + 1] : varietyIds[0];
+                AttachPreviousAndNext(readModel, previousId, nextId);
 
                 readModel.DefenseAttackEffectivities = GetAttackEffectivityReadModels(variety);
 
@@ -193,7 +200,31 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 SpeedEv = variety.SpeedEv,
                 HitPointsEv = variety.HitPointsEv,
 
-                Notes = variety.Notes
+                Notes = variety.Notes,
+
+                PrimaryAbilityAttackBoost = variety.PrimaryAbility?.AttackBoost ?? 1,
+                PrimaryAbilitySpecialAttackBoost = variety.PrimaryAbility?.SpecialAttackBoost ?? 1,
+                PrimaryAbilityDefenseBoost = variety.PrimaryAbility?.DefenseBoost ?? 1,
+                PrimaryAbilitySpecialDefenseBoost = variety.PrimaryAbility?.SpecialDefenseBoost ?? 1,
+                PrimaryAbilitySpeedBoost = variety.PrimaryAbility?.SpeedBoost ?? 1,
+                PrimaryAbilityHitPointsBoost = variety.PrimaryAbility?.HitPointsBoost ?? 1,
+                PrimaryAbilityBoostConditions = variety.PrimaryAbility?.BoostConditions,
+
+                SecondaryAbilityAttackBoost = variety.SecondaryAbility?.AttackBoost ?? 1,
+                SecondaryAbilitySpecialAttackBoost = variety.SecondaryAbility?.SpecialAttackBoost ?? 1,
+                SecondaryAbilityDefenseBoost = variety.SecondaryAbility?.DefenseBoost ?? 1,
+                SecondaryAbilitySpecialDefenseBoost = variety.SecondaryAbility?.SpecialDefenseBoost ?? 1,
+                SecondaryAbilitySpeedBoost = variety.SecondaryAbility?.SpeedBoost ?? 1,
+                SecondaryAbilityHitPointsBoost = variety.SecondaryAbility?.HitPointsBoost ?? 1,
+                SecondaryAbilityBoostConditions = variety.SecondaryAbility?.BoostConditions,
+
+                HiddenAbilityAttackBoost = variety.HiddenAbility?.AttackBoost ?? 1,
+                HiddenAbilitySpecialAttackBoost = variety.HiddenAbility?.SpecialAttackBoost ?? 1,
+                HiddenAbilityDefenseBoost = variety.HiddenAbility?.DefenseBoost ?? 1,
+                HiddenAbilitySpecialDefenseBoost = variety.HiddenAbility?.SpecialDefenseBoost ?? 1,
+                HiddenAbilitySpeedBoost = variety.HiddenAbility?.SpeedBoost ?? 1,
+                HiddenAbilityHitPointsBoost = variety.HiddenAbility?.HitPointsBoost ?? 1,
+                HiddenAbilityBoostConditions = variety.HiddenAbility?.BoostConditions,
             };
         }
 
@@ -259,6 +290,27 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 }
 
             } while (preEvolutions.Any());
+        }
+
+        public void AttachPreviousAndNext(PokemonVarietyReadModel readModel, int previousId, int nextId)
+        {
+            var previous = _dbContext.PokemonVarieties
+                .Include(v => v.DefaultForm)
+                .AsNoTracking()
+                .Single(v => v.Id == previousId);
+
+            var next = _dbContext.PokemonVarieties
+                .Include(v => v.DefaultForm)
+                .AsNoTracking()
+                .Single(v => v.Id == nextId);
+
+            readModel.PreviousPokemonResourceName = previous.ResourceName;
+            readModel.PreviousPokemonSpriteName = previous.DefaultForm.SpriteName;
+            readModel.PreviousPokemonName = previous.Name;
+
+            readModel.NextPokemonResourceName = next.ResourceName;
+            readModel.NextPokemonSpriteName = next.DefaultForm.SpriteName;
+            readModel.NextPokemonName = next.Name;
         }
 
         private EvolutionAbilityReadModel GetEvolutionAbility(PokemonVariety variety, Ability ability,
