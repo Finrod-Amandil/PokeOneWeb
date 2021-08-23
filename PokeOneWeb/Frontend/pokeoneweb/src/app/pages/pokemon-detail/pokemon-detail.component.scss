@@ -1,183 +1,265 @@
 h2 {
-    color: var(--light-gray);
-    text-shadow: 2px 2px black;
+  color: var(--light-gray);
+  text-shadow: 2px 2px black;
 }
 
 h3 {
-    color: var(--light-gray);
-    text-shadow: 2px 2px black;
-    font-size: 24px;
+  color: var(--light-gray);
+  text-shadow: 2px 2px black;
+  font-size: 24px;
 }
 
 .subtitle {
-    color: var(--light-gray);
-    font-weight: 300;
+  color: var(--light-gray);
+  font-weight: 300;
 }
 
 .no-table-container-outer {
-    background-color: var(--dark-gray);
-    border: 1px solid black;
-    padding: 2px;
-    margin-bottom: 30px;
+  background-color: var(--dark-gray);
+  border: 1px solid black;
+  padding: 2px;
+  margin-bottom: 30px;
 }
 
 .no-table-container-inner {
-    display: flex;
-    justify-content: center;
-    background-color: var(--medium-gray);
-    border: 1px solid black;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--medium-gray);
+  border: 1px solid black;
+  padding: 10px;
 }
 
 p.empty {
-    color: var(--medium-light-gray);
-    font-style: italic;
-    font-weight: 300;
-    margin-bottom: 0;
+  color: var(--medium-light-gray);
+  font-style: italic;
+  font-weight: 300;
+  margin-bottom: 0;
 }
 
 .has-tooltip {
-    position: relative;
-    cursor: help;
+  position: relative;
+  cursor: help;
 }
 
 .tooltip {
-    min-width: 120px;
-    position: absolute;
-    visibility: hidden;
-    background-color: rgba(0,0,0,0.7);
-    border: 1px solid black;
-    border-radius: 10px;
-    z-index: 1;
-    padding: 4px 8px;
-    margin-top: 4px;
+  min-width: 120px;
+  position: absolute;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 1;
+  padding: 4px 8px;
+  margin-top: 4px;
+}
+
+.pokemon-detail-navigation {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pokemon-detail-navigation a {
+  font-size: 18px;
+  color: var(--light-gray);
+}
+
+.pokemon-detail-navigation-center {
+  text-align: center;
+}
+
+.pokemon-detail-navigation-left,
+.pokemon-detail-navigation-center,
+.pokemon-detail-navigation-right {
+  background-color: var(--medium-gray);
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.pokemon-detail-navigation-left {
+  padding-left: 10px;
+}
+
+.pokemon-detail-navigation-right {
+  padding-right: 10px;
+}
+
+.pokemon-detail-navigation-link,
+.pokemon-detail-navigation-sprite {
+  display: inline-block;
+}
+
+.pokemon-detail-navigation-sprite {
+  padding-top: 5px;
+  width: 40px;
+  height: 40px;
+  background-color: var(--dark-gray);
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.pokemon-detail-navigation-left .pokemon-detail-navigation-sprite {
+  margin-left: 10px;
+  margin-top: -1px;
+  margin-right: -1px;
+}
+
+.pokemon-detail-navigation-center
+  .pokemon-detail-navigation-sprite:first-child {
+  margin-left: -1px;
+  margin-top: -1px;
+  margin-right: 20px;
+}
+
+.pokemon-detail-navigation-center .pokemon-detail-navigation-sprite:last-child {
+  margin-right: -1px;
+  margin-top: -1px;
+  margin-left: 20px;
+}
+
+.pokemon-detail-navigation-right .pokemon-detail-navigation-sprite {
+  margin-right: 10px;
+  margin-top: -1px;
+  margin-left: -1px;
+}
+
+.pokemon-detail-navigation a:hover .pokemon-detail-navigation-left,
+.pokemon-detail-navigation a:hover .pokemon-detail-navigation-center,
+.pokemon-detail-navigation a:hover .pokemon-detail-navigation-right {
+  background-color: var(--medium-gray-lighter);
+}
+
+.pokemon-detail-navigation a:hover .pokemon-detail-navigation-sprite {
+  background-color: var(--medium-gray);
 }
 
 pokeone-advanced-stat-chart {
-    width: 100%;
+  width: 100%;
 }
 
 th.col-syncable .tooltip {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 th.col-event .tooltip {
-    margin-top: 18px;
+  margin-top: 18px;
 }
 
 .has-tooltip:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 .main-table {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .table-compact td {
-    font-size: 14px;
-    font-weight: 300;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 #ability_table .col-ability-name {
-    min-width: 100px;
+  min-width: 100px;
 }
 
 #ability_table td.col-ability-effect {
-    font-size: 14px;
-    font-weight: 300;
+  font-size: 14px;
+  font-weight: 300;
 }
 
-#ability_table td.col-ability-effect>p {
-    margin-bottom: 0;
+#ability_table td.col-ability-effect > p {
+  margin-bottom: 0;
 }
 
 #ability_table .ability-turns-into {
-    font-weight: 500;
-    margin-bottom: 0;
-    margin-top: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 16px;
 }
 
 #ability_table .ability-turns-into a {
-    color: var(--medium-light-gray);
+  color: var(--medium-light-gray);
 }
 
 #ability_table .ability-turns-into a:hover {
-    color: var(--text-accent);
-    text-decoration: none;
+  color: var(--text-accent);
+  text-decoration: none;
 }
 
 #type_defense_table th {
-    text-align: center;
+  text-align: center;
 }
 
 #type_defense_table th p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 #type_defense_table th p.type-defense-th-subtitle {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 #type_defense_table td {
-    width: calc(100% / 6);
+  width: calc(100% / 6);
 }
 
-#type_defense_table>thead>tr>th:nth-child(1) {
-    background-color: var(--effectivity-4);
+#type_defense_table > thead > tr > th:nth-child(1) {
+  background-color: var(--effectivity-4);
 }
 
-#type_defense_table>thead>tr>th:nth-child(2) {
-    background-color: var(--effectivity-2);
+#type_defense_table > thead > tr > th:nth-child(2) {
+  background-color: var(--effectivity-2);
 }
 
-#type_defense_table>thead>tr>th:nth-child(3) {
-    color: var(--dark-gray);
-    background-color: var(--effectivity-1);
+#type_defense_table > thead > tr > th:nth-child(3) {
+  color: var(--dark-gray);
+  background-color: var(--effectivity-1);
 }
 
-#type_defense_table>thead>tr>th:nth-child(4) {
-    background-color: var(--effectivity-05);
+#type_defense_table > thead > tr > th:nth-child(4) {
+  background-color: var(--effectivity-05);
 }
 
-#type_defense_table>thead>tr>th:nth-child(5) {
-    background-color: var(--effectivity-025);
+#type_defense_table > thead > tr > th:nth-child(5) {
+  background-color: var(--effectivity-025);
 }
 
-#type_defense_table>thead>tr>th:nth-child(6) {
-    background-color: var(--effectivity-0);
+#type_defense_table > thead > tr > th:nth-child(6) {
+  background-color: var(--effectivity-0);
 }
 
 #spawn_table,
 #learnset_table {
-    position: relative;
+  position: relative;
 }
 
 #spawn_table th,
 #learnset_table th {
-    position: sticky;
-    top: 0;
-    z-index: 20;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 #spawn_table th {
-    text-align: center;
+  text-align: center;
 }
 
 #spawn_table .has-tooltip {
-    border-bottom: 1px dotted var(--light-gray);
+  border-bottom: 1px dotted var(--light-gray);
 }
 
 #spawn_table img {
-    max-height: 40px;
+  max-height: 40px;
 }
 
 #spawn_table a {
-    color: var(--light-gray);
+  color: var(--light-gray);
 }
 
 #spawn_table a:hover {
-    color: var(--text-accent);
+  color: var(--text-accent);
 }
 
 #spawn_table td.col-sprite,
@@ -185,69 +267,93 @@ th.col-event .tooltip {
 #spawn_table td.col-syncable,
 #spawn_table th.col-event,
 #spawn_table td.col-event {
-    padding-left: 0;
-    padding-right: 0;
-    width: 40px;
+  padding-left: 0;
+  padding-right: 0;
+  width: 40px;
 }
 
 #spawn_table td.col-region {
-    max-width: 90px;
-    color: var(--dark-gray);
-    font-weight: 700;
-    text-align: center;
+  max-width: 90px;
+  color: var(--dark-gray);
+  font-weight: 700;
+  text-align: center;
 }
 
 #spawn_table td.col-location {
-    min-width: 100px;
+  min-width: 100px;
 }
 
 #spawn_table td.col-method {
-    min-width: 80px;
-    color: var(--dark-gray);
-    font-weight: 700;
+  min-width: 80px;
+  color: var(--dark-gray);
+  font-weight: 700;
 }
 
 #spawn_table td.col-season,
 #spawn_table td.col-time {
-    width: 90px;
+  width: 90px;
 }
 
 #spawn_table td.col-rarity {
-    text-align: center;
-    font-weight: 700;
+  text-align: center;
+  font-weight: 700;
 }
 
 #spawn_table td.col-syncable,
 #spawn_table td.col-event {
-    padding-top: 10px;
-    text-align: center;
+  padding-top: 10px;
+  text-align: center;
 }
 
-#spawn_table th.col-syncable>div {
-    padding-bottom: 2px;
+#spawn_table th.col-syncable > div {
+  padding-bottom: 2px;
 }
 
 .sync-true {
-    background-color: var(--availability-obtainable);
+  background-color: var(--availability-obtainable);
 }
 
 .sync-false {
-    background-color: var(--availability-unobtainable);
+  background-color: var(--availability-unobtainable);
 }
 
 .evolution-chart-container-outer {
-    background-color: var(--dark-gray);
-    border: 1px solid black;
-    padding: 2px;
-    margin-bottom: 30px;
+  background-color: var(--dark-gray);
+  border: 1px solid black;
+  padding: 2px;
+  margin-bottom: 30px;
 }
 
 .evolution-chart-container {
-    display: flex;
-    justify-content: center;
-    background-color: var(--medium-gray);
-    border: 1px solid black;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--medium-gray);
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.evolution-ability-table {
+  font-size: 14px;
+}
+
+.evolution-ability-table tbody tr {
+  border-top: 1px solid var(--dark-gray);
+}
+
+.evolution-ability-table tbody tr:first-child {
+  border-top: none;
+}
+
+.col-evolution-ability-sprite {
+  width: 42px;
+}
+
+.col-evolution-ability-pokemon {
+  width: 100px;
+}
+
+.col-evolution-ability-ability {
+  width: 100px;
 }
 
 th.col-move-name,
@@ -256,59 +362,59 @@ th.col-move-class,
 th.col-power,
 th.col-accuracy,
 th.col-power-points {
-    text-align: center;
+  text-align: center;
 }
 
-#learnset_table>tbody>tr,
-#unavailable_moves_table>tbody>tr {
-    height: 66px;
+#learnset_table > tbody > tr,
+#unavailable_moves_table > tbody > tr {
+  height: 66px;
 }
 
 td.col-move-learn-methods {
-    min-width: 200px;
+  min-width: 200px;
 }
 
 td.col-move-learn-methods .tooltip {
-    min-width: 200px;
+  min-width: 200px;
 }
 
-table td.col-power, 
-table td.col-accuracy, 
+table td.col-power,
+table td.col-accuracy,
 table td.col-power-points {
-    text-align: center;
-    font-weight: 600;
-    width: 50px;
+  text-align: center;
+  font-weight: 600;
+  width: 50px;
 }
 
 td.col-move-learn-methods p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 td.col-move-learn-methods .has-tooltip p {
-    text-decoration: underline;
-    text-decoration-style: dotted;
+  text-decoration: underline;
+  text-decoration-style: dotted;
 }
 
 td.col-power p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 td.stab-power .stab {
-    color: blue;
+  color: blue;
 }
 
 td.stab-power .stab-label {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .learnmethod-available i {
-    vertical-align: middle;
-    font-size: 16px;
-    color: var(--availability-obtainable);
+  vertical-align: middle;
+  font-size: 16px;
+  color: var(--availability-obtainable);
 }
 
 .learnmethod-unavailable i {
-    vertical-align: middle;
-    font-size: 16px;
-    color: var(--availability-unobtainable);
+  vertical-align: middle;
+  font-size: 16px;
+  color: var(--availability-unobtainable);
 }

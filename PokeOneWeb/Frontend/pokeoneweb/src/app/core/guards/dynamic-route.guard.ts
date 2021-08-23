@@ -30,7 +30,7 @@ export class DynamicRouteGuard implements CanActivate {
         //Ask backend, what kind of entity the requested path matches to
         this.entityTypeService.getEntityTypeForPath(path).subscribe(response => {
             let entityTypeModel = response as IEntityTypeModel;
-            
+
             //If backend did not recognize path --> redirect to page not found component.
             if (entityTypeModel.entityType === EntityType.Unknown) {
                 this.router.navigate(['not-found']);
@@ -39,7 +39,7 @@ export class DynamicRouteGuard implements CanActivate {
             //Build a new routes array. Slicing is required as wildcard route needs to stay at the
             //bottom of the list.
             let routes = this.router.config;
-            let newRoutes = routes.slice(0, routes.length - 4);
+            let newRoutes = routes.slice(0, 3);
 
             //Add a new route for the requested path to the correct component.
             switch (entityTypeModel.entityType) {
@@ -69,7 +69,12 @@ export class DynamicRouteGuard implements CanActivate {
                     return;
             }
 
-            newRoutes.push(routes[routes.length - 4])
+            routes.slice(routes.length - 4)
+                .forEach(route => {
+                    newRoutes.push(route);
+                })
+
+            console.log(newRoutes);
 
             //Reload routes and navigate.
             this.router.resetConfig(newRoutes);

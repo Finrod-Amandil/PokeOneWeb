@@ -39,6 +39,37 @@ namespace PokeOneWeb.Dtos
         public int HitPointsEv { get; set; }
         public string Notes { get; set; }
 
+        public string PreviousPokemonResourceName { get; set; }
+        public string PreviousPokemonSpriteName { get; set; }
+        public string PreviousPokemonName { get; set; }
+        public string NextPokemonResourceName { get; set; }
+        public string NextPokemonSpriteName { get; set; }
+        public string NextPokemonName { get; set; }
+
+        public decimal PrimaryAbilityAttackBoost { get; set; }
+        public decimal PrimaryAbilitySpecialAttackBoost { get; set; }
+        public decimal PrimaryAbilityDefenseBoost { get; set; }
+        public decimal PrimaryAbilitySpecialDefenseBoost { get; set; }
+        public decimal PrimaryAbilitySpeedBoost { get; set; }
+        public decimal PrimaryAbilityHitPointsBoost { get; set; }
+        public string PrimaryAbilityBoostConditions { get; set; }
+
+        public decimal SecondaryAbilityAttackBoost { get; set; }
+        public decimal SecondaryAbilitySpecialAttackBoost { get; set; }
+        public decimal SecondaryAbilityDefenseBoost { get; set; }
+        public decimal SecondaryAbilitySpecialDefenseBoost { get; set; }
+        public decimal SecondaryAbilitySpeedBoost { get; set; }
+        public decimal SecondaryAbilityHitPointsBoost { get; set; }
+        public string SecondaryAbilityBoostConditions { get; set; }
+
+        public decimal HiddenAbilityAttackBoost { get; set; }
+        public decimal HiddenAbilitySpecialAttackBoost { get; set; }
+        public decimal HiddenAbilityDefenseBoost { get; set; }
+        public decimal HiddenAbilitySpecialDefenseBoost { get; set; }
+        public decimal HiddenAbilitySpeedBoost { get; set; }
+        public decimal HiddenAbilityHitPointsBoost { get; set; }
+        public string HiddenAbilityBoostConditions { get; set; }
+
         public IEnumerable<PokemonVarietyUrlDto> Urls { get; set; }
         public IEnumerable<EvolutionAbilityDto> PrimaryEvolutionAbilities { get; set; }
         public IEnumerable<EvolutionAbilityDto> SecondaryEvolutionAbilities { get; set; }

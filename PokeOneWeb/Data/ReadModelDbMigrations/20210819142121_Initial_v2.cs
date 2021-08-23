@@ -126,7 +126,13 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     SpecialDefenseEv = table.Column<int>(type: "int", nullable: false),
                     SpeedEv = table.Column<int>(type: "int", nullable: false),
                     HitPointsEv = table.Column<int>(type: "int", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreviousPokemonResourceName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreviousPokemonSpriteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreviousPokemonName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NextPokemonResourceName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NextPokemonSpriteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NextPokemonName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

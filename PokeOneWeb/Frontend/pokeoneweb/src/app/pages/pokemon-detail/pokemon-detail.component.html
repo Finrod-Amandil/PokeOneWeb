@@ -7,6 +7,35 @@
 <div id="content_main_container">
     <div *ngIf="!model.pokemon">Loading...</div>
     <div *ngIf="model.pokemon">
+        <div class="pokemon-detail-navigation">
+            <a [routerLink]="'/'+ model.pokemon.previousPokemonResourceName">
+                <div class="pokemon-detail-navigation-left">
+                    <div class="pokemon-detail-navigation-link">⮜ {{model.pokemon.previousPokemonName}}</div>
+                    <div class="pokemon-detail-navigation-sprite">
+                        <img *ngIf="model.pokemon.previousPokemonSpriteName" [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.previousPokemonSpriteName" />
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/p'">
+                <div class="pokemon-detail-navigation-center">
+                    <div class="pokemon-detail-navigation-sprite">
+                        <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                    </div>
+                    <div class="pokemon-detail-navigation-link">Pokémon List</div>
+                    <div class="pokemon-detail-navigation-sprite">
+                        <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/'+ model.pokemon.nextPokemonResourceName">
+                <div class="pokemon-detail-navigation-right">
+                    <div class="pokemon-detail-navigation-sprite">
+                        <img *ngIf="model.pokemon.nextPokemonSpriteName" [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.nextPokemonSpriteName" />
+                    </div>
+                    <div class="pokemon-detail-navigation-link">{{model.pokemon.nextPokemonName}} ⮞</div>
+                </div>
+            </a>
+        </div>
 
         <h2 name="stats">Stats</h2>
         <div class="no-table-container-outer">
@@ -92,6 +121,7 @@
                     <th class="col-ability-slot">Slot</th>
                     <th class="col-ability-name">Name</th>
                     <th class="col-ability-effect">Effect</th>
+                    <th *ngIf="model.pokemon.evolutions.length > 0" class="col-ability-evolutions">On other evolutions</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,8 +135,33 @@
                     <td class="col-ability-effect">
                         <p>{{model.pokemon.primaryAbilityEffect}}</p>
                     </td>
-                    <td class="col-ability-evolutions">
-                        TODO
+                    <td *ngIf="model.pokemon.evolutions.length > 0" class="col-ability-evolutions">
+                        <table class="evolution-ability-table">
+                            <tbody>
+                                <tr *ngFor="let evolutionAbility of getPreEvolutionAbilities(model.pokemon.primaryEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let evolutionAbility of getPostEvolutionAbilities(model.pokemon.primaryEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -119,8 +174,33 @@
                     <td class="col-ability-effect">
                         <p>{{model.pokemon.secondaryAbilityEffect}}</p>
                     </td>
-                    <td class="col-ability-evolutions">
-                        TODO
+                    <td *ngIf="model.pokemon.evolutions.length > 0" class="col-ability-evolutions">
+                        <table class="evolution-ability-table">
+                            <tbody>
+                                <tr *ngFor="let evolutionAbility of getPreEvolutionAbilities(model.pokemon.secondaryEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let evolutionAbility of getPostEvolutionAbilities(model.pokemon.secondaryEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -133,8 +213,33 @@
                     <td class="col-ability-effect">
                         <p>{{model.pokemon.hiddenAbilityEffect}}</p>
                     </td>
-                    <td class="col-ability-evolutions">
-                        TODO
+                    <td *ngIf="model.pokemon.evolutions.length > 0" class="col-ability-evolutions">
+                        <table class="evolution-ability-table">
+                            <tbody>
+                                <tr *ngFor="let evolutionAbility of getPreEvolutionAbilities(model.pokemon.hiddenEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let evolutionAbility of getPostEvolutionAbilities(model.pokemon.hiddenEvolutionAbilities)">
+                                    <td class="col-evolution-ability-sprite">
+                                        <img *ngIf="evolutionAbility.spriteName" [src]="'./assets/img/sprites/pokemon/small/' + evolutionAbility.spriteName" />
+                                    </td>
+                                    <td class="col-evolution-ability-pokemon">
+                                        <a [routerLink]="'/'+ evolutionAbility.pokemonResourceName">{{evolutionAbility.pokemonName}}</a>
+                                    </td>
+                                    <td class="col-evolution-ability-ability">
+                                        {{evolutionAbility.abilityName}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
             </tbody>

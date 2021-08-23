@@ -200,6 +200,39 @@
                     <table class="stat-input-table">
                         <thead>
                             <tr>
+                                <th colspan="2" class="stat-hp">
+                                    HP
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinHp" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxHp" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
                                 <th colspan="2" class="stat-attack">
                                     Attack
                                 </th>
@@ -233,39 +266,6 @@
                     <table class="stat-input-table">
                         <thead>
                             <tr>
-                                <th colspan="2" class="stat-special-attack">
-                                    Special Attack
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="stat-input-minmax">Min</td>
-                                <td class="stat-input-minmax">Max</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input 
-                                        [(ngModel)]="model.filter.selectedMinSpa" 
-                                        (input)="onFilterChangedDelayed()"
-                                        class="stat-input" 
-                                        type="text"/>
-                                </td>
-                                <td>
-                                    <input 
-                                        [(ngModel)]="model.filter.selectedMaxSpa" 
-                                        (input)="onFilterChangedDelayed()"
-                                        class="stat-input" 
-                                        type="text"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <table class="stat-input-table">
-                        <thead>
-                            <tr>
                                 <th colspan="2" class="stat-defense">
                                     Defense
                                 </th>
@@ -287,6 +287,39 @@
                                 <td>
                                     <input 
                                         [(ngModel)]="model.filter.selectedMaxDef" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-special-attack">
+                                    Special Attack
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinSpa" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxSpa" 
                                         (input)="onFilterChangedDelayed()"
                                         class="stat-input" 
                                         type="text"/>
@@ -361,39 +394,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div>
-                    <table class="stat-input-table">
-                        <thead>
-                            <tr>
-                                <th colspan="2" class="stat-hp">
-                                    HP
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="stat-input-minmax">Min</td>
-                                <td class="stat-input-minmax">Max</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input 
-                                        [(ngModel)]="model.filter.selectedMinHp" 
-                                        (input)="onFilterChangedDelayed()"
-                                        class="stat-input" 
-                                        type="text"/>
-                                </td>
-                                <td>
-                                    <input 
-                                        [(ngModel)]="model.filter.selectedMaxHp" 
-                                        (input)="onFilterChangedDelayed()"
-                                        class="stat-input" 
-                                        type="text"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
                 <div>
                     <table class="stat-input-table">
                         <thead>
@@ -746,6 +747,17 @@
             </th>
             <th class="col-type">Type</th>
             <th class="col-ability">Abilities</th>
+            <th class="col-stat stat-hp">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Hp, 1)" 
+                    (click)="sort(column.Hp, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">HP</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Hp, -1)" 
+                    (click)="sort(column.Hp, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
             <th class="col-stat stat-attack">
                 <div 
                     [ngClass]="getSortButtonClass(column.Atk, 1)" 
@@ -757,17 +769,6 @@
                     (click)="sort(column.Atk, -1)"
                     class="table-header-sort">⮟</div>
             </th>
-            <th class="col-stat stat-special-attack">
-                <div 
-                    [ngClass]="getSortButtonClass(column.Spa, 1)" 
-                    (click)="sort(column.Spa, 1)"
-                    class="table-header-sort">⮝</div>
-                <div class="table-header-label">SPA</div>
-                <div 
-                    [ngClass]="getSortButtonClass(column.Spa, -1)" 
-                    (click)="sort(column.Spa, -1)"
-                    class="table-header-sort">⮟</div>
-            </th>
             <th class="col-stat stat-defense">
                 <div 
                     [ngClass]="getSortButtonClass(column.Def, 1)" 
@@ -777,6 +778,17 @@
                 <div 
                     [ngClass]="getSortButtonClass(column.Def, -1)" 
                     (click)="sort(column.Def, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-special-attack">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spa, 1)" 
+                    (click)="sort(column.Spa, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">SPA</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spa, -1)" 
+                    (click)="sort(column.Spa, -1)"
                     class="table-header-sort">⮟</div>
             </th>
             <th class="col-stat stat-special-defense">
@@ -799,17 +811,6 @@
                 <div 
                     [ngClass]="getSortButtonClass(column.Spe, -1)" 
                     (click)="sort(column.Spe, -1)"
-                    class="table-header-sort">⮟</div>
-            </th>
-            <th class="col-stat stat-hp">
-                <div 
-                    [ngClass]="getSortButtonClass(column.Hp, 1)" 
-                    (click)="sort(column.Hp, 1)"
-                    class="table-header-sort">⮝</div>
-                <div class="table-header-label">HP</div>
-                <div 
-                    [ngClass]="getSortButtonClass(column.Hp, -1)" 
-                    (click)="sort(column.Hp, -1)"
                     class="table-header-sort">⮟</div>
             </th>
             <th class="col-stat stat-total">
@@ -881,6 +882,16 @@
             </td>
             <td class="col-stat">
                 <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxHp > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="HP"
+                    [statValue]="pokemon.hitPoints"
+                    [maxValue]="model.maxHp">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
                     *ngIf="model.maxAtk > 0" 
                     [width]="40"
                     [height]="104"
@@ -891,22 +902,22 @@
             </td>
             <td class="col-stat">
                 <pokeone-vertical-stat-bar 
-                    *ngIf="model.maxSpa > 0" 
-                    [width]="40"
-                    [height]="104"
-                    label="Sp. A."
-                    [statValue]="pokemon.specialAttack"
-                    [maxValue]="model.maxSpa">
-                </pokeone-vertical-stat-bar>
-            </td>
-            <td class="col-stat">
-                <pokeone-vertical-stat-bar 
                     *ngIf="model.maxDef > 0" 
                     [width]="40"
                     [height]="104"
                     label="Def."
                     [statValue]="pokemon.defense"
                     [maxValue]="model.maxDef">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxSpa > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Sp. A."
+                    [statValue]="pokemon.specialAttack"
+                    [maxValue]="model.maxSpa">
                 </pokeone-vertical-stat-bar>
             </td>
             <td class="col-stat">
@@ -927,16 +938,6 @@
                     label="Speed"
                     [statValue]="pokemon.speed"
                     [maxValue]="model.maxSpe">
-                </pokeone-vertical-stat-bar>
-            </td>
-            <td class="col-stat">
-                <pokeone-vertical-stat-bar 
-                    *ngIf="model.maxHp > 0" 
-                    [width]="40"
-                    [height]="104"
-                    label="HP"
-                    [statValue]="pokemon.hitPoints"
-                    [maxValue]="model.maxHp">
                 </pokeone-vertical-stat-bar>
             </td>
             <td class="col-stat">

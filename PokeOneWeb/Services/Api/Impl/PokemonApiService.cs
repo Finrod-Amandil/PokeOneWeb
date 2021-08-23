@@ -171,6 +171,37 @@ namespace PokeOneWeb.Services.Api.Impl
 
                 Notes = v.Notes,
 
+                PreviousPokemonResourceName = v.PreviousPokemonResourceName,
+                PreviousPokemonSpriteName = v.PreviousPokemonSpriteName,
+                PreviousPokemonName = v.PreviousPokemonName,
+                NextPokemonResourceName = v.NextPokemonResourceName,
+                NextPokemonSpriteName = v.NextPokemonSpriteName,
+                NextPokemonName = v.NextPokemonName,
+
+                PrimaryAbilityAttackBoost = v.PrimaryAbilityAttackBoost,
+                PrimaryAbilitySpecialAttackBoost = v.PrimaryAbilitySpecialAttackBoost,
+                PrimaryAbilityDefenseBoost = v.PrimaryAbilityDefenseBoost,
+                PrimaryAbilitySpecialDefenseBoost = v.PrimaryAbilitySpecialDefenseBoost,
+                PrimaryAbilitySpeedBoost = v.PrimaryAbilitySpeedBoost,
+                PrimaryAbilityHitPointsBoost = v.PrimaryAbilityHitPointsBoost,
+                PrimaryAbilityBoostConditions = v.PrimaryAbilityBoostConditions,
+
+                SecondaryAbilityAttackBoost = v.SecondaryAbilityAttackBoost,
+                SecondaryAbilitySpecialAttackBoost = v.SecondaryAbilitySpecialAttackBoost,
+                SecondaryAbilityDefenseBoost = v.SecondaryAbilityDefenseBoost,
+                SecondaryAbilitySpecialDefenseBoost = v.SecondaryAbilitySpecialDefenseBoost,
+                SecondaryAbilitySpeedBoost = v.SecondaryAbilitySpeedBoost,
+                SecondaryAbilityHitPointsBoost = v.SecondaryAbilityHitPointsBoost,
+                SecondaryAbilityBoostConditions = v.SecondaryAbilityBoostConditions,
+
+                HiddenAbilityAttackBoost = v.HiddenAbilityAttackBoost,
+                HiddenAbilitySpecialAttackBoost = v.HiddenAbilitySpecialAttackBoost,
+                HiddenAbilityDefenseBoost = v.HiddenAbilityDefenseBoost,
+                HiddenAbilitySpecialDefenseBoost = v.HiddenAbilitySpecialDefenseBoost,
+                HiddenAbilitySpeedBoost = v.HiddenAbilitySpeedBoost,
+                HiddenAbilityHitPointsBoost = v.HiddenAbilityHitPointsBoost,
+                HiddenAbilityBoostConditions = v.HiddenAbilityBoostConditions,
+
                 Urls = v.Urls.Select(u => new PokemonVarietyUrlDto
                     {
                         Name = u.Name,

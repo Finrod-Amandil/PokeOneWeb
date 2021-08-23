@@ -10,7 +10,7 @@ using PokeOneWeb.Data;
 namespace PokeOneWeb.Data.ReadModelDbMigrations
 {
     [DbContext(typeof(ReadModelDbContext))]
-    [Migration("20210818155522_Initial_v2")]
+    [Migration("20210819142121_Initial_v2")]
     partial class Initial_v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -668,11 +668,29 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("NextPokemonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NextPokemonResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NextPokemonSpriteName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PokedexNumber")
                         .HasColumnType("int");
+
+                    b.Property<string>("PreviousPokemonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreviousPokemonResourceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreviousPokemonSpriteName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrimaryAbility")
                         .HasColumnType("nvarchar(max)");
