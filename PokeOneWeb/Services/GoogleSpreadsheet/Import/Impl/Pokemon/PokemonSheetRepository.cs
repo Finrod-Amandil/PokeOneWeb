@@ -236,7 +236,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             entities.Select(f => f.PokemonVariety).ToList().ForEach(v => v.DefaultForm = null);
             entities.Select(f => f.PokemonVariety.PokemonSpecies).ToList().ForEach(s => s.DefaultVariety = null);
 
-            _dbContext.PokemonForms.AddRange(entities);
+            _dbContext.PokemonForms.UpdateRange(entities);
             _dbContext.SaveChanges();
 
             // Attach Default form and default variety
@@ -311,6 +311,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
             variety.IsFullyEvolved = newVariety.IsFullyEvolved;
             variety.Generation = newVariety.Generation;
             variety.CatchRate = newVariety.CatchRate;
+            variety.HasGender = newVariety.HasGender;
+            variety.MaleRatio = newVariety.MaleRatio;
+            variety.EggCycles = newVariety.EggCycles;
+            variety.Height = newVariety.Height;
+            variety.Weight = newVariety.Weight;
+            variety.ExpYield = newVariety.ExpYield;
             variety.Attack = newVariety.Attack;
             variety.Defense = newVariety.Defense;
             variety.SpecialAttack = newVariety.SpecialAttack;

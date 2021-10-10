@@ -23,6 +23,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 var existingEntity =
                     _dbContext.PokemonVarietyReadModels
                         .Where(e  => e.ApplicationDbId == entity.ApplicationDbId)
+                        .IncludeOptimized(e => e.Varieties)
+                        .IncludeOptimized(e => e.Forms)
                         .IncludeOptimized(e => e.Urls)
                         .IncludeOptimized(e => e.PrimaryEvolutionAbilities)
                         .IncludeOptimized(e => e.SecondaryEvolutionAbilities)
@@ -63,8 +65,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             existingEntity.PokedexNumber = updatedEntity.PokedexNumber;
             existingEntity.Name = updatedEntity.Name;
             existingEntity.SpriteName = updatedEntity.SpriteName;
-            existingEntity.PrimaryType = updatedEntity.PrimaryType;
-            existingEntity.SecondaryType = updatedEntity.SecondaryType;
+            existingEntity.PrimaryElementalType = updatedEntity.PrimaryElementalType;
+            existingEntity.SecondaryElementalType = updatedEntity.SecondaryElementalType;
             existingEntity.Attack = updatedEntity.Attack;
             existingEntity.SpecialAttack = updatedEntity.SpecialAttack;
             existingEntity.Defense = updatedEntity.Defense;
@@ -84,6 +86,13 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             existingEntity.IsFullyEvolved = updatedEntity.IsFullyEvolved;
             existingEntity.IsMega = updatedEntity.IsMega;
             existingEntity.CatchRate = updatedEntity.CatchRate;
+            existingEntity.HasGender = updatedEntity.HasGender;
+            existingEntity.MaleRatio = updatedEntity.MaleRatio;
+            existingEntity.FemaleRatio = updatedEntity.FemaleRatio;
+            existingEntity.EggCycles = updatedEntity.EggCycles;
+            existingEntity.Height = updatedEntity.Height;
+            existingEntity.Weight = updatedEntity.Weight;
+            existingEntity.ExpYield = updatedEntity.ExpYield;
             existingEntity.AttackEv = updatedEntity.AttackEv;
             existingEntity.SpecialAttackEv = updatedEntity.SpecialAttackEv;
             existingEntity.DefenseEv = updatedEntity.DefenseEv;
@@ -122,6 +131,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             existingEntity.HiddenAbilityHitPointsBoost = updatedEntity.HiddenAbilityHitPointsBoost;
             existingEntity.HiddenAbilityBoostConditions = updatedEntity.HiddenAbilityBoostConditions;
 
+            UpdateVarieties(existingEntity.Varieties, updatedEntity.Varieties);
+            UpdateForms(existingEntity.Forms, updatedEntity.Forms);
             UpdateUrls(existingEntity.Urls, updatedEntity.Urls);
             UpdateEvolutionAbilities(existingEntity.PrimaryEvolutionAbilities, updatedEntity.PrimaryEvolutionAbilities);
             UpdateEvolutionAbilities(existingEntity.SecondaryEvolutionAbilities, updatedEntity.SecondaryEvolutionAbilities);
@@ -132,6 +143,57 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             UpdateLearnableMoves(existingEntity.LearnableMoves, updatedEntity.LearnableMoves);
             UpdateHuntingConfigurations(existingEntity.HuntingConfigurations, updatedEntity.HuntingConfigurations);
             UpdateBuilds(existingEntity.Builds, updatedEntity.Builds);
+        }
+
+        private void UpdateVarieties(List<PokemonVarietyVarietyReadModel> existingVarieties, List<PokemonVarietyVarietyReadModel> updatedVarieties)
+        {
+            existingVarieties.RemoveAll(e =>
+                !updatedVarieties.Select(u => u.ResourceName).Contains(e.ResourceName));
+
+            foreach (var variety in updatedVarieties)
+            {
+                var existingVariety = existingVarieties
+                    .SingleOrDefault(e => e.Name.EqualsExact(variety.ResourceName));
+
+                if (existingVariety != null)
+                {
+                    existingVariety.ResourceName = variety.ResourceName;
+                    existingVariety.Name = variety.Name;
+                    existingVariety.SortIndex = variety.SortIndex;
+                    existingVariety.SpriteName = variety.SpriteName;
+                    existingVariety.Availability = variety.Availability;
+                    existingVariety.PrimaryType = variety.PrimaryType;
+                    existingVariety.SecondaryType = variety.SecondaryType;
+                }
+                else
+                {
+                    existingVarieties.Add(variety);
+                }
+            }
+        }
+
+        private void UpdateForms(List<PokemonVarietyFormReadModel> existingForms, List<PokemonVarietyFormReadModel> updatedForms)
+        {
+            existingForms.RemoveAll(e =>
+                !updatedForms.Select(u => u.Name).Contains(e.Name));
+
+            foreach (var form in updatedForms)
+            {
+                var existingForm = existingForms
+                    .SingleOrDefault(e => e.Name.EqualsExact(form.Name));
+
+                if (existingForm != null)
+                {
+                    existingForm.Name = form.Name;
+                    existingForm.SortIndex = form.SortIndex;
+                    existingForm.SpriteName = form.SpriteName;
+                    existingForm.Availability = form.Availability;
+                }
+                else
+                {
+                    existingForms.Add(form);
+                }
+            }
         }
 
         private void UpdateUrls(
@@ -373,6 +435,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                     existingLearnableMove.PowerPoints = learnableMove.PowerPoints;
                     existingLearnableMove.Priority = learnableMove.Priority;
                     existingLearnableMove.EffectDescription = learnableMove.EffectDescription;
+                    existingLearnableMove.HasStab = learnableMove.HasStab;
+                    existingLearnableMove.EffectivePower = learnableMove.EffectivePower;
 
                     UpdateLearnMethods(existingLearnableMove.LearnMethods, learnableMove.LearnMethods);
                 }

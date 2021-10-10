@@ -4,7 +4,9 @@ import { IEvolutionAbilityModel } from "./evolution-ability.model";
 import { IEvolutionModel } from "./evolution.model";
 import { IHuntingConfigurationModel } from "./hunting-configuration.model";
 import { ILearnableMoveModel } from "./learnable-move.model";
+import { IPokemonVarietyFormModel } from "./pokemon-variety-form.model";
 import { IPokemonVarietyUrlModel } from "./pokemon-variety-url.model";
+import { IPokemonVarietyVarietyModel } from "./pokemon-variety-variety.model";
 import { ISpawnModel } from "./spawn.model";
 
 export interface IPokemonVarietyModel {
@@ -32,12 +34,20 @@ export interface IPokemonVarietyModel {
     hiddenAbilityEffect: string;
 
     availability: string;
+    availabilityDescription: string;
     pvpTier: string;
     pvpTierSortIndex: number;
     generation: number;
     isFullyEvolved: boolean;
     isMega: boolean;
     catchRate: number;
+    hasGender: boolean;
+    maleRatio: number;
+    femaleRatio: number;
+    eggCycles: number;
+    height: number;
+    weight: number;
+    expYield: number;
 
     attackEv: number;
     specialAttackEv: number;
@@ -79,6 +89,8 @@ export interface IPokemonVarietyModel {
     hiddenAbilityHitPointsBoost: number;
     hiddenAbilityBoostConditions: string;
 
+    varieties: IPokemonVarietyVarietyModel[];
+    forms: IPokemonVarietyFormModel[];
     urls: IPokemonVarietyUrlModel[];
 
     primaryEvolutionAbilities: IEvolutionAbilityModel[];
@@ -118,12 +130,20 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     hiddenAbilityEffect = '';
 
     availability = '';
+    availabilityDescription = '';
     pvpTier = '';
     pvpTierSortIndex = 0;
     generation = 0;
     isFullyEvolved = false;
     isMega = false;
     catchRate = 0;
+    hasGender = true;
+    maleRatio = 50;
+    femaleRatio = 50;
+    eggCycles = 0;
+    height = 0;
+    weight = 0;
+    expYield = 0;
 
     attackEv = 0;
     specialAttackEv = 0;
@@ -165,6 +185,8 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     hiddenAbilityHitPointsBoost = 1;
     hiddenAbilityBoostConditions = '';
 
+    varieties = [];
+    forms = [];
     urls = [];
 
     primaryEvolutionAbilities = [];

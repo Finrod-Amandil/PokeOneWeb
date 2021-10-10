@@ -77,6 +77,15 @@ namespace PokeOneWeb.Data.Entities
         public bool IsFullyEvolved { get; set; }
         public int Generation { get; set; }
         public int CatchRate { get; set; }
+        public bool HasGender { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal MaleRatio { get; set; }
+        public int EggCycles { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Height { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Weight { get; set; }
+        public int ExpYield { get; set; }
 
         //BASE STATS
         public int Attack { get; set; }

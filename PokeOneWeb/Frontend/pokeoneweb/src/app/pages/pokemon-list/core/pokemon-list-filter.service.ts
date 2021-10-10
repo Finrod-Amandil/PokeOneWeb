@@ -37,8 +37,8 @@ export class PokemonListFilterService {
         return p.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) || 
             String(p.pokedexNumber) === filter.searchTerm ||
             p.primaryAbility.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-            p.secondaryAbility.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-            p.hiddenAbility.toLowerCase().includes(filter.searchTerm.toLowerCase());
+            (!!p.secondaryAbility && p.secondaryAbility.toLowerCase().includes(filter.searchTerm.toLowerCase())) ||
+            (!!p.hiddenAbility && p.hiddenAbility.toLowerCase().includes(filter.searchTerm.toLowerCase()));
     }
 
     private filterAvailabilities(p: IPokemonVarietyListModel, filter: PokemonListFilterModel): boolean {
@@ -157,10 +157,10 @@ export class PokemonListFilterService {
         }
 
         const pokemonWithLearnset = await this.pokemonService.getAllPokemonForMoveSet(
-            filter.selectedMove1Option1?.name, filter.selectedMove1Option2?.name, filter.selectedMove1Option3?.name, filter.selectedMove1Option4?.name,
-            filter.selectedMove2Option1?.name, filter.selectedMove2Option2?.name, filter.selectedMove2Option3?.name, filter.selectedMove2Option4?.name,
-            filter.selectedMove3Option1?.name, filter.selectedMove3Option2?.name, filter.selectedMove3Option3?.name, filter.selectedMove3Option4?.name,
-            filter.selectedMove4Option1?.name, filter.selectedMove4Option2?.name, filter.selectedMove4Option3?.name, filter.selectedMove4Option4?.name)
+            filter.selectedMove1Option1?.resourceName, filter.selectedMove1Option2?.resourceName, filter.selectedMove1Option3?.resourceName, filter.selectedMove1Option4?.resourceName,
+            filter.selectedMove2Option1?.resourceName, filter.selectedMove2Option2?.resourceName, filter.selectedMove2Option3?.resourceName, filter.selectedMove2Option4?.resourceName,
+            filter.selectedMove3Option1?.resourceName, filter.selectedMove3Option2?.resourceName, filter.selectedMove3Option3?.resourceName, filter.selectedMove3Option4?.resourceName,
+            filter.selectedMove4Option1?.resourceName, filter.selectedMove4Option2?.resourceName, filter.selectedMove4Option3?.resourceName, filter.selectedMove4Option4?.resourceName)
             .toPromise();
 
         return models.filter(p => pokemonWithLearnset.map(pls => pls.resourceName).includes(p.resourceName));

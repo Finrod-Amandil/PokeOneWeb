@@ -176,6 +176,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 variety.IsFullyEvolved = dto.IsFullyEvolved;
                 variety.Generation = dto.Generation;
                 variety.CatchRate = dto.CatchRate;
+                variety.HasGender = dto.HasGender;
+                variety.MaleRatio = dto.MaleRatio;
+                variety.EggCycles = dto.EggCycles;
+                variety.Height = dto.Height;
+                variety.Weight = dto.Weight;
+                variety.ExpYield = dto.ExpYield;
                 variety.Notes = dto.Notes;
 
                 variety.DefaultForm = MapDefaultForm(dto, variety.DefaultForm);
@@ -211,7 +217,9 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 
         private PokemonAvailability MapAvailability(PokemonSheetDto dto, PokemonAvailability availability = null)
         {
-            availability ??= new PokemonAvailability { Name = dto.AvailabilityName };
+            availability = string.Equals(dto.AvailabilityName, availability?.Name, StringComparison.Ordinal)
+                ? availability
+                : new PokemonAvailability {Name = dto.AvailabilityName};
             if (!_availabilities.ContainsKey(dto.AvailabilityName))
             {
                 _availabilities.Add(dto.AvailabilityName, availability);
@@ -226,7 +234,9 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 
         private PvpTier MapPvpTier(PokemonSheetDto dto, PvpTier pvpTier = null)
         {
-            pvpTier ??= new PvpTier { Name = dto.PvpTierName };
+            pvpTier = string.Equals(dto.PvpTierName, pvpTier?.Name, StringComparison.Ordinal)
+                ? pvpTier
+                : new PvpTier {Name = dto.PvpTierName};
             if (!_pvpTiers.ContainsKey(dto.PvpTierName))
             {
                 _pvpTiers.Add(dto.PvpTierName, pvpTier);
@@ -241,7 +251,9 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 
         private Ability MapPrimaryAbility(PokemonSheetDto dto, Ability ability = null)
         {
-            ability ??= new Ability { Name = dto.PrimaryAbilityName };
+            ability = string.Equals(dto.PrimaryAbilityName, ability?.Name, StringComparison.Ordinal)
+                ? ability
+                : new Ability {Name = dto.PrimaryAbilityName};
             if (!_abilities.ContainsKey(dto.PrimaryAbilityName))
             {
                 _abilities.Add(dto.PrimaryAbilityName, ability);
@@ -261,7 +273,9 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 return null;
             }
 
-            ability ??= new Ability { Name = dto.SecondaryAbilityName };
+            ability = string.Equals(dto.SecondaryAbilityName, ability?.Name)
+                ? ability
+                : new Ability {Name = dto.SecondaryAbilityName};
             if (!_abilities.ContainsKey(dto.SecondaryAbilityName))
             {
                 _abilities.Add(dto.SecondaryAbilityName, ability);
@@ -281,7 +295,9 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 return null;
             }
 
-            ability ??= new Ability { Name = dto.HiddenAbilityName };
+            ability = string.Equals(dto.HiddenAbilityName, ability?.Name, StringComparison.Ordinal)
+                ? ability
+                : new Ability {Name = dto.HiddenAbilityName};
             if (!_abilities.ContainsKey(dto.HiddenAbilityName))
             {
                 _abilities.Add(dto.HiddenAbilityName, ability);
@@ -296,7 +312,8 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 
         private ElementalType MapPrimaryType(PokemonSheetDto dto, ElementalType type = null)
         {
-            type ??= new ElementalType { Name = dto.Type1Name };
+            type = string.Equals(dto.Type1Name, type?.Name, StringComparison.Ordinal) ? 
+                type : new ElementalType {Name = dto.Type1Name};
             if (!_types.ContainsKey(dto.Type1Name))
             {
                 _types.Add(dto.Type1Name, type);
@@ -316,7 +333,8 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 return null;
             }
 
-            type ??= new ElementalType { Name = dto.Type2Name };
+            type = string.Equals(dto.Type2Name, type?.Name, StringComparison.Ordinal) ? 
+                type : new ElementalType {Name = dto.Type2Name};
             if (!_types.ContainsKey(dto.Type2Name))
             {
                 _types.Add(dto.Type2Name, type);
@@ -331,12 +349,12 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
 
         private PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
         {
-            return form ?? new PokemonForm { Name = dto.DefaultFormName };
+            return dto.DefaultFormName.EqualsExact(form?.Name) ? form : new PokemonForm {Name = dto.DefaultFormName};
         }
 
         private PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
         {
-            return variety ?? new PokemonVariety { Name = dto.DefaultVarietyName };
+            return dto.DefaultVarietyName.EqualsExact(variety?.Name) ? variety : new PokemonVariety {Name = dto.DefaultVarietyName};
         }
 
         private void AddUrls(PokemonVariety variety, PokemonSheetDto dto)

@@ -16,7 +16,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
     {
         private readonly ILogger<SpreadsheetDataLoader> _logger;
         private static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        private const string ApplicationName = "PokeOneWeb Guide Import Service";
+        private const string APPLICATION_NAME = "PokeOneWeb Guide Import Service";
 
         private UserCredential _credential;
 
@@ -90,7 +90,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             var service = new SheetsService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = _credential,
-                ApplicationName = ApplicationName
+                ApplicationName = APPLICATION_NAME
             });
 
             var request = service.Spreadsheets.Values.BatchGet(spreadsheetId);
