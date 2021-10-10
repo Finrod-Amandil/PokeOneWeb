@@ -12,8 +12,6 @@ import { NatureService } from '../../services/api/nature.service';
 import { PokemonService } from '../../services/api/pokemon.service';
 import { FieldBoostService } from '../../services/field-boost.service';
 
-const UPDATE_TIMEOUT = 100;
-
 @Component({
     selector: 'pokeone-stat-input',
     templateUrl: './stat-input.component.html',

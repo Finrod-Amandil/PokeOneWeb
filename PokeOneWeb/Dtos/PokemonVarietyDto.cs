@@ -25,12 +25,20 @@ namespace PokeOneWeb.Dtos
         public string HiddenAbility { get; set; }
         public string HiddenAbilityEffect { get; set; }
         public string Availability { get; set; }
+        public string AvailabilityDescription { get; set; }
         public string PvpTier { get; set; }
         public int PvpTierSortIndex { get; set; }
         public int Generation { get; set; }
         public bool IsFullyEvolved { get; set; }
         public bool IsMega { get; set; }
         public int CatchRate { get; set; }
+        public bool HasGender { get; set; }
+        public decimal MaleRatio { get; set; }
+        public decimal FemaleRatio { get; set; }
+        public int EggCycles { get; set; }
+        public decimal Height { get; set; }
+        public decimal Weight { get; set; }
+        public int ExpYield { get; set; }
         public int AttackEv { get; set; }
         public int SpecialAttackEv { get; set; }
         public int DefenseEv { get; set; }
@@ -70,6 +78,8 @@ namespace PokeOneWeb.Dtos
         public decimal HiddenAbilityHitPointsBoost { get; set; }
         public string HiddenAbilityBoostConditions { get; set; }
 
+        public IEnumerable<PokemonVarietyVarietyDto> Varieties { get; set; }
+        public IEnumerable<PokemonVarietyFormDto> Forms { get; set; }
         public IEnumerable<PokemonVarietyUrlDto> Urls { get; set; }
         public IEnumerable<EvolutionAbilityDto> PrimaryEvolutionAbilities { get; set; }
         public IEnumerable<EvolutionAbilityDto> SecondaryEvolutionAbilities { get; set; }

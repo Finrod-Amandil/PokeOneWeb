@@ -68,6 +68,18 @@
 
         public int CatchRate { get; set; }
 
+        public bool HasGender { get; set; }
+
+        public decimal MaleRatio { get; set; }
+
+        public int EggCycles { get; set; }
+
+        public decimal Height { get; set; }
+
+        public decimal Weight { get; set; }
+
+        public int ExpYield { get; set; }
+
         public string SmogonUrl { get; set; }
 
         public string BulbapediaUrl { get; set; }

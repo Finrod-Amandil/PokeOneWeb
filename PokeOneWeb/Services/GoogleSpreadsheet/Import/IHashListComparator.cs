@@ -5,6 +5,6 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import
 {
     public interface IHashListComparator
     {
-        HashListComparisonResult CompareHashLists(List<RowHash> sheetHashes, List<RowHash> dbHashes);
+        HashListComparisonResult CompareHashLists(List<RowHash> sheetHashes, List<RowHash> dbHashesOrdered);
     }
 }

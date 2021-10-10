@@ -38,6 +38,8 @@ namespace PokeOneWeb.Services.Api.Impl
         {
             var variety = _dbContext.PokemonVarietyReadModels
                 .Where(v  => v.ResourceName.Equals(pokemonVarietyResourceName))
+                .IncludeOptimized(p => p.Varieties)
+                .IncludeOptimized(p => p.Forms)
                 .IncludeOptimized(p => p.Urls)
                 .IncludeOptimized(p => p.PrimaryEvolutionAbilities)
                 .IncludeOptimized(p => p.SecondaryEvolutionAbilities)
@@ -136,8 +138,8 @@ namespace PokeOneWeb.Services.Api.Impl
                 PokedexNumber = v.PokedexNumber,
                 Name = v.Name,
                 SpriteName = v.SpriteName,
-                PrimaryElementalType = v.PrimaryType,
-                SecondaryElementalType = v.SecondaryType,
+                PrimaryElementalType = v.PrimaryElementalType,
+                SecondaryElementalType = v.SecondaryElementalType,
 
                 Attack = v.Attack,
                 SpecialAttack = v.SpecialAttack,
@@ -155,12 +157,20 @@ namespace PokeOneWeb.Services.Api.Impl
                 HiddenAbilityEffect = v.HiddenAbilityEffect,
 
                 Availability = v.Availability,
+                AvailabilityDescription = v.AvailabilityDescription,
                 PvpTier = v.PvpTier,
                 PvpTierSortIndex = v.PvpTierSortIndex,
                 Generation = v.Generation,
                 IsFullyEvolved = v.IsFullyEvolved,
                 IsMega = v.IsMega,
                 CatchRate = v.CatchRate,
+                HasGender = v.HasGender,
+                MaleRatio = v.MaleRatio,
+                FemaleRatio = v.FemaleRatio,
+                EggCycles = v.EggCycles,
+                Height = v.Height,
+                Weight = v.Weight,
+                ExpYield = v.ExpYield,
                 
                 AttackEv = v.AttackEv,
                 SpecialAttackEv = v.SpecialAttackEv,
@@ -202,11 +212,30 @@ namespace PokeOneWeb.Services.Api.Impl
                 HiddenAbilityHitPointsBoost = v.HiddenAbilityHitPointsBoost,
                 HiddenAbilityBoostConditions = v.HiddenAbilityBoostConditions,
 
+                Varieties = v.Varieties.Select(variety => new PokemonVarietyVarietyDto
+                {
+                    ResourceName = variety.ResourceName,
+                    Name = variety.Name,
+                    SortIndex = variety.SortIndex,
+                    SpriteName = variety.SpriteName,
+                    Availability = variety.Availability,
+                    PrimaryType = variety.PrimaryType,
+                    SecondaryType = variety.SecondaryType
+                }),
+
+                Forms = v.Forms.Select(f => new PokemonVarietyFormDto
+                {
+                    Name = f.Name,
+                    SortIndex = f.SortIndex,
+                    SpriteName = f.SpriteName,
+                    Availability = f.Availability
+                }),
+
                 Urls = v.Urls.Select(u => new PokemonVarietyUrlDto
-                    {
-                        Name = u.Name,
-                        Url = u.Url
-                    }),
+                {
+                    Name = u.Name,
+                    Url = u.Url
+                }),
 
                 PrimaryEvolutionAbilities = v.PrimaryEvolutionAbilities.Select(ToEvolutionAbilityDto()),
                 SecondaryEvolutionAbilities = v.SecondaryEvolutionAbilities.Select(ToEvolutionAbilityDto()),
@@ -381,8 +410,8 @@ namespace PokeOneWeb.Services.Api.Impl
                 PokedexNumber = v.PokedexNumber,
                 Name = v.Name,
                 SpriteName = v.SpriteName,
-                PrimaryElementalType = v.PrimaryType,
-                SecondaryElementalType = v.SecondaryType,
+                PrimaryElementalType = v.PrimaryElementalType,
+                SecondaryElementalType = v.SecondaryElementalType,
 
                 Attack = v.Attack,
                 SpecialAttack = v.SpecialAttack,

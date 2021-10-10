@@ -1692,8 +1692,20 @@ namespace PokeOneWeb.Data.ApplicationDbMigrations
                     b.Property<bool>("DoInclude")
                         .HasColumnType("bit");
 
+                    b.Property<int>("EggCycles")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExpYield")
+                        .HasColumnType("int");
+
                     b.Property<int>("Generation")
                         .HasColumnType("int");
+
+                    b.Property<bool>("HasGender")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Height")
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<int?>("HiddenAbilityId")
                         .HasColumnType("int");
@@ -1709,6 +1721,9 @@ namespace PokeOneWeb.Data.ApplicationDbMigrations
 
                     b.Property<bool>("IsMega")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("MaleRatio")
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1759,6 +1774,9 @@ namespace PokeOneWeb.Data.ApplicationDbMigrations
 
                     b.Property<int>("SpeedEv")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(6,2)");
 
                     b.HasKey("Id");
 

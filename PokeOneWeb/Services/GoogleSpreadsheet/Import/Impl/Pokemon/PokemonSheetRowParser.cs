@@ -48,7 +48,13 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 IsMega = bool.TryParse(values[29].ToString(), out var parsedIsMega) && parsedIsMega,
                 IsFullyEvolved = bool.TryParse(values[30].ToString(), out var parsedIsFullyEvolved) && parsedIsFullyEvolved,
                 Generation = int.TryParse(values[31].ToString(), out var parsedGeneration) ? parsedGeneration : 0,
-                CatchRate = int.TryParse(values[32].ToString(), out var parsedCatchRate) ? parsedCatchRate : 0
+                CatchRate = int.TryParse(values[32].ToString(), out var parsedCatchRate) ? parsedCatchRate : 0,
+                HasGender = !bool.TryParse(values[33].ToString(), out var parsedHasGender) || parsedHasGender,
+                MaleRatio = decimal.TryParse(values[34].ToString(), out var parsedMaleRatio) ? parsedMaleRatio : 0.5M,
+                EggCycles = int.TryParse(values[35].ToString(), out var parsedEggCycles) ? parsedEggCycles : 0,
+                Height = decimal.TryParse(values[36].ToString(), out var parsedHeight) ? parsedHeight : 0,
+                Weight = decimal.TryParse(values[37].ToString(), out var parsedWeight) ? parsedWeight : 0,
+                ExpYield = int.TryParse(values[38].ToString(), out var parsedExpYield) ? parsedExpYield : 0,
             };
 
             if (value.PokedexNumber == 0)
@@ -116,54 +122,69 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon
                 throw new InvalidRowDataException($"Tried to read Pokemon, but required field {nameof(value.CatchRate)} was zero.");
             }
 
-            if (values.Count > 33)
+            if (value.EggCycles == 0)
             {
-                value.SmogonUrl = values[33] as string;
+                throw new InvalidRowDataException($"Tried to read Pokemon, but required field {nameof(value.EggCycles)} was zero.");
             }
 
-            if (values.Count > 34)
+            if (value.Height == 0)
             {
-                value.BulbapediaUrl = values[34] as string;
+                throw new InvalidRowDataException($"Tried to read Pokemon, but required field {nameof(value.Height)} was zero.");
             }
 
-            if (values.Count > 35)
+            if (value.Weight == 0)
             {
-                value.PokeoneCommunityUrl = values[35] as string;
-            }
-
-            if (values.Count > 36)
-            {
-                value.PokemonShowdownUrl = values[36] as string;
-            }
-
-            if (values.Count > 37)
-            {
-                value.SerebiiUrl = values[37] as string;
-            }
-
-            if (values.Count > 38)
-            {
-                value.PokemonDbUrl = values[38] as string;
+                throw new InvalidRowDataException($"Tried to read Pokemon, but required field {nameof(value.Weight)} was zero.");
             }
 
             if (values.Count > 39)
             {
-                value.PokemonSpeciesPokeApiName = values[39] as string;
+                value.SmogonUrl = values[39] as string;
             }
 
             if (values.Count > 40)
             {
-                value.PokemonVarietyPokeApiName = values[40] as string;
+                value.BulbapediaUrl = values[40] as string;
             }
 
             if (values.Count > 41)
             {
-                value.PokemonFormPokeApiName = values[41] as string;
+                value.PokeoneCommunityUrl = values[41] as string;
             }
 
             if (values.Count > 42)
             {
-                value.Notes = values[42] as string;
+                value.PokemonShowdownUrl = values[42] as string;
+            }
+
+            if (values.Count > 43)
+            {
+                value.SerebiiUrl = values[43] as string;
+            }
+
+            if (values.Count > 44)
+            {
+                value.PokemonDbUrl = values[44] as string;
+            }
+
+            if (values.Count > 45)
+            {
+                value.PokemonSpeciesPokeApiName = values[45] as string;
+            }
+
+            if (values.Count > 46)
+            {
+                value.PokemonVarietyPokeApiName = values[46] as string;
+            }
+
+            if (values.Count > 47)
+            {
+                value.PokemonFormPokeApiName = values[47] as string;
+            }
+
+            if (values.Count > 48)
+            {
+                value.Notes = values[48] as string;
             }
 
             return value;

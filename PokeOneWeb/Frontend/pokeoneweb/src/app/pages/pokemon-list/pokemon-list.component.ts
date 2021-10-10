@@ -53,7 +53,9 @@ export class PokemonListComponent implements OnInit {
         });
 
         this.movesService.getAllMoveNames().subscribe((response) => {
-            this.model.moves = response as IMoveNameModel[];
+            this.model.moves = (response as IMoveNameModel[]).sort((m1, m2) => {
+                return m1.resourceName > m2.resourceName ? 1 : m1.resourceName < m2.resourceName ? -1 : 0;
+            });
         });
 
         this.model.generations = this.generationService.getGenerations();

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Dtos;
 using PokeOneWeb.Services.Api;
 using System.Collections.Generic;
-using PokeOneWeb.Dtos;
 
 namespace PokeOneWeb.Controllers
 {

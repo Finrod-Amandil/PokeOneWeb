@@ -37,6 +37,259 @@
             </a>
         </div>
 
+        <h2 name="general">General Info</h2>
+        <div class="no-table-container-outer">
+            <div class="no-table-container-inner general-info-container">
+                <div class="general-panel general-pokedexnumber-container">
+                    <h4>No.</h4>
+                    <div class="general-pokedexnumber">#{{model.pokemon.pokedexNumber}}</div>
+                    <div class="general-generation">Generation {{model.pokemon.generation}}</div>
+                </div>
+                
+                <div class="general-panel general-sprite-container">
+                    <h4>Sprites</h4>
+                    <div class="sprites-container">
+                        <div>
+                            <div *ngIf="model.pokemon.spriteName" class="sprite-container">
+                                <img [src]="'./assets/img/sprites/pokemon/medium/' + model.pokemon.spriteName" />
+                            </div>
+                            <div class="sprite-label">Regular</div>
+                        </div>
+                        <div>
+                            <div *ngIf="model.pokemon.spriteName" class="sprite-container">
+                                <img [src]="'./assets/img/sprites/pokemon/medium-shiny/' + model.pokemon.spriteName" />
+                            </div>
+                            <div class="sprite-label">Shiny</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-panel general-type-container">
+                    <h4>Type</h4>
+                    <pokeone-type-badge 
+                        [typeName]="model.pokemon.primaryElementalType">
+                    </pokeone-type-badge>
+                    <pokeone-type-badge 
+                        *ngIf="model.pokemon.secondaryElementalType"
+                        [typeName]="model.pokemon.secondaryElementalType">
+                    </pokeone-type-badge>
+                </div>
+
+                <div class="general-panel general-availability-container">
+                    <h4>Availability</h4>
+                    <div class="availability-name">
+                        <div class="availability-icon-container" [ngClass]="getAvailabilityClass(model.pokemon.availability)">
+                            <i *ngIf="model.pokemon.availability==='Obtainable'" class="material-icons md-24">check</i>
+                            <i *ngIf="model.pokemon.availability==='Unobtainable'" class="material-icons md-24">clear</i>
+                            <i *ngIf="model.pokemon.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
+                            <i *ngIf="model.pokemon.availability==='Removed'" class="material-icons md-24">delete_forever</i>
+                        </div>
+                        <div>
+                            {{model.pokemon.availability}}
+                        </div>
+                    </div>
+                    <div class="availability-description">
+                        {{model.pokemon.availabilityDescription}}
+                    </div>
+                </div>
+
+                <div class="general-panel general-pvp-tier">
+                    <h4>PVP Tier</h4>
+                    <div class="pvp-tier-name">{{model.pokemon.pvpTier}}</div>
+                    <div class="pvp-tier-credit">
+                        Rankings created by DSK and Cutebun on PokeoneCommunity
+                        (<a href="https://www.pokeonecommunity.com/index.php?mod=articles&action=view&id=75" target="_blank">Link</a>)
+                    </div>
+                </div>
+
+                <div class="general-panel general-evyields">
+                    <h4>EV Yields</h4>
+                    <table>
+                        <tbody>
+                            <tr *ngIf="model.pokemon.hitPointsEv > 0">
+                                <td>Hit Points</td>
+                                <td>{{model.pokemon.hitPointsEv}}</td>
+                            </tr>
+                            <tr *ngIf="model.pokemon.attackEv > 0">
+                                <td>Attack</td>
+                                <td>{{model.pokemon.attackEv}}</td>
+                            </tr>
+                            <tr *ngIf="model.pokemon.defenseEv > 0">
+                                <td>Defense</td>
+                                <td>{{model.pokemon.defenseEv}}</td>
+                            </tr>
+                            <tr *ngIf="model.pokemon.specialAttackEv > 0">
+                                <td>Special Attack</td>
+                                <td>{{model.pokemon.specialAttackEv}}</td>
+                            </tr>
+                            <tr *ngIf="model.pokemon.specialDefenseEv > 0">
+                                <td>Special Defense</td>
+                                <td>{{model.pokemon.specialDefenseEv}}</td>
+                            </tr>
+                            <tr *ngIf="model.pokemon.speedEv > 0">
+                                <td>Speed</td>
+                                <td>{{model.pokemon.speedEv}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{model.pokemon.hitPointsEv + model.pokemon.attackEv + model.pokemon.defenseEv + model.pokemon.specialAttackEv + model.pokemon.specialDefenseEv + model.pokemon.speedEv}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="general-panel general-catching">
+                    <h4>Catching</h4>
+                    <div class="catch-rate">
+                        <div>Catch Rate</div>
+                        <div>{{model.pokemon.catchRate}}</div>
+                    </div>
+                    <div class="catch-config">
+                        <div>
+                            <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                            <div class="hp-bar">
+                                <div class="hp-bar-label">HP</div>
+                                <svg width="100" height="20" viewBox="0 0 100 20">
+                                    <rect class="hp-bar-100" x="0" y="0" width="100" height="20"></rect>
+                                </svg>
+                            </div>
+                            <div class="status-badge"></div>
+                        </div>
+                        <div class="catch-probability">{{getCatchRate(1, 100, '') | number:'1.2-2'}}%</div>
+                    </div>
+                    
+                    <div class="catch-config">
+                        <div>
+                            <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                            <div class="hp-bar">
+                                <div class="hp-bar-label">HP</div>
+                                <svg width="100" height="20" viewBox="0 0 100 20">
+                                    <rect class="hp-bar-1" x="0" y="0" width="5" height="20"></rect>
+                                </svg>
+                            </div>
+                            <div class="status-badge"></div>
+                        </div>
+                        <div class="catch-probability">{{getCatchRate(1, 1, '') | number:'1.2-2'}}%</div>
+                    </div>
+
+                    <div class="catch-config">
+                        <div>
+                            <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                            <div class="hp-bar">
+                                <div class="hp-bar-label">HP</div>
+                                <svg width="100" height="20" viewBox="0 0 100 20">
+                                    <rect class="hp-bar-1" x="0" y="0" width="5" height="20"></rect>
+                                </svg>
+                            </div>
+                            <div class="status-badge">SLP</div>
+                        </div>
+                        <div class="catch-probability">{{getCatchRate(1, 1, 'SLP') | number:'1.2-2'}}%</div>
+                    </div>
+                
+                    <div class="catch-config">
+                        <div>
+                            <img src="./assets/img/sprites/items/small/ultra-ball.png" />
+                            <div class="hp-bar">
+                                <div class="hp-bar-label">HP</div>
+                                <svg width="100" height="20" viewBox="0 0 100 20">
+                                    <rect class="hp-bar-1" x="0" y="0" width="5" height="20"></rect>
+                                </svg>
+                            </div>
+                            <div class="status-badge">SLP</div>
+                        </div>
+                        <div class="catch-probability">{{getCatchRate(2, 1, 'SLP') | number:'1.2-2'}}%</div>
+                    </div>
+                    
+                    <div class="catch-config">
+                        <div>
+                            <img src="./assets/img/sprites/items/small/level-ball.png" />
+                            <div class="hp-bar">
+                                <div class="hp-bar-label">HP</div>
+                                <svg width="100" height="20" viewBox="0 0 100 20">
+                                    <rect class="hp-bar-1" x="0" y="0" width="5" height="20"></rect>
+                                </svg>
+                            </div>
+                            <div class="status-badge">SLP</div>
+                        </div>
+                        <div class="catch-probability">{{getCatchRate(8, 1, 'SLP') | number:'1.2-2'}}%</div>
+                    </div>
+                </div>
+
+                <div class="general-panel general-egg-hatching">
+                    <h4>Egg hatching</h4>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Egg cycles</td>
+                                <td>{{model.pokemon.eggCycles}}</td>
+                            </tr>
+                            <tr>
+                                <td>Steps</td>
+                                <td>{{getEggSteps()}}</td>
+                            </tr>
+                            <tr>
+                                <td>Hatch time (mounted)</td>
+                                <td>{{getEggHatchingTime()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="flame-body">
+                        Steps / hatch time are halved, if a Pokémon with Flame Body or Magma Armor is in the party.
+                    </div>
+                </div>
+
+                <div class="general-panel general-genderratio">
+                    <h4>Gender Ratio</h4>
+                    <svg viewBox="0 0 100 10">
+                        <rect *ngIf="model.pokemon.hasGender" class="genderratio-bar-male" x="0" y="0" [attr.width]="model.pokemon.maleRatio" height="20"></rect>
+                        <rect *ngIf="model.pokemon.hasGender" class="genderratio-bar-female" [attr.x]="model.pokemon.maleRatio" y="0" [attr.width]="model.pokemon.femaleRatio" height="20"></rect>
+                        <rect *ngIf="!model.pokemon.hasGender" class="genderratio-bar-ungendered" x="0" y="0" width="100" height="20"></rect>
+                    </svg>
+                    <div class="gender-male-female">
+                        <div class="gender-male">
+                            <div *ngIf="model.pokemon.hasGender">{{model.pokemon.maleRatio}}%</div>
+                            <div>Male</div>
+                        </div>
+                        <div class="gender-female">
+                            <div *ngIf="model.pokemon.hasGender">{{model.pokemon.femaleRatio}}%</div>
+                            <div>Female</div>
+                        </div>
+                    </div>
+                    <div class="gender-ungendered" *ngIf="!model.pokemon.hasGender">
+                        Pokémon has no gender.
+                    </div>
+                </div>
+
+                <div class="general-panel general-miscellaneous">
+                    <h4>Miscellanous</h4>
+                    <div class="misc-row">
+                        <div>Exp. yield</div>
+                        <div>{{model.pokemon.expYield}}</div>
+                    </div>
+                    <div class="misc-row">
+                        <div>Height</div>
+                        <div>{{model.pokemon.height}} m</div>
+                    </div>
+                    <div class="misc-row">
+                        <div>Weight</div>
+                        <div>{{model.pokemon.weight}} kg</div>
+                    </div>
+                </div>
+
+                <div class="general-panel general-urls">
+                    <h4>Links</h4>
+                    <div *ngFor="let url of model.pokemon.urls">
+                        <a [href]="getFullUrl(url)" target="_blank">
+                            <img [src]="getUrlIcon(url)" />
+                            <div innerHtml={{getUrlDisplayName(url)}}>
+                                {{getUrlDisplayName(url)}}
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <h2 name="stats">Stats</h2>
         <div class="no-table-container-outer">
             <div class="no-table-container-inner">

@@ -27,7 +27,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
         {
             var varietyIds = _dbContext.PokemonVarieties
                 .Where(v => v.DoInclude)
-                .IncludeOptimized(v => v.DefaultForm)
+                .Include(v => v.DefaultForm)
                 .AsNoTracking()
                 .OrderBy(v => v.DefaultForm.SortIndex)
                 .Select(v => v.Id)
@@ -66,6 +66,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 
                 var readModel = GetBasicReadModel(variety);
 
+                AttachVarieties(readModel, variety);
+                AttachForms(readModel, variety);
+
                 AttachEvolutionAbilities(readModel, variety);
 
                 int previousId = i != 0 ? varietyIds[i - 1] : varietyIds[^1];
@@ -93,7 +96,14 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
         {
             return _dbContext.PokemonVarieties
                 .Where(v => v.Id == varietyId)
-                .Include(v => v.PokemonSpecies)
+                .Include(v => v.PokemonSpecies.Varieties)
+                .ThenInclude(v => v.PrimaryType)
+                .Include(v => v.PokemonSpecies.Varieties)
+                .ThenInclude(v => v.SecondaryType)
+                .Include(v => v.PokemonSpecies.Varieties)
+                .ThenInclude(v => v.DefaultForm.Availability)
+                .Include(v => v.Forms)
+                .ThenInclude(f => f.Availability)
                 .Include(v => v.DefaultForm.Availability)
                 .Include(v => v.PvpTier)
                 .Include(v => v.PrimaryAbility)
@@ -149,7 +159,6 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .Include(v => v.HuntingConfigurations)
                 .ThenInclude(hc => hc.Nature)
                 .Include(v => v.Urls)
-                .AsNoTracking()
                 .Single();
         }
 
@@ -166,8 +175,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 
                 SpriteName = variety.DefaultForm.SpriteName,
 
-                PrimaryType = variety.PrimaryType.Name,
-                SecondaryType = variety.SecondaryType?.Name,
+                PrimaryElementalType = variety.PrimaryType.Name,
+                SecondaryElementalType = variety.SecondaryType?.Name,
 
                 Attack = variety.Attack,
                 SpecialAttack = variety.SpecialAttack,
@@ -184,6 +193,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 HiddenAbilityEffect = variety.HiddenAbility?.EffectDescription,
 
                 Availability = variety.DefaultForm.Availability.Name,
+                AvailabilityDescription = variety.DefaultForm.Availability.Description,
 
                 PvpTier = variety.PvpTier?.Name,
                 PvpTierSortIndex = variety.PvpTier?.SortIndex ?? int.MaxValue,
@@ -192,6 +202,13 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 IsFullyEvolved = variety.IsFullyEvolved,
                 IsMega = variety.IsMega,
                 CatchRate = variety.CatchRate,
+                HasGender = variety.HasGender,
+                MaleRatio = variety.MaleRatio,
+                FemaleRatio = 100 - variety.MaleRatio,
+                EggCycles = variety.EggCycles,
+                Height = variety.Height,
+                Weight = variety.Weight,
+                ExpYield = variety.ExpYield,
 
                 AttackEv = variety.AttackEv,
                 SpecialAttackEv = variety.SpecialAttackEv,
@@ -226,6 +243,33 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 HiddenAbilityHitPointsBoost = variety.HiddenAbility?.HitPointsBoost ?? 1,
                 HiddenAbilityBoostConditions = variety.HiddenAbility?.BoostConditions,
             };
+        }
+
+        private void AttachVarieties(PokemonVarietyReadModel readModel, PokemonVariety variety)
+        {
+            readModel.Varieties = variety.PokemonSpecies.Varieties.Select(v => new PokemonVarietyVarietyReadModel
+                {
+                    ResourceName = v.ResourceName,
+                    Name = v.Name,
+                    SortIndex = v.DefaultForm.SortIndex,
+                    SpriteName = v.DefaultForm.SpriteName,
+                    Availability = v.DefaultForm.Availability.Name,
+                    PrimaryType = v.PrimaryType.Name,
+                    SecondaryType = v.SecondaryType?.Name
+                })
+                .ToList();
+        }
+
+        private void AttachForms(PokemonVarietyReadModel readModel, PokemonVariety variety)
+        {
+            readModel.Forms = variety.Forms.Select(f => new PokemonVarietyFormReadModel
+                {
+                    Name = f.Name,
+                    SpriteName = f.SpriteName,
+                    SortIndex = f.SortIndex,
+                    Availability = f.Availability.Name
+                })
+                .ToList();
         }
 
         private void AttachEvolutionAbilities(PokemonVarietyReadModel readModel, PokemonVariety variety)
@@ -625,7 +669,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             return variety.LearnableMoves.Select(learnableMove =>
                 {
                     var hasStab = learnableMove.Move.ElementalType.Name.EqualsExact(variety.PrimaryType.Name) ||
-                                  learnableMove.Move.ElementalType.Name.EqualsExact(variety.SecondaryType?.Name ?? "");
+                                  learnableMove.Move.ElementalType.Name.EqualsExact(variety.SecondaryType?.Name);
 
                     return new LearnableMoveReadModel
                     {

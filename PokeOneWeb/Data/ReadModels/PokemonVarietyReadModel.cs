@@ -23,8 +23,8 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string SpriteName { get; set; }
 
-        public string PrimaryType { get; set; }
-        public string SecondaryType { get; set; }
+        public string PrimaryElementalType { get; set; }
+        public string SecondaryElementalType { get; set; }
 
         public int Attack { get; set; }
         public int SpecialAttack { get; set; }
@@ -41,6 +41,7 @@ namespace PokeOneWeb.Data.ReadModels
         public string HiddenAbilityEffect { get; set; }
 
         public string Availability { get; set; }
+        public string AvailabilityDescription { get; set; }
 
         public string PvpTier { get; set; }
         public int PvpTierSortIndex { get; set; }
@@ -49,6 +50,17 @@ namespace PokeOneWeb.Data.ReadModels
         public bool IsFullyEvolved { get; set; }
         public bool IsMega { get; set; }
         public int CatchRate { get; set; }
+        public bool HasGender { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal MaleRatio { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal FemaleRatio { get; set; }
+        public int EggCycles { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Height { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Weight { get; set; }
+        public int ExpYield { get; set; }
 
         public int AttackEv { get; set; }
         public int SpecialAttackEv { get; set; }
@@ -108,6 +120,8 @@ namespace PokeOneWeb.Data.ReadModels
         public decimal HiddenAbilityHitPointsBoost { get; set; }
         public string HiddenAbilityBoostConditions { get; set; }
 
+        public List<PokemonVarietyVarietyReadModel> Varieties { get; set; }
+        public List<PokemonVarietyFormReadModel> Forms { get; set; }
         public List<PokemonVarietyUrlReadModel> Urls { get; set; } = new();
         public List<EvolutionAbilityReadModel> PrimaryEvolutionAbilities { get; set; } = new();
         public List<EvolutionAbilityReadModel> SecondaryEvolutionAbilities { get; set; } = new();
