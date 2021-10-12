@@ -6,6 +6,7 @@ using PokeOneWeb.Services.Api;
 namespace PokeOneWeb.Controllers
 {
     [ApiController]
+    [Route("api/item")]
     public class ItemController : ControllerBase
     {
         private readonly IItemApiService _itemApiService;
@@ -15,7 +16,21 @@ namespace PokeOneWeb.Controllers
             _itemApiService = itemApiService;
         }
 
-        [Route("api/item/getitemstatboostsforpokemon")]
+        [Route("getall")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ItemListDto>> GetAll()
+        {
+            return Ok(_itemApiService.GetAllListItems());
+        }
+
+        [Route("getbyname")]
+        [HttpGet]
+        public ActionResult<ItemDto> GetByName([FromQuery] string name)
+        {
+            return Ok(_itemApiService.GetItemByName(name));
+        }
+
+        [Route("getitemstatboostsforpokemon")]
         [HttpGet]
         public ActionResult<IEnumerable<ItemStatBoostPokemonDto>> GetItemStatBoostsForPokemon([FromQuery] string name)
         {
