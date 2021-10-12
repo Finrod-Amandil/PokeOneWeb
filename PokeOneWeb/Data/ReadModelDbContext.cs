@@ -20,6 +20,8 @@ namespace PokeOneWeb.Data
 
         public DbSet<NatureReadModel> NatureReadModels { get; set; }
 
+        public DbSet<ItemReadModel> ItemReadModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EntityTypeReadModel>()
@@ -105,6 +107,18 @@ namespace PokeOneWeb.Data
                 .WithOne()
                 .HasForeignKey(t => t.PokemonVarietyAsHiddenAbilityId)
                 .OnDelete(DeleteBehavior.ClientNoAction);
+
+            modelBuilder.Entity<ItemReadModel>()
+                .HasIndex(i => i.ApplicationDbId)
+                .IsUnique();
+
+            modelBuilder.Entity<ItemReadModel>()
+                .HasIndex(i => i.ResourceName)
+                .IsUnique();
+
+            modelBuilder.Entity<PlacedItemReadModel>()
+                .HasIndex(p => p.ApplicationDbId)
+                .IsUnique();
         }
     }
 }
