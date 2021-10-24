@@ -6,7 +6,6 @@ using PokeOneWeb.Extensions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 {

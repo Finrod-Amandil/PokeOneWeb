@@ -19,7 +19,9 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string LocationName { get; set; }
 
-        public string LocationSortIndex { get; set; }
+        public string LocationGroupResourceName { get; set; }
+
+        public int LocationSortIndex { get; set; }
 
         public int SortIndex { get; set; }
 

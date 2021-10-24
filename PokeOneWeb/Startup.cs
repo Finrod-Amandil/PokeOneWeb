@@ -48,6 +48,7 @@ using PokeOneWeb.Services.PokeApi.Impl;
 using PokeOneWeb.Services.ReadModelUpdate;
 using PokeOneWeb.Services.ReadModelUpdate.Impl;
 using PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes;
+using PokeOneWeb.Services.ReadModelUpdate.Impl.Item;
 using PokeOneWeb.Services.ReadModelUpdate.Impl.ItemStatBoostPokemon;
 using PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves;
 using PokeOneWeb.Services.ReadModelUpdate.Impl.Moves;
@@ -206,6 +207,7 @@ namespace PokeOneWeb
             services.AddScoped<IReadModelMapper<MoveReadModel>, MoveReadModelMapper>();
             services.AddScoped<IReadModelMapper<NatureReadModel>, NatureReadModelMapper>();
             services.AddScoped<IReadModelMapper<PokemonVarietyReadModel>, PokemonReadModelMapper>();
+            services.AddScoped<IReadModelMapper<ItemReadModel>, ItemReadModelMapper>();
 
             services.AddScoped<IReadModelRepository<EntityTypeReadModel>, EntityTypeReadModelRepository>();
             services.AddScoped<IReadModelRepository<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelRepository>();
@@ -213,6 +215,7 @@ namespace PokeOneWeb
             services.AddScoped<IReadModelRepository<MoveReadModel>, MoveReadModelRepository>();
             services.AddScoped<IReadModelRepository<NatureReadModel>, NatureReadModelRepository>();
             services.AddScoped<IReadModelRepository<PokemonVarietyReadModel>, PokemonVarietyReadModelRepository>();
+            services.AddScoped<IReadModelRepository<ItemReadModel>, ItemReadModelRepository>();
 
             services.AddScoped<IEntityTypeApiService, EntityTypeApiService>();
             services.AddScoped<IItemApiService, ItemApiService>();
