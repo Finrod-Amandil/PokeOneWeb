@@ -11,12 +11,14 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
         private readonly IReadModelMapper<MoveReadModel> _moveMapper;
         private readonly IReadModelMapper<NatureReadModel> _natureMapper;
         private readonly IReadModelMapper<PokemonVarietyReadModel> _pokemonVarietyMapper;
+        private readonly IReadModelMapper<ItemReadModel> _itemMapper;
         private readonly IReadModelRepository<EntityTypeReadModel> _entityTypeRepository;
         private readonly IReadModelRepository<ItemStatBoostPokemonReadModel> _itemStatBoostPokemonRepository;
         private readonly IReadModelRepository<SimpleLearnableMoveReadModel> _simpleLearnableMoveRepository;
         private readonly IReadModelRepository<MoveReadModel> _moveRepository;
         private readonly IReadModelRepository<NatureReadModel> _natureRepository;
         private readonly IReadModelRepository<PokemonVarietyReadModel> _pokemonVarietyRepository;
+        private readonly IReadModelRepository<ItemReadModel> _itemRepository;
 
         public ReadModelUpdateService(
             IReadModelMapper<EntityTypeReadModel> entityTypeMapper,
@@ -25,13 +27,15 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             IReadModelMapper<MoveReadModel> moveMapper,
             IReadModelMapper<NatureReadModel> natureMapper,
             IReadModelMapper<PokemonVarietyReadModel> pokemonVarietyMapper,
+            IReadModelMapper<ItemReadModel> itemMapper,
 
             IReadModelRepository<EntityTypeReadModel> entityTypeRepository,
             IReadModelRepository<ItemStatBoostPokemonReadModel> itemStatBoostPokemonRepository,
             IReadModelRepository<SimpleLearnableMoveReadModel> simpleLearnableMoveRepository,
             IReadModelRepository<MoveReadModel> moveRepository,
             IReadModelRepository<NatureReadModel> natureRepository,
-            IReadModelRepository<PokemonVarietyReadModel> pokemonVarietyRepository)
+            IReadModelRepository<PokemonVarietyReadModel> pokemonVarietyRepository,
+            IReadModelRepository<ItemReadModel> itemRepository)
         {
             _entityTypeMapper = entityTypeMapper;
             _itemStatBoostPokemonMapper = itemStatBoostPokemonMapper;
@@ -39,33 +43,25 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             _moveMapper = moveMapper;
             _natureMapper = natureMapper;
             _pokemonVarietyMapper = pokemonVarietyMapper;
+            _itemMapper = itemMapper;
             _entityTypeRepository = entityTypeRepository;
             _itemStatBoostPokemonRepository = itemStatBoostPokemonRepository;
             _simpleLearnableMoveRepository = simpleLearnableMoveRepository;
             _moveRepository = moveRepository;
             _natureRepository = natureRepository;
             _pokemonVarietyRepository = pokemonVarietyRepository;
+            _itemRepository = itemRepository;
         }
 
         public void UpdateReadModel()
         {
-            var entityTypeReadModels = _entityTypeMapper.MapFromDatabase();
-            _entityTypeRepository.Update(entityTypeReadModels);
-
-            var itemStatBoostPokemonReadModels = _itemStatBoostPokemonMapper.MapFromDatabase();
-            _itemStatBoostPokemonRepository.Update(itemStatBoostPokemonReadModels);
-
-            var simpleLearnableMoveReadModels = _simpleLearnableMoveMapper.MapFromDatabase();
-            _simpleLearnableMoveRepository.Update(simpleLearnableMoveReadModels);
-
-            var moveReadModels = _moveMapper.MapFromDatabase();
-            _moveRepository.Update(moveReadModels);
-
-            var natureReadModels = _natureMapper.MapFromDatabase();
-            _natureRepository.Update(natureReadModels);
-
-            var pokemonVarietyReadModels = _pokemonVarietyMapper.MapFromDatabase();
-            _pokemonVarietyRepository.Update(pokemonVarietyReadModels);
+            _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase());
+            _itemStatBoostPokemonRepository.Update(_itemStatBoostPokemonMapper.MapFromDatabase());
+            _simpleLearnableMoveRepository.Update(_simpleLearnableMoveMapper.MapFromDatabase());
+            _moveRepository.Update(_moveMapper.MapFromDatabase());
+            _natureRepository.Update(_natureMapper.MapFromDatabase());
+            _pokemonVarietyRepository.Update(_pokemonVarietyMapper.MapFromDatabase());
+            _itemRepository.Update(_itemMapper.MapFromDatabase());
         }
     }
 }
