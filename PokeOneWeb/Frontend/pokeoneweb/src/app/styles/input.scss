@@ -1,0 +1,26 @@
+.ng-select.ng-select-multiple
+  ::ng-deep
+  .ng-select-container
+  .ng-value-container
+  .ng-value {
+  background-color: var(--light-gray);
+}
+
+.ng-select.ng-select-multiple
+  ::ng-deep
+  .ng-select-container
+  .ng-value-container
+  .ng-value
+  .ng-value-icon {
+  border-right: 1px solid var(--medium-gray);
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label {
+  margin: 0;
+  margin-left: 10px;
+  cursor: pointer;
+}

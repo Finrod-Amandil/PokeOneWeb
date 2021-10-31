@@ -15,6 +15,34 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pokemon-list/pokemon-list.module').then((m) => m.PokemonListModule),
   },
   {
+    path: 'pokemon',
+    loadChildren: () => import('./pages/pokemon-list/pokemon-list.module').then((m) => m.PokemonListModule),
+  },
+  {
+    path: 'pokedex',
+    loadChildren: () => import('./pages/pokemon-list/pokemon-list.module').then((m) => m.PokemonListModule),
+  },
+  {
+    path: 'dex',
+    loadChildren: () => import('./pages/pokemon-list/pokemon-list.module').then((m) => m.PokemonListModule),
+  },
+  {
+    path: 'i',
+    loadChildren: () => import('./pages/item-list/item-list.module').then((m) => m.ItemListModule),
+  },
+  {
+    path: 'item',
+    loadChildren: () => import('./pages/item-list/item-list.module').then((m) => m.ItemListModule),
+  },
+  {
+    path: 'items',
+    loadChildren: () => import('./pages/item-list/item-list.module').then((m) => m.ItemListModule),
+  },
+  {
+    path: 'itemdex',
+    loadChildren: () => import('./pages/item-list/item-list.module').then((m) => m.ItemListModule),
+  },
+  {
     path: 'not-found',
     component: NotFoundComponent
   },

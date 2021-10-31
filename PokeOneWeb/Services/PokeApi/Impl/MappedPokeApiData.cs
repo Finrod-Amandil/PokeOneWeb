@@ -1,5 +1,5 @@
-﻿using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.PokeApi.Impl
 {

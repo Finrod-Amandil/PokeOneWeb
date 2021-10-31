@@ -8,7 +8,7 @@ import { IMoveNameModel } from '../../models/move-name.model';
 @Injectable({
     providedIn: 'root'
 })
-export class MovesService extends BaseService {
+export class MoveService extends BaseService {
     constructor (http: HttpClient) {
         super(http);
     }

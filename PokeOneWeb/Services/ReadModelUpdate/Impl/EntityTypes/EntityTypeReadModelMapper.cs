@@ -35,6 +35,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
                 });
 
             var itemMappings = _dbContext.Items
+                .Where(i => i.DoInclude)
                 .AsNoTracking()
                 .Select(i => new EntityTypeReadModel
                 {

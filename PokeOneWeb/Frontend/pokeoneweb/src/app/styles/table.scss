@@ -1,55 +1,96 @@
 table.main-table {
-    width: 100%;
-    position: relative;
-    background-color: var(--dark-gray);
-    color: var(--light-gray);
-    font-family: 'Roboto', sans-serif;
-    border-collapse: separate;
-    border-spacing: 0px 2px;
-    border: 1px solid black;
-    padding-left: 2px;
-    padding-right: 2px;
+  width: 100%;
+  position: relative;
+  background-color: var(--dark-gray);
+  color: var(--light-gray);
+  font-family: "Roboto", sans-serif;
+  border-collapse: separate;
+  border-spacing: 0px 2px;
+  border: 1px solid black;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-table.main-table>thead>tr>th {
-    position: relative;
-    background-color: var(--dark-gray);
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid var(--dark-gray);
-    border-right: 1px solid var(--dark-gray);
-    padding: 5px;
+table.main-table > thead > tr > th {
+  position: relative;
+  background-color: var(--dark-gray);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid var(--dark-gray);
+  border-right: 1px solid var(--dark-gray);
+  padding: 5px;
 }
 
-table.main-table>tbody>tr>td {
-    position: relative;
-    background-color: var(--medium-gray);
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid var(--medium-dark-gray);
-    border-right: 1px solid var(--medium-dark-gray);
-    padding: 5px;
+table.main-table > tbody > tr > td {
+  position: relative;
+  background-color: var(--medium-gray);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid var(--medium-dark-gray);
+  border-right: 1px solid var(--medium-dark-gray);
+  padding: 5px;
 }
 
-table.main-table>tbody>tr>td:first-child, 
-table.main-table>thead>tr>th:first-child {
-    border-left: 1px solid black;
+table.main-table > tbody > tr > td:first-child,
+table.main-table > thead > tr > th:first-child {
+  border-left: 1px solid black;
 }
 
-table.main-table>tbody>tr>td:last-child, 
-table.main-table>thead>tr>th:last-child {
-    border-right: 1px solid black;
+table.main-table > tbody > tr > td:last-child,
+table.main-table > thead > tr > th:last-child {
+  border-right: 1px solid black;
 }
 
-table.main-table>thead>tr>th>div.table-header-sort {
-    line-height: 0.9;
-    cursor: pointer;
+table.main-table > thead > tr > th > div.table-header-sort {
+  line-height: 0.9;
+  cursor: pointer;
 }
 
-table.main-table>thead>tr>th>div.table-header-sort.unsorted {
-    color: var(--medium-gray-lighter);
+table.main-table > thead > tr > th > div.table-header-sort.unsorted {
+  color: var(--medium-gray-lighter);
 }
 
-table.main-table>thead>tr>th>div.table-header-sort.sorted {
-    color: white;
+table.main-table > thead > tr > th > div.table-header-sort.sorted {
+  color: white;
+}
+
+table.sortable th {
+  padding: 3px;
+  text-align: center;
+}
+
+table.rows-clickable td {
+  cursor: pointer;
+}
+
+table.rows-clickable tr:hover td {
+  background-color: var(--medium-gray-lighter);
+}
+
+table.search-table {
+  margin-bottom: 40px;
+}
+
+table.search-table > thead > tr > th {
+  font-size: 24px;
+}
+
+table.search-table > tbody > tr > td:first-child {
+  background-color: var(--dark-gray);
+  border-right: 1px solid black;
+  width: 140px;
+}
+
+table.search-table > tbody > tr > td > div {
+  display: inline-block;
+}
+
+table.search-table .inline {
+  margin-right: 10px;
+}
+
+table.search-table .search-option-explanation {
+  font-weight: 300;
+  color: var(--medium-light-gray);
+  font-size: 14px;
 }

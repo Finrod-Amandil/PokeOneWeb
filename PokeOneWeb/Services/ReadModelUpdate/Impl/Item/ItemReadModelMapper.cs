@@ -29,6 +29,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                     ApplicationDbId = i.Id,
                     ResourceName = i.ResourceName,
                     SortIndex = i.SortIndex,
+                    Name = i.Name,
                     Description = i.Description,
                     Effect = i.Effect,
                     IsAvailable = i.IsAvailable,

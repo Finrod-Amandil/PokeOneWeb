@@ -61,6 +61,7 @@ namespace PokeOneWeb.Services.Api.Impl
             {
                 ResourceName = i.ResourceName,
                 SortIndex = i.SortIndex,
+                Name = i.Name,
                 Description = i.Description,
                 Effect = i.Effect,
                 IsAvailable = i.IsAvailable,
@@ -91,6 +92,7 @@ namespace PokeOneWeb.Services.Api.Impl
             {
                 ResourceName = i.ResourceName,
                 SortIndex = i.SortIndex,
+                Name = i.Name,
                 Description = i.Description,
                 Effect = i.Effect,
                 IsAvailable = i.IsAvailable,

@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Options;
 using PokeOneWeb.Configuration;
 using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 {
@@ -61,7 +61,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 
                 var duration = DateTime.UtcNow.Subtract(sheetStartTime);
 
-                if (changedEntries > 0 && duration.TotalMilliseconds < _settings.Value.Import.MinTimeBetweenSheets)
+                if (duration.TotalMilliseconds < _settings.Value.Import.MinTimeBetweenSheets)
                 {
                     // Ensure, that google spreadsheet requests are spread out to avoid hitting quota limit.
                     Thread.Sleep(_settings.Value.Import.MinTimeBetweenSheets - (int)duration.TotalMilliseconds);

@@ -1,7 +1,7 @@
 ﻿using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data.Entities;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities

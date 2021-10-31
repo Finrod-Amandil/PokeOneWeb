@@ -5,7 +5,7 @@ import { WEBSITE_NAME, SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/cor
 import { IMoveNameModel } from 'src/app/core/models/move-name.model';
 import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
 import { IPokemonVarietyUrlModel } from 'src/app/core/models/pokemon-variety-url.model';
-import { MovesService } from 'src/app/core/services/api/moves.service';
+import { MoveService } from 'src/app/core/services/api/move.service';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { GenerationService } from 'src/app/core/services/generation.service';
 import { PokemonUrlService } from 'src/app/core/services/pokemon-url.service';
@@ -30,7 +30,7 @@ export class PokemonListComponent implements OnInit {
     constructor(
         private titleService: Title,
         private pokemonService: PokemonService,
-        private movesService: MovesService,
+        private moveService: MoveService,
         private generationService: GenerationService,
         private filterService: PokemonListFilterService,
         private sortService: PokemonListSortService,
@@ -52,7 +52,7 @@ export class PokemonListComponent implements OnInit {
             this.calculateGlobals();
         });
 
-        this.movesService.getAllMoveNames().subscribe((response) => {
+        this.moveService.getAllMoveNames().subscribe((response) => {
             this.model.moves = (response as IMoveNameModel[]).sort((m1, m2) => {
                 return m1.resourceName > m2.resourceName ? 1 : m1.resourceName < m2.resourceName ? -1 : 0;
             });
@@ -71,11 +71,11 @@ export class PokemonListComponent implements OnInit {
     }
 
     public async onFilterChanged() {
-        this.model.displayedPokemonModels = await this.filterService
+        let filtered = await this.filterService
             .applyFilter(this.model.filter, this.model.pokemonModels);
 
         this.model.displayedPokemonModels = this.sortService
-            .sort(this.model.displayedPokemonModels, this.model.sortColumn, this.model.sortDirection)
+            .sort(filtered, this.model.sortColumn, this.model.sortDirection);
     }
 
     public trackById(index: number, item: IPokemonVarietyListModel): number {

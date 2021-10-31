@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions
 {
