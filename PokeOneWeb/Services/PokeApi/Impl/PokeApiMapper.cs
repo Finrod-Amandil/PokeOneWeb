@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Options;
 using PokeOneWeb.Configuration;
 using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data.Entities;
 using Ability = PokeOneWeb.Data.Entities.Ability;
 using Item = PokeOneWeb.Data.Entities.Item;
 using Move = PokeOneWeb.Data.Entities.Move;

@@ -43,6 +43,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.ResourceName = entity.ResourceName;
             existingEntity.SortIndex = entity.SortIndex;
+            existingEntity.Name = entity.Name;
             existingEntity.Description = entity.Description;
             existingEntity.Effect = entity.Effect;
             existingEntity.IsAvailable = entity.IsAvailable;

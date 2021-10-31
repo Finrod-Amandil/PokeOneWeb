@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Extensions;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 {

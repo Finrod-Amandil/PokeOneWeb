@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using PokeOneWeb.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Extensions;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon

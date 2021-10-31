@@ -6,7 +6,7 @@
 
 <div id="content_main_container">
 
-<table class="main-table" id="search_table">
+<table class="main-table search-table" id="search_table">
     <thead>
         <tr>
             <th colspan="2">Search and filter</th>
@@ -718,7 +718,7 @@
 <div *ngIf="model.displayedPokemonModels.length > 0" attr.style="height: calc({{scroll.viewPortInfo.maxScrollPosition}}px + 100vh + 200px)">
 <virtual-scroller #scroll [parentScroll]="scroll.window" [items]="model.displayedPokemonModels">
   
-<table class="main-table" id="pokemon_list">
+<table class="main-table sortable rows-clickable" id="pokemon_list">
     <thead>
         <tr>
             <th class="col-availability"></th>
@@ -969,5 +969,5 @@
 </virtual-scroller>
 </div>
 
-<p *ngIf="model.displayedPokemonModels.length === 0" class="pokemon-list-empty">No Pokémon to display. Either no Pokémon matches your search criteria, or there was an error while loading the Pokémon data.</p>
+<p *ngIf="model.displayedPokemonModels.length === 0" class="pokemon-list-empty">No Pokémon to display. Try to adjust your search criteria.</p>
 </div>

@@ -1,30 +1,7 @@
-#search_table {
-  margin-bottom: 40px;
-}
-
-#search_table > thead > tr > th {
-  font-size: 24px;
-}
-
-#search_table > tbody > tr > td:first-child {
-  background-color: var(--dark-gray);
-  border-right: 1px solid black;
-  width: 140px;
-}
-
-#search_table > tbody > tr > td > div {
-  display: inline-block;
-}
-
-#search_table .search-option-explanation,
 #search_table .stat-input-table .stat-input-minmax {
   font-weight: 300;
   color: var(--medium-light-gray);
   font-size: 14px;
-}
-
-#search_table .inline {
-  margin-right: 10px;
 }
 
 #search_table #input_search,
@@ -65,23 +42,6 @@
 
 #availability_explanation_table td {
   padding: 2px 5px;
-}
-
-.ng-select.ng-select-multiple
-  ::ng-deep
-  .ng-select-container
-  .ng-value-container
-  .ng-value {
-  background-color: var(--light-gray);
-}
-
-.ng-select.ng-select-multiple
-  ::ng-deep
-  .ng-select-container
-  .ng-value-container
-  .ng-value
-  .ng-value-icon {
-  border-right: 1px solid var(--medium-gray);
 }
 
 .ng-select.input-type ::ng-deep .ng-option {
@@ -126,25 +86,10 @@
   padding: 0px 2px;
 }
 
-#search_table input[type="checkbox"] {
-  cursor: pointer;
-}
-
-#search_table input[type="checkbox"] + label {
-  margin: 0;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
 p.pokemon-list-title,
 p.pokemon-list-empty {
   color: var(--light-gray);
   font-size: 24px;
-}
-
-#pokemon_list th {
-  padding: 3px;
-  text-align: center;
 }
 
 #pokemon_list th.col-stat,
@@ -164,11 +109,6 @@ p.pokemon-list-empty {
 #pokemon_list td {
   padding: 0px;
   height: 107px;
-  cursor: pointer;
-}
-
-#pokemon_list tr:hover td {
-  background-color: var(--medium-gray-lighter);
 }
 
 #pokemon_list .col-availability {
@@ -314,7 +254,7 @@ p.pokemon-list-empty {
 
 #pokemon_list .col-links .favicon-container {
   position: relative;
-  display: inline-grid;
+  display: inline;
   height: 20px;
   width: 20px;
   border: 1px solid var(--light-gray);
@@ -329,7 +269,8 @@ p.pokemon-list-empty {
 #pokemon_list .col-links img {
   height: 16px;
   width: 16px;
-  margin-bottom: 8px;
+  margin: 2px;
+  margin-bottom: 6px;
 }
 
 #pokemon_list .col-links .favicon-tooltip {
@@ -337,7 +278,7 @@ p.pokemon-list-empty {
   visibility: hidden;
   opacity: 0;
   top: -1px;
-  right: 19px;
+  right: 21px;
   background-color: var(--light-gray);
   color: var(--dark-gray);
   font-weight: 300;
@@ -347,7 +288,7 @@ p.pokemon-list-empty {
   border-radius: 5px;
   padding-right: 5px;
   padding-left: 5px;
-  height: 20px;
+  height: 21px;
 }
 
 #pokemon_list .col-links a:hover + .favicon-tooltip {
