@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Moves
 {
@@ -15,19 +16,15 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Moves
             _dbContext = dbContext;
         }
 
-        public IEnumerable<MoveReadModel> MapFromDatabase()
+        public IDictionary<MoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
         {
-            var moves = _dbContext.Moves
+            return _dbContext.Moves
                 .Include(m => m.DamageClass)
                 .Include(m => m.ElementalType)
                 .AsNoTracking()
                 .Where(m => m.DoInclude)
                 .OrderBy(m => m.Name)
-                .ToList();
-
-            foreach (var move in moves)
-            {
-                yield return new MoveReadModel
+                .Select(move => new MoveReadModel
                 {
                     ApplicationDbId = move.Id,
                     Name = move.Name,
@@ -39,8 +36,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Moves
                     PowerPoints = move.PowerPoints,
                     Priority = move.Priority,
                     EffectDescription = move.Effect
-                };
-            }
+                })
+                .ToDictionary(x => x, _ => DbAction.Create);
         }
     }
 }

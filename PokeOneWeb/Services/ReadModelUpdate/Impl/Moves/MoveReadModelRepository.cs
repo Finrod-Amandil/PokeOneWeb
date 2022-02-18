@@ -14,9 +14,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Moves
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<MoveReadModel> entities)
+        public void Update(IDictionary<MoveReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.MoveReadModels
                     .SingleOrDefault(l => l.ApplicationDbId == entity.ApplicationDbId);

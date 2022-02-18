@@ -14,9 +14,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<ItemStatBoostPokemonReadModel> entities)
+        public void Update(IDictionary<ItemStatBoostPokemonReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.ItemStatBoostPokemonReadModels
                     .SingleOrDefault(l => l.ApplicationDbId == entity.ApplicationDbId);

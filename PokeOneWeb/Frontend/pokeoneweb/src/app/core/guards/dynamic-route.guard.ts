@@ -39,7 +39,15 @@ export class DynamicRouteGuard implements CanActivate {
             //Build a new routes array. Slicing is required as wildcard route needs to stay at the
             //bottom of the list.
             let routes = this.router.config;
-            let newRoutes = routes.slice(0, 3);
+            let wildCardRoute = routes.find(r => r.path && r.path === '**');
+
+            if (!wildCardRoute) {
+                throw new Error("Wildcard Route was not found in Routes List.");
+            }
+
+            let wildCardRouteIndex = routes.indexOf(wildCardRoute);
+
+            let newRoutes = routes.slice(0, wildCardRouteIndex);
 
             //Add a new route for the requested path to the correct component.
             switch (entityTypeModel.entityType) {
@@ -69,7 +77,7 @@ export class DynamicRouteGuard implements CanActivate {
                     return;
             }
 
-            routes.slice(routes.length - 4)
+            routes.slice(wildCardRouteIndex + 1)
                 .forEach(route => {
                     newRoutes.push(route);
                 })

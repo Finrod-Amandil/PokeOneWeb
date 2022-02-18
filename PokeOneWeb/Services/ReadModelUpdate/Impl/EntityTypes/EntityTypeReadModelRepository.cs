@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
 {
@@ -14,9 +14,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<EntityTypeReadModel> entities)
+        public void Update(IDictionary<EntityTypeReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.EntityTypeReadModels
                     .SingleOrDefault(e => 

@@ -15,11 +15,15 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string ItemName { get; set; }
 
+        public string ItemSpriteName { get; set; }
+
         public string RegionName { get; set; }
+
+        public string RegionColor { get; set; }
 
         public string LocationName { get; set; }
 
-        public string LocationGroupResourceName { get; set; }
+        public string LocationResourceName { get; set; }
 
         public int LocationSortIndex { get; set; }
 
@@ -34,6 +38,8 @@ namespace PokeOneWeb.Data.ReadModels
         public bool IsConfirmed { get; set; }
 
         public int Quantity { get; set; }
+
+        public string Notes { get; set; }
 
         public string Screenshot { get; set; }
     }

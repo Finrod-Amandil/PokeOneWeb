@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 {
@@ -22,7 +23,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             _dbContext = dbContext;
         }
 
-        public IEnumerable<PokemonVarietyReadModel> MapFromDatabase()
+        public IDictionary<PokemonVarietyReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
         {
             var varietyIds = _dbContext.PokemonVarieties
                 .Where(v => v.DoInclude)
@@ -57,6 +58,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .ToList();
 
+            var result = new List<PokemonVarietyReadModel>();
+
             for (var i = 0; i < varietyIds.Count; i++)
             {
                 var varietyId = varietyIds[i];
@@ -87,8 +90,10 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
 
                 readModel.Urls = GetUrls(variety);
 
-                yield return readModel;
+                result.Add(readModel);
             }
+
+            return result.ToDictionary(x => x, _ => DbAction.Create);
         }
 
         private PokemonVariety LoadVariety(int varietyId)

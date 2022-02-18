@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.ItemStatBoostPokemon
 {
@@ -15,33 +16,30 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext = dbContext;
         }
 
-        public IEnumerable<ItemStatBoostPokemonReadModel> MapFromDatabase()
+        public IDictionary<ItemStatBoostPokemonReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
         {
-            var itemStatBoostPokemon = _dbContext.ItemStatBoostPokemon
+            return _dbContext.ItemStatBoostPokemon
                 .Include(i => i.ItemStatBoost.Item)
                 .Include(i => i.PokemonVariety)
                 .AsNoTracking()
-                .ToList();
-
-            foreach (var singleItemStatBoostPokemon in itemStatBoostPokemon)
-            {
-                yield return new ItemStatBoostPokemonReadModel
+                .Select(x => new ItemStatBoostPokemonReadModel
                 {
-                    ApplicationDbId = singleItemStatBoostPokemon.Id,
-                    ItemName = singleItemStatBoostPokemon.ItemStatBoost.Item.Name,
-                    ItemResourceName = singleItemStatBoostPokemon.ItemStatBoost.Item.ResourceName,
-                    ItemEffect = singleItemStatBoostPokemon.ItemStatBoost.Item.Effect,
-                    AttackBoost = singleItemStatBoostPokemon.ItemStatBoost.AttackBoost,
-                    DefenseBoost = singleItemStatBoostPokemon.ItemStatBoost.DefenseBoost,
-                    SpecialAttackBoost = singleItemStatBoostPokemon.ItemStatBoost.SpecialAttackBoost,
-                    SpecialDefenseBoost = singleItemStatBoostPokemon.ItemStatBoost.SpecialDefenseBoost,
-                    SpeedBoost = singleItemStatBoostPokemon.ItemStatBoost.SpeedBoost,
-                    HitPointsBoost = singleItemStatBoostPokemon.ItemStatBoost.HitPointsBoost,
-                    HasRequiredPokemon = singleItemStatBoostPokemon.PokemonVariety != null,
-                    RequiredPokemonName = singleItemStatBoostPokemon.PokemonVariety?.Name,
-                    RequiredPokemonResourceName = singleItemStatBoostPokemon.PokemonVariety?.ResourceName
-                };
-            }
+                    ApplicationDbId = x.Id,
+                    ItemName = x.ItemStatBoost.Item.Name,
+                    ItemResourceName = x.ItemStatBoost.Item.ResourceName,
+                    ItemEffect = x.ItemStatBoost.Item.Effect,
+                    AttackBoost = x.ItemStatBoost.AttackBoost,
+                    DefenseBoost = x.ItemStatBoost.DefenseBoost,
+                    SpecialAttackBoost = x.ItemStatBoost.SpecialAttackBoost,
+                    SpecialDefenseBoost = x.ItemStatBoost.SpecialDefenseBoost,
+                    SpeedBoost = x.ItemStatBoost.SpeedBoost,
+                    HitPointsBoost = x.ItemStatBoost.HitPointsBoost,
+                    HasRequiredPokemon = x.PokemonVariety != null,
+                    RequiredPokemonName = x.PokemonVariety.Name,
+                    RequiredPokemonResourceName = x.PokemonVariety.ResourceName
+                })
+                .ToDictionary(x => x, _ => DbAction.Create);
+
         }
     }
 }

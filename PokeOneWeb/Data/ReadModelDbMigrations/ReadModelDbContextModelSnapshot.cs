@@ -691,20 +691,29 @@ namespace PokeOneWeb.Data.ReadModelDbMigrations
                     b.Property<string>("ItemResourceName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LocationGroupResourceName")
+                    b.Property<string>("ItemSpriteName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LocationResourceName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LocationSortIndex")
                         .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlacementDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("RegionColor")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionName")
                         .HasColumnType("nvarchar(max)");

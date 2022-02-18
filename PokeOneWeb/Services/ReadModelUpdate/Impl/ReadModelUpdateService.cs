@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl
 {
@@ -53,15 +54,15 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl
             _itemRepository = itemRepository;
         }
 
-        public void UpdateReadModel()
+        public void UpdateReadModel(SpreadsheetImportReport importReport)
         {
-            _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase());
-            _itemStatBoostPokemonRepository.Update(_itemStatBoostPokemonMapper.MapFromDatabase());
-            _simpleLearnableMoveRepository.Update(_simpleLearnableMoveMapper.MapFromDatabase());
-            _moveRepository.Update(_moveMapper.MapFromDatabase());
-            _natureRepository.Update(_natureMapper.MapFromDatabase());
-            _pokemonVarietyRepository.Update(_pokemonVarietyMapper.MapFromDatabase());
-            _itemRepository.Update(_itemMapper.MapFromDatabase());
+            _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase(importReport));
+            _itemStatBoostPokemonRepository.Update(_itemStatBoostPokemonMapper.MapFromDatabase(importReport));
+            _simpleLearnableMoveRepository.Update(_simpleLearnableMoveMapper.MapFromDatabase(importReport));
+            _moveRepository.Update(_moveMapper.MapFromDatabase(importReport));
+            _natureRepository.Update(_natureMapper.MapFromDatabase(importReport));
+            _pokemonVarietyRepository.Update(_pokemonVarietyMapper.MapFromDatabase(importReport));
+            _itemRepository.Update(_itemMapper.MapFromDatabase(importReport));
         }
     }
 }

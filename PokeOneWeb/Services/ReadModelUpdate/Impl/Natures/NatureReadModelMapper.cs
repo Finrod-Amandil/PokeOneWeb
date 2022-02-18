@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Extensions;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Natures
 {
@@ -15,13 +17,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Natures
             _dbContext = dbContext;
         }
 
-        public IEnumerable<NatureReadModel> MapFromDatabase()
+        public IDictionary<NatureReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
         {
-            var natures = _dbContext.Natures.AsNoTracking();
-
-            foreach (var nature in natures)
-            { 
-                yield return new NatureReadModel
+            return _dbContext.Natures
+                .AsNoTracking()
+                .Select(nature => new NatureReadModel
                 {
                     Name = nature.Name,
                     ApplicationDbId = nature.Id,
@@ -31,8 +31,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Natures
                     Defense = nature.Defense,
                     SpecialDefense = nature.SpecialDefense,
                     Speed = nature.Speed,
-                };
-            }
+                })
+                .ToDictionary(x => x, _ => DbAction.Create);
         }
     }
 }

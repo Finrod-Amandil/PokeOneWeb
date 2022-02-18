@@ -16,9 +16,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<PokemonVarietyReadModel> entities)
+        public void Update(IDictionary<PokemonVarietyReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity =
                     _dbContext.PokemonVarietyReadModels

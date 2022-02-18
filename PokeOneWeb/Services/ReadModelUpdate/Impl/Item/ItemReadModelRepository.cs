@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
@@ -16,9 +16,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<ItemReadModel> entities)
+        public void Update(IDictionary<ItemReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.ItemReadModels
                     .Where(e => e.ApplicationDbId == entity.ApplicationDbId)
@@ -71,9 +71,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                     existingPlacedItem.ApplicationDbId = placedItem.ApplicationDbId;
                     existingPlacedItem.ItemResourceName = placedItem.ItemResourceName;
                     existingPlacedItem.ItemName = placedItem.ItemName;
+                    existingPlacedItem.ItemSpriteName = placedItem.ItemSpriteName;
                     existingPlacedItem.RegionName = placedItem.RegionName;
+                    existingPlacedItem.RegionColor = placedItem.RegionColor;
                     existingPlacedItem.LocationName = placedItem.LocationName;
-                    existingPlacedItem.LocationGroupResourceName = placedItem.LocationGroupResourceName;
+                    existingPlacedItem.LocationResourceName = placedItem.LocationResourceName;
                     existingPlacedItem.LocationSortIndex = placedItem.LocationSortIndex;
                     existingPlacedItem.SortIndex = placedItem.SortIndex;
                     existingPlacedItem.Index = placedItem.Index;
@@ -81,6 +83,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                     existingPlacedItem.IsHidden = placedItem.IsHidden;
                     existingPlacedItem.IsConfirmed = placedItem.IsConfirmed;
                     existingPlacedItem.Quantity = placedItem.Quantity;
+                    existingPlacedItem.Notes = placedItem.Notes;
                     existingPlacedItem.Screenshot = placedItem.Screenshot;
                 }
                 else
