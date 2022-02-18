@@ -1,7 +1,9 @@
-﻿namespace PokeOneWeb.Services.ReadModelUpdate
+﻿using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
+
+namespace PokeOneWeb.Services.ReadModelUpdate
 {
     public interface IReadModelUpdateService
     {
-        void UpdateReadModel();
+        void UpdateReadModel(SpreadsheetImportReport importReport);
     }
 }

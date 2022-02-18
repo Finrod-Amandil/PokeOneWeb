@@ -47,12 +47,14 @@ namespace PokeOneWeb.Services.Api.Impl
                 .Select(ToListItem());
         }
 
-        public IEnumerable<ItemDto> GetItemByName(string itemResourceName)
+        public ItemDto GetItemByName(string itemResourceName)
         {
             return _dbContext.ItemReadModels
+                .Where(i => i.ResourceName.Equals(itemResourceName))
                 .Include(i => i.PlacedItems)
                 .AsNoTracking()
-                .Select(ToItem());
+                .Select(ToItem())
+                .SingleOrDefault();
         }
 
         private static Expression<Func<ItemReadModel, ItemDto>> ToItem()
@@ -72,8 +74,11 @@ namespace PokeOneWeb.Services.Api.Impl
                 {
                     ItemResourceName = p.ItemResourceName,
                     ItemName = p.ItemName,
+                    ItemSpriteName = p.ItemSpriteName,
                     RegionName = p.RegionName,
+                    RegionColor = p.RegionColor,
                     LocationName = p.LocationName,
+                    LocationResourceName = p.LocationResourceName,
                     LocationSortIndex = p.LocationSortIndex,
                     SortIndex = p.SortIndex,
                     Index = p.Index,
@@ -81,6 +86,7 @@ namespace PokeOneWeb.Services.Api.Impl
                     IsHidden = p.IsHidden,
                     IsConfirmed = p.IsConfirmed,
                     Quantity = p.Quantity,
+                    Notes = p.Notes,
                     Screenshot = p.Screenshot
                 })
             };

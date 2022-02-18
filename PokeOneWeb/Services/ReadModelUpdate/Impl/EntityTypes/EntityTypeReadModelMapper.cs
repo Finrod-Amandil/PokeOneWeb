@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Data.ReadModels.Enums;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
 {
@@ -16,7 +17,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
             _dbContext = dbContext;
         }
 
-        public IEnumerable<EntityTypeReadModel> MapFromDatabase()
+        public IDictionary<EntityTypeReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             var pokemonMappings = _dbContext.PokemonVarieties
                 .Where(p => p.DoInclude)
@@ -29,7 +30,8 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
 
             var locationMappings = _dbContext.LocationGroups
                 .AsNoTracking()
-                .Select(l => new EntityTypeReadModel {
+                .Select(l => new EntityTypeReadModel 
+                {
                     ResourceName = l.ResourceName,
                     EntityType = EntityType.Location
                 });
@@ -47,7 +49,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.EntityTypes
             entityTypeMappings.AddRange(locationMappings);
             entityTypeMappings.AddRange(itemMappings);
 
-            return entityTypeMappings;
+            return entityTypeMappings.ToDictionary(x => x, _ => DbAction.Create);
         }
     }
 }

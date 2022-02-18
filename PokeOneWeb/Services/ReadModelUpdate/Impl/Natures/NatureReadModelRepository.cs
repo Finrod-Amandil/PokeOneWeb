@@ -14,9 +14,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Natures
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<NatureReadModel> entities)
+        public void Update(IDictionary<NatureReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.NatureReadModels
                     .SingleOrDefault(l => l.ApplicationDbId == entity.ApplicationDbId);

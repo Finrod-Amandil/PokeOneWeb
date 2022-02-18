@@ -9,6 +9,6 @@ namespace PokeOneWeb.Services.Api
 
         IEnumerable<ItemListDto> GetAllListItems();
 
-        IEnumerable<ItemDto> GetItemByName(string itemResourceName);
+        ItemDto GetItemByName(string itemResourceName);
     }
 }

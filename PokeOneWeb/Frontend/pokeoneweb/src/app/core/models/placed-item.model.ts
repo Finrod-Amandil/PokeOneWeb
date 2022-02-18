@@ -1,8 +1,10 @@
-export interface IPlacedItemModel{
+export interface IPlacedItemModel {
     itemResourceName: string;
     itemName: string;
     regionName: string;
+    regionColor: string;
     locationName: string;
+    locationResourceName: string;
     locationSortIndex: number;
     sortIndex: number;
     index: number;
@@ -10,6 +12,7 @@ export interface IPlacedItemModel{
     isHidden: boolean;
     isConfirmed: boolean;
     quantity: number;
+    notes: string;
     screenshot: string;
 }
 
@@ -17,7 +20,9 @@ export class PlacedItemModel implements IPlacedItemModel {
     itemResourceName = '';
     itemName = '';
     regionName = '';
+    regionColor = '';
     locationName = '';
+    locationResourceName = '';
     locationSortIndex = 0;
     sortIndex = 0;
     index = 0;
@@ -25,5 +30,6 @@ export class PlacedItemModel implements IPlacedItemModel {
     isHidden = false;
     isConfirmed = true;
     quantity = 1;
+    notes = '';
     screenshot = '';
 }

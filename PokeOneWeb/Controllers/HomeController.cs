@@ -52,11 +52,11 @@ namespace PokeOneWeb.Controllers
 
         public async Task<IActionResult> GetData()
         {
-            //var totalChangedEntries = await _googleSpreadsheetImportService.ImportSpreadsheetData();
+            var importReport = await _googleSpreadsheetImportService.ImportSpreadsheetData();
 
             if (true /*|| totalChangedEntries > 0*/)
             {
-                await Task.Run(() => _readModelUpdateService.UpdateReadModel());
+                await Task.Run(() => _readModelUpdateService.UpdateReadModel(importReport));
             }
 
             return Ok();

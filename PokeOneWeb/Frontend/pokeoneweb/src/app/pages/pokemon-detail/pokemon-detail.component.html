@@ -19,11 +19,11 @@
             <a [routerLink]="'/p'">
                 <div class="pokemon-detail-navigation-center">
                     <div class="pokemon-detail-navigation-sprite">
-                        <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                        <img src="./assets/img/navbar/pokedex.png" />
                     </div>
                     <div class="pokemon-detail-navigation-link">Pokémon List</div>
                     <div class="pokemon-detail-navigation-sprite">
-                        <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                        <img src="./assets/img/navbar/pokedex.png" />
                     </div>
                 </div>
             </a>
@@ -521,7 +521,7 @@
                             (click)="sortSpawns(spawnsColumn.Pokemon, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
-                    <th class="col-pokemon" colspan="2">
+                    <th class="col-location" colspan="2">
                         <div 
                             [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, 1)" 
                             (click)="sortSpawns(spawnsColumn.Location, 1)"
@@ -532,7 +532,7 @@
                             (click)="sortSpawns(spawnsColumn.Location, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
-                    <th class="col-pokemon">
+                    <th class="col-method">
                         <div 
                             [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, 1)" 
                             (click)="sortSpawns(spawnsColumn.SpawnType, 1)"

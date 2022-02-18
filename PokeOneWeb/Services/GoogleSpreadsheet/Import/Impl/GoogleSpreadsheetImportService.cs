@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using PokeOneWeb.Data.Entities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 {
@@ -18,6 +19,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
         private readonly ApplicationDbContext _dbContext;
         private readonly ISpreadsheetDataLoader _dataLoader;
         private readonly ISheetNameHelper _sheetNameHelper;
+        private readonly ISpreadsheetImportReporter _reporter;
         private readonly IHashListComparator _hashListComparator;
 
         public GoogleSpreadsheetImportService(
@@ -26,6 +28,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             ApplicationDbContext dbContext,
             ISpreadsheetDataLoader dataLoader,
             ISheetNameHelper sheetNameHelper,
+            ISpreadsheetImportReporter reporter,
             IHashListComparator hashListComparator)
         {
             _logger = logger;
@@ -33,17 +36,18 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             _dbContext = dbContext;
             _dataLoader = dataLoader;
             _sheetNameHelper = sheetNameHelper;
+            _reporter = reporter;
             _hashListComparator = hashListComparator;
         }
 
-        public async Task<int> ImportSpreadsheetData()
+        public async Task<SpreadsheetImportReport> ImportSpreadsheetData()
         {
+            _reporter.NewSession();
+
             var sheetsData = await _dataLoader.LoadRange(
                 _settings.Value.Import.SheetsListSpreadsheetId,
                 _settings.Value.Import.SheetsListSheetName,
                 "B2:C");
-
-            var totalChangedEntries = 0;
 
             foreach (var sheetData in sheetsData)
             {
@@ -54,7 +58,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 
                 var sheet = GetSheet(spreadsheetId, sheetName);
 
-                var changedEntries = await ImportSheet(sheet);
+                await ImportSheet(sheet);
 
                 _dbContext.ChangeTracker.Clear();
                 GC.Collect();
@@ -66,19 +70,17 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
                     // Ensure, that google spreadsheet requests are spread out to avoid hitting quota limit.
                     Thread.Sleep(_settings.Value.Import.MinTimeBetweenSheets - (int)duration.TotalMilliseconds);
                 }
-
-                totalChangedEntries += changedEntries;
             }
 
-            return totalChangedEntries;
+            return _reporter.GetReport();
         }
 
-        private async Task<int> ImportSheet(ImportSheet sheet)
+        private async Task ImportSheet(ImportSheet sheet)
         {
             var sheetHash = await _dataLoader.LoadSheetHash(sheet.SpreadsheetId, sheet.SheetName);
             if (!HasSheetChanged(sheet, sheetHash))
             {
-                return 0;
+                return;
             }
 
             var repository = _sheetNameHelper.GetSheetRepositoryForSheetName(sheet.SheetName);
@@ -90,13 +92,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 
             var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
 
-            var totalChangedEntries = 0;
-
             // Delete
             if (hashListComparisonResult.RowsToDelete.Any())
             {
                 var deletedCount = repository.Delete(hashListComparisonResult.RowsToDelete);
-                totalChangedEntries += deletedCount;
                 _logger.LogInformation($"Deleted {deletedCount} entries for sheet {sheet.SheetName}.");
             }
 
@@ -111,7 +110,6 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
                     .ToDictionary(x => x.hash, x => x.values);
 
                 var insertedCount = repository.Insert(dataToInsertForHashes);
-                totalChangedEntries += insertedCount;
                 _logger.LogInformation($"Inserted {insertedCount} entries for sheet {sheet.SheetName}.");
             }
             
@@ -126,13 +124,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
                     .ToDictionary(x => x.hash, x => x.values);
 
                 var updatedCount = repository.Update(dataToUpdateForHashes);
-                totalChangedEntries += updatedCount;
                 _logger.LogInformation($"Updated {updatedCount} entries for sheet {sheet.SheetName}.");
             }
 
             UpdateSheetHash(sheet.SpreadsheetId, sheet.SheetName, sheetHash);
-
-            return totalChangedEntries;
         }
 
         private bool HasSheetChanged(ImportSheet sheet, string sheetHash)

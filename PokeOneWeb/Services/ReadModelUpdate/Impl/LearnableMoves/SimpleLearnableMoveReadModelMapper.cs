@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
 {
@@ -15,26 +16,22 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
             _dbContext = dbContext;
         }
 
-        public IEnumerable<SimpleLearnableMoveReadModel> MapFromDatabase()
+        public IDictionary<SimpleLearnableMoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
         {
-            var learnableMoves = _dbContext.LearnableMoves
+            return _dbContext.LearnableMoves
                 .Include(lm => lm.PokemonVariety)
                 .Include(lm => lm.Move)
                 .Include(lm => lm.LearnMethods)
-                .AsNoTracking();
-
-            foreach (var learnableMove in learnableMoves)
-            {
-                if (learnableMove.LearnMethods.Any(learnMethod => learnMethod.IsAvailable))
+                .AsNoTracking()
+                .ToList()
+                .Where(learnableMove => learnableMove.LearnMethods.Any(learnMethod => learnMethod.IsAvailable))
+                .Select(learnableMove => new SimpleLearnableMoveReadModel
                 {
-                    yield return new SimpleLearnableMoveReadModel
-                    {
-                        ApplicationDbId = learnableMove.Id,
-                        PokemonVarietyApplicationDbId = learnableMove.PokemonVariety.Id,
-                        MoveResourceName = learnableMove.Move.ResourceName
-                    };
-                }
-            }
+                    ApplicationDbId = learnableMove.Id,
+                    PokemonVarietyApplicationDbId = learnableMove.PokemonVariety.Id,
+                    MoveResourceName = learnableMove.Move.ResourceName
+                })
+                .ToDictionary(x => x, _ => DbAction.Create);
         }
     }
 }

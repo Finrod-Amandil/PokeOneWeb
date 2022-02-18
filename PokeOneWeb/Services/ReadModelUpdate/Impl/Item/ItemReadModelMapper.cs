@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
 {
@@ -15,7 +16,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
             _dbContext = dbContext;
         }
 
-        public IEnumerable<ItemReadModel> MapFromDatabase()
+        public IDictionary<ItemReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.Items
                 .Where(i => i.DoInclude)
@@ -41,9 +42,11 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                         ApplicationDbId = pi.Id,
                         ItemResourceName = i.ResourceName,
                         ItemName = i.Name,
+                        ItemSpriteName = i.SpriteName,
                         RegionName = pi.Location.LocationGroup.Region.Name,
+                        RegionColor = pi.Location.LocationGroup.Region.Color,
                         LocationName = pi.Location.Name,
-                        LocationGroupResourceName = pi.Location.LocationGroup.ResourceName,
+                        LocationResourceName = pi.Location.LocationGroup.ResourceName,
                         LocationSortIndex = pi.Location.SortIndex,
                         SortIndex = pi.SortIndex,
                         Index = pi.Index,
@@ -51,10 +54,12 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                         IsHidden = pi.IsHidden,
                         IsConfirmed = pi.IsConfirmed,
                         Quantity = pi.Quantity,
+                        Notes = pi.Notes,
                         Screenshot = pi.ScreenshotName
                     }).ToList()
                 })
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToDictionary(x => x, _ => DbAction.Create);
         }
     }
 }

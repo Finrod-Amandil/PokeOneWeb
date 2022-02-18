@@ -14,35 +14,36 @@ using PokeOneWeb.Services.Api;
 using PokeOneWeb.Services.Api.Impl;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import;
 using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Abilities;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Availabilities;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.BagCategories;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Builds;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Currencies;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypeRelations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ElementalTypes;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Events;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Evolutions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.HuntingConfigurations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Items;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.ItemStatBoosts;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.LearnableMoveLearnMethods;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Locations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveDamageClasses;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveLearnMethodLocations;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Moves;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutorMoves;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.MoveTutors;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Natures;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PlacedItems;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Pokemon;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.PvpTiers;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Regions;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Seasons;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SeasonTimesOfDay;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Spawns;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.SpawnTypes;
-using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.TimesOfDay;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Reporting;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Abilities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Availabilities;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Builds;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Currencies;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypeRelations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Events;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Items;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Locations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageClasses;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.MoveLearnMethodLocations;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Moves;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMoves;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Natures;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.PvpTiers;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Regions;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Seasons;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Spawns;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes;
+using PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay;
 using PokeOneWeb.Services.PokeApi;
 using PokeOneWeb.Services.PokeApi.Impl;
 using PokeOneWeb.Services.ReadModelUpdate;
@@ -84,6 +85,8 @@ namespace PokeOneWeb
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddDbContext<ReadModelDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ReadModelConnection")));
 
@@ -108,6 +111,7 @@ namespace PokeOneWeb
             services.AddScoped<IHashListComparator, HashListComparator>();
             services.AddScoped<ISheetNameHelper, SheetNameHelper>();
             services.AddScoped<ISpreadsheetDataLoader, SpreadsheetDataLoader>();
+            services.AddSingleton<ISpreadsheetImportReporter, SpreadsheetImportReporter>();
 
             services.AddScoped<ISheetRowParser<AbilitySheetDto>, AbilitySheetRowParser>();
             services.AddScoped<ISheetRowParser<AvailabilitySheetDto>, AvailabilitySheetRowParser>();
@@ -244,7 +248,7 @@ namespace PokeOneWeb
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {

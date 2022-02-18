@@ -8,7 +8,7 @@ import { SpawnListColumn } from "./spawn-list-column.enum";
     providedIn: 'root'
 })
 export class PokemonDetailSortService {
-    public sortSpawns(models: ISpawnModel[], sortColumn: SpawnListColumn, sortDirection: number) {
+    public sortSpawns(models: ISpawnModel[], sortColumn: SpawnListColumn, sortDirection: number): ISpawnModel[] {
         switch (sortColumn) {
             case SpawnListColumn.Pokemon:
                 return this.sortSpawnsByPokemon(models, sortDirection);
@@ -23,7 +23,7 @@ export class PokemonDetailSortService {
         return models;
     }
 
-    public sortMoves(models: ILearnableMoveModel[], sortColumn: MoveListColumn, sortDirection: number) {
+    public sortMoves(models: ILearnableMoveModel[], sortColumn: MoveListColumn, sortDirection: number): ILearnableMoveModel[] {
         switch (sortColumn) {
             case MoveListColumn.Name:
                 return this.sortMovesByName(models, sortDirection);

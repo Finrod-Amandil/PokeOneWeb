@@ -14,9 +14,9 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.LearnableMoves
             _dbContext = dbContext;
         }
 
-        public void Update(IEnumerable<SimpleLearnableMoveReadModel> entities)
+        public void Update(IDictionary<SimpleLearnableMoveReadModel, DbAction> entities)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.SimpleLearnableMoveReadModels
                     .SingleOrDefault(l => l.ApplicationDbId == entity.ApplicationDbId);

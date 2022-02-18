@@ -1,0 +1,35 @@
+﻿namespace PokeOneWeb.Data
+{
+    public enum Entity
+    {
+        Ability,
+        BagCategory,
+        Build,
+        Currency,
+        ElementalType,
+        ElementalTypeRelation,
+        Event,
+        Evolution,
+        HuntingConfiguration,
+        Item,
+        ItemStatBoostPokemon,
+        LearnableMoveLearnMethod,
+        Location,
+        Move,
+        MoveDamageClass,
+        MoveLearnMethodLocation,
+        MoveTutor,
+        MoveTutorMove,
+        Nature,
+        PlacedItem,
+        PokemonAvailability,
+        PokemonForm,
+        PvpTier,
+        Region,
+        Season,
+        SeasonTimeOfDay,
+        Spawn,
+        SpawnType,
+        TimeOfDay
+    }
+}
