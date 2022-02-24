@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -79,16 +80,25 @@ namespace PokeOneWeb
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                //options.EnableSensitiveDataLogging();
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
+                options.EnableSensitiveDataLogging();
             });
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddDbContext<ReadModelDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ReadModelConnection")));
+            {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ReadModelConnection"),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
+                options.EnableSensitiveDataLogging();
+            });
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddLogging(loggingBuilder =>
             {
