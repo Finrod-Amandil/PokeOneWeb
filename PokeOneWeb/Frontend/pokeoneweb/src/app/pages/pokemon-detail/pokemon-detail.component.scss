@@ -439,7 +439,8 @@ th.col-move-type,
 th.col-move-class,
 th.col-power,
 th.col-accuracy,
-th.col-power-points {
+th.col-power-points,
+th.col-priority {
     text-align: center;
 }
 
@@ -458,7 +459,8 @@ td.col-move-learn-methods .tooltip {
 
 table td.col-power,
 table td.col-accuracy,
-table td.col-power-points {
+table td.col-power-points,
+table td.col-priority {
     text-align: center;
     font-weight: 600;
     width: 50px;

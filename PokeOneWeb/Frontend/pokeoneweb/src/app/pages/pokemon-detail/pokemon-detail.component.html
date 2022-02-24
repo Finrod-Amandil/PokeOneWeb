@@ -700,6 +700,17 @@
                             (click)="sortMoves(movesColumn.PowerPoints, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
+                    <th class="col-priority">
+                        <div 
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, 1)" 
+                            (click)="sortMoves(movesColumn.Priority, 1)"
+                            class="table-header-sort">⮝</div>
+                        <div class="table-header-label">Prio</div>
+                        <div 
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, -1)" 
+                            (click)="sortMoves(movesColumn.Priority, -1)"
+                            class="table-header-sort">⮟</div>
+                    </th>
                     <th class="col-move-effect">Effect</th>
                     <th class="col-move-learn-methods">Learn methods</th>
                 </tr>
@@ -730,6 +741,9 @@
                     <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
                         class="col-power-points">
                         {{move.powerPoints}}
+                    </td>
+                    <td class="col-priority">
+                        {{move.priority}}
                     </td>
                     <td class="col-move-effect" (mouseover)="hoverMoveDescription(i)" (mouseout)="hoverMoveDescription(-1)">
                         <div *ngIf="i !== model.moveHoverIndex">

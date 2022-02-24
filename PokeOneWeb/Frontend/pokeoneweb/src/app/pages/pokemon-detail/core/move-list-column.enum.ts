@@ -4,5 +4,6 @@ export enum MoveListColumn {
     Class,
     Power,
     Accuracy,
-    PowerPoints
+    PowerPoints,
+    Priority,
 }
