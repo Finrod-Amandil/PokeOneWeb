@@ -59,6 +59,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
                     }).ToList()
                 })
                 .AsNoTracking()
+                .AsSingleQuery()
                 .ToDictionary(x => x, _ => DbAction.Create);
         }
     }

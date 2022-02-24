@@ -23,6 +23,7 @@ namespace PokeOneWeb.Services.Api.Impl
         {
             return _dbContext.PokemonVarietyReadModels
                 .Include(v => v.Urls)
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Select(ToListPokemonVariety());
         }
@@ -30,6 +31,7 @@ namespace PokeOneWeb.Services.Api.Impl
         public IEnumerable<BasicPokemonVarietyDto> GetAllBasicPokemonVarieties()
         {
             return _dbContext.PokemonVarietyReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Select(ToBasicPokemonVariety());
         }
@@ -56,6 +58,7 @@ namespace PokeOneWeb.Services.Api.Impl
                 .IncludeOptimized(p => p.Builds.Select(b => b.MoveOptions))
                 .IncludeOptimized(p => p.Builds.Select(b => b.ItemOptions))
                 .IncludeOptimized(p => p.Builds.Select(b => b.NatureOptions))
+                .AsSingleQuery()
                 .AsEnumerable()
                 .Select(ToFullPokemonVariety())
                 .SingleOrDefault();
@@ -73,6 +76,7 @@ namespace PokeOneWeb.Services.Api.Impl
             var variety = _dbContext.PokemonVarietyReadModels
                 .Where(v  => v.ResourceName.Equals(pokemonVarietyResourceName))
                 .Include(v => v.Urls)
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Select(ToListPokemonVariety())
                 .SingleOrDefault();
@@ -101,26 +105,31 @@ namespace PokeOneWeb.Services.Api.Impl
                 .Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
 
             var move1Query = _dbContext.SimpleLearnableMoveReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Where(lm => !move1Options.Any() || move1Options.Contains(lm.MoveResourceName))
                 .Select(lm => lm.PokemonVarietyApplicationDbId);
 
             var move2Query = _dbContext.SimpleLearnableMoveReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Where(lm => !move2Options.Any() || move2Options.Contains(lm.MoveResourceName))
                 .Select(lm => lm.PokemonVarietyApplicationDbId);
 
             var move3Query = _dbContext.SimpleLearnableMoveReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Where(lm => !move3Options.Any() || move3Options.Contains(lm.MoveResourceName))
                 .Select(lm => lm.PokemonVarietyApplicationDbId);
 
             var move4Query = _dbContext.SimpleLearnableMoveReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Where(lm => !move4Options.Any() || move4Options.Contains(lm.MoveResourceName))
                 .Select(lm => lm.PokemonVarietyApplicationDbId);
 
             return _dbContext.PokemonVarietyReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Where(p => move1Query.Contains(p.ApplicationDbId))
                 .Where(p => move2Query.Contains(p.ApplicationDbId))

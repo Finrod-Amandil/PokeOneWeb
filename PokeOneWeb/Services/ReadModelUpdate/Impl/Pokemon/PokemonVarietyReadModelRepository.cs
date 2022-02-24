@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Extensions;
@@ -42,6 +43,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                         .IncludeOptimized(e => e.Builds.Select(b => b.ItemOptions))
                         .IncludeOptimized(e => e.Builds.Select(b => b.NatureOptions))
                         .IncludeOptimized(e => e.Builds.Select(b => b.OffensiveCoverage))
+                        .AsSingleQuery()
                         .SingleOrDefault();
 
                 if (existingEntity != null)

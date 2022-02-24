@@ -18,12 +18,14 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Item
 
         public void Update(IDictionary<ItemReadModel, DbAction> entities)
         {
+            var allEntities = _dbContext.ItemReadModels
+                .Include(e => e.PlacedItems)
+                .ToList();
+
             foreach (var entity in entities.Keys)
             {
-                var existingEntity = _dbContext.ItemReadModels
-                    .Where(e => e.ApplicationDbId == entity.ApplicationDbId)
-                    .IncludeOptimized(e => e.PlacedItems)
-                    .SingleOrDefault();
+                var existingEntity = allEntities
+                    .SingleOrDefault(e => e.ApplicationDbId == entity.ApplicationDbId);
 
                 if (existingEntity != null)
                 {
