@@ -163,6 +163,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                 .Include(v => v.HuntingConfigurations)
                 .ThenInclude(hc => hc.Nature)
                 .Include(v => v.Urls)
+                .OrderBy(x => x.Id)
                 .Single();
         }
 
@@ -687,6 +688,7 @@ namespace PokeOneWeb.Services.ReadModelUpdate.Impl.Pokemon
                         HasStab = hasStab,
                         Accuracy = learnableMove.Move.Accuracy,
                         PowerPoints = learnableMove.Move.PowerPoints,
+                        Priority = learnableMove.Move.Priority,
                         EffectDescription = learnableMove.Move.Effect,
                         LearnMethods = learnableMove.LearnMethods.Select(GetLearnMethod).ToList()
                     };

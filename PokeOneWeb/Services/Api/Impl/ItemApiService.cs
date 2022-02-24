@@ -24,6 +24,7 @@ namespace PokeOneWeb.Services.Api.Impl
                 .Where(i =>
                     !i.HasRequiredPokemon ||
                     i.RequiredPokemonResourceName.Equals(pokemonVarietyResourceName))
+                .AsSingleQuery()
                 .ToList();
 
             return itemStatBoosts.Select(i => new ItemStatBoostPokemonDto
@@ -43,6 +44,7 @@ namespace PokeOneWeb.Services.Api.Impl
         public IEnumerable<ItemListDto> GetAllListItems()
         {
             return _dbContext.ItemReadModels
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Select(ToListItem());
         }
@@ -52,6 +54,7 @@ namespace PokeOneWeb.Services.Api.Impl
             return _dbContext.ItemReadModels
                 .Where(i => i.ResourceName.Equals(itemResourceName))
                 .Include(i => i.PlacedItems)
+                .AsSingleQuery()
                 .AsNoTracking()
                 .Select(ToItem())
                 .SingleOrDefault();
