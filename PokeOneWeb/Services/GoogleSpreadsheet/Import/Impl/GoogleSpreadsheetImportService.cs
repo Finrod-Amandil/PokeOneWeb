@@ -43,6 +43,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
         public async Task<SpreadsheetImportReport> ImportSpreadsheetData()
         {
             _reporter.NewSession();
+            _reporter.StartImport();
 
             var sheetsData = await _dataLoader.LoadRange(
                 _settings.Value.Import.SheetsListSpreadsheetId,
@@ -51,10 +52,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 
             foreach (var sheetData in sheetsData)
             {
-                var sheetStartTime = DateTime.UtcNow;
-
                 var spreadsheetId = sheetData[0].ToString();
                 var sheetName = sheetData[1].ToString();
+
+                _reporter.StartImport(sheetName);
 
                 var sheet = GetSheet(spreadsheetId, sheetName);
 
@@ -63,15 +64,10 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
                 _dbContext.ChangeTracker.Clear();
                 GC.Collect();
 
-                var duration = DateTime.UtcNow.Subtract(sheetStartTime);
-
-                if (duration.TotalMilliseconds < _settings.Value.Import.MinTimeBetweenSheets)
-                {
-                    // Ensure, that google spreadsheet requests are spread out to avoid hitting quota limit.
-                    Thread.Sleep(_settings.Value.Import.MinTimeBetweenSheets - (int)duration.TotalMilliseconds);
-                }
+                _reporter.StopImport(sheetName);
             }
 
+            _reporter.StopImport();
             return _reporter.GetReport();
         }
 
@@ -80,6 +76,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             var sheetHash = await _dataLoader.LoadSheetHash(sheet.SpreadsheetId, sheet.SheetName);
             if (!HasSheetChanged(sheet, sheetHash))
             {
+                _logger.LogInformation($"No changes found in sheet {sheet.SheetName}.");
                 return;
             }
 
