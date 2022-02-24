@@ -19,5 +19,25 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import
         void ReportError(Entity entity, string hash, string message);
 
         void ReportError(Entity entity, string hash, Exception exception);
+
+        public void StartImport();
+
+        public void StopImport();
+
+        public void StartImport(string entity);
+
+        public void StopImport(string entity);
+
+        public void StartIdle();
+
+        public void StopIdle();
+
+        public void StartReadModelUpdate();
+
+        public void StopReadModelUpdate();
+
+        public void StartReadModelUpdate(string entity);
+
+        public void StopReadModelUpdate(string entity);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using System;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
@@ -14,15 +15,23 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 {
     public class SpreadsheetDataLoader : ISpreadsheetDataLoader
     {
-        private readonly ILogger<SpreadsheetDataLoader> _logger;
-        private static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         private const string APPLICATION_NAME = "PokeOneWeb Guide Import Service";
+        private const int MAX_CALLS_PER_MINUTE = 50;
+
+        private static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
+        private static readonly HashSet<DateTime> ApiCallTimestamps = new();
+
+        private readonly ILogger<SpreadsheetDataLoader> _logger;
+        private readonly ISpreadsheetImportReporter _reporter;
 
         private UserCredential _credential;
 
-        public SpreadsheetDataLoader(ILogger<SpreadsheetDataLoader> logger)
+        public SpreadsheetDataLoader(
+            ILogger<SpreadsheetDataLoader> logger,
+            ISpreadsheetImportReporter reporter)
         {
             _logger = logger;
+            _reporter = reporter;
         }
 
         public async Task<string> LoadSheetHash(string spreadsheetId, string sheetName)
@@ -86,6 +95,8 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
 
         private async Task<IList<ValueRange>> LoadData(string spreadsheetId, List<string> ranges)
         {
+            EnsureQuotaLimitNotReached();
+
             _credential ??= await GetCredentials();
             var service = new SheetsService(new BaseClientService.Initializer
             {
@@ -137,6 +148,24 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl
             }
 
             return ranges;
+        }
+
+        private void EnsureQuotaLimitNotReached()
+        {
+            while (true)
+            {
+                ApiCallTimestamps.RemoveWhere(timeStamp => timeStamp < DateTime.UtcNow - TimeSpan.FromMinutes(1));
+
+                if (ApiCallTimestamps.Count < MAX_CALLS_PER_MINUTE)
+                {
+                    ApiCallTimestamps.Add(DateTime.UtcNow);
+                    return;
+                }
+
+                _reporter.StartIdle();
+                Thread.Sleep(1000);
+                _reporter.StopIdle();
+            }
         }
     }
 }
