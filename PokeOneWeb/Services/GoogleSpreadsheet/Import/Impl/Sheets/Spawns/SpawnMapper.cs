@@ -28,7 +28,7 @@ namespace PokeOneWeb.Services.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 
         protected override string GetUniqueName(SpawnSheetDto dto)
         {
-            return dto.PokemonForm + dto.LocationName + dto.Season + dto.TimeOfDay;
+            return dto.PokemonForm + dto.LocationName + dto.SpawnType + dto.Season + dto.TimeOfDay;
         }
 
         protected override Spawn MapEntity(SpawnSheetDto dto, RowHash rowHash, Spawn spawn = null)
