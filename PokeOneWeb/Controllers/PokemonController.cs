@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.Dtos;
 using PokeOneWeb.Services.Api;
-using System.Collections.Generic;
+using PokeOneWeb.WebApi.Dtos;
 
-namespace PokeOneWeb.Controllers
+namespace PokeOneWeb.WebApi.Controllers
 {
     [ApiController]
     [Route("api/pokemon")]

@@ -1,4 +1,5 @@
 ﻿using PokeOneWeb.Dtos;
+using PokeOneWeb.WebApi.Dtos;
 
 namespace PokeOneWeb.Services.Api
 {

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.Dtos;
 using PokeOneWeb.Services.Api;
+using PokeOneWeb.WebApi.Dtos;
 
-namespace PokeOneWeb.Controllers
+namespace PokeOneWeb.WebApi.Controllers
 {
     [ApiController]
     [Route("api")]

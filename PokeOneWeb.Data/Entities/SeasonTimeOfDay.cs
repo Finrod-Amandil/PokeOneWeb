@@ -1,0 +1,66 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
+using PokeOneWeb.Data.Extensions;
+
+namespace PokeOneWeb.Data.Entities
+{
+    public class SeasonTimeOfDay : IHashedEntity
+    {
+        public static void ConfigureForDatabase(ModelBuilder builder)
+        {
+            builder.Entity<SeasonTimeOfDay>().HasIndexedHashes();
+
+            builder.Entity<SeasonTimeOfDay>()
+                .HasOne(st => st.Season)
+                .WithMany()
+                .HasForeignKey(st => st.SeasonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SeasonTimeOfDay>()
+                .HasOne(st => st.TimeOfDay)
+                .WithMany(t => t.SeasonTimes)
+                .HasForeignKey(st => st.TimeOfDayId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SeasonTimeOfDay>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+        }
+
+        [Key]
+        public int Id { get; set; }
+
+        //INDEXED
+        [Required]
+        public string Hash { get; set; }
+
+        //INDEXED
+        [Required]
+        public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+        public int ImportSheetId { get; set; }
+
+        public int StartHour { get; set; }
+
+        public int EndHour { get; set; }
+
+        [ForeignKey("SeasonId")]
+        public Season Season { get; set; }
+        public int? SeasonId { get; set; }
+        
+        [ForeignKey("TimeOfDayId")]
+        public TimeOfDay TimeOfDay { get; set; }
+        public int? TimeOfDayId { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{TimeOfDay} in {Season}: {StartHour}:00 - {EndHour}:00";
+        }
+    }
+}

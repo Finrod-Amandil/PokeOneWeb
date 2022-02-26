@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.WebApi.Dtos;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.Services.Api.Impl

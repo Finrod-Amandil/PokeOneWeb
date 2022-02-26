@@ -1,4 +1,4 @@
-﻿namespace PokeOneWeb.Dtos
+﻿namespace PokeOneWeb.WebApi.Dtos
 {
     public class MoveDto
     {
