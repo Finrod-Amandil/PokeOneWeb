@@ -1,5 +1,6 @@
 ﻿using PokeOneWeb.Dtos;
 using System.Collections.Generic;
+using PokeOneWeb.WebApi.Dtos;
 
 namespace PokeOneWeb.Services.Api
 {

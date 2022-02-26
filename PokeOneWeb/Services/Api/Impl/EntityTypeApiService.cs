@@ -2,6 +2,7 @@
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels.Enums;
 using PokeOneWeb.Dtos;
+using PokeOneWeb.WebApi.Dtos;
 
 namespace PokeOneWeb.Services.Api.Impl
 {
