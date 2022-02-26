@@ -14,6 +14,9 @@ namespace PokeOneWeb.Controllers
             _natureApiService = natureApiService;
         }
 
+        /// <summary>
+        /// Returns a list of all natures.
+        /// </summary>
         [Route("api/nature/getall")]
         [HttpGet]
         public ActionResult<IEnumerable<NatureDto>> GetNatures()
