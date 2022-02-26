@@ -16,6 +16,9 @@ namespace PokeOneWeb.Controllers
             _pokemonApiService = pokemonApiService;
         }
 
+        /// <summary>
+        /// Returns a list of all Pokemon Varieties, with a medium amount of details.
+        /// </summary>
         [Route("getall")]
         [HttpGet]
         public ActionResult<IEnumerable<PokemonVarietyListDto>> GetAll()
@@ -23,6 +26,9 @@ namespace PokeOneWeb.Controllers
             return Ok(_pokemonApiService.GetAllListPokemonVarieties());
         }
 
+        /// <summary>
+        /// Returns a list of all Pokemon Varieties with only a minimal set of details.
+        /// </summary>
         [Route("getallbasic")]
         [HttpGet]
         public ActionResult<IEnumerable<BasicPokemonVarietyDto>> GetAllBasic()
@@ -30,6 +36,10 @@ namespace PokeOneWeb.Controllers
             return Ok(_pokemonApiService.GetAllBasicPokemonVarieties());
         }
 
+        /// <summary>
+        /// Returns one specific Pokemon Variety with its full set of details.
+        /// </summary>
+        /// <param name="name">The resource name of a specific Pokemon Variety</param>
         [Route("getbynamefull")]
         [HttpGet]
         public ActionResult<PokemonVarietyDto> GetByNameFull([FromQuery] string name)
@@ -37,13 +47,28 @@ namespace PokeOneWeb.Controllers
             return Ok(_pokemonApiService.GetPokemonVarietyByName(name));
         }
 
+        /// <summary>
+        /// Returns one specific Pokemon Variety with a medium amount of details.
+        /// </summary>
+        /// <param name="name">The resource name of a specific Pokemon Variety</param>
         [Route("getbyname")]
         [HttpGet]
         public ActionResult<PokemonVarietyListDto> GetByName([FromQuery] string name)
         {
-            return _pokemonApiService.GetListPokemonVarietyByName(name);
+            return Ok(_pokemonApiService.GetListPokemonVarietyByName(name));
         }
 
+        /// <summary>
+        /// Returns the names of all Pokemon Varieties which supply a given learnset, i.e. which are
+        /// able to learn the given moves. The 16 parameters are understood in the following way:
+        /// Show all Pokemon which can learn
+        ///     (move "m11" OR "m12" OR "m13" OR "m14")
+        /// AND (move "m21" OR "m22" OR "m23" OR "m24")
+        /// AND (move "m31" OR "m32" OR "m33" OR "m34")
+        /// AND (move "m41" OR "m42" OR "m43" OR "m44")
+        ///
+        /// Any of the parameters can be left unspecified and will then be ignored.
+        /// </summary>
         [Route("getallformoveset")]
         [HttpGet]
         public ActionResult<IEnumerable<PokemonVarietyNameDto>> GetAllForMoveSet(

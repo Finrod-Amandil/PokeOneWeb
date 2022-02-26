@@ -16,6 +16,9 @@ namespace PokeOneWeb.Controllers
             _moveApiService = moveApiService;
         }
 
+        /// <summary>
+        /// Returns a list of all moves, including move details (type, power, PP, priority etc.)
+        /// </summary>
         [Route("getall")]
         [HttpGet]
         public ActionResult<IEnumerable<MoveDto>> GetAll()
@@ -23,6 +26,9 @@ namespace PokeOneWeb.Controllers
             return Ok(_moveApiService.GetAllMoves());
         }
 
+        /// <summary>
+        /// Returns a list of only the names of all moves, no details.
+        /// </summary>
         [Route("getallnames")]
         [HttpGet]
         public ActionResult<IEnumerable<MoveNameDto>> GetAllNames()
