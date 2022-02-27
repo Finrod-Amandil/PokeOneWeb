@@ -6,6 +6,14 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Every Pokemon has a Nature. The nature of a Pokemon increases one stat
+    /// (Attack, Special Attack, Defense, Special Defense, Speed) and decreases
+    /// a stat by 10%. Depending on the Pokemon Variety, some natures are
+    /// beneficial while others are detrimental. Natures which boost and decrease
+    /// the same nature and thus have no effect, are called "neutral" natures.
+    /// The HP stat is unaffected by natures.
+    /// </summary>
     [Table("Nature")]
     public class Nature : IHashedEntity
     {

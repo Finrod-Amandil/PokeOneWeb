@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Depending on the in-game season, the in-game times of day start and end at different times.
+    /// </summary>
     public class SeasonTimeOfDay : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)

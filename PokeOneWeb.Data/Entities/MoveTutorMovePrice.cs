@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// The price in one currency that a Move Tutor charges for teaching a certain move.
+    /// </summary>
     [Table("MoveTutorMovePrice")]
     public class MoveTutorMovePrice
     {

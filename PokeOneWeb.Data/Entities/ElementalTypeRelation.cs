@@ -6,6 +6,11 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Defines, how effective a move with a specific Attacking Type is when used against a
+    /// (single typed) Pokemon with a specific Defending Type. The effectivity can be x1 (normal),
+    /// x2 (super effective), x0.5 (not very effective) or x0 (immune).
+    /// </summary>
     [Table("ElementalTypeRelation")]
     public class ElementalTypeRelation : IHashedEntity
     {

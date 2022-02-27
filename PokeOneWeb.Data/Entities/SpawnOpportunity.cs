@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A time and season when a spawn can occur. 
+    /// </summary>
     [Table("SpawnOpportunity")]
     public class SpawnOpportunity
     {

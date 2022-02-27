@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// An item is an inanimate object which can be used (i.e. Potion to heal a Pokemon)
+    /// or given to a Pokemon as a held item to gain certain battle effects.
+    /// </summary>
     [Table("Item")]
     public class Item : IHashedEntity
     {
@@ -52,6 +56,9 @@ namespace PokeOneWeb.Data.Entities
 
         public string PokeApiName { get; set; }
 
+        /// <summary>
+        /// An item ID used within Pokeone.
+        /// </summary>
         public int? PokeoneItemId { get; set; }
 
         public int SortIndex { get; set; }

@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Categorization of spawns. Usually all spawns with the same spawn type in the same
+    /// location are encountered simultaneously.
+    /// </summary>
     [Table("SpawnType")]
     public class SpawnType : IHashedEntity
     {

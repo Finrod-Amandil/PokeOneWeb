@@ -6,6 +6,11 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Move Tutors are NPCs which offer a fixed set of moves that can be taught to Pokemon
+    /// (as opposed to Move Reminders and Egg Move Tutors, where the offered moves depend on
+    /// the Pokemon).
+    /// </summary>
     [Table("MoveTutor")]
     public class MoveTutor : IHashedEntity
     {
@@ -51,6 +56,9 @@ namespace PokeOneWeb.Data.Entities
         public Location Location{ get; set; }
         public int LocationId { get; set; }
 
+        /// <summary>
+        /// The moves that this tutor teaches.
+        /// </summary>
         public ICollection<MoveTutorMove> Moves { get; set; }
 
 

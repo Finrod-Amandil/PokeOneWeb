@@ -43,7 +43,7 @@ namespace PokeOneWeb.Data.Entities
 
         //INDEXED, UNIQUE
         [Required]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         public string PokeApiName { get; set; }
 

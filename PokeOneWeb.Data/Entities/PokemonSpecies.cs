@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A Pokemon Species is a kind of Pokemon with the granularity as applied to the in-game
+    /// Pokedex. Pokemon Species may appear in one or more varieties, modeled with PokemonVarieties.
+    /// </summary>
     [Table("PokemonSpecies")]
     public class PokemonSpecies
     {

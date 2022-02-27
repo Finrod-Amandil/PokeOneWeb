@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A recommendation about which nature to use for a specific build.
+    /// </summary>
     [Table("NatureOption")]
     public class NatureOption
     {

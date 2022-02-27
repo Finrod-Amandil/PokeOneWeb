@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// In-game time is divided into Morning, Day, Evening and Night. Depending
+    /// on these phases, different Pokemon may spawn.
+    /// </summary>
     [Table("TimeOfDay")]
     public class TimeOfDay : IHashedEntity
     {

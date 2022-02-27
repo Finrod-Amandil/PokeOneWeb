@@ -4,6 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Additional information about certain items which can boost (or reduce)
+    /// the stats of a Pokemon during battle. Certain items only boost the stats
+    /// only if held by a specific Pokemon.
+    /// </summary>
     [Table("ItemStatBoost")]
     public class ItemStatBoost
     {
@@ -41,6 +46,10 @@ namespace PokeOneWeb.Data.Entities
         public Item Item { get; set; }
         public int ItemId { get; set; }
 
+        /// <summary>
+        /// For which Pokemon this stat boost is available. If no Pokemon are listed,
+        /// a single entry is available where the required Pokemon is null.
+        /// </summary>
         public List<ItemStatBoostPokemon> RequiredPokemon { get; set; } = new();
 
 
