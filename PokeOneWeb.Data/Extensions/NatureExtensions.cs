@@ -4,6 +4,9 @@ namespace PokeOneWeb.Data.Extensions
 {
     public static class NatureExtensions
     {
+        /// <summary>
+        /// Returns a displayable description of the effect of the nature.
+        /// </summary>
         public static string GetDescription(this Nature nature)
         {
             var effect = "";
