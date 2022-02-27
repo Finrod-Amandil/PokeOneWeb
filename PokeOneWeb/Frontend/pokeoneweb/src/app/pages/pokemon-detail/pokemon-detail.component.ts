@@ -126,8 +126,6 @@ export class PokemonDetailComponent implements OnInit {
                 ? 1.5
                 : 1.0;
 
-        console.log(c, b, s, m, h);
-
         let x = Math.min(
             255.0,
             this.down(
@@ -157,7 +155,6 @@ export class PokemonDetailComponent implements OnInit {
             y_chance = 1;
         }
         let r = Math.pow(y_chance, 4.0);
-        console.log(r);
         return r * 100.0;
     }
 
