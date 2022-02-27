@@ -6,6 +6,16 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A spawn denotes that a Pokemon Form can appear in a certain location.
+    /// Depending on how the spawn occurs, it has a different spawn type, i.e.
+    /// whether the Pokemon can be encountered in tall grass, on water, through
+    /// fishing or as a boss reward. The spawn can occur during various seasons
+    /// and times of day, which is modeled with one or more spawn opportunities.
+    ///
+    /// If a spawn occurs with different rarities during different times, this is
+    /// modeled with multiple spawn instances with one spawn opportunity each.
+    /// </summary>
     [Table("Spawn")]
     public class Spawn : IHashedEntity
     {
@@ -54,11 +64,23 @@ namespace PokeOneWeb.Data.Entities
         public ImportSheet ImportSheet { get; set; }
         public int ImportSheetId { get; set; }
 
+        /// <summary>
+        /// Definition of rarity using predicates to describe
+        /// perceived (not measured) rarities, i.e. "Common" or "Rare".
+        /// </summary>
         public string SpawnCommonality { get; set; }
 
+        /// <summary>
+        /// Definition of rarity as percentage (ground truth or measured)
+        /// </summary>
         [Column(TypeName = "decimal(18,4)")]
         public decimal? SpawnProbability { get; set; }
 
+        /// <summary>
+        /// Definition of rarity based on counted encounters. This
+        /// measure needs to be compared to other spawns in the same place
+        /// in order to determine a percentage for the rarity.
+        /// </summary>
         public int? EncounterCount { get; set; }
 
         public bool IsConfirmed { get; set; }

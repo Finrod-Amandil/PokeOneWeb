@@ -6,6 +6,13 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// The potentially multiple Forms of a Pokemon Variety denote purely
+    /// visual differences with which a Pokemon can appear.
+    /// If two "kinds" of Pokemon differ in anything else than visual appearance,
+    /// it is represented as variety instead.
+    /// Example: Different patterns of Vivillon are forms.
+    /// </summary>
     [Table("PokemonForm")]
     public class PokemonForm : IHashedEntity
     {

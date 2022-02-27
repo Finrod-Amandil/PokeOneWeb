@@ -6,6 +6,12 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Moves are categorized into three damage classes: Physical, Special and Status.
+    /// Physical moves deal damage based on the Attack and Defense stats of the involved Pokemon.
+    /// Special moves deal damage based on the Special Attack and Special Defense stats of the involved Pokemon.
+    /// Status moves do not deal direct damage.
+    /// </summary>
     [Table("MoveDamageClass")]
     public class MoveDamageClass : IHashedEntity
     {

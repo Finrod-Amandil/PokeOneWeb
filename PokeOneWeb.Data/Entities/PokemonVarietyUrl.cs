@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A URL to the page about this variety on another website.
+    /// </summary>
     [Table("PokemonVarietyUrl")]
     public class PokemonVarietyUrl
     {

@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A Location Group groups one or multiple locations that are closely related together.
+    /// This can be the different floors of a tower or parts of a cave.
+    /// </summary>
     [Table("LocationGroup")]
     public class LocationGroup
     {

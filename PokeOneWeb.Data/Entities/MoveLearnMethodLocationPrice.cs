@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// When using an NPC to teach a Pokemon a move, he will charge a price, often in multiple currencies,
+    /// i.e. 1000 Pokedollars and 50 Gold. This entity describes the price per currency (n-n relation).
+    /// </summary>
     [Table("MoveLearnMethodLocationPrice")]
     public class MoveLearnMethodLocationPrice
     {

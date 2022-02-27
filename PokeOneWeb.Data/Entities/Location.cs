@@ -6,6 +6,11 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// The Pokemon World is made up from Locations. A single location can be an
+    /// overground route, a town/city, a cave, a building (or part of a building, i.e.
+    /// floor of a tower) and so on.
+    /// </summary>
     [Table("Location")]
     public class Location : IHashedEntity
     {
@@ -48,6 +53,9 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public int SortIndex { get; set; }
 
+        /// <summary>
+        /// Locations which are discoverable contribute towards certain in-game achievements ("Discovered X locations")
+        /// </summary>
         public bool IsDiscoverable { get; set; }
 
         public string Notes { get; set; }

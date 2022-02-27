@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A Hunting Configuration is a recommendation about which combination of ability and nature should be
+    /// looked for when hunting (trying to find and catch) a certain kind of Pokemon. 
+    /// </summary>
     [Table("HuntingConfiguration")]
     public class HuntingConfiguration : IHashedEntity
     {

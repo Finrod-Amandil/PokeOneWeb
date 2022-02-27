@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Categorization of Pokemon Varieties in terms of PVP (player vs player) viability.
+    /// </summary>
     [Table("PvpTier")]
     public class PvpTier : IHashedEntity
     {

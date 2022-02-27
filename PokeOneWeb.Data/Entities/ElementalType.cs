@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Elemental Types are properties of Pokemon Varieties and Moves and influence, how effective a move of a specific type is,
+    /// when used against a Pokemon with a specific type.
+    /// </summary>
     [Table("ElementalType")]
     public class ElementalType : IHashedEntity
     {

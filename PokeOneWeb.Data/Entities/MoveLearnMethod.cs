@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Describes, by what means a Pokemon can learn a specific move, i.e. by Level-Up, TM, Tutor NPC...
+    /// </summary>
     [Table("MoveLearnMethod")]
     public class MoveLearnMethod
     {
@@ -18,6 +21,10 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
+        /// <summary>
+        /// For NPC-based methods, a list of all locations where this kind of NPC
+        /// can be found.
+        /// </summary>
         public List<MoveLearnMethodLocation> Locations { get; set; } = new();
 
 

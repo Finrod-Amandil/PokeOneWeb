@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Describes a location, respectively an NPC in a specific location, which is able
+    /// to teach moves to Pokemon.
+    /// </summary>
     [Table("MoveLearnMethodLocation")]
     public class MoveLearnMethodLocation : IHashedEntity
     {
@@ -50,6 +54,9 @@ namespace PokeOneWeb.Data.Entities
 
         public string NpcName { get; set; }
 
+        /// <summary>
+        /// Where in the area the NPC is located and how to find him.
+        /// </summary>
         public string PlacementDescription { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]

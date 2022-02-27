@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Denotes, that the given item stat boost is only available for a specific Pokemon Variety.
+    /// </summary>
     [Table("ItemStatBoostPokemon")]
     public class ItemStatBoostPokemon : IHashedEntity
     {

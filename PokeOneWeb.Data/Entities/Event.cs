@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// An event is a time-limited occasion during which an event area and/or special activities are available.
+    /// Events usually contain catching of some Pokemon which are otherwise unavailable.
+    /// </summary>
     [Table("Event")]
     public class Event : IHashedEntity
     {
@@ -41,6 +45,9 @@ namespace PokeOneWeb.Data.Entities
 
         public DateTime? StartDate { get; set; }
 
+        /// <summary>
+        /// If End Date is missing, the event is still active.
+        /// </summary>
         public DateTime? EndDate { get; set; }
 
 

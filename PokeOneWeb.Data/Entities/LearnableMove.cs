@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A LearnableMove indicates, that a PokemonVariety is able to learn a certain move. A move can
+    /// be learned through one or multiple methods (--> LearnableMoveLearnMethod)
+    /// </summary>
     [Table("LearnableMove")]
     public class LearnableMove
     {
@@ -32,6 +36,7 @@ namespace PokeOneWeb.Data.Entities
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
         public int PokemonVarietyId { get; set; }
+
         public List<LearnableMoveLearnMethod> LearnMethods { get; set; } = new();
 
 

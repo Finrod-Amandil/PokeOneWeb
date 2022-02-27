@@ -7,7 +7,7 @@ using PokeOneWeb.Data.Extensions;
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// Denotes a currency, that is used to pay on PokeOne, between players or between player and NPC.
+    /// Denotes a currency, that is used to pay on PokeOne, between players or between players and NPCs.
     /// Currencies may be PokeDollars, Gold, Reroll Tokens, Game Corner Coins, Heart Scales, Shards, ...
     /// </summary>
     [Table("Currency")]

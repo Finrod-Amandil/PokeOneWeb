@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A build represents a possible, recommended configuration of a Pokemon Variety and specifies which
+    /// nature, ability, moves, held items and EV distributions to choose for this Pokemon Variety.
+    /// </summary>
     [Table("Build")]
     public class Build : IHashedEntity
     {

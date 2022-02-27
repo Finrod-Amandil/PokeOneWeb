@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// The Pokemon World is divided into major areas called Regions.
+    /// </summary>
     [Table("Region")]
     public class Region : IHashedEntity
     {

@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Whether / under what conditions a Pokemon can generally be obtained.
+    /// </summary>
     [Table("PokemonAvailability")]
     public class PokemonAvailability : IHashedEntity
     {

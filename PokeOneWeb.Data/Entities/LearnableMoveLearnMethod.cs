@@ -60,7 +60,7 @@ namespace PokeOneWeb.Data.Entities
 
         public bool IsAvailable { get; set; }
 
-        public int? LevelLearnedAt { get; set; }
+        public int? LevelLearnedAt { get; set; } // Only used for learn method Level Up
 
         public string Comments { get; set; }
 
@@ -74,11 +74,11 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("RequiredItemId")]
         public Item RequiredItem { get; set; }
-        public int? RequiredItemId { get; set; }
+        public int? RequiredItemId { get; set; } // Only used for learn method Machine / TM/HM
 
         [ForeignKey("MoveTutorMoveId")]
         public MoveTutorMove MoveTutorMove { get; set; }
-        public int? MoveTutorMoveId { get; set; }
+        public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
 
 
         public override string ToString()

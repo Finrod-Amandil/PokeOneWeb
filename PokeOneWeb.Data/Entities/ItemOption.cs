@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// One of potentially multiple items that are recommended to be used in a Build.
+    /// </summary>
     [Table("ItemOption")]
     public class ItemOption
     {

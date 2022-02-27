@@ -6,6 +6,10 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// Some Spawns depend on the in-game season. Some Pokemon spawn only during certain
+    /// seasons, or with a different rarity. In-game seasons last a few real-time weeks.
+    /// </summary>
     [Table("Season")]
     public class Season : IHashedEntity
     {

@@ -4,6 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A Pokemon Variety is a kind of Pokemon. A Pokemon Species can have one or multiple varieties.
+    /// All kinds of Pokemon within the same species that differ in anything else than visuals (i.e. types,
+    /// available abilities, stats, evolution, learnset...) represent different varieties. If the kinds only
+    /// differ in visuals, these will be Forms of the same Variety.
+    /// </summary>
     [Table("PokemonVariety")]
     public class PokemonVariety
     {

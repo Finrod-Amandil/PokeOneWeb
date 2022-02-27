@@ -6,6 +6,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A move that is taught by a move tutor.
+    /// </summary>
     [Table("MoveTutorMove")]
     public class MoveTutorMove : IHashedEntity
     {
