@@ -1,5 +1,5 @@
 // Custom Theming for Angular Material
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // For more information: https://material.angular.io/guide/theming
 // Plus imports for other components in your app.
 
@@ -309,7 +309,7 @@ body {
         var(--content-outer-width) + 2 * (var(--tb1) + var(--tb2) + var(--tb3))
     );
 
-    --clip-width: calc(var(--content-title-height) + 7px);
+    --clip-width: calc(var(--content-title-height) + 1px);
 }
 
 #content .tb2 {
@@ -317,7 +317,7 @@ body {
     padding-bottom: var(--tb2);
     width: calc(var(--content-outer-width) + 2 * (var(--tb2) + var(--tb3)));
 
-    --clip-width: calc(var(--content-title-height) + 5.5px);
+    --clip-width: calc(var(--content-title-height) - 0.5px);
 }
 
 #content .tb3 {
@@ -325,7 +325,7 @@ body {
     padding-bottom: var(--tb3);
     width: calc(var(--content-outer-width) + 2 * var(--tb3));
 
-    --clip-width: calc(var(--content-title-height) + 1.5px);
+    --clip-width: calc(var(--content-title-height) - 4.5px);
 }
 
 #content_inner {
@@ -334,7 +334,7 @@ body {
     margin: auto;
     background-color: #505050;
 
-    --clip-width: calc(var(--content-title-height));
+    --clip-width: calc(var(--content-title-height) - 6px);
 }
 
 .clip-edges {
