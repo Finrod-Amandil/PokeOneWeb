@@ -5,7 +5,7 @@ using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Extensions;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using PokeOneWeb.Extensions;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 {

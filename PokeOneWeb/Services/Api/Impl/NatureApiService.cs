@@ -2,10 +2,9 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
-using PokeOneWeb.Dtos;
 using PokeOneWeb.WebApi.Dtos;
 
-namespace PokeOneWeb.Services.Api.Impl
+namespace PokeOneWeb.WebApi.Services.Api.Impl
 {
     public class NatureApiService : INatureApiService
     {

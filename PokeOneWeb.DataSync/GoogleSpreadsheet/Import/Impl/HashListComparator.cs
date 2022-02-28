@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using PokeOneWeb.Extensions;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {

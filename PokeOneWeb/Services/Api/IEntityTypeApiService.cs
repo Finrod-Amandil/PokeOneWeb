@@ -1,7 +1,6 @@
-﻿using PokeOneWeb.Dtos;
-using PokeOneWeb.WebApi.Dtos;
+﻿using PokeOneWeb.WebApi.Dtos;
 
-namespace PokeOneWeb.Services.Api
+namespace PokeOneWeb.WebApi.Services.Api
 {
     public interface IEntityTypeApiService
     {

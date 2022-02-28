@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Dtos;
 using PokeOneWeb.Services.Api;
 using PokeOneWeb.WebApi.Dtos;
+using PokeOneWeb.WebApi.Services.Api;
 
 namespace PokeOneWeb.WebApi.Controllers
 {

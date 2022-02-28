@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.Services.Api;
 using PokeOneWeb.WebApi.Dtos;
+using System.Collections.Generic;
+using PokeOneWeb.WebApi.Services.Api;
 
 namespace PokeOneWeb.WebApi.Controllers
 {

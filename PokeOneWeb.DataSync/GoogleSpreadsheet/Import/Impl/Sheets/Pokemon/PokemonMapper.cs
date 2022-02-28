@@ -1,6 +1,6 @@
 ﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using PokeOneWeb.Extensions;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 {

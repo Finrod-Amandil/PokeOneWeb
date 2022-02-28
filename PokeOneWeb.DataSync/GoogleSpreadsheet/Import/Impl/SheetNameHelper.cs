@@ -30,7 +30,7 @@ using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay;
-using PokeOneWeb.Extensions;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {

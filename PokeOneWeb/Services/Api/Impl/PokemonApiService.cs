@@ -1,5 +1,4 @@
-﻿using PokeOneWeb.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,7 +8,7 @@ using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.WebApi.Dtos;
 using Z.EntityFramework.Plus;
 
-namespace PokeOneWeb.Services.Api.Impl
+namespace PokeOneWeb.WebApi.Services.Api.Impl
 {
     public class PokemonApiService : IPokemonApiService
     {
