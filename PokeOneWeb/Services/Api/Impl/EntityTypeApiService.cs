@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels.Enums;
 using PokeOneWeb.WebApi.Dtos;
+using System.Linq;
 
 namespace PokeOneWeb.WebApi.Services.Api.Impl
 {

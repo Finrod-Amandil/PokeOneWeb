@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.WebApi.Dtos;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.WebApi.Services.Api.Impl
 {
