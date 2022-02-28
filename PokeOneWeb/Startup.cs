@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
-using PokeOneWeb.Services.Api;
-using PokeOneWeb.Services.Api.Impl;
+using PokeOneWeb.WebApi.Services.Api;
+using PokeOneWeb.WebApi.Services.Api.Impl;
 
 namespace PokeOneWeb.WebApi
 {
@@ -24,23 +24,7 @@ namespace PokeOneWeb.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
-            });
-
-            services.AddDbContext<ReadModelDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ReadModelConnection"),
-                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
-            });
-
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            ConfigureDatabases(services);
 
             services.AddLogging(loggingBuilder =>
             {
@@ -94,6 +78,27 @@ namespace PokeOneWeb.WebApi
                     name: "default",
                     pattern: "{controller}/{action}");
             });
+        }
+
+        public void ConfigureDatabases(IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
+            });
+
+            services.AddDbContext<ReadModelDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ReadModelConnection"),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
+            });
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
     }
 }

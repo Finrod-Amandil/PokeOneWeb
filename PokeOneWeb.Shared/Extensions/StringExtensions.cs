@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PokeOneWeb.Extensions
+﻿namespace PokeOneWeb.Shared.Extensions
 {
     public static class StringExtensions
     {
