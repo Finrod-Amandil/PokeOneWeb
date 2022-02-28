@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PokeOneWeb.Services.Api;
 using PokeOneWeb.WebApi.Dtos;
 using System.Collections.Generic;
 using PokeOneWeb.WebApi.Services.Api;
