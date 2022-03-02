@@ -8,9 +8,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EntityType } from '../enums/entity-type.enum';
-import { PokemonDetailComponent } from '../../pages/pokemon-detail/pokemon-detail.component';
-import { LocationDetailComponent } from '../../pages/location-detail/location-detail.component';
-import { ItemDetailComponent } from '../../pages/item-detail/item-detail.component';
 import { IEntityTypeModel } from '../models/entity-type.model';
 import { EntityTypeService } from '../services/api/entity-type.service';
 
