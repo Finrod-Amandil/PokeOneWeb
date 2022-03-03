@@ -19,5 +19,5 @@ mat-slider ::ng-deep .mat-slider-wrapper {
 
 mat-slider ::ng-deep .mat-slider-track-fill,
 mat-slider ::ng-deep .mat-slider-thumb {
-  background-color: var(--light-gray);
+  background-color: var(--light-gray) !important;
 }
