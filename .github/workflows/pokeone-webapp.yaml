@@ -9,6 +9,8 @@ jobs:
       with:
         node-version: '16'
         cache: 'npm'
-    - run: npm run-script build
+    - run: |
+        npm ci
+        npm run-script build
       working-directory: ./PokeOneWeb/Frontend/pokeoneweb
 
