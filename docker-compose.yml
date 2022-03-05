@@ -5,7 +5,7 @@ services:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     user: root
     hostname: "sql01"
-    command: /bin/bash ./docker/entrypoint.sh
+    command: /bin/bash ./db/entrypoint.sh
     ports:
       - 1433:1433
     environment:
@@ -14,7 +14,7 @@ services:
       - MSSQL_PID=Express
     volumes:
       - dbdata:/var/opt/mssql/data
-      - ./docker/:/docker/
+      - ./docker/db:/db/
  
   pokeoneweb.webapi:
     image: ${DOCKER_REGISTRY-}pokeonewebwebapi
@@ -26,6 +26,12 @@ services:
       - 5001:5001
     environment:
       - DB_HOST=db
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5001;http://+:5000
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ./docker/https/:/https
     depends_on:
       - db
   

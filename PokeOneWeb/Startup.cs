@@ -118,7 +118,7 @@ namespace PokeOneWeb.WebApi
             }
 
             app.UseCors("CorsPolicy");
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
