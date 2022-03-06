@@ -9,7 +9,7 @@ else
     #wait for the SQL Server to come up (max ~60s)
     for i in {1..60};
     do
-        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1Secure*Password1 -Q "SELECT @@VERSION"
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -Q "SELECT @@VERSION"
         if [ $? -eq 0 ]
         then
             echo "#####################################################"
@@ -19,12 +19,12 @@ else
             if [[ ! -f /var/opt/mssql/data/PokeOneWebReadModel.mdf ]]
             then
                 echo "DB PokeOneWebReadModel is not existing, starting creation..."
-                /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1Secure*Password1 -d master -i db/pokeonewebreadmodel.sql
+                /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i db/pokeonewebreadmodel.sql
             fi
             if [[ ! -f /var/opt/mssql/data/PokeOneWeb.mdf ]]
             then
                 echo "DB PokeOneWeb is not existing, starting creation..."
-                /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1Secure*Password1 -d master -i db/pokeoneweb.sql
+                /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i db/pokeoneweb.sql
             fi
             end=`date +%s`
             runtime=$((end-start))
