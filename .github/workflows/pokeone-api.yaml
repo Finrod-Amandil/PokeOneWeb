@@ -20,6 +20,7 @@ jobs:
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468" /d:sonar.host.url="https://sonarcloud.io"
+    #    dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
     - name: Build Api
       run: dotnet build PokeOneWeb --configuration Release
@@ -28,5 +29,8 @@ jobs:
     #  run: dotnet test PokeOneWeb --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
 
     - name: End Sonar Scan
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468"
+    #  run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
