@@ -13,8 +13,8 @@ jobs:
         with: 
           projectBaseDir: PokeOneWeb/Frontend/pokeoneweb
           args: >
-          -Dsonar.organization=poke-one-web
-          -Dsonar.projectKey=poke-one-web-frontend
+            -Dsonar.organization=poke-one-web
+            -Dsonar.projectKey=poke-one-web-frontend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: 3c910b639e6bff83c19d78f62688951784b83449
