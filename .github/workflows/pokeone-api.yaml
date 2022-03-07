@@ -4,9 +4,41 @@ jobs:
   Build-PokeOneApi:
     runs-on: ubuntu-latest
     steps:
+    - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
     - uses: actions/checkout@v2
+      with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 6.0 channel
-    - run: dotnet build PokeOneWeb --configuration Release
+    - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+    - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+    - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+    - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: "3bfa62926f14f6826497ef30bbf2708a92090468"
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build PokeOneWeb --configuration Release
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468"
 
