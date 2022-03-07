@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build:
     name: Build-PokeOneApi
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Set up JDK 11
       uses: actions/setup-java@v1
@@ -15,31 +15,18 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 6.0 channel
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v1
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v1
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-    - name: Install SonarCloud scanner
-      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      shell: powershell
+
+    - name: Begin Sonar Scan
       run: |
-        New-Item -Path .\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-    - name: Build and analyze
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: "3bfa62926f14f6826497ef30bbf2708a92090468"
-      shell: powershell
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build PokeOneWeb --configuration Release
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468"
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468" /d:sonar.host.url="https://sonarcloud.io"
+
+    - name: Build Api
+      run: dotnet build PokeOneWeb --configuration Release
+
+    #- name: Unit-Test Api
+    #  run: dotnet test PokeOneWeb --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+
+    - name: End Sonar Scan
+      run: dotnet-sonarscanner end /d:sonar.login="3bfa62926f14f6826497ef30bbf2708a92090468"
 
