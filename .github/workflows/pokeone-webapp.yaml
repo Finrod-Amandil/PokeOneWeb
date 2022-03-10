@@ -24,6 +24,7 @@ jobs:
         source: "PokeOneWeb/Frontend/pokeoneweb/dist"
         target: "/var/www/html"
         strip_components: 5
+        overwrite: true
     # - uses: appleboy/ssh-action@master
     #   with:
     #     host: vps-0f9a3187.vps.ovh.net

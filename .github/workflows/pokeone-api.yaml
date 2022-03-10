@@ -19,4 +19,5 @@ jobs:
         source: "PokeOneWeb/bin/Release/net6.0"
         target: "/opt/PokeOneWeb"
         strip_components: 4
+        overwrite: true
 
