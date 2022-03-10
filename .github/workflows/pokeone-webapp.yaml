@@ -21,8 +21,9 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        source: "PokeOneWeb/Frontend/pokeoneweb/dist"
+        source: "pokeoneweb"
         target: "pokeoneweb"
+      working-directory: PokeOneWeb/Frontend/pokeoneweb/dist
     # - uses: appleboy/ssh-action@master
     #   with:
     #     host: vps-0f9a3187.vps.ovh.net
