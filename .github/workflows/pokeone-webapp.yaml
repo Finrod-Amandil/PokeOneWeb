@@ -22,8 +22,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         source: "PokeOneWeb/Frontend/pokeoneweb/dist"
-        target: "pokeoneweb"
-        strip_components: 4
+        target: "/var/www/html"
+        strip_components: 5
     # - uses: appleboy/ssh-action@master
     #   with:
     #     host: vps-0f9a3187.vps.ovh.net
