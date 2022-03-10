@@ -9,4 +9,14 @@ jobs:
       with:
         dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 6.0 channel
     - run: dotnet build PokeOneWeb --configuration Release
+    - uses: appleboy/scp-action@master
+      with:
+        host: vps-0f9a3187.vps.ovh.net
+        port: 22
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        source: "PokeOneWeb/PokeOneWeb/bin/Release/net6.0"
+        target: "/opt/PokeOneWeb"
+        strip_components: 5
 
