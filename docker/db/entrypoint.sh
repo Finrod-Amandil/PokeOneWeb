@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 #start SQL Server, start the script to create/setup the DB
-db/db-init.sh & /opt/mssql/bin/sqlservr
+/bin/sh /db/db-init.sh & /opt/mssql/bin/sqlservr
