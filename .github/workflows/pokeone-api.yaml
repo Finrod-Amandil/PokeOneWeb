@@ -16,7 +16,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        source: "PokeOneWeb/PokeOneWeb/bin/Release/net6.0"
+        source: "PokeOneWeb/bin/Release/net6.0"
         target: "/opt/PokeOneWeb"
-        strip_components: 5
+        strip_components: 4
 
