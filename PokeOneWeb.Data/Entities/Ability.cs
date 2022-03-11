@@ -45,8 +45,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         public string EffectDescription { get; set; }
 
         public string EffectShortDescription { get; set; }
