@@ -30,18 +30,6 @@
 
         protected abstract List<Action<TDto, object>> MappingDelegates { get; }
 
-        protected static decimal ParseAsDecimal(object value)
-        {
-            var canParse = decimal.TryParse(value.ToString(), out var parsed);
-
-            if (!canParse)
-            {
-                throw new UnparsableRowValueException(value, "decimal");
-            }
-
-            return parsed;
-        }
-
         protected static string ParseAsString(object value)
         {
             if (value is not string stringValue)
@@ -62,6 +50,54 @@
             }
 
             return stringValue;
+        }
+
+        protected static decimal ParseAsDecimal(object value)
+        {
+            var canParse = decimal.TryParse(value.ToString(), out var parsed);
+
+            if (!canParse)
+            {
+                throw new UnparsableRowValueException(value, "decimal");
+            }
+
+            return parsed;
+        }
+
+        protected static int ParseAsInt(object value)
+        {
+            var canParse = int.TryParse(value.ToString(), out var parsed);
+
+            if (!canParse)
+            {
+                throw new UnparsableRowValueException(value, "int");
+            }
+
+            return parsed;
+        }
+
+        protected static DateTime ParseAsDateTime(object value)
+        {
+            var canParse = DateTime.TryParse(value.ToString(), out var parsed);
+
+            if (!canParse)
+            {
+                throw new UnparsableRowValueException(value, "DateTime");
+            }
+
+            return parsed;
+        }
+
+        protected static bool ParseAsBoolean(object value)
+        {
+            var canParse = bool.TryParse(value.ToString(), out var parsed);
+
+            if (!canParse)
+            {
+                throw new UnparsableRowValueException(value, "DateTime");
+            }
+
+            return parsed;
         }
     }
 }

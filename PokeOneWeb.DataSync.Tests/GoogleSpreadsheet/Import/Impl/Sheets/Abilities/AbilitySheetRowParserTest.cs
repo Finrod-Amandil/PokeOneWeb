@@ -5,28 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
+namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
 {
     public class AbilitySheetRowParserTest
     {
-        private readonly AbilitySheetRowParser _sheetRowParser;
-
-        public AbilitySheetRowParserTest()
-        {
-            _sheetRowParser = new AbilitySheetRowParser();
-        }
-
         [Fact]
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
             var name = "Ability Name";
             var values = new List<object> { name };
 
             var expected = new AbilitySheetDto { Name = name };
 
             // Act
-            var result = _sheetRowParser.ReadRow(values);
+            var result = parser.ReadRow(values);
 
             // Assert
             result.Should().BeEquivalentTo(expected);
@@ -36,6 +30,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
+
             var name = "Ability Name";
             var shortEffect = "Short Effect";
             var effect = "Effect";
@@ -64,7 +60,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
             };
 
             // Act
-            var result = _sheetRowParser.ReadRow(values);
+            var result = parser.ReadRow(values);
 
             // Assert
             result.Should().BeEquivalentTo(expected);
@@ -74,10 +70,11 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
             var values = new List<object>();
 
             // Act
-            var actual = () => _sheetRowParser.ReadRow(values);
+            var actual = () => parser.ReadRow(values);
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
@@ -87,13 +84,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
             var values = new List<object>()
             {
                 "0", "", "", 1, 1, 1, 1, 1, 1, "", "excessive value"
             };
 
             // Act
-            var actual = () => _sheetRowParser.ReadRow(values);
+            var actual = () => parser.ReadRow(values);
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
@@ -103,10 +101,11 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
             List<object> values = null;
 
             // Act
-            var actual = () => _sheetRowParser.ReadRow(values);
+            var actual = () => parser.ReadRow(values);
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
@@ -126,10 +125,11 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
+            var parser = new AbilitySheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act
-            var actual = () => _sheetRowParser.ReadRow(values);
+            var actual = () => parser.ReadRow(values);
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
