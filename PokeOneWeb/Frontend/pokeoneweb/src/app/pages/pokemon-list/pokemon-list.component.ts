@@ -142,6 +142,7 @@ export class PokemonListComponent implements OnInit {
             if (this.model.maxSpe < pokemon.speed) this.model.maxSpe = pokemon.speed;
             if (this.model.maxHp < pokemon.hitPoints)  this.model.maxHp = pokemon.hitPoints;
             if (this.model.maxTotal < pokemon.statTotal) this.model.maxTotal = pokemon.statTotal;
+            if (this.model.maxBulk < pokemon.bulk)  this.model.maxBulk = pokemon.bulk;
 
             if (!this.model.pvpTiers.find((p) => p.sortIndex === pokemon.pvpTierSortIndex)) {
                 this.model.pvpTiers.push({

@@ -223,7 +223,11 @@ p.pokemon-list-empty {
 
 #pokemon_list .col-stat {
   width: 40px;
-  min-width: 40px;
+  max-width: 40px;
+}
+
+#pokemon_list th {
+  padding: 5px 0px;
 }
 
 #pokemon_list .col-pvp-tier {
