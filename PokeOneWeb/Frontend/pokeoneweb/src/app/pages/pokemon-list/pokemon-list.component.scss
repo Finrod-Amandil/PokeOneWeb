@@ -299,3 +299,13 @@ p.pokemon-list-empty {
   visibility: visible;
   opacity: 1;
 }
+
+#pokemon_list th.col-stat .tooltip {
+  margin-top: 20px;
+  color: var(--light-gray);
+}
+
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

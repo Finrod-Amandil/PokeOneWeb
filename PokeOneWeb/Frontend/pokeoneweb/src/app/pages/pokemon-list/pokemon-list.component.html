@@ -818,7 +818,10 @@
                     [ngClass]="getSortButtonClass(column.Bulk, 1)" 
                     (click)="sort(column.Bulk, 1)"
                     class="table-header-sort">⮝</div>
-                <div class="table-header-label">Bulk</div>
+                <div class="has-tooltip">
+                    <div class="table-header-label">Bulk</div>
+                    <span class="tooltip">Bulk can be calculated by adding up the Healthpoints(HP), Defense(DEF) and Special Defense(SPD) stats. It can be used to search for Pokémon which are hard to defeat.</span>
+                </div>
                 <div 
                     [ngClass]="getSortButtonClass(column.Bulk, -1)" 
                     (click)="sort(column.Bulk, -1)"
