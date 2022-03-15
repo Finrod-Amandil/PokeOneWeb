@@ -64,8 +64,15 @@
             return parsed;
         }
 
-        protected static int ParseAsInt(object value)
+        protected static int ParseAsInt(object value, int? defaultValue = null)
         {
+            var stringValue = value.ToString();
+
+            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            {
+                return (int)defaultValue;
+            }
+
             var canParse = int.TryParse(value.ToString(), out var parsed);
 
             if (!canParse)

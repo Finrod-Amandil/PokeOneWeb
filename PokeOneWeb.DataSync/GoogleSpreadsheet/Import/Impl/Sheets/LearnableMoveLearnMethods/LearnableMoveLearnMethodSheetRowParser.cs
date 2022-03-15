@@ -1,63 +1,22 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodSheetRowParser : ISheetRowParser<LearnableMoveLearnMethodSheetDto>
+    public class LearnableMoveLearnMethodSheetRowParser : SheetRowParser<LearnableMoveLearnMethodSheetDto>
     {
-        public LearnableMoveLearnMethodSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 5;
+
+        protected override List<Action<LearnableMoveLearnMethodSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 5)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new LearnableMoveLearnMethodSheetDto
-            {
-                PokemonVarietyName = values[1] as string,
-                MoveName = values[2] as string,
-                LearnMethod = values[3] as string,
-                IsAvailable = bool.TryParse(values[4].ToString(), out var parsedIsAvailable) && parsedIsAvailable
-            };
-
-            if (value.PokemonVarietyName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read LearnableMoveLearnMethod, but required field {nameof(value.PokemonVarietyName)} was empty.");
-            }
-
-            if (value.MoveName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read LearnableMoveLearnMethod, but required field {nameof(value.MoveName)} was empty.");
-            }
-
-            if (value.LearnMethod is null)
-            {
-                throw new InvalidRowDataException($"Tried to read LearnableMoveLearnMethod, but required field {nameof(value.LearnMethod)} was empty.");
-            }
-
-            if (values.Count > 6)
-            {
-                value.LevelLearnedAt = int.TryParse(values[6].ToString(), out var parsedLevelLearnedAt) ? parsedLevelLearnedAt : 0;
-            }
-
-            if (values.Count > 7)
-            {
-                value.RequiredItemName = values[7] as string;
-            }
-
-            if (values.Count > 8)
-            {
-                value.TutorName = values[8] as string;
-            }
-
-            if (values.Count > 9)
-            {
-                value.TutorLocation = values[9] as string;
-            }
-
-            if (values.Count > 10)
-            {
-                value.Comments = values[10] as string;
-            }
-
-            return value;
-        }
+            (dto, value) => dto.PokemonSpeciesPokedexNumber = ParseAsInt(value),
+            (dto, value) => dto.PokemonVarietyName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.MoveName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.LearnMethod = ParseAsNonEmptyString(value),
+            (dto, value) => dto.IsAvailable = ParseAsBoolean(value),
+            (dto, value) => dto.Generation = ParseAsString(value),
+            (dto, value) => dto.LevelLearnedAt = ParseAsInt(value, 0),
+            (dto, value) => dto.RequiredItemName = ParseAsString(value),
+            (dto, value) => dto.TutorName = ParseAsString(value),
+            (dto, value) => dto.TutorLocation = ParseAsString(value),
+            (dto, value) => dto.Comments = ParseAsString(value),
+        };
     }
 }
