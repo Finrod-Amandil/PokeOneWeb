@@ -38,7 +38,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: systemctl stop p1backend
+        script: sudo systemctl stop p1backend
     - uses: appleboy/scp-action@master
       with:
         host: dev.pokeone.guide
@@ -57,5 +57,5 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: systemctl start p1backend
+        script: sudo systemctl start p1backend
 
