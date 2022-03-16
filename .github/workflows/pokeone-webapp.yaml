@@ -1,5 +1,8 @@
 name: PokeOneWebApp
-on: [push]
+on:
+  push:
+    branches:
+      - development
 jobs:
   sonarcloud:
     name: SonarCloud-PokeOneWebApp
