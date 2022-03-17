@@ -4,6 +4,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DynamicRouteGuard } from './core/guards/dynamic-route.guard';
+import { FaqComponent } from './pages/faq/faq.component';
+import { AboutComponent } from './pages/about/about.component';
+import { GuidesComponent } from './pages/guides/guides.component';
+import { LocationsComponent } from './pages/locations/locations.component';
 
 const routes: Routes = [
     {
@@ -65,6 +69,38 @@ const routes: Routes = [
             import('./pages/item-list/item-list.module').then(
                 (m) => m.ItemListModule
             ),
+    },
+    {
+        path: 'g',
+        component: GuidesComponent,
+    },
+    {
+        path: 'guides',
+        component: GuidesComponent,
+    },
+    {
+        path: 'l',
+        component: LocationsComponent,
+    },
+    {
+        path: 'locations',
+        component: LocationsComponent,
+    },
+    {
+        path: 'r',
+        component: LocationsComponent,
+    },
+    {
+        path: 'regions',
+        component: LocationsComponent,
+    },
+    {
+        path: 'faq',
+        component: FaqComponent,
+    },
+    {
+        path: 'about',
+        component: AboutComponent,
     },
     {
         path: 'not-found',
