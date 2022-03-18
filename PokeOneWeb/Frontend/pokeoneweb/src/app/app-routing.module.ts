@@ -72,11 +72,17 @@ const routes: Routes = [
     },
     {
         path: 'g',
-        component: GuidesComponent,
+        loadChildren: () =>
+            import('./pages/guides/guides.module').then(
+                (m) => m.GuidesModule
+            ),
     },
     {
         path: 'guides',
-        component: GuidesComponent,
+        loadChildren: () =>
+            import('./pages/guides/guides.module').then(
+                (m) => m.GuidesModule
+            ),
     },
     {
         path: 'l',
@@ -108,11 +114,17 @@ const routes: Routes = [
     },
     {
         path: 'faq',
-        component: FaqComponent,
+        loadChildren: () =>
+            import('./pages/faq/faq.module').then(
+                (m) => m.FaqModule
+            ),
     },
     {
         path: 'about',
-        component: AboutComponent,
+        loadChildren: () =>
+            import('./pages/about/about.module').then(
+                (m) => m.AboutModule
+            ),
     },
     {
         path: 'not-found',

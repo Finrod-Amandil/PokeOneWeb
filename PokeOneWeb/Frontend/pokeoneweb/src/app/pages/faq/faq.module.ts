@@ -20,4 +20,4 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ]
 })
-export class ItemListModule { }
+export class FaqModule { }
