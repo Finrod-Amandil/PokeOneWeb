@@ -4,10 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoadingComponent } from './pages/loading/loading.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DynamicRouteGuard } from './core/guards/dynamic-route.guard';
-import { FaqComponent } from './pages/faq/faq.component';
-import { AboutComponent } from './pages/about/about.component';
-import { GuidesComponent } from './pages/guides/guides.component';
-import { LocationListComponent } from './pages/location-list/location-list.component';
 
 const routes: Routes = [
     {
