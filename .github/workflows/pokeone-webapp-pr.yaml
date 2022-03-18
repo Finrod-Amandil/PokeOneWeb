@@ -28,44 +28,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json
-    - run: |
+
+    - name: Build frontend project  
+      run: |
         npm ci
         npm run build -- --prod
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
-    - name: Save build folder
-      uses: actions/upload-artifact@v2
+    - name: Run Jasmine Unit-Tests
+      run: npm test -- --watch=false --browsers=ChromeHeadless
+
+    - name: Run Cypress UI-Tests
+      uses: cypress-io/github-action@v2
       with:
-        name: build
-        if-no-files-found: error
-        path: PokeOneWeb/Frontend/pokeoneweb
-
-      
-  cypress-run:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: PokeOneWeb/Frontend/pokeoneweb
-
-      - name: Jasmine Unit-Testing
-        run: npm test -- --watch=false --browsers=ChromeHeadless
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: PokeOneWeb/Frontend/pokeoneweb
-          #build: npm run build
-          start: npm start
-          browser: chrome
+        working-directory: PokeOneWeb/Frontend/pokeoneweb
+        #build: npm run build
+        start: npm start
+        browser: chrome
