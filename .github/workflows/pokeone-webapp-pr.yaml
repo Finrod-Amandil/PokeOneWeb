@@ -29,16 +29,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup and build node
-      uses: actions/setup-node@v2
+    - uses: actions/setup-node@v2
       with:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json 
-    - run: npm ci
-      working-directory: PokeOneWeb/Frontend/pokeoneweb
-    - run: npm run build -- --configuration production
-      working-directory: PokeOneWeb/Frontend/pokeoneweb
+    - run: |
+        npm ci
+        npm run build -- --configuration production
+    working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
       run: npm test -- --watch=false --browsers=ChromeHeadless
@@ -48,6 +47,8 @@ jobs:
       uses: cypress-io/github-action@v2
       with:
         working-directory: PokeOneWeb/Frontend/pokeoneweb
+        wait-on: 'http://localhost:4200'
+        wait-on-timeout: 120
         #build: npm run build
         start: npm start
         browser: chrome
