@@ -39,9 +39,18 @@ jobs:
         npm run build -- --prod
       working-directory: PokeOneWeb/Frontend/pokeoneweb
       
-    - name: Run Cypress UI-Testing
-      uses: cypress-io/github-action@v2
-      with:
-        browser: chrome
-      working-directory: PokeOneWeb/Frontend/pokeoneweb
+  cypress-run:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
+
       
