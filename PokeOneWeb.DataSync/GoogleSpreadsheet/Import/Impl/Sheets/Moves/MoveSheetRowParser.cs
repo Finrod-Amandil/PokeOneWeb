@@ -44,12 +44,7 @@
 
             if (values.Count > 9)
             {
-                value.PokeApiName = values[9] as string;
-            }
-
-            if (values.Count > 10)
-            {
-                value.Effect = values[10] as string;
+                value.Effect = values[9] as string;
             }
 
             return value;

@@ -19,11 +19,6 @@
                 throw new InvalidRowDataException($"Tried to read ElementalType, but required field {nameof(value.Name)} was empty.");
             }
 
-            if (values.Count > 1)
-            {
-                value.PokeApiName = values[1] as string;
-            }
-
             return value;
         }
     }

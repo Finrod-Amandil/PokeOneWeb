@@ -27,7 +27,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
             elementalType.Hash = rowHash.ContentHash;
             elementalType.ImportSheetId = rowHash.ImportSheetId;
             elementalType.Name = dto.Name;
-            elementalType.PokeApiName = dto.PokeApiName;
 
             return elementalType;
         }

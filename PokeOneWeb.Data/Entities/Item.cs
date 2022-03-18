@@ -54,8 +54,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         /// <summary>
         /// An item ID used within Pokeone.
         /// </summary>

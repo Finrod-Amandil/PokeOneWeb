@@ -64,7 +64,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Moves
             move.Accuracy = dto.Accuracy;
             move.PowerPoints = dto.PowerPoints;
             move.Priority = dto.Priority;
-            move.PokeApiName = dto.PokeApiName;
             move.Effect = dto.Effect;
 
             return move;
