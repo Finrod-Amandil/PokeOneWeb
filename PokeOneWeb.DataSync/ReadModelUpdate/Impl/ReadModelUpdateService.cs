@@ -98,7 +98,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 
             _reporter.StartReadModelUpdate("regions");
             _regionRepository.Update(_regionMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("region");
+            _reporter.StopReadModelUpdate("regions");
 
             _reporter.StopReadModelUpdate();
         }
