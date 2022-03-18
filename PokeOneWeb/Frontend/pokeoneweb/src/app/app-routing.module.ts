@@ -67,6 +67,62 @@ const routes: Routes = [
             ),
     },
     {
+        path: 'g',
+        loadChildren: () =>
+            import('./pages/guides/guides.module').then(
+                (m) => m.GuidesModule
+            ),
+    },
+    {
+        path: 'guides',
+        loadChildren: () =>
+            import('./pages/guides/guides.module').then(
+                (m) => m.GuidesModule
+            ),
+    },
+    {
+        path: 'l',
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
+    },
+    {
+        path: 'locations',
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
+    },
+    {
+        path: 'r',
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
+    },
+    {
+        path: 'regions',
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
+    },
+    {
+        path: 'faq',
+        loadChildren: () =>
+            import('./pages/faq/faq.module').then(
+                (m) => m.FaqModule
+            ),
+    },
+    {
+        path: 'about',
+        loadChildren: () =>
+            import('./pages/about/about.module').then(
+                (m) => m.AboutModule
+            ),
+    },
+    {
         path: 'not-found',
         component: NotFoundComponent,
     },

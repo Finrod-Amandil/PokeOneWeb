@@ -5,11 +5,19 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.WebApi", "PokeOneWeb\PokeOneWeb.WebApi.csproj", "{087452DE-DA09-43C0-829A-D2EDCC04FEAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.Data", "PokeOneWeb.Data\PokeOneWeb.Data.csproj", "{D2A8644A-0969-4958-83BF-D6C61B6D264A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.Data", "PokeOneWeb.Data\PokeOneWeb.Data.csproj", "{D2A8644A-0969-4958-83BF-D6C61B6D264A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.Shared", "PokeOneWeb.Shared\PokeOneWeb.Shared.csproj", "{891EF1A0-B04B-4F14-B86D-067EEDF1D7BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.Shared", "PokeOneWeb.Shared\PokeOneWeb.Shared.csproj", "{891EF1A0-B04B-4F14-B86D-067EEDF1D7BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.DataSync", "PokeOneWeb.DataSync\PokeOneWeb.DataSync.csproj", "{0301B6D0-3C2E-4462-BA6D-91DB229654DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.DataSync", "PokeOneWeb.DataSync\PokeOneWeb.DataSync.csproj", "{0301B6D0-3C2E-4462-BA6D-91DB229654DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.WebApi.Tests", "PokeOneWeb.WebApi.Tests\PokeOneWeb.WebApi.Tests.csproj", "{9A81A2FA-43F5-4E6A-B343-7D089F9B069C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.Shared.Tests", "PokeOneWeb.Shared.Tests\PokeOneWeb.Shared.Tests.csproj", "{D169E352-B51B-4992-A2D1-81AA15DD4EAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.DataSync.Tests", "PokeOneWeb.DataSync.Tests\PokeOneWeb.DataSync.Tests.csproj", "{4181934E-5030-4322-B8E3-704306A3073E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.Data.Tests", "PokeOneWeb.Data.Tests\PokeOneWeb.Data.Tests.csproj", "{BC039C1E-5079-4FF1-999A-EC8891827E8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,22 @@ Global
 		{0301B6D0-3C2E-4462-BA6D-91DB229654DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0301B6D0-3C2E-4462-BA6D-91DB229654DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0301B6D0-3C2E-4462-BA6D-91DB229654DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A81A2FA-43F5-4E6A-B343-7D089F9B069C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A81A2FA-43F5-4E6A-B343-7D089F9B069C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A81A2FA-43F5-4E6A-B343-7D089F9B069C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A81A2FA-43F5-4E6A-B343-7D089F9B069C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D169E352-B51B-4992-A2D1-81AA15DD4EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D169E352-B51B-4992-A2D1-81AA15DD4EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D169E352-B51B-4992-A2D1-81AA15DD4EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D169E352-B51B-4992-A2D1-81AA15DD4EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4181934E-5030-4322-B8E3-704306A3073E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4181934E-5030-4322-B8E3-704306A3073E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4181934E-5030-4322-B8E3-704306A3073E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4181934E-5030-4322-B8E3-704306A3073E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC039C1E-5079-4FF1-999A-EC8891827E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC039C1E-5079-4FF1-999A-EC8891827E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC039C1E-5079-4FF1-999A-EC8891827E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC039C1E-5079-4FF1-999A-EC8891827E8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
