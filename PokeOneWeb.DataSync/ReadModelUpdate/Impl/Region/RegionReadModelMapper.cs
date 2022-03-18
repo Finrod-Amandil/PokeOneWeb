@@ -23,8 +23,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
                 {
                     ApplicationDbId = region.Id,
                     Name = region.Name,
-                    // TODO: As soon as the Resource Name is available in the import db the line afterwards can be uncommented.
-                    //ResourceName = region.ResourceName,
+                    ResourceName = region.ResourceName,
                     Color = region.Color,
                     IsEventRegion = region.IsEventRegion,
                     EventName = region.Event.Name,
