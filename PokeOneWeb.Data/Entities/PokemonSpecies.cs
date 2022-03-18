@@ -34,8 +34,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         [ForeignKey("DefaultVarietyId")]
         public PokemonVariety DefaultVariety { get; set; }
         public int? DefaultVarietyId { get; set; }
