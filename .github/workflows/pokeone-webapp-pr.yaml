@@ -40,7 +40,7 @@ jobs:
       working-directory: PokeOneWeb/Frontend/pokeoneweb
       
     - name: Run Cypress UI-Testing
-        uses: cypress-io/github-action@v2
-        with:
-          browser: chrome
+      uses: cypress-io/github-action@v2
+      with:
+        browser: chrome
       
