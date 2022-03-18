@@ -23,12 +23,12 @@ jobs:
     - name: Begin Sonar Scan
       run: |
         dotnet tool install --global dotnet-sonarscanner
-        dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=**/*.opencover.xml
+        dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=**/*.opencover.xml /d:"sonar.verbose=true"
 
     - name: Build & Install Dependencies
       run: dotnet build PokeOneWeb --configuration Release
     - name: Test
-      run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test --no-restore --verbosity diag /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
     - name: End Sonar Scan
       env:
