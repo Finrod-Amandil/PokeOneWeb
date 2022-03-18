@@ -27,15 +27,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json
+        
     - run: |
         npm ci
         npm run build -- --prod
       working-directory: PokeOneWeb/Frontend/pokeoneweb
+
+    - name: Run Jasmine Unit-Tests
+      run: npm test -- --watch=false --browsers=ChromeHeadless
+      working-directory: PokeOneWeb/Frontend/pokeoneweb
+
+    - name: Run Cypress UI-Tests
+      uses: cypress-io/github-action@v2
+      with:
+        working-directory: PokeOneWeb/Frontend/pokeoneweb
+        wait-on: 'http://localhost:4200'
+        wait-on-timeout: 120
+        start: npm start
+        browser: chrome
+
     - uses: appleboy/scp-action@master
       with:
         host: dev.pokeone.guide
