@@ -43,4 +43,5 @@ jobs:
       uses: cypress-io/github-action@v2
       with:
         browser: chrome
+      working-directory: PokeOneWeb/Frontend/pokeoneweb
       
