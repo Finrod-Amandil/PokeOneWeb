@@ -11,10 +11,10 @@ COPY ["PokeOneWeb.Data/PokeOneWeb.Data.csproj", "PokeOneWeb.Data/"]
 RUN dotnet restore "PokeOneWeb/PokeOneWeb.WebApi.csproj"
 COPY . .
 WORKDIR "/src/PokeOneWeb"
-RUN dotnet build "PokeOneWeb.WebApi.csproj" -c Release -o /app/build
+RUN dotnet build "PokeOneWeb.WebApi.csproj" -c Docker -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "PokeOneWeb.WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "PokeOneWeb.WebApi.csproj" -c Docker -o /app/publish
 
 FROM base AS finals
 WORKDIR /app
