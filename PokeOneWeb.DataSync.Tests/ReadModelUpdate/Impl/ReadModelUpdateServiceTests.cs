@@ -90,6 +90,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _natureMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _itemMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
+            _regionMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _entityTypeRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<EntityTypeReadModel, DbAction>>()), Times.Once());
             _itemStatBoostPokemonRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemStatBoostPokemonReadModel, DbAction>>()), Times.Once());
             _simpleLearnableMoveRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<SimpleLearnableMoveReadModel, DbAction>>()), Times.Once());
@@ -97,9 +98,10 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _natureRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<NatureReadModel, DbAction>>()), Times.Once());
             _pokemonVarietyRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<PokemonVarietyReadModel, DbAction>>()), Times.Once());
             _itemRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemReadModel, DbAction>>()), Times.Once());
-            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(7));
+            _regionRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<RegionReadModel, DbAction>>()), Times.Once());
+            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(8));
             _reporterMock.Verify(m => m.StartReadModelUpdate(), Times.Once());
-            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(7));
+            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(8));
             _reporterMock.Verify(m => m.StopReadModelUpdate(), Times.Once());
         }
     }
