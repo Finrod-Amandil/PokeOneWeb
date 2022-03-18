@@ -7,7 +7,7 @@ import { DynamicRouteGuard } from './core/guards/dynamic-route.guard';
 import { FaqComponent } from './pages/faq/faq.component';
 import { AboutComponent } from './pages/about/about.component';
 import { GuidesComponent } from './pages/guides/guides.component';
-import { LocationsComponent } from './pages/locations/locations.component';
+import { LocationListComponent } from './pages/location-list/location-list.component';
 
 const routes: Routes = [
     {
@@ -80,19 +80,31 @@ const routes: Routes = [
     },
     {
         path: 'l',
-        component: LocationsComponent,
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
     },
     {
         path: 'locations',
-        component: LocationsComponent,
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
     },
     {
         path: 'r',
-        component: LocationsComponent,
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
     },
     {
         path: 'regions',
-        component: LocationsComponent,
+        loadChildren: () =>
+            import('./pages/location-list/location-list.module').then(
+                (m) => m.LocationListModule
+            ),
     },
     {
         path: 'faq',
