@@ -1,4 +1,4 @@
-name: PokeOneWebApp
+name: PokeOneWebApp Pull Request
 on:
   pull_request:
     branches:
