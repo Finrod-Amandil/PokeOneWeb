@@ -33,10 +33,10 @@ jobs:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json
-        
+
     - run: |
         npm ci
-        npm run build -- --prod
+        npm run build -- --configuration production
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
