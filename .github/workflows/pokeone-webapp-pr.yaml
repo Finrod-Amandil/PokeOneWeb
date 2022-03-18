@@ -37,7 +37,7 @@ jobs:
     - run: |
         npm ci
         npm run build -- --configuration production
-    working-directory: PokeOneWeb/Frontend/pokeoneweb
+      working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
       run: npm test -- --watch=false --browsers=ChromeHeadless
