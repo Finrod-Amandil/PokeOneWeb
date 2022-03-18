@@ -770,29 +770,10 @@
                         </div>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-
-        <ng-container *ngIf="model.unavailableLearnableMoves.length > 0">
-        <h3 name="unavailable_moves">Unavailable moves</h3>
-        <p class="subtitle">Moves which this Pokémon can learn in other games, but are currently unavailable for this Pokémon in PokéOne</p>
-        <table class="main-table table-compact" id="unavailable_moves_table">
-            <thead>
-                <tr>
-                    <th class="col-move-name">Name</th>
-                    <th class="col-move-type">Type</th>
-                    <th class="col-move-class">Cat.</th>
-                    <th class="col-power">Pow.</th>
-                    <th class="col-accuracy">Acc.</th>
-                    <th class="col-power-points">PP</th>
-                    <th class="col-move-effect">Effect</th>
-                    <th class="col-move-learn-methods">Learn methods</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let move of model.unavailableLearnableMoves; let i = index">
+                <tr *ngFor="let move of model.unavailableLearnableMoves; let i = index" class="row-unavailable-move">
                     <td class="col-move-name">
                         {{move.moveName}}
+                        <p>{{move.baseAttackPower !== 0 ? move.baseAttackPower : '-'}}</p>
                     </td>
                     <td class="col-move-type">
                         <pokeone-type-badge [typeName]="move.elementalType"></pokeone-type-badge>
@@ -815,6 +796,9 @@
                     <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
                         class="col-power-points">
                         {{move.powerPoints}}
+                    </td>
+                    <td class="col-priority">
+                        -
                     </td>
                     <td class="col-move-effect" (mouseover)="hoverMoveDescription(i)" (mouseout)="hoverMoveDescription(-1)">
                         <div *ngIf="i !== model.moveHoverIndex">
@@ -843,6 +827,27 @@
                 </tr>
             </tbody>
         </table>
-        </ng-container>
+
+        <!-- <ng-container *ngIf="model.unavailableLearnableMoves.length > 0">
+        <h3 name="unavailable_moves">Unavailable moves</h3>
+        <p class="subtitle">Moves which this Pokémon can learn in other games, but are currently unavailable for this Pokémon in PokéOne</p>
+        <table class="main-table table-compact" id="unavailable_moves_table">
+            <thead>
+                <tr>
+                    <th class="col-move-name">Name</th>
+                    <th class="col-move-type">Type</th>
+                    <th class="col-move-class">Cat.</th>
+                    <th class="col-power">Pow.</th>
+                    <th class="col-accuracy">Acc.</th>
+                    <th class="col-power-points">PP</th>
+                    <th class="col-move-effect">Effect</th>
+                    <th class="col-move-learn-methods">Learn methods</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+        </ng-container> -->
     </div>
 </div>
