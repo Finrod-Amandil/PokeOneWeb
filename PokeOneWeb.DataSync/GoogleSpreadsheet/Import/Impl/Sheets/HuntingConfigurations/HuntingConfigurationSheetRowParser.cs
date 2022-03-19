@@ -1,37 +1,14 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
 {
-    public class HuntingConfigurationSheetRowParser : ISheetRowParser<HuntingConfigurationSheetDto>
+    public class HuntingConfigurationSheetRowParser : SheetRowParser<HuntingConfigurationSheetDto>
     {
-        public HuntingConfigurationSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 3;
+
+        protected override List<Action<HuntingConfigurationSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 3)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new HuntingConfigurationSheetDto
-            {
-                PokemonVarietyName = values[0] as string,
-                Nature = values[1] as string,
-                Ability = values[2] as string
-            };
-
-            if (value.PokemonVarietyName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Hunting Configuration, but required field {nameof(value.PokemonVarietyName)} was empty.");
-            }
-
-            if (value.Nature is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Hunting Configuration, but required field {nameof(value.Nature)} was empty.");
-            }
-
-            if (value.Ability is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Hunting Configuration, but required field {nameof(value.Ability)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.PokemonVarietyName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Nature = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Ability = ParseAsNonEmptyString(value),
+        };
     }
 }
