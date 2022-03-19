@@ -36,27 +36,22 @@
 
             if (values.Count > 6)
             {
-                value.PokeApiName = values[6] as string;
+                value.PokeOneItemId = int.TryParse(values[6].ToString(), out var parsed) ? parsed : 0;
             }
 
             if (values.Count > 7)
             {
-                value.PokeOneItemId = int.TryParse(values[7].ToString(), out var parsed) ? parsed : 0;
+                value.Description = values[7] as string;
             }
 
             if (values.Count > 8)
             {
-                value.Description = values[8] as string;
+                value.Effect = values[8] as string;
             }
 
             if (values.Count > 9)
             {
-                value.Effect = values[9] as string;
-            }
-
-            if (values.Count > 10)
-            {
-                value.SpriteName = values[10] as string;
+                value.SpriteName = values[9] as string;
             }
 
             return value;

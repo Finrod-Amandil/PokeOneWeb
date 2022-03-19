@@ -58,8 +58,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         public int SortIndex { get; set; }
 
         public string SpriteName { get; set; }

@@ -167,22 +167,7 @@
 
             if (values.Count > 45)
             {
-                value.PokemonSpeciesPokeApiName = values[45] as string;
-            }
-
-            if (values.Count > 46)
-            {
-                value.PokemonVarietyPokeApiName = values[46] as string;
-            }
-
-            if (values.Count > 47)
-            {
-                value.PokemonFormPokeApiName = values[47] as string;
-            }
-
-            if (values.Count > 48)
-            {
-                value.Notes = values[48] as string;
+                value.Notes = values[45] as string;
             }
 
             return value;

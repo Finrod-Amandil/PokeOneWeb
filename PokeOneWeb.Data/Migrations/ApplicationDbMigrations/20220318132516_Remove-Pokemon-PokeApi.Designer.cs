@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
@@ -11,9 +12,10 @@ using PokeOneWeb.Data;
 namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318132516_Remove-Pokemon-PokeApi")]
+    partial class RemovePokemonPokeApi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -475,6 +477,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PokeApiName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Hash")
@@ -757,6 +762,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PokeApiName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PokeoneItemId")
                         .HasColumnType("int");
@@ -1102,6 +1110,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PokeApiName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PowerPoints")
                         .HasColumnType("int");

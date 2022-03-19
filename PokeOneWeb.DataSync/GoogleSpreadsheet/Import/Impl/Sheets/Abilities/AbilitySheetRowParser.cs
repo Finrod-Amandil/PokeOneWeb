@@ -21,52 +21,47 @@
 
             if (values.Count > 1)
             {
-                value.PokeApiName = values[1] as string;
+                value.ShortEffect = values[1] as string;
             }
 
             if (values.Count > 2)
             {
-                value.ShortEffect = values[2] as string;
+                value.Effect = values[2] as string;
             }
 
             if (values.Count > 3)
             {
-                value.Effect = values[3] as string;
+                value.AtkBoost = decimal.TryParse(values[3].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 4)
             {
-                value.AtkBoost = decimal.TryParse(values[4].ToString(), out var parsed) ? parsed : 1M;
+                value.SpaBoost = decimal.TryParse(values[4].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 5)
             {
-                value.SpaBoost = decimal.TryParse(values[5].ToString(), out var parsed) ? parsed : 1M;
+                value.DefBoost = decimal.TryParse(values[5].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 6)
             {
-                value.DefBoost = decimal.TryParse(values[6].ToString(), out var parsed) ? parsed : 1M;
+                value.SpdBoost = decimal.TryParse(values[6].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 7)
             {
-                value.SpdBoost = decimal.TryParse(values[7].ToString(), out var parsed) ? parsed : 1M;
+                value.SpeBoost = decimal.TryParse(values[7].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 8)
             {
-                value.SpeBoost = decimal.TryParse(values[8].ToString(), out var parsed) ? parsed : 1M;
+                value.HpBoost = decimal.TryParse(values[8].ToString(), out var parsed) ? parsed : 1M;
             }
 
             if (values.Count > 9)
             {
-                value.HpBoost = decimal.TryParse(values[9].ToString(), out var parsed) ? parsed : 1M;
-            }
-
-            if (values.Count > 10)
-            {
-                value.BoostConditions = values[10] as string;
+                value.BoostConditions = values[9] as string;
             }
 
             return value;
