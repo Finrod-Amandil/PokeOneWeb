@@ -16,6 +16,7 @@ namespace PokeOneWeb.Data.Entities
         {
             builder.Entity<Region>().HasIndexedHashes();
             builder.Entity<Region>().HasIndex(r => r.Name).IsUnique();
+            builder.Entity<Region>().HasIndex(r => r.ResourceName).IsUnique();
 
             builder.Entity<Region>()
                 .HasOne(r => r.Event)
@@ -47,6 +48,8 @@ namespace PokeOneWeb.Data.Entities
         //INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
+
+        public string ResourceName { get; set; }
 
         public bool IsEventRegion { get; set; }
 

@@ -4,34 +4,39 @@
     {
         public RegionSheetDto ReadRow(List<object> values)
         {
-            if (values is null || values.Count < 1)
+            if (values is null || values.Count < 2)
             {
                 throw new InvalidRowDataException("Row data does not contain sufficient values.");
             }
 
             var value = new RegionSheetDto
             {
-                Name = values[0] as string
+                Name = values[0] as string,
+                ResourceName = values[1] as string
             };
 
             if (value.Name is null)
             {
                 throw new InvalidRowDataException($"Tried to read Region, but required field {nameof(value.Name)} was empty.");
             }
-
-            if (values.Count > 1)
+            if (value.ResourceName is null)
             {
-                value.Color = values[1] as string;
+                throw new InvalidRowDataException($"Tried to read Region, but required field {nameof(value.ResourceName)} was empty.");
             }
 
             if (values.Count > 2)
             {
-                value.IsEventRegion = bool.TryParse(values[2].ToString(), out var parsedIsEventRegion) && parsedIsEventRegion;
+                value.Color = values[2] as string;
             }
 
             if (values.Count > 3)
             {
-                value.EventName = values[3] as string;
+                value.IsEventRegion = bool.TryParse(values[3].ToString(), out var parsedIsEventRegion) && parsedIsEventRegion;
+            }
+
+            if (values.Count > 4)
+            {
+                value.EventName = values[4] as string;
             }
 
             return value;

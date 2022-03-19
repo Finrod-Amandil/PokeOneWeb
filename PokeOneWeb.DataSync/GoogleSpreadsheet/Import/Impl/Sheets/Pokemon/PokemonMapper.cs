@@ -55,7 +55,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             form.IdHash = rowHash.IdHash;
             form.Hash = rowHash.ContentHash;
             form.ImportSheetId = rowHash.ImportSheetId;
-            form.PokeApiName = dto.PokemonFormPokeApiName;
             form.SortIndex = dto.SortIndex;
             form.Name = dto.PokemonFormName;
             form.PokemonVariety = MapPokemonVariety(dto, form.PokemonVariety);
@@ -85,7 +84,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             else
             {
                 variety.ResourceName = dto.ResourceName;
-                variety.PokeApiName = dto.PokemonVarietyPokeApiName;
                 variety.Name = dto.PokemonVarietyName;
                 variety.PokemonSpecies = species;
                 variety.Attack = dto.Attack;
@@ -140,7 +138,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             {
                 species.PokedexNumber = dto.PokedexNumber;
                 species.Name = dto.PokemonSpeciesName;
-                species.PokeApiName = dto.PokemonSpeciesPokeApiName;
 
                 species.DefaultVariety = MapDefaultVariety(dto, species.DefaultVariety);
 

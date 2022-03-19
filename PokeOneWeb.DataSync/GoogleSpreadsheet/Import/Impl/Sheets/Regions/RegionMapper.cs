@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 
         protected override string GetUniqueName(RegionSheetDto dto)
         {
-            return dto.Name;
+            return dto.ResourceName;
         }
 
         protected override Region MapEntity(RegionSheetDto dto, RowHash rowHash, Region region = null)
@@ -44,6 +44,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             region.Hash = rowHash.ContentHash;
             region.ImportSheetId = rowHash.ImportSheetId;
             region.Name = dto.Name;
+            region.ResourceName = dto.ResourceName;
             region.Color = dto.Color;
             region.IsEventRegion = dto.IsEventRegion;
 

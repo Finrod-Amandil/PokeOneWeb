@@ -43,8 +43,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         public List<ElementalTypeRelation> AttackingDamageRelations { get; set; } = new();
         public List<ElementalTypeRelation> DefendingDamageRelations { get; set; } = new();
         public List<Move> Moves { get; set; } = new();
