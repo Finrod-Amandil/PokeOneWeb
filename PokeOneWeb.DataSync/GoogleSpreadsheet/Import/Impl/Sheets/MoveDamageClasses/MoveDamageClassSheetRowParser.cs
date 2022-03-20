@@ -1,27 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageClasses
 {
-    public class MoveDamageClassSheetRowParser : ISheetRowParser<MoveDamageClassSheetDto>
+    public class MoveDamageClassSheetRowParser : SheetRowParser<MoveDamageClassSheetDto>
     {
-        public MoveDamageClassSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 1;
+
+        protected override List<Action<MoveDamageClassSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 1)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new MoveDamageClassSheetDto
-            {
-                Name = values[0] as string
-            };
-
-            if (value.Name is null)
-            {
-                throw new InvalidRowDataException($"Tried to read MoveDamageClass, but required field {nameof(value.Name)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value)
+        };
     }
 }

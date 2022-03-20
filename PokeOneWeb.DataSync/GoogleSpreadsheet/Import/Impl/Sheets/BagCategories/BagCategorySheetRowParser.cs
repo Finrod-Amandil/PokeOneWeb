@@ -1,28 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
 {
-    public class BagCategorySheetRowParser : ISheetRowParser<BagCategorySheetDto>
+    public class BagCategorySheetRowParser : SheetRowParser<BagCategorySheetDto>
     {
-        public BagCategorySheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 2;
+
+        protected override List<Action<BagCategorySheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 1)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new BagCategorySheetDto
-            {
-                Name = values[0] as string,
-                SortIndex = int.TryParse(values[1].ToString(), out var parsed) ? parsed : 0
-            };
-
-            if (value.Name is null)
-            {
-                throw new InvalidRowDataException($"Tried to read BagCategory, but required field {nameof(value.Name)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value),
+            (dto, value) => dto.SortIndex = ParseAsInt(value)
+        };
     }
 }
