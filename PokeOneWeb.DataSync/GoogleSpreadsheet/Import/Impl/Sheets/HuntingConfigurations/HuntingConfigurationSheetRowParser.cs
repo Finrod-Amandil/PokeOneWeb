@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
 {
     public class HuntingConfigurationSheetRowParser : SheetRowParser<HuntingConfigurationSheetDto>
     {

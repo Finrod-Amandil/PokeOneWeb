@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
 {
     public class TimeOfDaySheetRowParser : SheetRowParser<TimeOfDaySheetDto>
     {

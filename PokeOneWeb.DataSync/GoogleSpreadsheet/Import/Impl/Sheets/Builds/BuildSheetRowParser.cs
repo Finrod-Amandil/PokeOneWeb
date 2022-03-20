@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
 {
     public class BuildSheetRowParser : SheetRowParser<BuildSheetDto>
     {

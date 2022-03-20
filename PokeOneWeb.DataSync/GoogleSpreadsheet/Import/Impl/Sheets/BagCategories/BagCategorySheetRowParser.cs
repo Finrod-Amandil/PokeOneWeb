@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
 {
     public class BagCategorySheetRowParser : SheetRowParser<BagCategorySheetDto>
     {

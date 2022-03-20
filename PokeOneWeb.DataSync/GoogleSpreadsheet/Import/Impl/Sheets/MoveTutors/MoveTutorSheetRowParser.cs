@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
 {
     public class MoveTutorSheetRowParser : SheetRowParser<MoveTutorSheetDto>
     {

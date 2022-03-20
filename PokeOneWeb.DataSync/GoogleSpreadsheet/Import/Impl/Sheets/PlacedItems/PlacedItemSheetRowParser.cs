@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
+﻿using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
 {
     public class PlacedItemSheetRowParser : SheetRowParser<PlacedItemSheetDto>
     {
