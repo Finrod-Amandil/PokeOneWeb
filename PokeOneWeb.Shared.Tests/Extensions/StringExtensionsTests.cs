@@ -42,20 +42,5 @@ namespace PokeOneWeb.Shared.Tests.Extensions
             // Then
             output.Should().BeFalse("because the input is the not the same value.");
         }
-
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        [InlineData("test")]
-        [InlineData("abc")]
-        public void EqualExact2_UnequalInput_IsNotEqual(string compare)
-        {
-            // When
-            bool output = TEST_OBJECT.EqualsExact2(compare);
-
-            // Then
-            output.Should().BeFalse("because the input is the not the same value.");
-        }
     }
 }
