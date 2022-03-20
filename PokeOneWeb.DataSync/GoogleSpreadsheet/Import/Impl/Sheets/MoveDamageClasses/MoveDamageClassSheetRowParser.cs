@@ -6,7 +6,7 @@
 
         protected override List<Action<MoveDamageClassSheetDto, object>> MappingDelegates => new()
         {
-            (dto, value) => dto.Name = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value)
         };
     }
 }

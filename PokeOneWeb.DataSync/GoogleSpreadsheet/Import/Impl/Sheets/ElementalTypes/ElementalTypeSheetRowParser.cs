@@ -1,25 +1,12 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes
 {
-    public class ElementalTypeSheetRowParser : ISheetRowParser<ElementalTypeSheetDto>
+    public class ElementalTypeSheetRowParser : SheetRowParser<ElementalTypeSheetDto>
     {
-        public ElementalTypeSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 1;
+
+        protected override List<Action<ElementalTypeSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 1)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new ElementalTypeSheetDto
-            {
-                Name = values[0] as string
-            };
-
-            if (value.Name is null)
-            {
-                throw new InvalidRowDataException($"Tried to read ElementalType, but required field {nameof(value.Name)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value)
+        };
     }
 }

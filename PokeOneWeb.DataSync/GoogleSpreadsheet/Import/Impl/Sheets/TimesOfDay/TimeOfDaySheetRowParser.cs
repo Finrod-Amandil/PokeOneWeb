@@ -1,37 +1,15 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
 {
-    public class TimeOfDaySheetRowParser : ISheetRowParser<TimeOfDaySheetDto>
+    public class TimeOfDaySheetRowParser : SheetRowParser<TimeOfDaySheetDto>
     {
-        public TimeOfDaySheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 3;
+
+        protected override List<Action<TimeOfDaySheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 3)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new TimeOfDaySheetDto
-            {
-                SortIndex = int.TryParse(values[0].ToString(), out var parsed) ? parsed : 0,
-                Name = values[1] as string,
-                Abbreviation = values[2] as string
-            };
-
-            if (value.Name is null)
-            {
-                throw new InvalidRowDataException($"Tried to read TimeOfDay, but required field {nameof(value.Name)} was empty.");
-            }
-
-            if (value.Abbreviation is null)
-            {
-                throw new InvalidRowDataException($"Tried to read TimeOfDay, but required field {nameof(value.Abbreviation)} was empty.");
-            }
-
-            if (values.Count > 3)
-            {
-                value.Color = values[3] as string;
-            }
-
-            return value;
-        }
+            (dto, value) => dto.SortIndex = ParseAsInt(value),
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Abbreviation = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Color = ParseAsString(value)
+        };
     }
 }

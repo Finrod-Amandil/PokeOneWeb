@@ -101,7 +101,7 @@
 
             if (!canParse)
             {
-                throw new UnparsableRowValueException(value, "DateTime");
+                throw new UnparsableRowValueException(value, "bool");
             }
 
             return parsed;
