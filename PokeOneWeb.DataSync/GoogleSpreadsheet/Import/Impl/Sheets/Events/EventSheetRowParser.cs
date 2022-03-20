@@ -7,8 +7,8 @@
         protected override List<Action<EventSheetDto, object>> MappingDelegates => new()
         {
             (dto, value) => dto.Name = ParseAsNonEmptyString(value),
-            (dto, value) => dto.StartDate = ParseAsDateTime(value),
-            (dto, value) => dto.EndDate = ParseAsDateTime(value)
+            (dto, value) => dto.StartDate = ParseAsDate(value),
+            (dto, value) => dto.EndDate = ParseAsDate(value)
         };
     }
 }

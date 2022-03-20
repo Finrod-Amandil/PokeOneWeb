@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
+﻿using System.Globalization;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
     public abstract class SheetRowParser<TDto> 
         : ISheetRowParser<TDto> where TDto : ISpreadsheetEntityDto, new()
@@ -83,9 +85,16 @@
             return parsed;
         }
 
-        protected static DateTime ParseAsDateTime(object value)
+        protected static DateTime ParseAsDate(object value)
         {
-            var canParse = DateTime.TryParse(value.ToString(), out var parsed);
+            var format = "dd.MM.yyyy";
+            var canParse = DateTime.TryParseExact(
+                value.ToString(), 
+                format, 
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                out var parsed
+            );
 
             if (!canParse)
             {
