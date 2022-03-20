@@ -157,14 +157,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Moves
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "")] // DoInclude must be boolean
+        [InlineData("0", "notBoolean")] // DoInclude must be boolean
         [InlineData("0", false, "")] // ResourceName must be non-empty
         [InlineData("0", false, "0", "")] // DamageClassName must be non-empty
         [InlineData("0", false, "0", "0", "")] // TypeName must be non-empty
-        [InlineData("0", false, "0", "0", "0", "")] // AttackPower must be int
-        [InlineData("0", false, "0", "0", "0", 0, "")] // Accuracy must be int
-        [InlineData("0", false, "0", "0", "0", 0, 0, "")] // PowerPoints must be int
-        [InlineData("0", false, "0", "0", "0", 0, 0, 0, "")] // Priority must be int
+        [InlineData("0", false, "0", "0", "0", "notInt")] // AttackPower must be int
+        [InlineData("0", false, "0", "0", "0", 0, "notInt")] // Accuracy must be int
+        [InlineData("0", false, "0", "0", "0", 0, 0, "notInt")] // PowerPoints must be int
+        [InlineData("0", false, "0", "0", "0", 0, 0, 0, "notInt")] // Priority must be int
         [InlineData("0", false, "0", "0", "0", 0, 0, 0, 0, 0)] // Effect must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {

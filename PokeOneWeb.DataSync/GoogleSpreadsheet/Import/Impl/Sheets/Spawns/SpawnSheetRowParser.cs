@@ -13,10 +13,10 @@
             (dto, value) => dto.SpawnType = ParseAsNonEmptyString(value),
             (dto, value) => dto.SpawnCommonality = ParseAsString(value),
             (dto, value) => dto.SpawnProbability = ParseAsString(value),
-            (dto, value) => dto.EncounterCount = ParseAsInt(value),
-            (dto, value) => dto.IsConfirmed = ParseAsBoolean(value),
-            (dto, value) => dto.LowestLvl = ParseAsInt(value),
-            (dto, value) => dto.HighestLvl = ParseAsInt(value),
+            (dto, value) => dto.EncounterCount = ParseAsInt(value, 0),
+            (dto, value) => dto.IsConfirmed = ParseAsBoolean(value, true),
+            (dto, value) => dto.LowestLvl = ParseAsInt(value, 0),
+            (dto, value) => dto.HighestLvl = ParseAsInt(value, 0),
             (dto, value) => dto.Notes = ParseAsString(value),
         };
     }

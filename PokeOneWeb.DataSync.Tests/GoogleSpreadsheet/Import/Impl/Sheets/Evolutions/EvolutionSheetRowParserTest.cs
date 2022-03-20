@@ -107,16 +107,16 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         }
 
         [Theory]
-        [InlineData("")] // BasePokemonSpeciesPokedexNumber must be int
+        [InlineData("notInt")] // BasePokemonSpeciesPokedexNumber must be int
         [InlineData(1, "")] // BasePokemonSpeciesName must be non-empty
         [InlineData(1, "0", "")] // BasePokemonVarietyName must be non-empty
-        [InlineData(1, "0", "0", "")] // BaseStage must be int
+        [InlineData(1, "0", "0", "notInt")] // BaseStage must be int
         [InlineData(1, "0", "0", 0, "")] // EvolvedPokemonVarietyName must be non-empty
-        [InlineData(1, "0", "0", 0, "0", "")] // EvolvedStage must be int
+        [InlineData(1, "0", "0", 0, "0", "notInt")] // EvolvedStage must be int
         [InlineData(1, "0", "0", 0, "0", 1, "")] // EvolutionTrigger must be non-empty
-        [InlineData(1, "0", "0", 0, "0", 1, "0", "")] // isReversible must be boolean
-        [InlineData(1, "0", "0", 0, "0", 1, "0", false, "")] // isAvailable must be boolean
-        [InlineData(1, "0", "0", 0, "0", 1, "0", false, false, "")] // doInclude must be boolean
+        [InlineData(1, "0", "0", 0, "0", 1, "0", "notBoolean")] // isReversible must be boolean
+        [InlineData(1, "0", "0", 0, "0", 1, "0", false, "notBoolean")] // isAvailable must be boolean
+        [InlineData(1, "0", "0", 0, "0", 1, "0", false, false, "notBoolean")] // doInclude must be boolean
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

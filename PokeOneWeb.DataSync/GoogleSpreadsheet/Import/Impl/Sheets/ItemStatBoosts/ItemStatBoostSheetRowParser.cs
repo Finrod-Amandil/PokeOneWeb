@@ -13,7 +13,7 @@
             (dto, value) => dto.SpdBoost = ParseAsDecimal(value),
             (dto, value) => dto.SpeBoost = ParseAsDecimal(value),
             (dto, value) => dto.HpBoost = ParseAsDecimal(value),
-            (dto, value) => dto.RequiredPokemonName = ParseAsString(value),
+            (dto, value) => dto.RequiredPokemonName = ParseAsString(value)
         };
     }
 }

@@ -148,12 +148,12 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "")] // IsAvailable must be boolean
-        [InlineData("0", false, "")] // DoInclude must be boolean
+        [InlineData("0", "notBoolean")] // IsAvailable must be boolean
+        [InlineData("0", false, "notBoolean")] // DoInclude must be boolean
         [InlineData("0", false, false, "")] // ResourceName must be non-empty
-        [InlineData("0", false, false, "0", "")] // SortIndex must be int
+        [InlineData("0", false, false, "0", "notInt")] // SortIndex must be int
         [InlineData("0", false, false, "0", 1, "")] // BagCategoryName must be non-empty
-        [InlineData("0", false, false, "0", 1, "0", "")] // PokeOneItemId must be int
+        [InlineData("0", false, false, "0", 1, "0", "notInt")] // PokeOneItemId must be int
         [InlineData("0", false, false, "0", 1, "0", 1, 0)] // Description must be string
         [InlineData("0", false, false, "0", 1, "0", 1, "", 0)] // Effect must be string
         [InlineData("0", false, false, "0", 1, "0", 1, "", "", 0)] // SpriteName must be string
@@ -168,6 +168,51 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new ItemSheetRowParser();
+
+            var name = "Item Name";
+            var isAvailable = false;
+            var doInclude = true;
+            var resourceName = "item-resource-name";
+            var sortIndex = 1;
+            var bagCategoryName = "Bag Category Name";
+            var pokeOneItemId = ""; // Missing non-string value
+
+            var values = new List<object>
+            {
+                name,
+                isAvailable,
+                doInclude,
+                resourceName,
+                sortIndex,
+                bagCategoryName,
+                pokeOneItemId,
+            };
+
+            var defaultValue = 0;
+
+            var expected = new ItemSheetDto
+            {
+                Name = name,
+                IsAvailable = isAvailable,
+                DoInclude = doInclude,
+                ResourceName = resourceName,
+                SortIndex = sortIndex,
+                BagCategoryName = bagCategoryName,
+                PokeOneItemId = defaultValue,
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

@@ -137,14 +137,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         [Theory]
         [InlineData("")] // MoveTutorName must be non-empty
         [InlineData("0", "")] // MoveName must be non-empty
-        [InlineData("0", "0", "")] // RedShardPrice must be int
-        [InlineData("0", "0", 0, "")] // BlueShardPrice must be int
-        [InlineData("0", "0", 0, 0, "")] // GreenShardPrice must be int
-        [InlineData("0", "0", 0, 0, 0, "")] // YellowShardPrice must be int
-        [InlineData("0", "0", 0, 0, 0, 0, "")] // PWTBPPrice must be int
-        [InlineData("0", "0", 0, 0, 0, 0, 0, "")] // BFBPPrice must be int
-        [InlineData("0", "0", 0, 0, 0, 0, 0, 0, "")] // PokeDollarPrice must be int
-        [InlineData("0", "0", 0, 0, 0, 0, 0, 0, 0, "")] // PokeGoldPrice must be int
+        [InlineData("0", "0", "notInt")] // RedShardPrice must be int
+        [InlineData("0", "0", 0, "notInt")] // BlueShardPrice must be int
+        [InlineData("0", "0", 0, 0, "notInt")] // GreenShardPrice must be int
+        [InlineData("0", "0", 0, 0, 0, "notInt")] // YellowShardPrice must be int
+        [InlineData("0", "0", 0, 0, 0, 0, "notInt")] // PWTBPPrice must be int
+        [InlineData("0", "0", 0, 0, 0, 0, 0, "notInt")] // BFBPPrice must be int
+        [InlineData("0", "0", 0, 0, 0, 0, 0, 0, "notInt")] // PokeDollarPrice must be int
+        [InlineData("0", "0", 0, 0, 0, 0, 0, 0, 0, "notInt")] // PokeGoldPrice must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
@@ -156,6 +156,60 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new MoveTutorMoveSheetRowParser();
+
+            var moveTutorName = "Move Tutor Name";
+            var moveName = "Move Name";
+            var redShardPrice = "";
+            var blueShardPrice = "";
+            var greenShardPrice = "";
+            var yellowShardPrice = "";
+            var pwtBpPrice = "";
+            var bfBpPrice = "";
+            var pokeDollarPrice = "";
+            var pokeGoldPrice = "";
+
+            var values = new List<object>
+            {
+                moveTutorName,
+                moveName,
+                redShardPrice,
+                blueShardPrice,
+                greenShardPrice,
+                yellowShardPrice,
+                pwtBpPrice,
+                bfBpPrice,
+                pokeDollarPrice,
+                pokeGoldPrice
+            };
+
+            var defaultValue = 0;
+
+            var expected = new MoveTutorMoveSheetDto
+            {
+                MoveTutorName = moveTutorName,
+                MoveName = moveName,
+                RedShardPrice = defaultValue,
+                BlueShardPrice = defaultValue,
+                GreenShardPrice = defaultValue,
+                YellowShardPrice = defaultValue,
+                PWTBPPrice = defaultValue,
+                BFBPPrice = defaultValue,
+                PokeDollarPrice = defaultValue,
+                PokeGoldPrice = defaultValue
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

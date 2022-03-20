@@ -96,11 +96,11 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Natures
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "")] // Attack must be int
-        [InlineData("0", 0, "")] // SpecialAttack must be int
-        [InlineData("0", 0, 0, "")] // Defense must be int
-        [InlineData("0", 0, 0, 0, "")] // SpecialDefense must be int
-        [InlineData("0", 0, 0, 0, 0, "")] // Speed must be int
+        [InlineData("0", "notInt")] // Attack must be int
+        [InlineData("0", 0, "notInt")] // SpecialAttack must be int
+        [InlineData("0", 0, 0, "notInt")] // Defense must be int
+        [InlineData("0", 0, 0, 0, "notInt")] // SpecialDefense must be int
+        [InlineData("0", 0, 0, 0, 0, "notInt")] // Speed must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

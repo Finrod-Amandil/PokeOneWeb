@@ -54,9 +54,16 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return stringValue;
         }
 
-        protected static decimal ParseAsDecimal(object value)
+        protected static decimal ParseAsDecimal(object value, decimal? defaultValue = null)
         {
-            var canParse = decimal.TryParse(value.ToString(), out var parsed);
+            var stringValue = value.ToString();
+
+            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            {
+                return (decimal)defaultValue;
+            }
+
+            var canParse = decimal.TryParse(stringValue, out var parsed);
 
             if (!canParse)
             {
@@ -85,8 +92,13 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return parsed;
         }
 
-        protected static DateTime ParseAsDate(object value)
+        protected static DateTime? ParseAsOptionalDate(object value)
         {
+            if (string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return null;
+            }
+
             var format = "dd.MM.yyyy";
             var canParse = DateTime.TryParseExact(
                 value.ToString(), 
@@ -104,9 +116,16 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return parsed;
         }
 
-        protected static bool ParseAsBoolean(object value)
+        protected static bool ParseAsBoolean(object value, bool? defaultValue = null)
         {
-            var canParse = bool.TryParse(value.ToString(), out var parsed);
+            var stringValue = value.ToString();
+
+            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            {
+                return (bool)defaultValue;
+            }
+
+            var canParse = bool.TryParse(stringValue, out var parsed);
 
             if (!canParse)
             {

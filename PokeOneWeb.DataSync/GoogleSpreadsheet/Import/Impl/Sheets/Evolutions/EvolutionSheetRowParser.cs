@@ -12,7 +12,7 @@
             (dto, value) => dto.BaseStage = ParseAsInt(value),
             (dto, value) => dto.EvolvedPokemonVarietyName = ParseAsNonEmptyString(value),
             (dto, value) => dto.EvolvedStage = ParseAsInt(value),
-            (dto, value) => dto.EvolutionTrigger = ParseAsNonEmptyString(value),
+            (dto, value) => dto.EvolutionTrigger = ParseAsString(value),
             (dto, value) => dto.IsReversible = ParseAsBoolean(value),
             (dto, value) => dto.IsAvailable = ParseAsBoolean(value),
             (dto, value) => dto.DoInclude = ParseAsBoolean(value),

@@ -120,7 +120,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         }
 
         [Theory]
-        [InlineData("")] // SortIndex must be int
+        [InlineData("notInt")] // SortIndex must be int
         [InlineData(0, "")] // Name must be non-empty
         [InlineData(0, "0", "")] // Abbreviation must be non-empty
         [InlineData(0, "0", "0", 0)] // Color must be string

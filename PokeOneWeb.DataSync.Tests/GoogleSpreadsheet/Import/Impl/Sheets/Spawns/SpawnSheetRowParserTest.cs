@@ -157,10 +157,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         [InlineData("0", "0", "0", "0", "")] // SpawnType must be non-empty
         [InlineData("0", "0", "0", "0", "0", 0)] // SpawnCommonality must string
         [InlineData("0", "0", "0", "0", "0", "", 0)] // SpawnProbability must be string
-        [InlineData("0", "0", "0", "0", "0", "", "", "")] // EncounterCount must be int
-        [InlineData("0", "0", "0", "0", "0", "", "", 0, "")] // IsConfirmed must be boolean
-        [InlineData("0", "0", "0", "0", "0", "", "", 0, false, "")] // LowestLvl must be int
-        [InlineData("0", "0", "0", "0", "0", "", "", 0, false, 0, "")] // HighestLvl must be int
+        [InlineData("0", "0", "0", "0", "0", "", "", "notInt")] // EncounterCount must be int
+        [InlineData("0", "0", "0", "0", "0", "", "", 0, "notBoolean")] // IsConfirmed must be boolean
+        [InlineData("0", "0", "0", "0", "0", "", "", 0, false, "notInt")] // LowestLvl must be int
+        [InlineData("0", "0", "0", "0", "0", "", "", 0, false, 0, "notInt")] // HighestLvl must be int
         [InlineData("0", "0", "0", "0", "0", "", "", 0, false, 0, 0, 0)] // Notes must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
@@ -173,6 +173,67 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new SpawnSheetRowParser();
+
+            var locationName = "Location Name";
+            var pokemonForm = "Pokemon Form";
+            var season = "Season";
+            var timeOfDay = "TimeOfDay";
+            var spawnType = "Spawn Type";
+            var spawnCommonality = "Common";
+            var spawnProbability = "50%";
+            var encounterCount = "";
+            var isConfirmed = "";
+            var lowestLvl = "";
+            var highestLvl = "";
+            var notes = "Notes";
+
+            var values = new List<object>
+            {
+                locationName,
+                pokemonForm,
+                season,
+                timeOfDay,
+                spawnType,
+                spawnCommonality,
+                spawnProbability,
+                encounterCount,
+                isConfirmed,
+                lowestLvl,
+                highestLvl,
+                notes
+            };
+
+            var defaultValue = 0;
+            var defaultIsConfirmed = true;
+
+            var expected = new SpawnSheetDto
+            {
+                LocationName = locationName,
+                PokemonForm = pokemonForm,
+                Season = season,
+                TimeOfDay = timeOfDay,
+                SpawnType = spawnType,
+                SpawnCommonality = spawnCommonality,
+                SpawnProbability = spawnProbability,
+                EncounterCount = defaultValue,
+                IsConfirmed = defaultIsConfirmed,
+                LowestLvl = defaultValue,
+                HighestLvl = defaultValue,
+                Notes = notes
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

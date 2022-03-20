@@ -148,13 +148,13 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedI
 
         [Theory]
         [InlineData("")] // LocationName must be non-empty
-        [InlineData("0", "")] // Quantity must be int
+        [InlineData("0", "notInt")] // Quantity must be int
         [InlineData("0", 0, "")] // ItemName must be non-empty
-        [InlineData("0", 0, "0", "")] // SortIndex must be int
-        [InlineData("0", 0, "0", 0, "")] // Index must be int
+        [InlineData("0", 0, "0", "notInt")] // SortIndex must be int
+        [InlineData("0", 0, "0", 0, "notInt")] // Index must be int
         [InlineData("0", 0, "0", 0, 0, 0)] // PlacementDescription must be string
-        [InlineData("0", 0, "0", 0, 0, "", "")] // IsHidden must be boolean
-        [InlineData("0", 0, "0", 0, 0, "", false, "")] // IsConfirmed must be boolean
+        [InlineData("0", 0, "0", 0, 0, "", "notBoolean")] // IsHidden must be boolean
+        [InlineData("0", 0, "0", 0, 0, "", false, "notBoolean")] // IsConfirmed must be boolean
         [InlineData("0", 0, "0", 0, 0, "", false, false, 0)] // Requirements must be string
         [InlineData("0", 0, "0", 0, 0, "", false, false, "", 0)] // ScreenshotName must be string
         [InlineData("0", 0, "0", 0, 0, "", false, false, "", "", 0)] // Notes must be string
@@ -169,6 +169,55 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedI
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new PlacedItemSheetRowParser();
+
+            var locationName = "Location Name";
+            var quantity = 5;
+            var itemName = "Item Name";
+            var sortIndex = 1;
+            var index = 2;
+            var placementDescription = "Placement Description";
+            var isHidden = "";
+            var isConfirmed = "";
+
+            var values = new List<object>
+            {
+                locationName,
+                quantity,
+                itemName,
+                sortIndex,
+                index,
+                placementDescription,
+                isHidden,
+                isConfirmed,
+            };
+
+            var defaultIsHidden = false;
+            var defaultIsConfirmed = true;
+
+            var expected = new PlacedItemSheetDto()
+            {
+                LocationName = locationName,
+                Quantity = quantity,
+                ItemName = itemName,
+                SortIndex = sortIndex,
+                Index = index,
+                PlacementDescription = placementDescription,
+                IsHidden = defaultIsHidden,
+                IsConfirmed = defaultIsConfirmed,
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

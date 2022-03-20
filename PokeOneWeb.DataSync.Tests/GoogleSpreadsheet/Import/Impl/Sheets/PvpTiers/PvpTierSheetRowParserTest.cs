@@ -84,7 +84,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PvpTier
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "")] // SortIndex must be int
+        [InlineData("0", "notInt")] // SortIndex must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

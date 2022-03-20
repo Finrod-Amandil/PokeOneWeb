@@ -49,6 +49,7 @@
             (dto, value) => dto.Weight = ParseAsDecimal(value),
             (dto, value) => dto.ExpYield = ParseAsInt(value),
 
+            // Optional
             (dto, value) => dto.SmogonUrl = ParseAsString(value),
             (dto, value) => dto.BulbapediaUrl = ParseAsString(value),
             (dto, value) => dto.PokeoneCommunityUrl = ParseAsString(value),

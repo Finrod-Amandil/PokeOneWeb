@@ -140,5 +140,53 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Abiliti
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
         }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new AbilitySheetRowParser();
+
+            var name = "Ability Name";
+            var shortEffect = "Short Effect";
+            var effect = "Effect";
+            var atkBoost = "";
+            var spaBoost = "";
+            var defBoost = "";
+            var spdBoost = "";
+            var speBoost = "";
+            var hpBoost = "";
+            var boostConditions = "Boost Conditions";
+
+            var values = new List<object>
+            {
+                name, shortEffect, effect,
+                atkBoost, spaBoost, defBoost,
+                spdBoost, speBoost, hpBoost,
+                boostConditions
+            };
+
+            var defaultValue = 1M;
+
+            var expected = new AbilitySheetDto
+            {
+                Name = name,
+                ShortEffect = shortEffect,
+                Effect = effect,
+                AtkBoost = defaultValue,
+                SpaBoost = defaultValue,
+                DefBoost = defaultValue,
+                SpdBoost = defaultValue,
+                SpeBoost = defaultValue,
+                HpBoost = defaultValue,
+                BoostConditions = boostConditions
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }

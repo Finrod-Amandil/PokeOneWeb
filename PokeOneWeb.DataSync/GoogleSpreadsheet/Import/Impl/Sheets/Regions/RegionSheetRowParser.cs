@@ -9,7 +9,7 @@
             (dto, value) => dto.Name = ParseAsNonEmptyString(value),
             (dto, value) => dto.ResourceName = ParseAsNonEmptyString(value),
             (dto, value) => dto.Color = ParseAsString(value),
-            (dto, value) => dto.IsEventRegion = ParseAsBoolean(value),
+            (dto, value) => dto.IsEventRegion = ParseAsBoolean(value, false),
             (dto, value) => dto.EventName = ParseAsString(value),
         };
     }

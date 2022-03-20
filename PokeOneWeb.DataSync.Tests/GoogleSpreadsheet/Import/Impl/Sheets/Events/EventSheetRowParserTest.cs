@@ -103,8 +103,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "x")] // Start Date must be DateTime
-        [InlineData("0", "01.01.2020", "x")] // End Date must be DateTime
+        [InlineData("0", "notDateTime")] // Start Date must be DateTime
+        [InlineData("0", "01.01.2020", "notDateTime")] // End Date must be DateTime
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
@@ -137,6 +137,37 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new EventSheetRowParser();
+
+            var name = "Event Name";
+            var startDate = "";
+            var endDate = "";
+
+            var values = new List<object>
+            {
+                name, startDate, endDate
+            };
+
+            DateTime? defaultValue = null;
+
+            var expected = new EventSheetDto
+            {
+                Name = name,
+                StartDate = defaultValue,
+                EndDate = defaultValue
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

@@ -132,12 +132,12 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.ItemSta
 
         [Theory]
         [InlineData("")] // ItemName must be non-empty
-        [InlineData("0", "")] // AtkBoost must be decimal
-        [InlineData("0", 1, "")] // SpaBoost must be decimal
-        [InlineData("0", 1, 1, "")] // DefBoost must be decimal
-        [InlineData("0", 1, 1, 1, "")] // SpdBoost must be decimal
-        [InlineData("0", 1, 1, 1, 1, "")] // SpeBoost must be decimal
-        [InlineData("0", 1, 1, 1, 1, 1, "")] // HpBoost must be decimal
+        [InlineData("0", "notDecimal")] // AtkBoost must be decimal
+        [InlineData("0", 1, "notDecimal")] // SpaBoost must be decimal
+        [InlineData("0", 1, 1, "notDecimal")] // DefBoost must be decimal
+        [InlineData("0", 1, 1, 1, "notDecimal")] // SpdBoost must be decimal
+        [InlineData("0", 1, 1, 1, 1, "notDecimal")] // SpeBoost must be decimal
+        [InlineData("0", 1, 1, 1, 1, 1, "notDecimal")] // HpBoost must be decimal
         [InlineData("0", 1, 1, 1, 1, 1, 1, 0)] // RequiredPokemonName must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {

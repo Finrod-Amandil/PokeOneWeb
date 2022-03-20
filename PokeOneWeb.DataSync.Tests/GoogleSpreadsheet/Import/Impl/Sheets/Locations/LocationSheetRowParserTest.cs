@@ -133,7 +133,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         [InlineData("0", "")] // LocationGroupName must be non-empty
         [InlineData("0", "0", "")] // ResourceName must be non-empty
         [InlineData("0", "0", "0", "")] // LocationName must be non-empty
-        [InlineData("0", "0", "0", "0", "")] // SortIndex must be int
+        [InlineData("0", "0", "0", "0", "notInt")] // SortIndex must be int
         [InlineData("0", "0", "0", "0", 1, "")] // IsDiscoverable must be boolean
         [InlineData("0", "0", "0", "0", 1, false, 0)] // Notes must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)

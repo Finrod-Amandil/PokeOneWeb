@@ -137,13 +137,13 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Learnab
         }
 
         [Theory]
-        [InlineData("")] // PokemonSpeciesPokedexNumber must be int
+        [InlineData("notInt")] // PokemonSpeciesPokedexNumber must be int
         [InlineData(1, "")] // PokemonVarietyName must be non-empty
         [InlineData(1, "0", "")] // MoveName must be non-empty
         [InlineData(1, "0", "0", "")] // LearnMethod must be non-empty
-        [InlineData(1, "0", "0", "0", "x")] // IsAvailable must be boolean
+        [InlineData(1, "0", "0", "0", "notBoolean")] // IsAvailable must be boolean
         [InlineData(1, "0", "0", "0", false, 0)] // Generation must be string
-        [InlineData(1, "0", "0", "0", false, "", "x")] // LevelLearnedAt must be int
+        [InlineData(1, "0", "0", "0", false, "", "notInt")] // LevelLearnedAt must be int
         [InlineData(1, "0", "0", "0", false, "", 1, 0)] // RequiredItemName must be string
         [InlineData(1, "0", "0", "0", false, "", 1, "", 0)] // TutorName must be string
         [InlineData(1, "0", "0", "0", false, "", 1, "", "", 0)] // TutorLocation must be string
@@ -159,6 +159,47 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Learnab
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new LearnableMoveLearnMethodSheetRowParser();
+
+            var pokemonSpeciesPokedexNumber = 1;
+            var pokemonVarietyName = "Pokemon Variety Name";
+            var moveName = "Move Name";
+            var learnMethod = "Learn Method";
+            var isAvailable = true;
+            var generation = "Generation I";
+            var levelLearnedAt = ""; // Missing non-string value
+
+            var values = new List<object>
+            {
+                pokemonSpeciesPokedexNumber, pokemonVarietyName,
+                moveName, learnMethod, isAvailable,
+                generation, levelLearnedAt
+            };
+
+            var defaultValue = 0;
+
+            var expected = new LearnableMoveLearnMethodSheetDto
+            {
+                PokemonSpeciesPokedexNumber = pokemonSpeciesPokedexNumber,
+                PokemonVarietyName = pokemonVarietyName,
+                MoveName = moveName,
+                LearnMethod = learnMethod,
+                IsAvailable = isAvailable,
+                Generation = generation,
+                LevelLearnedAt = defaultValue
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

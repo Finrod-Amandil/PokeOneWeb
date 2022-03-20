@@ -91,8 +91,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         [Theory]
         [InlineData("")] // SeasonName must be non-empty
         [InlineData("0", "")] // TimeOfDayName must be non-empty
-        [InlineData("0", "0", "")] // StartHour must be int
-        [InlineData("0", "0", 0, "")] // EndHour must be int
+        [InlineData("0", "0", "notInt")] // StartHour must be int
+        [InlineData("0", "0", 0, "notInt")] // EndHour must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

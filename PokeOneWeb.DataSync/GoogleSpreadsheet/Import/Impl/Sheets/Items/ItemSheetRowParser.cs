@@ -12,7 +12,7 @@
             (dto, value) => dto.ResourceName = ParseAsNonEmptyString(value),
             (dto, value) => dto.SortIndex = ParseAsInt(value),
             (dto, value) => dto.BagCategoryName = ParseAsNonEmptyString(value),
-            (dto, value) => dto.PokeOneItemId = ParseAsInt(value),
+            (dto, value) => dto.PokeOneItemId = ParseAsInt(value, 0),
             (dto, value) => dto.Description = ParseAsString(value),
             (dto, value) => dto.Effect = ParseAsString(value),
             (dto, value) => dto.SpriteName = ParseAsString(value)

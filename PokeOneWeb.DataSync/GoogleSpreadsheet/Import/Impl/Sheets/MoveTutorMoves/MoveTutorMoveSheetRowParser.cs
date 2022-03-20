@@ -8,14 +8,14 @@
         {
             (dto, value) => dto.MoveTutorName = ParseAsNonEmptyString(value),
             (dto, value) => dto.MoveName = ParseAsNonEmptyString(value),
-            (dto, value) => dto.RedShardPrice = ParseAsInt(value),
-            (dto, value) => dto.BlueShardPrice = ParseAsInt(value),
-            (dto, value) => dto.GreenShardPrice = ParseAsInt(value),
-            (dto, value) => dto.YellowShardPrice = ParseAsInt(value),
-            (dto, value) => dto.PWTBPPrice = ParseAsInt(value),
-            (dto, value) => dto.BFBPPrice = ParseAsInt(value),
-            (dto, value) => dto.PokeDollarPrice = ParseAsInt(value),
-            (dto, value) => dto.PokeGoldPrice = ParseAsInt(value)
+            (dto, value) => dto.RedShardPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.BlueShardPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.GreenShardPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.YellowShardPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.PWTBPPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.BFBPPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.PokeDollarPrice = ParseAsInt(value, 0),
+            (dto, value) => dto.PokeGoldPrice = ParseAsInt(value, 0)
         };
     }
 }

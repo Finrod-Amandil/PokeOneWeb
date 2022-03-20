@@ -84,7 +84,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         [Theory]
         [InlineData("")] // Attacking Type Name must be non-empty
         [InlineData("0", "")] // Defending Type Name must be non-empty
-        [InlineData("0", "0", "")] // Effectivity must be int
+        [InlineData("0", "0", "notInt")] // Effectivity must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

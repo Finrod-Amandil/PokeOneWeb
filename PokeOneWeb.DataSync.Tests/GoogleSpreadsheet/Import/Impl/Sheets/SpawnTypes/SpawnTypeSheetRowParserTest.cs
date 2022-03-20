@@ -93,9 +93,9 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
 
         [Theory]
         [InlineData("")] // Name must be non-empty
-        [InlineData("0", "")] // SortIndex must be int
-        [InlineData("0", 0, "")] // IsSyncable must be int
-        [InlineData("0", 0, false, "")] // IsInfinite must be int
+        [InlineData("0", "notInt")] // SortIndex must be int
+        [InlineData("0", 0, "notBoolean")] // IsSyncable must be boolean
+        [InlineData("0", 0, false, "notBoolean")] // IsInfinite must be boolean
         [InlineData("0", 0, false, false, 0)] // Color must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {

@@ -134,10 +134,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveLea
         [InlineData("0", "0", "")] // NpcName must be non-empty
         [InlineData("0", "0", "0", "")] // LocationName must be non-empty
         [InlineData("0", "0", "0", "0", 0)] // PlacementDescription must be string
-        [InlineData("0", "0", "0", "0", "", "x")] // PokeDollarPrice must be int
-        [InlineData("0", "0", "0", "0", "", 0, "x")] // PokeGoldPrice must be int
-        [InlineData("0", "0", "0", "0", "", 0, 0, "x")] // BigMushroomPrice must be int
-        [InlineData("0", "0", "0", "0", "", 0, 0, 0, "x")] // HeartScalePrice must be int
+        [InlineData("0", "0", "0", "0", "", "notInt")] // PokeDollarPrice must be int
+        [InlineData("0", "0", "0", "0", "", 0, "notInt")] // PokeGoldPrice must be int
+        [InlineData("0", "0", "0", "0", "", 0, 0, "notInt")] // BigMushroomPrice must be int
+        [InlineData("0", "0", "0", "0", "", 0, 0, 0, "notInt")] // HeartScalePrice must be int
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
@@ -149,6 +149,51 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveLea
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
+        }
+
+        [Fact]
+        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
+        {
+            // Arrange
+            var parser = new MoveLearnMethodLocationSheetRowParser();
+
+            var moveLearnMethodName = "Move Learn Method Name";
+            var tutorType = "Tutor Type";
+            var npcName = "NPC Name";
+            var locationName = "Location Name";
+            var placementDescription = "Placement Description";
+            var pokeDollarPrice = "";
+            var pokeGoldPrice = "";
+            var bigMushroomPrice = "";
+            var heartScalePrice = "";
+
+            var values = new List<object>
+            {
+                moveLearnMethodName, tutorType, npcName, locationName,
+                placementDescription, pokeDollarPrice, pokeGoldPrice,
+                bigMushroomPrice, heartScalePrice
+            };
+
+            var defaultValue = 0;
+
+            var expected = new MoveLearnMethodLocationSheetDto
+            {
+                MoveLearnMethodName = moveLearnMethodName,
+                TutorType = tutorType,
+                NpcName = npcName,
+                LocationName = locationName,
+                PlacementDescription = placementDescription,
+                PokeDollarPrice = defaultValue,
+                PokeGoldPrice = defaultValue,
+                BigMushroomPrice = defaultValue,
+                HeartScalePrice = defaultValue
+            };
+
+            // Act
+            var result = parser.ReadRow(values);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

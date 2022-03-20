@@ -382,8 +382,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         }
 
         [Theory]
-        [InlineData("")] // SortIndex must be int
-        [InlineData(0, "")] // PokedexNumber must be int
+        [InlineData("notInt")] // SortIndex must be int
+        [InlineData(0, "notInt")] // PokedexNumber must be int
         [InlineData(0, 0, "")] // PokemonSpeciesName must be non-empty
         [InlineData(0, 0, "0", "")] // DefaultVarietyName must be non-empty
         [InlineData(0, 0, "0", "0", "")] // PokemonVarietyName must be non-empty
@@ -391,36 +391,36 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         [InlineData(0, 0, "0", "0", "0", "0", "")] // PokemonFormName must be non-empty
         [InlineData(0, 0, "0", "0", "0", "0", "0", "")] // AvailabilityName must be non-empty
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "")] // SpriteName must be non-empty
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", "")] // DoInclude must be boolean
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", "notBoolean")] // DoInclude must be boolean
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "")] // DefaultFormName must be non-empty
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", "")] // Attack must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, "")] // SpecialAttack must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, "")] // Defense must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, "")] // SpecialDefense must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, "")] // Speed must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, "")] // HitPoints must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, "")] // AttackEvYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, "")] // SpecialAttackEvYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, "")] // DefenseEvYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, "")] // SpecialDefenseEvYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "")] // SpeedEvYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "")] // HitPointsEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", "notInt")] // Attack must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, "notInt")] // SpecialAttack must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, "notInt")] // Defense must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, "notInt")] // SpecialDefense must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, "notInt")] // Speed must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, "notInt")] // HitPoints must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, "notInt")] // AttackEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, "notInt")] // SpecialAttackEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, "notInt")] // DefenseEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, "notInt")] // SpecialDefenseEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "notInt")] // SpeedEvYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "notInt")] // HitPointsEvYield must be int
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "")] // Type1Name must be non-empty
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", 0)] // Type2Name must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "")] // PrimaryAbilityName must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", 0)] // SecondAbilityName must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", 0)] // HiddenAbilityName must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", 0)] // PvpTierName must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", "")] // IsMega must be boolean
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, "")] // IsFullyEvolved must be boolean
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, "")] // Generation must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, "")] // CatchRate must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, "")] // HasGender must be boolean
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, "")] // MaleRatio must be decimal
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, "")] // EggCycles must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, "")] // Height must be decimal
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, "")] // Weight must be decimal
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, "")] // ExpYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", "notBoolean")] // IsMega must be boolean
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, "notBoolean")] // IsFullyEvolved must be boolean
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, "notInt")] // Generation must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, "notInt")] // CatchRate must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, "notBoolean")] // HasGender must be boolean
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, "notDecimal")] // MaleRatio must be decimal
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, "notInt")] // EggCycles must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, "notDecimal")] // Height must be decimal
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, "notDecimal")] // Weight must be decimal
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, "notInt")] // ExpYield must be int
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, 0)] // SmogonUrl must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", 0)] // BulbapediaUrl must be string
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", 0)] // PokeoneCommunityUrl must be string
