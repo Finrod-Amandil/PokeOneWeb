@@ -74,13 +74,12 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
             actual.Should().Throw<InvalidRowDataException>();
         }
 
-        [Theory]
-        [InlineData("")] // Name must be non-empty
-        public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
+        [Fact]
+        public void ReadRow_WithUnparsableValue_ShouldThrow()
         {
             // Arrange
             var parser = new ElementalTypeSheetRowParser();
-            var values = valuesAsArray.ToList();
+            var values = new List<object> { "" };
 
             // Act
             var actual = () => parser.ReadRow(values);
