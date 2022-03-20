@@ -1,5 +1,6 @@
 ﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels.Interfaces;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate
 {

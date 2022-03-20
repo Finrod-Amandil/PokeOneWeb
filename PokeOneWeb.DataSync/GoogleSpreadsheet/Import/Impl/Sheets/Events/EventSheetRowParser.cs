@@ -1,4 +1,7 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
+﻿using System;
+using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
 {
     public class EventSheetRowParser : ISheetRowParser<EventSheetDto>
     {
