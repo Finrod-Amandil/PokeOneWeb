@@ -54,8 +54,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             var hasGender = true;
             var maleRatio = 0.5M;
             var eggCycles = 1000;
-            var height = 100;
-            var weight = 200;
+            var height = 10.5M;
+            var weight = 11.5M;
             var expYield = 300;
 
             var values = new List<object>
@@ -202,8 +202,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             var hasGender = true;
             var maleRatio = 0.5M;
             var eggCycles = 1000;
-            var height = 100;
-            var weight = 200;
+            var height = 10.5M;
+            var weight = 11.5M;
             var expYield = 300;
 
             var smogonUrl = "Smogon-Url";
@@ -356,7 +356,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
                 0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0",
                 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0,
-                "0", "", "0", "", "", "", false, false, 0, 0, false, 0.5, 0, 0, 0, 0,
+                "0", "", "0", "", "", "", false, false, 0, 0, false, 0.5, 0, 0.5, 0.5, 0,
                 "", "", "", "", "", "", "", "excessive value"
             };
 
@@ -418,16 +418,16 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, "")] // HasGender must be boolean
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, "")] // MaleRatio must be decimal
         [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, "")] // EggCycles must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, "")] // Height must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, "")] // Weight must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, "")] // ExpYield must be int
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, 0)] // SmogonUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", 0)] // BulbapediaUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", "", 0)] // PokeoneCommunityUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", "", "", 0)] // PokemonShowdownUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", "", "", "", 0)] // SerebiiUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", "", "", "", "", 0)] // PokemonDbUrl must be string
-        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0, 0, 0, "", "", "", "", "", "", 0)] // Notes must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, "")] // Height must be decimal
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, "")] // Weight must be decimal
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, "")] // ExpYield must be int
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, 0)] // SmogonUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", 0)] // BulbapediaUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", 0)] // PokeoneCommunityUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", "", 0)] // PokemonShowdownUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", "", "", 0)] // SerebiiUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", "", "", "", 0)] // PokemonDbUrl must be string
+        [InlineData(0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "0", "", "0", "", "", "", false, false, 0, 0, false, 0.1, 0, 0.1, 0.1, 0, "", "", "", "", "", "", 0)] // Notes must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange

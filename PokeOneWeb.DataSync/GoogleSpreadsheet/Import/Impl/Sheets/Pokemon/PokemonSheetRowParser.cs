@@ -45,8 +45,8 @@
             (dto, value) => dto.HasGender = ParseAsBoolean(value),
             (dto, value) => dto.MaleRatio = ParseAsDecimal(value),
             (dto, value) => dto.EggCycles = ParseAsInt(value),
-            (dto, value) => dto.Height = ParseAsInt(value),
-            (dto, value) => dto.Weight = ParseAsInt(value),
+            (dto, value) => dto.Height = ParseAsDecimal(value),
+            (dto, value) => dto.Weight = ParseAsDecimal(value),
             (dto, value) => dto.ExpYield = ParseAsInt(value),
 
             (dto, value) => dto.SmogonUrl = ParseAsString(value),
