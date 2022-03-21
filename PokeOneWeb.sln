@@ -15,9 +15,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.WebApi.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.Shared.Tests", "PokeOneWeb.Shared.Tests\PokeOneWeb.Shared.Tests.csproj", "{D169E352-B51B-4992-A2D1-81AA15DD4EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.DataSync.Tests", "PokeOneWeb.DataSync.Tests\PokeOneWeb.DataSync.Tests.csproj", "{4181934E-5030-4322-B8E3-704306A3073E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.DataSync.Tests", "PokeOneWeb.DataSync.Tests\PokeOneWeb.DataSync.Tests.csproj", "{4181934E-5030-4322-B8E3-704306A3073E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeOneWeb.Data.Tests", "PokeOneWeb.Data.Tests\PokeOneWeb.Data.Tests.csproj", "{BC039C1E-5079-4FF1-999A-EC8891827E8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokeOneWeb.Data.Tests", "PokeOneWeb.Data.Tests\PokeOneWeb.Data.Tests.csproj", "{BC039C1E-5079-4FF1-999A-EC8891827E8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{83D74C06-A68D-4B50-A2AF-BBA4388C5EB8}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
+		StyleCop.ruleset = StyleCop.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
