@@ -309,3 +309,9 @@ p.pokemon-list-empty {
   visibility: visible;
   opacity: 1;
 }
+
+.has-tooltip .table-header-label {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--light-gray);
+}
