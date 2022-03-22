@@ -1,137 +1,9 @@
-.general-info-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    color: var(--light-gray);
-}
-
-.general-panel {
-    padding: 10px;
-}
-
-.general-panel h4 {
-    font-size: 20px;
-    text-shadow: 1px 1px black;
-}
-
-.general-sprite-container .sprites-container {
-    display: flex;
-}
-
-.general-sprite-container .sprite-container {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-    background-color: var(--dark-gray);
-    border-radius: 50px;
-}
-
-.general-sprite-container .sprite-label {
-    text-align: center;
-}
-
-.general-pokedexnumber-container .general-pokedexnumber {
-    font-size: 48px;
-}
-
-.general-availability-container .availability-name {
-    display: flex;
-}
-
-.general-availability-container .availability-description {
-    max-width: 200px;
-}
-
-.general-pvp-tier .pvp-tier-name {
-    font-size: 24px;
-}
-
-.general-pvp-tier .pvp-tier-credit {
-    max-width: 200px;
-}
-
-.general-catching .catch-rate {
-    display: flex;
-}
-
-.general-catching .catch-config,
-.general-catching .catch-config > div,
-.general-catching .catch-config .hp-bar {
-    display: flex;
-    justify-content: space-between;
-}
-
-.general-catching img {
-    width: 30px;
-    height: 30px;
-}
-
-.general-catching .hp-bar-100 {
-    fill: hsl(120, 100%, 50%);
-}
-
-.general-catching .hp-bar-1 {
-    fill: hsl(0, 100%, 50%);
-}
-
-.general-catching .status-badge {
-    width: 40px;
-}
-
-.general-egg-hatching .flame-body {
-    max-width: 250px;
-}
-
-.general-genderratio {
-    max-width: 150px;
-}
-
-.general-genderratio svg {
-    width: 100%;
-    border: 1px solid black;
-}
-
-.general-genderratio .genderratio-bar-male {
-    fill: hsl(190, 100%, 70%);
-}
-
-.general-genderratio .genderratio-bar-female {
-    fill: hsl(300, 100%, 70%);
-}
-
-.general-genderratio .genderratio-bar-ungendered {
-    fill: hsl(0, 0%, 50%);
-}
-
-.general-genderratio .gender-male-female {
-    display: flex;
-    justify-content: space-between;
-}
-
-.general-genderratio .gender-female {
-    text-align: right;
-}
-
-.general-miscellaneous .misc-row {
-    display: flex;
-    justify-content: space-between;
-}
-
-.general-urls a {
-    display: flex;
-    align-items: baseline;
-}
-
-.general-urls img {
-    width: 16px;
-    height: 16px;
-}
-
 .pokemon-detail-navigation {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .pokemon-detail-navigation a {
@@ -211,6 +83,333 @@
 
 .pokemon-detail-navigation a:hover .pokemon-detail-navigation-sprite {
     background-color: var(--medium-gray);
+}
+
+.general-info-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    color: var(--light-gray);
+    padding: 0;
+}
+
+.general-panel {
+    padding-bottom: 10px;
+    border-right: 1px solid var(--dark-gray);
+}
+
+// No border right for rightmost panels
+.general-evyields,
+.general-urls {
+    border-right: none;
+}
+
+.general-header {
+    background-color: var(--dark-gray);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+// No border top for lower row of panels
+.general-pokedexnumber .general-header,
+.general-sprite .general-header,
+.general-type .general-header,
+.general-availability .general-header,
+.general-pvp-tier .general-header,
+.general-evyields .general-header {
+    border-top: none;
+}
+
+.general-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.general-content {
+    padding: 10px;
+}
+
+.general-sprite-container .sprites-container {
+    display: flex;
+    gap: 5px;
+}
+
+.general-sprite-container .sprite-container {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    background-color: var(--dark-gray);
+    border-radius: 50px;
+}
+
+.general-sprite .sprite-container img {
+    height: 96px;
+    width: 96px;
+}
+
+.general-sprite .sprite-label {
+    text-align: center;
+}
+
+.general-pokedexnumber .general-pokedexnumber {
+    font-size: 48px;
+}
+
+.general-availability .availability-name {
+    display: flex;
+}
+
+.general-availability .availability-icon-container {
+    border: 1px solid black;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.general-availability .availability-name-container {
+    font-size: 24px;
+}
+
+.general-availability .availability-description {
+    max-width: 200px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.general-pvp-tier .pvp-tier-name {
+    font-size: 24px;
+    margin-bottom: 11px;
+}
+
+.general-pvp-tier .pvp-tier-credit {
+    max-width: 200px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.general-evyields {
+    flex-grow: 1;
+}
+
+.evyields-table {
+    color: black;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.evyields-table tr {
+    border: 1px solid black;
+}
+
+.evyields-table td {
+    padding: 10px;
+}
+
+.evyields-table td:first-child {
+    padding-right: 20px;
+}
+
+.general-catching .catch-rate {
+    display: flex;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.general-catching .catch-rate-label {
+    margin-right: 10px;
+}
+
+.general-catching .catch-config,
+.general-catching .catch-config > div,
+.general-catching .catch-config .hp-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.general-catching .catch-config {
+    margin-bottom: 5px;
+}
+
+.general-catching img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.general-catching .hp-bar {
+    background-color: var(--dark-gray);
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.general-catching .hp-bar-label {
+    font-weight: 700;
+    padding-left: 2px;
+    padding-right: 5px;
+    padding-top: 2px;
+    line-height: 1;
+    height: 18px;
+}
+
+.general-catching .hp-bar svg {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: var(--medium-dark-gray);
+}
+
+.general-catching .hp-bar-100 {
+    fill: hsl(120, 100%, 50%);
+}
+
+.general-catching .hp-bar-1 {
+    fill: hsl(0, 100%, 50%);
+}
+
+.general-catching .status-badge {
+    width: 40px;
+    margin-right: 5px;
+}
+
+.general-catching .status-sleep {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: var(--light-gray);
+    color: black;
+    text-align: center;
+    font-weight: 700;
+    padding-top: 2px;
+}
+
+.general-catching .catch-probability {
+    margin-top: 2px;
+}
+
+.general-egg-hatching .egg-stat-label {
+    padding-right: 10px;
+}
+
+.general-egg-hatching .flame-body {
+    margin-top: 5px;
+    max-width: 200px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.general-genderratio {
+    max-width: 150px;
+}
+
+.general-genderratio svg {
+    width: 100%;
+    border: 1px solid black;
+}
+
+.general-genderratio .genderratio-bar-male {
+    fill: hsl(190, 100%, 70%);
+}
+
+.general-genderratio .genderratio-bar-female {
+    fill: hsl(300, 100%, 70%);
+}
+
+.general-genderratio .genderratio-bar-ungendered {
+    fill: hsl(0, 0%, 50%);
+}
+
+.general-genderratio .gender-male-female {
+    display: flex;
+    justify-content: space-between;
+}
+
+.general-genderratio .gender-female {
+    text-align: right;
+}
+
+.general-genderratio .gender-ungendered {
+    margin-top: 5px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.general-miscellaneous .misc-stat-label {
+    padding-right: 10px;
+}
+
+.general-urls {
+    flex-grow: 1;
+}
+
+.general-urls .url-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.general-urls a {
+    display: flex;
+    align-items: center;
+}
+
+.general-urls .url-image {
+    width: 16px;
+    height: 16px;
+    margin-right: 7px;
+}
+
+.general-urls .url-label {
+    line-height: 1;
+}
+
+.general-forms-container-outer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-top: 10px;
+}
+
+.general-forms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.general-forms .sprite-container img {
+    width: 96px;
+    height: 96px;
+}
+
+.general-forms .availability-container {
+    display: flex;
+}
+
+.general-forms .form-name-container {
+    flex-grow: 1;
+}
+
+.general-forms .availability-icon-container {
+    border: 1px solid black;
+    padding: 5px 3px 0px;
+}
+
+.general-forms .availability-name-container {
+    padding: 6px 4px;
 }
 
 pokeone-advanced-stat-chart {
