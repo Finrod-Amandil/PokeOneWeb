@@ -60,8 +60,6 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         public bool DoInclude { get; set; }
 
         /// <summary>

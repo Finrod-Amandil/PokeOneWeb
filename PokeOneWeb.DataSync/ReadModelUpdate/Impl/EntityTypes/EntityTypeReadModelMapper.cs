@@ -3,6 +3,8 @@ using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Data.ReadModels.Enums;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
 {

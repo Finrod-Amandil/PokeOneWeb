@@ -64,6 +64,7 @@ export class PokemonDetailComponent implements OnInit {
                         );
 
                     this.sortMoveLearnMethods();
+                    this.sortForms();
                     this.applyInitialSorting();
                 });
         });
@@ -364,5 +365,12 @@ export class PokemonDetailComponent implements OnInit {
                 else return 0;
             });
         });
+    }
+
+    private sortForms() {
+        if (this.model.pokemon != null) {
+            this.model.pokemon.forms = this.model.pokemon?.forms
+                .sort((f1, f2) => f1.sortIndex - f2.sortIndex);
+        }
     }
 }
