@@ -100,7 +100,8 @@
 
 // No border right for rightmost panels
 .general-evyields,
-.general-urls {
+.general-urls,
+.general-forms {
     border-right: none;
 }
 
@@ -370,6 +371,10 @@
 
 .general-urls .url-label {
     line-height: 1;
+}
+
+.general-forms {
+    width: 100%;
 }
 
 .general-forms-container-outer {
