@@ -28,6 +28,7 @@ export class PokemonListModel {
     public maxSpe: number = 1;
     public maxHp: number = 1;
     public maxTotal: number = 1;
+    public maxBulk: number = 1;
 
     public filter: PokemonListFilterModel = new PokemonListFilterModel();
 }
