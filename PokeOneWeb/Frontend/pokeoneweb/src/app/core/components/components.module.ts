@@ -16,6 +16,7 @@ import { StatInputComponent } from './stat-input/stat-input.component';
 import { TimeBadgeComponent } from './time-badge/time-badge.component';
 import { TypeBadgeComponent } from './type-badge/type-badge.component';
 import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.component';
+import { GlassButtonComponent } from './glass-button/glass-button.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.
         TimeBadgeComponent,
         TypeBadgeComponent,
         VerticalStatBarComponent,
+        GlassButtonComponent,
     ],
     imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
     exports: [
@@ -46,6 +48,7 @@ import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.
         TimeBadgeComponent,
         TypeBadgeComponent,
         VerticalStatBarComponent,
+        GlassButtonComponent,
     ],
 })
 export class ComponentsModule {}
