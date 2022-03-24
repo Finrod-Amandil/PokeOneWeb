@@ -1,4 +1,6 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
+﻿using System;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
     public class InvalidRowDataException : Exception
     {

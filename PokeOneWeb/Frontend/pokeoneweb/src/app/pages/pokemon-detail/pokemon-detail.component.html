@@ -71,7 +71,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="general-panel general-type">
                     <div class="general-header">
                         <h4>Type</h4>
@@ -212,7 +211,6 @@
                             </div>
                             <div class="catch-probability">{{getCatchRate(1, 1, 'SLP') | number:'1.2-2'}}%</div>
                         </div>
-
                         <div class="catch-config">
                             <div>
                                 <img src="./assets/img/sprites/items/small/ultra-ball.png" />
@@ -360,6 +358,30 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="model.pokemon.forms.length > 1" class="general-forms general-panel">
+                    <h4>Forms</h4>
+                    <div class="general-forms-container-outer">
+                        <div *ngFor="let form of model.pokemon.forms" class="general-forms-container">
+                            <div class="sprite-container">
+                                <img [src]="'./assets/img/sprites/pokemon/medium/' + form.spriteName" />
+                            </div>
+                            <div class="form-name-container">
+                                {{form.name}}
+                            </div>
+                            <div class="availability-container">
+                                <div class="availability-icon-container" [ngClass]="getAvailabilityClass(form.availability)">
+                                    <i *ngIf="form.availability==='Obtainable'" class="material-icons md-24">check</i>
+                                    <i *ngIf="form.availability==='Unobtainable'" class="material-icons md-24">clear</i>
+                                    <i *ngIf="form.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
+                                    <i *ngIf="form.availability==='Removed'" class="material-icons md-24">delete_forever</i>
+                                </div>
+                                    <div class="availability-name-container">
+                                    {{form.availability}}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -367,7 +389,7 @@
         <div class="no-table-container-outer">
             <div class="no-table-container-inner">
                 <pokeone-advanced-stat-chart
-                    [pokemon]="model.pokemon"> 
+                    [pokemon]="model.pokemon">
                 </pokeone-advanced-stat-chart>
             </div>
         </div>
@@ -387,49 +409,49 @@
             <tbody>
                 <tr>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(4)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(4)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(2)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(2)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(1)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(1)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(0.5)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(0.5)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(0.25)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(0.25)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                     <td>
-                        <pokeone-type-badge 
-                            *ngFor="let type of getDefenseEffectivities(0)" 
+                        <pokeone-type-badge
+                            *ngFor="let type of getDefenseEffectivities(0)"
                             [typeName]="type.typeName">
                         </pokeone-type-badge>
                     </td>
                 </tr>
             </tbody>
         </table>
-        
+
         <h2 name="evolution">Evolution</h2>
         <div class="no-table-container-outer">
             <div class="no-table-container-inner">
-                <pokeone-evolution-chart 
+                <pokeone-evolution-chart
                     *ngIf="model.pokemon.evolutions.length > 0"
                     [evolutions]="model.pokemon.evolutions">
                 </pokeone-evolution-chart>
@@ -584,48 +606,48 @@
             <thead>
                 <tr>
                     <th class="col-pokemon" colspan="2">
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, 1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, 1)"
                             (click)="sortSpawns(spawnsColumn.Pokemon, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Pokemon</div>
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, -1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, -1)"
                             (click)="sortSpawns(spawnsColumn.Pokemon, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-location" colspan="2">
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, 1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, 1)"
                             (click)="sortSpawns(spawnsColumn.Location, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Location</div>
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, -1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, -1)"
                             (click)="sortSpawns(spawnsColumn.Location, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-method">
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, 1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, 1)"
                             (click)="sortSpawns(spawnsColumn.SpawnType, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Method</div>
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, -1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, -1)"
                             (click)="sortSpawns(spawnsColumn.SpawnType, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-season">Season</th>
                     <th class="col-time">Time</th>
                     <th class="col-rarity">
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, 1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, 1)"
                             (click)="sortSpawns(spawnsColumn.Rarity, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Rarity</div>
-                        <div 
-                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, -1)" 
+                        <div
+                            [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, -1)"
                             (click)="sortSpawns(spawnsColumn.Rarity, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
@@ -634,7 +656,7 @@
                             <img src="./assets/img/sprites/pokemon/small/63.png" />
                             <span class="tooltip">Synchronize possible?</span>
                         </div>
-                        
+
                     </th>
                     <th class="col-event">
                         <div class="has-tooltip">
@@ -686,7 +708,7 @@
                             <i class="material-icons md-24">grade</i>
                             <span class="tooltip">{{spawn.eventName}}<br />({{spawn.eventStartDate}} - {{spawn.eventEndDate}})</span>
                         </div>
-                        
+
                     </td>
                     <td class="col-notes">
                         {{spawn.notes}}
@@ -708,79 +730,79 @@
             <thead>
                 <tr>
                     <th class="col-move-name">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Name, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Name, 1)"
                             (click)="sortMoves(movesColumn.Name, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Name</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Name, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Name, -1)"
                             (click)="sortMoves(movesColumn.Name, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-move-type">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Type, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Type, 1)"
                             (click)="sortMoves(movesColumn.Type, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Type</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Type, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Type, -1)"
                             (click)="sortMoves(movesColumn.Type, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-move-class">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Class, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Class, 1)"
                             (click)="sortMoves(movesColumn.Class, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Cat.</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Class, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Class, -1)"
                             (click)="sortMoves(movesColumn.Class, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-power">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Power, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Power, 1)"
                             (click)="sortMoves(movesColumn.Power, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Pow.</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Power, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Power, -1)"
                             (click)="sortMoves(movesColumn.Power, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-accuracy">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Accuracy, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Accuracy, 1)"
                             (click)="sortMoves(movesColumn.Accuracy, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Acc.</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Accuracy, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Accuracy, -1)"
                             (click)="sortMoves(movesColumn.Accuracy, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-power-points">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.PowerPoints, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.PowerPoints, 1)"
                             (click)="sortMoves(movesColumn.PowerPoints, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">PP</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.PowerPoints, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.PowerPoints, -1)"
                             (click)="sortMoves(movesColumn.PowerPoints, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
                     <th class="col-priority">
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, 1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, 1)"
                             (click)="sortMoves(movesColumn.Priority, 1)"
                             class="table-header-sort">⮝</div>
                         <div class="table-header-label">Prio</div>
-                        <div 
-                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, -1)" 
+                        <div
+                            [ngClass]="getMoveSortButtonClass(movesColumn.Priority, -1)"
                             (click)="sortMoves(movesColumn.Priority, -1)"
                             class="table-header-sort">⮟</div>
                     </th>
@@ -799,19 +821,19 @@
                     <td class="col-move-class">
                         <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
                     </td>
-                    <td [style]="move.effectiveAttackPower !== 0 ? 
-                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''" 
+                    <td [style]="move.effectiveAttackPower !== 0 ?
+                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''"
                         class="col-power"
                         [ngClass]="{'stab-power': move.hasStab}">
                         <p>{{move.baseAttackPower !== 0 ? move.baseAttackPower : '-'}}</p>
                         <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab">{{move.effectiveAttackPower}}</p>
                         <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab stab-label">(STAB)</p>
                     </td>
-                    <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'" 
+                    <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'"
                         class="col-accuracy">
                         {{move.accuracy}}
                     </td>
-                    <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
+                    <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'"
                         class="col-power-points">
                         {{move.powerPoints}}
                     </td>
@@ -828,9 +850,9 @@
                     </td>
                     <td class="col-move-learn-methods">
                         <div *ngFor="let learnMethod of move.learnMethods">
-                            <div 
-                                *ngIf="learnMethod.isAvailable" 
-                                [ngClass]="{'has-tooltip': learnMethod.description}" 
+                            <div
+                                *ngIf="learnMethod.isAvailable"
+                                [ngClass]="{'has-tooltip': learnMethod.description}"
                                 class="learnmethod-available nobr">
                                 <p><i class="material-icons">check</i>{{learnMethod.learnMethodName}}</p>
                                 <span *ngIf="learnMethod.description" class="tooltip">
@@ -873,19 +895,19 @@
                     <td class="col-move-class">
                         <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
                     </td>
-                    <td [style]="move.effectiveAttackPower !== 0 ? 
-                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''" 
+                    <td [style]="move.effectiveAttackPower !== 0 ?
+                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''"
                         class="col-power"
                         [ngClass]="{'stab-power': move.hasStab}">
                         <p>{{move.baseAttackPower !== 0 ? move.baseAttackPower : '-'}}</p>
                         <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab">{{move.effectiveAttackPower}}</p>
                         <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab stab-label">(STAB)</p>
                     </td>
-                    <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'" 
+                    <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'"
                         class="col-accuracy">
                         {{move.accuracy}}
                     </td>
-                    <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'" 
+                    <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'"
                         class="col-power-points">
                         {{move.powerPoints}}
                     </td>
@@ -899,9 +921,9 @@
                     </td>
                     <td class="col-move-learn-methods">
                         <div *ngFor="let learnMethod of move.learnMethods">
-                            <div 
-                                *ngIf="learnMethod.isAvailable" 
-                                [ngClass]="{'has-tooltip': learnMethod.description}" 
+                            <div
+                                *ngIf="learnMethod.isAvailable"
+                                [ngClass]="{'has-tooltip': learnMethod.description}"
                                 class="learnmethod-available nobr">
                                 <p><i class="material-icons">check</i>{{learnMethod.learnMethodName}}</p>
                                 <span *ngIf="learnMethod.description" class="tooltip">

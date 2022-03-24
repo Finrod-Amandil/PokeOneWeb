@@ -4,6 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
 using PokeOneWeb.DataSync.ReadModelUpdate;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PokeOneWeb.DataSync
 {

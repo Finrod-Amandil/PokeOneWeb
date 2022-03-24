@@ -1,60 +1,24 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
+﻿using System;
+using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
 {
-    public class ItemSheetRowParser : ISheetRowParser<ItemSheetDto>
+    public class ItemSheetRowParser : SheetRowParser<ItemSheetDto>
     {
-        public ItemSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 6;
+
+        protected override List<Action<ItemSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 6)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new ItemSheetDto
-            {
-                Name = values[0] as string,
-                IsAvailable = bool.TryParse(values[1].ToString(), out var parsedIsAvailable) && parsedIsAvailable,
-                DoInclude = bool.TryParse(values[2].ToString(), out var parsedDoInclude) && parsedDoInclude,
-                ResourceName = values[3] as string,
-                SortIndex = int.TryParse(values[4].ToString(), out var parsedSortIndex) ? parsedSortIndex : 0,
-                BagCategoryName = values[5] as string
-            };
-
-            if (value.Name is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Item, but required field {nameof(value.Name)} was empty.");
-            }
-
-            if (value.ResourceName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Item, but required field {nameof(value.ResourceName)} was empty.");
-            }
-
-            if (value.BagCategoryName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Item, but required field {nameof(value.BagCategoryName)} was empty.");
-            }
-
-            if (values.Count > 6)
-            {
-                value.PokeOneItemId = int.TryParse(values[6].ToString(), out var parsed) ? parsed : 0;
-            }
-
-            if (values.Count > 7)
-            {
-                value.Description = values[7] as string;
-            }
-
-            if (values.Count > 8)
-            {
-                value.Effect = values[8] as string;
-            }
-
-            if (values.Count > 9)
-            {
-                value.SpriteName = values[9] as string;
-            }
-
-            return value;
-        }
+            (dto, value) => dto.Name = ParseAsNonEmptyString(value),
+            (dto, value) => dto.IsAvailable = ParseAsBoolean(value),
+            (dto, value) => dto.DoInclude = ParseAsBoolean(value),
+            (dto, value) => dto.ResourceName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.SortIndex = ParseAsInt(value),
+            (dto, value) => dto.BagCategoryName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.PokeOneItemId = ParseAsInt(value, 0),
+            (dto, value) => dto.Description = ParseAsString(value),
+            (dto, value) => dto.Effect = ParseAsString(value),
+            (dto, value) => dto.SpriteName = ParseAsString(value)
+        };
     }
 }

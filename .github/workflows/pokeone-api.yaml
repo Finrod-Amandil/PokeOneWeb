@@ -22,22 +22,23 @@ jobs:
     - name: Begin Sonar Scan
       run: |
         dotnet tool install --global dotnet-sonarscanner
-        dotnet sonarscanner begin /k:"poke-one-web-api" /o:"poke-one-web" /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet sonarscanner begin /k:"poke-one-web-api" \
+                                  /o:"poke-one-web" \
+                                  /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}" \
+                                  /d:sonar.host.url="https://sonarcloud.io" \
+                                  /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx \
+                                  /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
 
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build PokeOneWeb --configuration Release --no-restore
+    - name: Build & Install dep.
+      run: dotnet build PokeOneWeb --configuration Release
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
-
-    #- name: Unit-Test Api
-    #  run: dotnet test PokeOneWeb --no-build --no-restore --verbosity normal -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+      run: dotnet test --collect "XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
     - name: End Sonar Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}"
+
     - uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
