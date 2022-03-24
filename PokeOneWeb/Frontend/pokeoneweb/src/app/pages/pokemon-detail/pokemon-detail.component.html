@@ -358,30 +358,6 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="model.pokemon.forms.length > 1" class="general-forms general-panel">
-                    <h4>Forms</h4>
-                    <div class="general-forms-container-outer">
-                        <div *ngFor="let form of model.pokemon.forms" class="general-forms-container">
-                            <div class="sprite-container">
-                                <img [src]="'./assets/img/sprites/pokemon/medium/' + form.spriteName" />
-                            </div>
-                            <div class="form-name-container">
-                                {{form.name}}
-                            </div>
-                            <div class="availability-container">
-                                <div class="availability-icon-container" [ngClass]="getAvailabilityClass(form.availability)">
-                                    <i *ngIf="form.availability==='Obtainable'" class="material-icons md-24">check</i>
-                                    <i *ngIf="form.availability==='Unobtainable'" class="material-icons md-24">clear</i>
-                                    <i *ngIf="form.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
-                                    <i *ngIf="form.availability==='Removed'" class="material-icons md-24">delete_forever</i>
-                                </div>
-                                    <div class="availability-name-container">
-                                    {{form.availability}}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
