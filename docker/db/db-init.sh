@@ -8,7 +8,6 @@ then
 else
     #wait for the SQL Server to come up (max ~60s)
     i=1
-    j=1
     while  [ $i -le 60 ]
     do
         /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -Q "SELECT @@VERSION"
@@ -37,6 +36,6 @@ else
             echo "not ready yet..."
             sleep 1
         fi
-        i=$(($i+$j))
+        i=$(($i+ 1))
     done
 fi
