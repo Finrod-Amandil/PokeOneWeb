@@ -26,7 +26,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
             ability.IdHash = rowHash.IdHash;
             ability.Hash = rowHash.ContentHash;
             ability.ImportSheetId = rowHash.ImportSheetId;
-            ability.PokeApiName = dto.PokeApiName;
             ability.Name = dto.Name;
             ability.EffectDescription = dto.Effect;
             ability.EffectShortDescription = dto.ShortEffect;

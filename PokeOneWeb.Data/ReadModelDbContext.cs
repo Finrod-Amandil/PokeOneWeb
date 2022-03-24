@@ -22,6 +22,8 @@ namespace PokeOneWeb.Data
 
         public DbSet<ItemReadModel> ItemReadModels { get; set; }
 
+        public DbSet<RegionReadModel> RegionReadModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EntityTypeReadModel>()
@@ -117,6 +119,10 @@ namespace PokeOneWeb.Data
                 .IsUnique();
 
             modelBuilder.Entity<PlacedItemReadModel>()
+                .HasIndex(p => p.ApplicationDbId)
+                .IsUnique();
+
+            modelBuilder.Entity<RegionReadModel>()
                 .HasIndex(p => p.ApplicationDbId)
                 .IsUnique();
         }

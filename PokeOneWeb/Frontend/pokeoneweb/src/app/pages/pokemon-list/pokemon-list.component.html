@@ -813,6 +813,20 @@
                     (click)="sort(column.Spe, -1)"
                     class="table-header-sort">⮟</div>
             </th>
+            <th class="col-stat stat-bulk">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Bulk, 1)" 
+                    (click)="sort(column.Bulk, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="has-tooltip">
+                    <div class="table-header-label">Bulk</div>
+                    <span class="tooltip">Bulk = HP + Def. + Sp.D.</span>
+                </div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Bulk, -1)" 
+                    (click)="sort(column.Bulk, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
             <th class="col-stat stat-total">
                 <div 
                     [ngClass]="getSortButtonClass(column.StatTotal, 1)" 
@@ -938,6 +952,16 @@
                     label="Speed"
                     [statValue]="pokemon.speed"
                     [maxValue]="model.maxSpe">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxBulk > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Bulk"
+                    [statValue]="pokemon.bulk"
+                    [maxValue]="model.maxBulk">
                 </pokeone-vertical-stat-bar>
             </td>
             <td class="col-stat">

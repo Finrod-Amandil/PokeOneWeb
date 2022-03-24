@@ -1,6 +1,8 @@
 ﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
@@ -324,7 +326,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             variety.ResourceName = newVariety.ResourceName;
             variety.Name = newVariety.Name;
-            variety.PokeApiName = newVariety.PokeApiName;
             variety.DoInclude = newVariety.DoInclude;
             variety.IsMega = newVariety.IsMega;
             variety.IsFullyEvolved = newVariety.IsFullyEvolved;
@@ -428,7 +429,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             species.PokedexNumber = variety.PokemonSpecies.PokedexNumber;
             species.Name = variety.PokemonSpecies.Name;
-            species.PokeApiName = variety.PokemonSpecies.PokeApiName;
 
             variety.PokemonSpeciesId = species.Id;
             variety.PokemonSpecies = species;
