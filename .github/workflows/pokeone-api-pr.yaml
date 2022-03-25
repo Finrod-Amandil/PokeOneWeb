@@ -31,9 +31,9 @@ jobs:
                                   /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml
 
     - name: Build & Install Dependencies
-      run: dotnet build PokeOneWeb --configuration Release
+      run: dotnet build PokeOneWeb.sln --configuration Release
     - name: Test
-      run: dotnet test --collect "XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+      run: dotnet test PokeOneWeb.sln --collect "XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
     - name: End Sonar Scan
       env:
