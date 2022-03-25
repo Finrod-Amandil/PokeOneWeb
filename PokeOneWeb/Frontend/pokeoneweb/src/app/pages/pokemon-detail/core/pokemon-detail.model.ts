@@ -7,8 +7,7 @@ export class PokemonDetailModel {
     public pokemonName: string = '';
     public pokemon: IPokemonVarietyModel | null = null;
 
-    public availableLearnableMoves: ILearnableMoveModel[] = [];
-    public unavailableLearnableMoves: ILearnableMoveModel[] = [];
+    public learnableMoves: ILearnableMoveModel[] = [];
 
     public spawnsSortedByColumn: SpawnListColumn = SpawnListColumn.Location;
     public spawnsSortDirection: number = 1;

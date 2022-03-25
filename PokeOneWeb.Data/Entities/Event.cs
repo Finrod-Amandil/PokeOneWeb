@@ -3,6 +3,7 @@ using PokeOneWeb.Data.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PokeOneWeb.Data.Extensions;
+using System;
 
 namespace PokeOneWeb.Data.Entities
 {

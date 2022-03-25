@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "c7c6a4ac-8ab4-4f60-aa96-ad620463df1f"
+    "analytics": false
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -111,7 +111,6 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "pokeoneweb:serve"
           },
           "configurations": {

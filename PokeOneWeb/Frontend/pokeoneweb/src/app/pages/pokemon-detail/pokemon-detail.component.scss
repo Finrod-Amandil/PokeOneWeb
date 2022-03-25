@@ -499,6 +499,11 @@ td.stab-power .stab-label {
     color: var(--availability-unobtainable);
 }
 
-#learnset_table .row-unavailable-move td {
-    background-color: rgba(255, 142, 114, 0.7);
+.learnmethod-unavailable td {
+    background-color: rgb(85,85,85);
+}
+
+.unobtainable-move {
+    color: rgba(255, 50, 0, 0.67);
+    font-weight: 20;
 }

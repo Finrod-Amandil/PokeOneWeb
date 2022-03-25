@@ -3,6 +3,7 @@ using PokeOneWeb.Data.Entities.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PokeOneWeb.Data.Extensions;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -44,8 +45,6 @@ namespace PokeOneWeb.Data.Entities
         //INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
-
-        public string PokeApiName { get; set; }
 
         public string EffectDescription { get; set; }
 

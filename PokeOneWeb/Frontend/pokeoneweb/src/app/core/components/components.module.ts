@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import {RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -31,7 +32,7 @@ import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.
         TypeBadgeComponent,
         VerticalStatBarComponent,
     ],
-    imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule],
+    imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
     exports: [
         AdvancedStatChartComponent,
         EvolutionChartComponent,

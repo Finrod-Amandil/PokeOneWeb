@@ -92,12 +92,6 @@
 
         public string PokemonDbUrl { get; set; }
 
-        public string PokemonSpeciesPokeApiName { get; set; }
-
-        public string PokemonVarietyPokeApiName { get; set; }
-
-        public string PokemonFormPokeApiName { get; set; }
-
         public string Notes { get; set; }
     }
 }
