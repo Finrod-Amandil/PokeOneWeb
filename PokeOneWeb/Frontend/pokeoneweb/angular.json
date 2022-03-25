@@ -111,12 +111,32 @@
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
+            "devServerTarget": "pokeoneweb:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "pokeoneweb:serve:production"
+            }
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
             "devServerTarget": "pokeoneweb:serve"
           },
           "configurations": {
             "production": {
               "devServerTarget": "pokeoneweb:serve:production"
             }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
           }
         }
       }
