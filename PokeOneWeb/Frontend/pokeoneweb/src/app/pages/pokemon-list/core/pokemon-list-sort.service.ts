@@ -24,6 +24,8 @@ export class PokemonListSortService {
                 return this.sortSpeed(models, sortDirection);
             case PokemonListColumn.Hp:
                 return this.sortHitPoints(models, sortDirection);
+            case PokemonListColumn.Bulk:
+                return this.sortBulk(models, sortDirection);
             case PokemonListColumn.StatTotal:
                 return this.sortTotal(models, sortDirection);
             case PokemonListColumn.PvpTier:
@@ -93,6 +95,10 @@ export class PokemonListSortService {
 
     private sortHitPoints(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
         return models.slice().sort((n1, n2) => sortDirection * (n2.hitPoints - n1.hitPoints));
+    }
+
+    private sortBulk(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n2.bulk - n1.bulk));
     }
 
     private sortTotal(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {

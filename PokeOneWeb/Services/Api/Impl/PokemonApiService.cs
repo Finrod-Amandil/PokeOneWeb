@@ -429,6 +429,7 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
                 Speed = v.Speed,
                 HitPoints = v.HitPoints,
                 StatTotal = v.Attack + v.SpecialAttack + v.Defense + v.SpecialDefense + v.Speed + v.HitPoints,
+                Bulk = v.Defense + v.HitPoints + v.SpecialDefense,
 
                 PrimaryAbility = v.PrimaryAbility,
                 PrimaryAbilityEffect = v.PrimaryAbilityEffect,

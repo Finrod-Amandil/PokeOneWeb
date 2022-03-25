@@ -7,7 +7,6 @@ using PokeOneWeb.DataSync.ReadModelUpdate;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl;
 using System.Collections.Generic;
 using Xunit;
-
 namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
 {
     public class ReadModelUpdateServiceTests

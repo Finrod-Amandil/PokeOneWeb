@@ -1,5 +1,6 @@
 ﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
+using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
 {
@@ -48,7 +49,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
             item.Hash = rowHash.ContentHash;
             item.ImportSheetId = rowHash.ImportSheetId;
             item.ResourceName = dto.ResourceName;
-            item.PokeApiName = dto.PokeApiName;
             item.PokeoneItemId = dto.PokeOneItemId;
             item.SortIndex = dto.SortIndex;
             item.Name = dto.Name;
