@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 /PokeOneWeb/Services/GoogleSpreadsheet/credentials.json
 PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
+
+#Mac Shit
+.DS_Store

@@ -5,24 +5,6 @@ on:
       - master
       - development
 jobs:
-  sonarcloud:
-    name: SonarCloud-PokeOneWebApp
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with: 
-          projectBaseDir: PokeOneWeb/Frontend/pokeoneweb
-          args: >
-            -Dsonar.organization=poke-one-web
-            -Dsonar.projectKey=poke-one-web-frontend
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_WEBAPP }}
-
   build:
     name: Build-PokeOneWebApp
     runs-on: ubuntu-latest
@@ -41,7 +23,7 @@ jobs:
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
-      run: npm test -- --watch=false --browsers=ChromeHeadless
+      run: npm test -- --browsers=ChromeHeadless
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Cypress UI-Tests
@@ -52,3 +34,15 @@ jobs:
         wait-on-timeout: 120
         start: npm start
         browser: chrome
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      with: 
+        projectBaseDir: PokeOneWeb/Frontend/pokeoneweb
+        args: >
+          -Dsonar.organization=poke-one-web
+          -Dsonar.projectKey=poke-one-web-frontend
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_WEBAPP }}
