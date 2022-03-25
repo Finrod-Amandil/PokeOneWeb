@@ -19,6 +19,7 @@ namespace PokeOneWeb.WebApi.Dtos
         public int Speed { get; set; }
         public int HitPoints { get; set; }
         public int StatTotal { get; set; }
+        public int Bulk { get; set; }
 
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }

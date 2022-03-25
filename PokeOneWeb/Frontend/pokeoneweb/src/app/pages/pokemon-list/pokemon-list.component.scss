@@ -223,7 +223,11 @@ p.pokemon-list-empty {
 
 #pokemon_list .col-stat {
   width: 40px;
-  min-width: 40px;
+  max-width: 40px;
+}
+
+#pokemon_list th {
+  padding: 5px 0px;
 }
 
 #pokemon_list .col-pvp-tier {
@@ -294,4 +298,20 @@ p.pokemon-list-empty {
 #pokemon_list .col-links a:hover + .favicon-tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+#pokemon_list th.col-stat .tooltip {
+  margin-top: 20px;
+  color: var(--light-gray);
+}
+
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.has-tooltip .table-header-label {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--light-gray);
 }

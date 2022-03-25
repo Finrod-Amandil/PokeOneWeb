@@ -14,11 +14,41 @@
     text-shadow: 1px 1px black;
 }
 
-.general-sprite-container .sprites-container {
+.general-header {
+    background-color: var(--dark-gray);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+// No border top for lower row of panels
+.general-pokedexnumber .general-header,
+.general-sprite .general-header,
+.general-type .general-header,
+.general-availability .general-header,
+.general-pvp-tier .general-header,
+.general-evyields .general-header {
+    border-top: none;
+}
+
+.general-header h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.general-content {
+    padding: 10px;
+}
+
+.general-sprite .sprites-container {
     display: flex;
 }
 
-.general-sprite-container .sprite-container {
+.general-sprite .sprite-container {
     width: 100px;
     height: 100px;
     border: 1px solid black;
@@ -127,90 +157,52 @@
     height: 16px;
 }
 
-.pokemon-detail-navigation {
+.general-forms-container-outer {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-top: 10px;
+}
+
+.general-forms-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-}
-
-.pokemon-detail-navigation a {
-    font-size: 18px;
-    color: var(--light-gray);
-}
-
-.pokemon-detail-navigation-center {
+    width: 150px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-.pokemon-detail-navigation-left,
-.pokemon-detail-navigation-center,
-.pokemon-detail-navigation-right {
-    background-color: var(--medium-gray);
-    height: 40px;
+.general-forms .sprite-container {
+    width: 100px;
+    height: 100px;
     border: 1px solid black;
-    border-radius: 20px;
-}
-
-.pokemon-detail-navigation-left {
-    padding-left: 10px;
-}
-
-.pokemon-detail-navigation-right {
-    padding-right: 10px;
-}
-
-.pokemon-detail-navigation-link,
-.pokemon-detail-navigation-sprite {
-    display: inline-block;
-}
-
-.pokemon-detail-navigation-sprite {
-    padding-top: 5px;
-    width: 40px;
-    height: 40px;
     background-color: var(--dark-gray);
+    border-radius: 50px;
+}
+
+.general-forms .sprite-container img {
+    width: 96px;
+    height: 96px;
+}
+
+.general-forms .availability-container {
+    display: flex;
+}
+
+.general-forms .form-name-container {
+    flex-grow: 1;
+}
+
+.general-forms .availability-icon-container {
     border: 1px solid black;
-    border-radius: 20px;
+    padding: 5px 3px 0px;
 }
 
-.pokemon-detail-navigation-sprite img {
-    max-height: 30px;
-}
-
-.pokemon-detail-navigation-left .pokemon-detail-navigation-sprite {
-    margin-left: 10px;
-    margin-top: -1px;
-    margin-right: -1px;
-}
-
-.pokemon-detail-navigation-center
-    .pokemon-detail-navigation-sprite:first-child {
-    margin-left: -1px;
-    margin-top: -1px;
-    margin-right: 20px;
-}
-
-.pokemon-detail-navigation-center .pokemon-detail-navigation-sprite:last-child {
-    margin-right: -1px;
-    margin-top: -1px;
-    margin-left: 20px;
-}
-
-.pokemon-detail-navigation-right .pokemon-detail-navigation-sprite {
-    margin-right: 10px;
-    margin-top: -1px;
-    margin-left: -1px;
-}
-
-.pokemon-detail-navigation a:hover .pokemon-detail-navigation-left,
-.pokemon-detail-navigation a:hover .pokemon-detail-navigation-center,
-.pokemon-detail-navigation a:hover .pokemon-detail-navigation-right {
-    background-color: var(--medium-gray-lighter);
-}
-
-.pokemon-detail-navigation a:hover .pokemon-detail-navigation-sprite {
-    background-color: var(--medium-gray);
+.general-forms .availability-name-container {
+    padding: 6px 4px;
 }
 
 pokeone-advanced-stat-chart {

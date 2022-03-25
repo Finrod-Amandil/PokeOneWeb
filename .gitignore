@@ -353,3 +353,6 @@ PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Respons
 
 # Code coverage files
 coverage.opencover.xml
+
+#Mac Shit
+.DS_Store
