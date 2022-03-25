@@ -710,3 +710,12 @@ td.stab-power .stab-label {
     font-size: 16px;
     color: var(--availability-unobtainable);
 }
+
+.learnmethod-unavailable td {
+    background-color: rgb(85,85,85);
+}
+
+.unobtainable-move {
+    color: var(--text-accent);
+    font-weight: 700;
+}

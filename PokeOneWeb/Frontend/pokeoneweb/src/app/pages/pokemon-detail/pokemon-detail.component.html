@@ -694,7 +694,7 @@
         </table>
 
         <h2 name="moves">Learnset</h2>
-        <div *ngIf="model.availableLearnableMoves.length === 0" class="no-table-container-outer">
+        <div *ngIf="model.learnableMoves.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
                 <p
                     class="empty">
@@ -702,7 +702,7 @@
                 </p>
             </div>
         </div>
-        <table *ngIf="model.availableLearnableMoves.length > 0" class="main-table table-compact" id="learnset_table">
+        <table *ngIf="model.learnableMoves.length > 0" class="main-table table-compact" id="learnset_table">
             <thead>
                 <tr>
                     <th class="col-move-name">
@@ -787,9 +787,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let move of model.availableLearnableMoves; let i = index">
+                <tr *ngFor="let move of model.learnableMoves; let i = index" [ngClass]="{'learnmethod-unavailable': !move.isAvailable}">
                     <td class="col-move-name">
-                        {{move.moveName}}
+                        {{move.moveName}}<br>
+                        <span *ngIf="!move.isAvailable" class="unobtainable-move">(Unobtainable)</span>
                     </td>
                     <td class="col-move-type">
                         <pokeone-type-badge [typeName]="move.elementalType"></pokeone-type-badge>
@@ -843,77 +844,5 @@
                 </tr>
             </tbody>
         </table>
-
-        <ng-container *ngIf="model.unavailableLearnableMoves.length > 0">
-        <h3 name="unavailable_moves">Unavailable moves</h3>
-        <p class="subtitle">Moves which this Pokémon can learn in other games, but are currently unavailable for this Pokémon in PokéOne</p>
-        <table class="main-table table-compact" id="unavailable_moves_table">
-            <thead>
-                <tr>
-                    <th class="col-move-name">Name</th>
-                    <th class="col-move-type">Type</th>
-                    <th class="col-move-class">Cat.</th>
-                    <th class="col-power">Pow.</th>
-                    <th class="col-accuracy">Acc.</th>
-                    <th class="col-power-points">PP</th>
-                    <th class="col-move-effect">Effect</th>
-                    <th class="col-move-learn-methods">Learn methods</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let move of model.unavailableLearnableMoves; let i = index">
-                    <td class="col-move-name">
-                        {{move.moveName}}
-                    </td>
-                    <td class="col-move-type">
-                        <pokeone-type-badge [typeName]="move.elementalType"></pokeone-type-badge>
-                    </td>
-                    <td class="col-move-class">
-                        <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
-                    </td>
-                    <td [style]="move.effectiveAttackPower !== 0 ?
-                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''"
-                        class="col-power"
-                        [ngClass]="{'stab-power': move.hasStab}">
-                        <p>{{move.baseAttackPower !== 0 ? move.baseAttackPower : '-'}}</p>
-                        <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab">{{move.effectiveAttackPower}}</p>
-                        <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab stab-label">(STAB)</p>
-                    </td>
-                    <td [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'"
-                        class="col-accuracy">
-                        {{move.accuracy}}
-                    </td>
-                    <td [style]="'background-color: hsl(' + getHueForPowerPoints(move.powerPoints) + ',100%,70%); color: black;'"
-                        class="col-power-points">
-                        {{move.powerPoints}}
-                    </td>
-                    <td class="col-move-effect" (mouseover)="hoverMoveDescription(i)" (mouseout)="hoverMoveDescription(-1)">
-                        <div *ngIf="i !== model.moveHoverIndex">
-                            {{getAbbreviatedMoveDescription(move)}}
-                        </div>
-                        <div *ngIf="i === model.moveHoverIndex">
-                            {{move.effectDescription}}
-                        </div>
-                    </td>
-                    <td class="col-move-learn-methods">
-                        <div *ngFor="let learnMethod of move.learnMethods">
-                            <div
-                                *ngIf="learnMethod.isAvailable"
-                                [ngClass]="{'has-tooltip': learnMethod.description}"
-                                class="learnmethod-available nobr">
-                                <p><i class="material-icons">check</i>{{learnMethod.learnMethodName}}</p>
-                                <span *ngIf="learnMethod.description" class="tooltip">
-                                    {{learnMethod.description}}
-                                </span>
-                            </div>
-                            <div *ngIf="!learnMethod.isAvailable" class="learnmethod-unavailable nobr">
-                                <p><i class="material-icons ">clear</i>{{learnMethod.learnMethodName}}</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        </ng-container>
     </div>
 </div>

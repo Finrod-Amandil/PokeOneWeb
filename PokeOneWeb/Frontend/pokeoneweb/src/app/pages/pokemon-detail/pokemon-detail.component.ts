@@ -54,14 +54,7 @@ export class PokemonDetailComponent implements OnInit {
                         `${this.model.pokemon.name} - ${WEBSITE_NAME}`
                     );
 
-                    this.model.availableLearnableMoves =
-                        this.model.pokemon.learnableMoves.filter(
-                            (l) => l.isAvailable
-                        );
-                    this.model.unavailableLearnableMoves =
-                        this.model.pokemon.learnableMoves.filter(
-                            (l) => !l.isAvailable
-                        );
+                    this.model.learnableMoves = this.model.pokemon.learnableMoves;
 
                     this.sortMoveLearnMethods();
                     this.sortForms();
@@ -224,8 +217,8 @@ export class PokemonDetailComponent implements OnInit {
         this.model.movesSortedByColumn = sortColumn;
         this.model.movesSortDirection = sortDirection;
 
-        this.model.availableLearnableMoves = this.sortService.sortMoves(
-            this.model.availableLearnableMoves,
+        this.model.learnableMoves = this.sortService.sortMoves(
+            this.model.learnableMoves,
             sortColumn,
             sortDirection
         );
@@ -342,15 +335,9 @@ export class PokemonDetailComponent implements OnInit {
             1
         );
 
-        this.model.availableLearnableMoves = this.sortService.sortMoves(
-            this.model.availableLearnableMoves,
+        this.model.learnableMoves = this.sortService.sortMoves(
+            this.model.learnableMoves,
             MoveListColumn.Power,
-            1
-        );
-
-        this.model.unavailableLearnableMoves = this.sortService.sortMoves(
-            this.model.unavailableLearnableMoves,
-            MoveListColumn.Name,
             1
         );
     }
