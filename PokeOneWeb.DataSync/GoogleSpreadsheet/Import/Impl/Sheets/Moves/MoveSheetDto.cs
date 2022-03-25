@@ -20,8 +20,6 @@
 
         public int Priority { get; set; }
 
-        public string PokeApiName { get; set; }
-
         public string Effect { get; set; }
     }
 }

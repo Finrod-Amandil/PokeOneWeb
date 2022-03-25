@@ -24,35 +24,40 @@
 
         <h2 name="general">General Info</h2>
         <div class="no-table-container-outer">
-            <div class="no-table-container-inner">
+            <div class="no-table-container-inner item-general-info">
+                <div class="item-general-info-header">
+                    <div class="item-sprite">
+                        <img *ngIf="model.item.spriteName" [src]="'./assets/img/sprites/items/small/' + model.item.spriteName" />
+                    </div>
+                    <div class="item-name">
+                        <h4>{{model.item.name}}</h4>
+                    </div>
+                </div>
+
                 <table id="item_general_info_table">
                     <tbody>
-                        <tr class="item-general-info-sprite">
-                            <td colspan="3">
-                                <img *ngIf="model.item.spriteName" [src]="'./assets/img/sprites/items/small/' + model.item.spriteName" />
-                                {{model.item.name}}
-                            </td>
-                        </tr>
                         <tr class="item-general-info-availability">
                             <td>Availability</td>
-                            <td [ngClass]="getAvailabilityClass(model.item.isAvailable)">
-                                <i *ngIf="model.item.isAvailable" class="material-icons md-24">check</i>
-                                <i *ngIf="!model.item.isAvailable" class="material-icons md-24">clear</i>
-                            </td>
-                            <td *ngIf="model.item.isAvailable">
-                                Obtainable
-                            </td>
-                            <td *ngIf="!model.item.isAvailable">
-                                Unobtainable
+                            <td class="item-availability">
+                                <div [ngClass]="getAvailabilityClass(model.item.isAvailable)" class="availability-icon">
+                                    <i *ngIf="model.item.isAvailable" class="material-icons md-24">check</i>
+                                    <i *ngIf="!model.item.isAvailable" class="material-icons md-24">clear</i>
+                                </div>
+                                <div *ngIf="model.item.isAvailable" class="availability-name">
+                                    Obtainable
+                                </div>
+                                <div *ngIf="!model.item.isAvailable" class="availability-name">
+                                    Unobtainable
+                                </div>
                             </td>
                         </tr>
                         <tr class="item-general-info-description">
                             <td>Description</td>
-                            <td colspan="2">{{model.item.description}}</td>
+                            <td>{{model.item.description}}</td>
                         </tr>
                         <tr class="item-general-info-effect">
                             <td>Effect</td>
-                            <td colspan="2">{{model.item.effect}}</td>
+                            <td>{{model.item.effect}}</td>
                         </tr>
                     </tbody>
                 </table>
