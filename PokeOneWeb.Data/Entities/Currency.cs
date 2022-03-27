@@ -32,22 +32,23 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         [ForeignKey("ItemId")]
         public Item Item { get; set; }
-        public int? ItemId { get; set; }
 
+        public int? ItemId { get; set; }
 
         public override string ToString()
         {

@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
             ApplicationDbContext dbContext,
             ISheetRowParser<EventSheetDto> parser,
             ISpreadsheetEntityMapper<EventSheetDto, Event> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<Event> DbSet => DbContext.Events;
 

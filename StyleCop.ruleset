@@ -7,7 +7,7 @@
 		<!-- Invalid settings file -->
 	</Rules>
 	<Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.SpacingRules">
-		<Rule Id="SA1000"  Action="Warning" />
+		<Rule Id="SA1000"  Action="None" />
 		<!-- Keywords should be spaced correctly -->
 		<Rule Id="SA1001"  Action="Warning" />
 		<!-- Commas should be spaced correctly -->
@@ -104,7 +104,7 @@
 		<!-- Split parameters should start on line after declaration -->
 		<Rule Id="SA1117"  Action="None" />
 		<!-- Parameters should be on same line or separate lines -->
-		<Rule Id="SA1118"  Action="Warning" />
+		<Rule Id="SA1118"  Action="None" />
 		<!-- Parameter should not span multiple lines -->
 		<Rule Id="SA1120"  Action="Warning" />
 		<!-- Comments should contain text -->

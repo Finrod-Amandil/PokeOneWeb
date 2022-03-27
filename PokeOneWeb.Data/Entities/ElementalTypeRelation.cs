@@ -39,16 +39,17 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         [Column(TypeName = "decimal(4,1)")]
@@ -56,13 +57,14 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("AttackingTypeId")]
         public ElementalType AttackingType { get; set; }
+
         public int AttackingTypeId { get; set; }
 
         [ForeignKey("DefendingTypeId")]
         public ElementalType DefendingType { get; set; }
+
         public int DefendingTypeId { get; set; }
 
-        
         public override string ToString()
         {
             return $"{AttackingType} -> {DefendingType}: x{AttackEffectivity}";

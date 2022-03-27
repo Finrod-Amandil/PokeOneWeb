@@ -1,8 +1,8 @@
-﻿using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 {
@@ -14,7 +14,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         private readonly Dictionary<string, Location> _locations = new();
         private readonly Dictionary<string, PokemonForm> _pokemonForms = new();
 
-        public SpawnMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public SpawnMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Spawn;
 
@@ -90,8 +92,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
             var timesOfDay = MapTimesOfDay(dto);
 
             return (
-                from season in seasons 
-                from timeOfDay in timesOfDay 
+                from season in seasons
+                from timeOfDay in timesOfDay
                 select MapSpawnOpportunity(season, timeOfDay)
             ).ToList();
         }
@@ -124,7 +126,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 }
                 else
                 {
-                    var season = new Season {Abbreviation = Season.ANY};
+                    var season = new Season { Abbreviation = Season.ANY };
                     seasons.Add(season);
                     _seasons.Add(Season.ANY, season);
                 }
@@ -134,13 +136,13 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 
             foreach (var abbreviation in dto.Season.ToCharArray())
             {
-                if (_seasons.ContainsKey("" + abbreviation))
+                if (_seasons.ContainsKey(string.Empty + abbreviation))
                 {
-                    seasons.Add(_seasons["" + abbreviation]);
+                    seasons.Add(_seasons[string.Empty + abbreviation]);
                 }
                 else
                 {
-                    var season = new Season {Abbreviation = "" + abbreviation};
+                    var season = new Season { Abbreviation = string.Empty + abbreviation };
                     _seasons.Add(season.Abbreviation, season);
                     seasons.Add(season);
                 }
@@ -176,13 +178,13 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 
             foreach (var abbreviation in dto.TimeOfDay.ToCharArray())
             {
-                if (_timesOfDay.ContainsKey("" + abbreviation))
+                if (_timesOfDay.ContainsKey(string.Empty + abbreviation))
                 {
-                    timesOfDay.Add(_timesOfDay["" + abbreviation]);
+                    timesOfDay.Add(_timesOfDay[string.Empty + abbreviation]);
                 }
                 else
                 {
-                    var timeOfDay = new TimeOfDay { Abbreviation = "" + abbreviation };
+                    var timeOfDay = new TimeOfDay { Abbreviation = string.Empty + abbreviation };
                     _timesOfDay.Add(timeOfDay.Abbreviation, timeOfDay);
                     timesOfDay.Add(timeOfDay);
                 }

@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {

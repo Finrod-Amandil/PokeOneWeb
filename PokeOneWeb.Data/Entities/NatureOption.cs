@@ -30,12 +30,13 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("NatureId")]
         public Nature Nature { get; set; }
+
         public int NatureId { get; set; }
 
         [ForeignKey("BuildId")]
         public Build Build { get; set; }
-        public int BuildId { get; set; }
 
+        public int BuildId { get; set; }
 
         public override string ToString()
         {

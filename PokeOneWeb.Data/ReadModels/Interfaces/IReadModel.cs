@@ -3,5 +3,7 @@
     /// <summary>
     /// Marker interface used by all read models for generic type constraints.
     /// </summary>
-    public interface IReadModel { }
+    public interface IReadModel
+    {
+    }
 }

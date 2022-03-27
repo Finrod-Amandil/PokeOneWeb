@@ -1,17 +1,19 @@
-﻿using Moq;
+﻿using System.Collections.Generic;
+using Moq;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 using PokeOneWeb.DataSync.ReadModelUpdate;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl;
-using System.Collections.Generic;
 using Xunit;
+
 namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
 {
     public class ReadModelUpdateServiceTests
     {
         #region Mocks
+
         private readonly Mock<IReadModelMapper<EntityTypeReadModel>> _entityTypeMapperMock;
         private readonly Mock<IReadModelMapper<ItemStatBoostPokemonReadModel>> _itemStatBoostPokemonMapperMock;
         private readonly Mock<IReadModelMapper<SimpleLearnableMoveReadModel>> _simpleLearnableMoveMapperMock;
@@ -29,7 +31,8 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
         private readonly Mock<IReadModelRepository<ItemReadModel>> _itemRepositoryMock;
         private readonly Mock<IReadModelRepository<RegionReadModel>> _regionRepositoryMock;
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
-        #endregion
+
+        #endregion Mocks
 
         private readonly ReadModelUpdateService _readModelUpdateService;
 

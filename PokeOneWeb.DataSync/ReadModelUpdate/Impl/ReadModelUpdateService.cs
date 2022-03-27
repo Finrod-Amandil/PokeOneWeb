@@ -42,7 +42,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             IReadModelRepository<PokemonVarietyReadModel> pokemonVarietyRepository,
             IReadModelRepository<ItemReadModel> itemRepository,
             IReadModelRepository<RegionReadModel> regionRepository,
-            
+
             ISpreadsheetImportReporter reporter)
         {
             _entityTypeMapper = entityTypeMapper;

@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
-    public abstract class SheetRowParser<TDto> 
+    public abstract class SheetRowParser<TDto>
         : ISheetRowParser<TDto> where TDto : ISpreadsheetEntityDto, new()
     {
         public TDto ReadRow(List<object> values)
@@ -27,7 +27,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             }
 
             return dto;
-
         }
 
         protected abstract int RequiredValueCount { get; }
@@ -50,7 +49,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             if (string.IsNullOrWhiteSpace(stringValue))
             {
-               throw new UnparsableRowValueException(value, "non-empty string");
+                throw new UnparsableRowValueException(value, "non-empty string");
             }
 
             return stringValue;
@@ -103,8 +102,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             var format = "dd.MM.yyyy";
             var canParse = DateTime.TryParseExact(
-                value.ToString(), 
-                format, 
+                value.ToString(),
+                format,
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
                 out var parsed

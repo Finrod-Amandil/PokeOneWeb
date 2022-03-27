@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageCla
             ApplicationDbContext dbContext,
             ISheetRowParser<MoveDamageClassSheetDto> parser,
             ISpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<MoveDamageClass> DbSet => DbContext.MoveDamageClasses;
         protected override Entity Entity => Entity.MoveDamageClass;

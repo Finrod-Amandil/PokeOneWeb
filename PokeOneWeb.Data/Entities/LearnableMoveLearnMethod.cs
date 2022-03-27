@@ -46,16 +46,17 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         public bool IsAvailable { get; set; }
@@ -66,20 +67,23 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("LearnableMoveId")]
         public LearnableMove LearnableMove { get; set; }
+
         public int LearnableMoveId { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
         public MoveLearnMethod MoveLearnMethod { get; set; }
+
         public int MoveLearnMethodId { get; set; }
 
         [ForeignKey("RequiredItemId")]
         public Item RequiredItem { get; set; }
+
         public int? RequiredItemId { get; set; } // Only used for learn method Machine / TM/HM
 
         [ForeignKey("MoveTutorMoveId")]
         public MoveTutorMove MoveTutorMove { get; set; }
-        public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
 
+        public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
 
         public override string ToString()
         {

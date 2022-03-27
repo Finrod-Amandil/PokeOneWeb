@@ -1,15 +1,15 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
-using Google.Apis.Util.Store;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
+using Google.Apis.Util.Store;
+using Microsoft.Extensions.Logging;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -36,7 +36,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         public async Task<string> LoadSheetHash(string spreadsheetId, string sheetName)
         {
-            var ranges = new List<string> {$"{sheetName}!A1"};
+            var ranges = new List<string> { $"{sheetName}!A1" };
             var values = await LoadData(spreadsheetId, ranges);
 
             return values[0].Values[0][0].ToString();
@@ -61,7 +61,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
                 hashes.Add(new RowHash
                 {
-                    ContentHash = row[0].ToString(), 
+                    ContentHash = row[0].ToString(),
                     IdHash = row[1].ToString(),
                     ImportSheetId = sheetId
                 });
@@ -72,7 +72,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         public async Task<List<List<object>>> LoadRows(string spreadsheetId, string sheetName, List<int> rows = null)
         {
-            var ranges = rows != null ? GetRangesForRows(rows, sheetName) : new List<string> {$"{sheetName}!C2:ZZ"};
+            var ranges = rows != null ? GetRangesForRows(rows, sheetName) : new List<string> { $"{sheetName}!C2:ZZ" };
             var values = await LoadData(spreadsheetId, ranges);
 
             var valuesCollapsed = new List<List<object>>();
@@ -87,7 +87,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         public async Task<List<List<object>>> LoadRange(string spreadsheetId, string sheetName, string range)
         {
-            var ranges = new List<string> {range};
+            var ranges = new List<string> { range };
             var values = await LoadData(spreadsheetId, ranges);
 
             return values[0].Values.Select(row => row.ToList()).ToList();
@@ -138,7 +138,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             {
                 if (i == rows.Count || (i > 0 && rows[i] - rows[i - 1] > 1))
                 {
-                    ranges.Add($"{sheetName}!C{startRow + 2}:{rows[i-1] + 2}");
+                    ranges.Add($"{sheetName}!C{startRow + 2}:{rows[i - 1] + 2}");
 
                     if (i < rows.Count)
                     {

@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts
@@ -106,7 +106,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.ItemSta
             var parser = new ItemStatBoostSheetRowParser();
             var values = new List<object>()
             {
-                "0", 1M, 1M, 1M, 1M, 1M, 1M, "", "excessive value"
+                "0", 1M, 1M, 1M, 1M, 1M, 1M, string.Empty, "excessive value"
             };
 
             // Act

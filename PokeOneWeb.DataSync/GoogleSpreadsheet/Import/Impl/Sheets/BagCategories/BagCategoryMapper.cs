@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
 {
     public class BagCategoryMapper : SpreadsheetEntityMapper<BagCategorySheetDto, BagCategory>
     {
-        public BagCategoryMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public BagCategoryMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.BagCategory;
 
