@@ -1,1082 +1,997 @@
 <div id="content_title_container">
-	<div id="content_title">Pokédex</div>
+    <div id="content_title">
+        Pokédex
+    </div>
 </div>
 
 <div id="content_main_container">
-	<table class="main-table search-table" id="search_table">
-		<thead>
-			<tr>
-				<th colspan="2">Search and filter</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Search</td>
-				<td>
-					<div>
-						<input
-							[(ngModel)]="model.filter.searchTerm"
-							(input)="onFilterChangedDelayed()"
-							id="input_search"
-							class="inline text-input"
-							type="text"
-						/>
-					</div>
-					<div>
-						<span class="search-option-explanation">
-							Search for Pokémon Name, Pokédex number or Ability name
-						</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Availability</td>
-				<td>
-					<div>
-						<ng-select
-							id="input_availability"
-							class="inline"
-							[(ngModel)]="model.filter.selectedAvailabilities"
-							(change)="onFilterChanged()"
-							[multiple]="true"
-							[closeOnSelect]="false"
-							[clearable]="true"
-							placeholder="Any"
-						>
-							<ng-option *ngFor="let availability of model.availabilities" [value]="availability"
-								>{{availability}}</ng-option
-							>
-						</ng-select>
-					</div>
-					<div>
-						<span class="search-option-explanation">
-							Only show Pokémon with the selected availabilities in PokéOne
-						</span>
-					</div>
-					<br />
-					<table id="availability_explanation_table">
-						<tbody>
-							<tr>
-								<td class="availability-obtainable">
-									<i class="material-icons md-24">check</i>
-								</td>
-								<td>Obtainable</td>
-								<td class="availability-explanation">
-									The Pokémon can be currently caught or obtained without having to buy it from
-									someone else.
-								</td>
-							</tr>
-							<tr>
-								<td class="availability-event">
-									<i class="material-icons md-24">grade</i>
-								</td>
-								<td>Event-exclusive</td>
-								<td class="availability-explanation">
-									The Pokémon was/is only obtainable during a certain time-limited event.
-								</td>
-							</tr>
-							<tr>
-								<td class="availability-removed">
-									<i class="material-icons md-24">delete_forever</i>
-								</td>
-								<td>Removed</td>
-								<td class="availability-explanation">
-									The Pokémon was once obtainable, but is now no longer obtainable except by trading.
-								</td>
-							</tr>
-							<tr>
-								<td class="availability-unobtainable">
-									<i class="material-icons md-24">clear</i>
-								</td>
-								<td>Unobtainable</td>
-								<td class="availability-explanation">
-									The Pokémon can not be obtained and has never been obtainable before.
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td>PvP Tiers</td>
-				<td>
-					<div>
-						<div>
-							<ng-select
-								id="input_pvpTier"
-								class="inline"
-								[(ngModel)]="model.filter.selectedPvpTiers"
-								(change)="onFilterChanged()"
-								[multiple]="true"
-								[closeOnSelect]="false"
-								[clearable]="true"
-								placeholder="Any"
-							>
-								<ng-option *ngFor="let pvpTier of model.pvpTiers" [value]="pvpTier"
-									>{{pvpTier.name}}</ng-option
-								>
-							</ng-select>
-						</div>
-					</div>
-					<div>
-						<span class="search-option-explanation">
-							Rankings created by DSK and Cutebun on PokeoneCommunity (<a
-								href="https://www.pokeonecommunity.com/index.php?mod=articles&action=view&id=75"
-								target="_blank"
-								>Link</a
-							>)
-						</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Types</td>
-				<td>
-					<div>
-						<ng-select
-							id="input_type1"
-							class="inline input-type"
-							[(ngModel)]="model.filter.selectedType1"
-							(change)="onFilterChanged()"
-							[clearable]="false"
-						>
-							<ng-option *ngFor="let type of model.types1" [value]="type">
-								<pokeone-type-badge [typeName]="type"></pokeone-type-badge>
-							</ng-option>
-						</ng-select>
-					</div>
-					<div>
-						<ng-select
-							id="input_type2"
-							class="inline input-type"
-							[(ngModel)]="model.filter.selectedType2"
-							(change)="onFilterChanged()"
-							[clearable]="false"
-						>
-							<ng-option *ngFor="let type of model.types2" [value]="type">
-								<pokeone-type-badge [typeName]="type"></pokeone-type-badge>
-							</ng-option>
-						</ng-select>
-					</div>
-					<div>
-						<span class="search-option-explanation"> Only show Pokémon that have these types </span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Ability</td>
-				<td>
-					<div>
-						<ng-select
-							id="input_ability"
-							class="inline"
-							[(ngModel)]="model.filter.selectedAbility"
-							(change)="onFilterChanged()"
-							[clearable]="true"
-							[virtualScroll]="true"
-							placeholder="Any"
-						>
-							<ng-option *ngFor="let ability of model.abilities" [value]="ability">{{ability}}</ng-option>
-						</ng-select>
-					</div>
-					<div>
-						<span class="search-option-explanation"> Only show Pokémon that can have this ability </span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Base stats</td>
-				<td>
-					<div>
-						<span class="search-option-explanation"
-							>Only show Pokémon with the given minimum / maximum base stats</span
-						>
-					</div>
-					<br />
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-hp">HP</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinHp"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxHp"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-attack">Attack</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinAtk"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxAtk"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-defense">Defense</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinDef"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxDef"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-special-attack">Special Attack</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinSpa"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxSpa"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-special-defense">Special Defense</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinSpd"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxSpd"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-speed">Speed</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinSpe"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxSpe"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
 
-					<div>
-						<table class="stat-input-table">
-							<thead>
-								<tr>
-									<th colspan="2" class="stat-total">Total stats</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="stat-input-minmax">Min</td>
-									<td class="stat-input-minmax">Max</td>
-								</tr>
-								<tr>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMinTotal"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-									<td>
-										<input
-											[(ngModel)]="model.filter.selectedMaxTotal"
-											(input)="onFilterChangedDelayed()"
-											class="stat-input"
-											type="text"
-										/>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Learnset</td>
-				<td>
-					<div>
-						<table>
-							<tbody>
-								<tr>
-									<td colspan="8">
-										<span class="search-option-explanation"
-											>Only show Pokémon which can learn these moves in PokéOne</span
-										>
-									</td>
-								</tr>
-								<tr>
-									<td>Move 1:</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove1Option1"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove1Option2"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove1Option3"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove1Option4"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-								</tr>
-								<tr>
-									<td>Move 2:</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove2Option1"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove2Option2"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove2Option3"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove2Option4"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-								</tr>
-								<tr>
-									<td>Move 3:</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove3Option1"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove3Option2"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove3Option3"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove3Option4"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-								</tr>
-								<tr>
-									<td>Move 4:</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove4Option1"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove4Option2"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove4Option3"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-									<td>or</td>
-									<td>
-										<ng-select
-											class="input-move"
-											[(ngModel)]="model.filter.selectedMove4Option4"
-											(change)="onFilterChanged()"
-											[clearable]="true"
-											[virtualScroll]="true"
-										>
-											<ng-option *ngFor="let move of model.moves" [value]="move"
-												>{{move.name}}</ng-option
-											>
-										</ng-select>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Generation</td>
-				<td>
-					<div>
-						<ng-select
-							id="input_generation"
-							class="inline"
-							[(ngModel)]="model.filter.selectedGenerations"
-							(change)="onFilterChanged()"
-							[multiple]="true"
-							[closeOnSelect]="false"
-							placeholder="Any"
-						>
-							<ng-option *ngFor="let generation of model.generations" [value]="generation"
-								>{{generation.name}}</ng-option
-							>
-						</ng-select>
-					</div>
-					<div>
-						<span class="search-option-explanation">
-							Only show Pokémon which were introduced in the selected generations
-						</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>Mega evolutions</td>
-				<td>
-					<input
-						[(ngModel)]="model.filter.showMegaEvolutions"
-						(change)="onFilterChanged()"
-						id="input_show_megas"
-						type="checkbox"
-						checked
-					/>
-					<label for="input_show_megas">Show mega evolutions</label>
-				</td>
-			</tr>
-			<tr>
-				<td>Fully evolved</td>
-				<td>
-					<input
-						[(ngModel)]="model.filter.showFullyEvolvedOnly"
-						(change)="onFilterChanged()"
-						id="input_fully_evolved"
-						type="checkbox"
-					/>
-					<label for="input_fully_evolved">Only show fully evolved Pokémon</label>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+<table class="main-table search-table" id="search_table">
+    <thead>
+        <tr>
+            <th colspan="2">Search and filter</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Search</td>
+            <td>
+                <div>
+                    <input 
+                        [(ngModel)]="model.filter.searchTerm" 
+                        (input)="onFilterChangedDelayed()"
+                        id="input_search" 
+                        class="inline text-input" 
+                        type="text">
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Search for Pokémon Name, Pokédex number or Ability name
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Availability</td>
+            <td>
+                <div>
+                    <ng-select 
+                        id="input_availability" 
+                        class="inline"
+                        [(ngModel)]="model.filter.selectedAvailabilities" 
+                        (change)="onFilterChanged()"
+                        [multiple]="true" 
+                        [closeOnSelect]="false"
+                        [clearable]="true"
+                        placeholder="Any">
+                        <ng-option 
+                            *ngFor="let availability of model.availabilities" 
+                            [value]="availability">{{availability}}</ng-option>
+                     </ng-select>
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Only show Pokémon with the selected availabilities in PokéOne
+                    </span>
+                </div>
+                <br />
+                <table id="availability_explanation_table">
+                    <tbody>
+                        <tr>
+                            <td class="availability-obtainable">
+                                <i class="material-icons md-24">check</i>
+                            </td>
+                            <td>
+                                Obtainable
+                            </td>
+                            <td class="availability-explanation">
+                                The Pokémon can be currently caught or obtained without having to buy it from someone else.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="availability-event">
+                                <i class="material-icons md-24">grade</i>
+                            </td>
+                            <td>
+                                Event-exclusive
+                            </td>
+                            <td class="availability-explanation">
+                                The Pokémon was/is only obtainable during a certain time-limited event.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="availability-removed">
+                                <i class="material-icons md-24">delete_forever</i>
+                            </td>
+                            <td>
+                                Removed
+                            </td>
+                            <td class="availability-explanation">
+                                The Pokémon was once obtainable, but is now no longer obtainable except by trading.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="availability-unobtainable">
+                                <i class="material-icons md-24">clear</i>
+                            </td>
+                            <td>
+                                Unobtainable
+                            </td>
+                            <td class="availability-explanation">
+                                The Pokémon can not be obtained and has never been obtainable before.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>PvP Tiers</td>
+            <td>
+                <div>
+                    <div>
+                        <ng-select 
+                            id="input_pvpTier"
+                            class="inline"
+                            [(ngModel)]="model.filter.selectedPvpTiers" 
+                            (change)="onFilterChanged()"
+                            [multiple]="true" 
+                            [closeOnSelect]="false"
+                            [clearable]="true"
+                            placeholder="Any">
+                            <ng-option 
+                                *ngFor="let pvpTier of model.pvpTiers" 
+                                [value]="pvpTier">{{pvpTier.name}}</ng-option>
+                         </ng-select>
+                    </div>
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Rankings created by DSK and Cutebun on PokeoneCommunity
+                        (<a href="https://www.pokeonecommunity.com/index.php?mod=articles&action=view&id=75" target="_blank">Link</a>)
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Types</td>
+            <td>
+                <div>
+                    <ng-select 
+                        id="input_type1"
+                        class="inline input-type"
+                        [(ngModel)]="model.filter.selectedType1" 
+                        (change)="onFilterChanged()"
+                        [clearable]="false">
+                        <ng-option *ngFor="let type of model.types1" [value]="type">
+                            <pokeone-type-badge [typeName]="type"></pokeone-type-badge>
+                        </ng-option>
+                     </ng-select>
+                </div>
+                <div>
+                    <ng-select 
+                        id="input_type2"
+                        class="inline input-type"
+                        [(ngModel)]="model.filter.selectedType2" 
+                        (change)="onFilterChanged()"
+                        [clearable]="false">
+                        <ng-option *ngFor="let type of model.types2" [value]="type">
+                            <pokeone-type-badge [typeName]="type"></pokeone-type-badge>
+                        </ng-option>
+                     </ng-select>
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Only show Pokémon that have these types
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Ability</td>
+            <td>
+                <div>
+                    <ng-select 
+                        id="input_ability"
+                        class="inline"
+                        [(ngModel)]="model.filter.selectedAbility" 
+                        (change)="onFilterChanged()"
+                        [clearable]="true" 
+                        [virtualScroll]="true"
+                        placeholder="Any">
+                        <ng-option *ngFor="let ability of model.abilities" [value]="ability">{{ability}}</ng-option>
+                     </ng-select>
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Only show Pokémon that can have this ability
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Base stats</td>
+            <td>
+                <div>
+                    <span class="search-option-explanation">Only show Pokémon with the given minimum / maximum base stats</span>
+                </div>
+                <br />
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-hp">
+                                    HP
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinHp" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxHp" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-attack">
+                                    Attack
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinAtk" 
+                                        (input)="onFilterChangedDelayed()" 
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxAtk" 
+                                        (input)="onFilterChangedDelayed()" 
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-defense">
+                                    Defense
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinDef" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxDef" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-special-attack">
+                                    Special Attack
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinSpa" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxSpa" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-special-defense">
+                                    Special Defense
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinSpd" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxSpd" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-speed">
+                                    Speed
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinSpe" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxSpe" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <table class="stat-input-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="stat-total">
+                                    Total stats
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="stat-input-minmax">Min</td>
+                                <td class="stat-input-minmax">Max</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMinTotal" 
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input" 
+                                        type="text"/>
+                                </td>
+                                <td>
+                                    <input 
+                                        [(ngModel)]="model.filter.selectedMaxTotal"
+                                        (input)="onFilterChangedDelayed()"
+                                        class="stat-input"
+                                        type="text"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Learnset</td>
+            <td>
+                <div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td colspan="8">
+                                    <span class="search-option-explanation">Only show Pokémon which can learn these moves in PokéOne</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Move 1:</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove1Option1" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove1Option2" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove1Option3" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove1Option4" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Move 2:</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove2Option1" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove2Option2" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove2Option3" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove2Option4" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Move 3:</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove3Option1" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove3Option2" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove3Option3" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove3Option4" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Move 4:</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove4Option1" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove4Option2" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove4Option3" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td>or</td>
+                                <td>
+                                    <ng-select 
+                                        class="input-move" 
+                                        [(ngModel)]="model.filter.selectedMove4Option4" 
+                                        (change)="onFilterChanged()"
+                                        [clearable]="true" 
+                                        [virtualScroll]="true">
+                                        <ng-option 
+                                            *ngFor="let move of model.moves" 
+                                            [value]="move">{{move.name}}</ng-option>
+                                    </ng-select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Generation</td>
+            <td>
+                <div>
+                    <ng-select
+                        id="input_generation"
+                        class="inline"
+                        [(ngModel)]="model.filter.selectedGenerations" 
+                        (change)="onFilterChanged()"
+                        [multiple]="true" 
+                        [closeOnSelect]="false"
+                        placeholder="Any">
+                        <ng-option *ngFor="let generation of model.generations" [value]="generation">{{generation.name}}</ng-option>
+                     </ng-select>
+                </div>
+                <div>
+                    <span class="search-option-explanation">
+                        Only show Pokémon which were introduced in the selected generations
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mega evolutions
+            </td>
+            <td>
+                <input 
+                    [(ngModel)]="model.filter.showMegaEvolutions"
+                    (change)="onFilterChanged()"
+                    id="input_show_megas" 
+                    type="checkbox" checked>
+                <label for="input_show_megas">Show mega evolutions</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Fully evolved
+            </td>
+            <td>
+                <input 
+                    [(ngModel)]="model.filter.showFullyEvolvedOnly" 
+                    (change)="onFilterChanged()"
+                    id="input_fully_evolved" 
+                    type="checkbox">
+                <label for="input_fully_evolved">Only show fully evolved Pokémon</label>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-	<p *ngIf="model.displayedPokemonModels.length > 0" class="pokemon-list-title">
-		Showing {{model.displayedPokemonModels.length}} of {{model.pokemonModels.length}} Pokémon
-	</p>
+<p *ngIf="model.displayedPokemonModels.length > 0" class="pokemon-list-title">Showing {{model.displayedPokemonModels.length}} of {{model.pokemonModels.length}} Pokémon</p>
 
-	<div
-		*ngIf="model.displayedPokemonModels.length > 0"
-		attr.style="height: calc({{scroll.viewPortInfo.maxScrollPosition}}px + 100vh + 200px)"
-	>
-		<virtual-scroller #scroll [parentScroll]="scroll.window" [items]="model.displayedPokemonModels">
-			<table class="main-table sortable rows-clickable" id="pokemon_list">
-				<thead>
-					<tr>
-						<th class="col-availability"></th>
-						<th class="col-number">
-							<div
-								[ngClass]="getSortButtonClass(column.PokedexNumber, 1)"
-								(click)="sort(column.PokedexNumber, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">#</div>
-							<div
-								[ngClass]="getSortButtonClass(column.PokedexNumber, -1)"
-								(click)="sort(column.PokedexNumber, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-sprite"></th>
-						<th class="col-name">
-							<div
-								[ngClass]="getSortButtonClass(column.Name, 1)"
-								(click)="sort(column.Name, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">Name</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Name, -1)"
-								(click)="sort(column.Name, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-type">Type</th>
-						<th class="col-ability">Abilities</th>
-						<th class="col-stat stat-hp">
-							<div
-								[ngClass]="getSortButtonClass(column.Hp, 1)"
-								(click)="sort(column.Hp, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">HP</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Hp, -1)"
-								(click)="sort(column.Hp, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-attack">
-							<div
-								[ngClass]="getSortButtonClass(column.Atk, 1)"
-								(click)="sort(column.Atk, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">ATK</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Atk, -1)"
-								(click)="sort(column.Atk, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-defense">
-							<div
-								[ngClass]="getSortButtonClass(column.Def, 1)"
-								(click)="sort(column.Def, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">DEF</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Def, -1)"
-								(click)="sort(column.Def, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-special-attack">
-							<div
-								[ngClass]="getSortButtonClass(column.Spa, 1)"
-								(click)="sort(column.Spa, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">SPA</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Spa, -1)"
-								(click)="sort(column.Spa, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-special-defense">
-							<div
-								[ngClass]="getSortButtonClass(column.Spd, 1)"
-								(click)="sort(column.Spd, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">SPD</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Spd, -1)"
-								(click)="sort(column.Spd, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-speed">
-							<div
-								[ngClass]="getSortButtonClass(column.Spe, 1)"
-								(click)="sort(column.Spe, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">SPE</div>
-							<div
-								[ngClass]="getSortButtonClass(column.Spe, -1)"
-								(click)="sort(column.Spe, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-stat stat-total">
-							<div
-								[ngClass]="getSortButtonClass(column.StatTotal, 1)"
-								(click)="sort(column.StatTotal, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">Total</div>
-							<div
-								[ngClass]="getSortButtonClass(column.StatTotal, -1)"
-								(click)="sort(column.StatTotal, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-pvp-tier">
-							<div
-								[ngClass]="getSortButtonClass(column.PvpTier, 1)"
-								(click)="sort(column.PvpTier, 1)"
-								class="table-header-sort"
-							>
-								⮝
-							</div>
-							<div class="table-header-label">PvP</div>
-							<div
-								[ngClass]="getSortButtonClass(column.PvpTier, -1)"
-								(click)="sort(column.PvpTier, -1)"
-								class="table-header-sort"
-							>
-								⮟
-							</div>
-						</th>
-						<th class="col-links">Links</th>
-					</tr>
-				</thead>
-				<tbody #container>
-					<tr
-						*ngFor="let pokemon of scroll.viewPortItems; trackBy: trackById"
-						(click)="navigateToDetailPage(pokemon.resourceName);"
-					>
-						<td class="col-availability" [ngClass]="getAvailabilityClass(pokemon.availability)">
-							<i *ngIf="pokemon.availability==='Obtainable'" class="material-icons md-24">check</i>
-							<i *ngIf="pokemon.availability==='Unobtainable'" class="material-icons md-24">clear</i>
-							<i *ngIf="pokemon.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
-							<i *ngIf="pokemon.availability==='Removed'" class="material-icons md-24">delete_forever</i>
-						</td>
-						<td class="col-number">{{("" + pokemon.pokedexNumber).padStart(3, '0')}}</td>
-						<td class="col-sprite">
-							<img
-								*ngIf="pokemon.spriteName"
-								[src]="'./assets/img/sprites/pokemon/medium/' + pokemon.spriteName"
-							/>
-						</td>
-						<td class="col-name">{{pokemon.name}}</td>
-						<td class="col-type">
-							<pokeone-type-badge [typeName]="pokemon.primaryElementalType"></pokeone-type-badge>
-							<pokeone-type-badge
-								*ngIf="pokemon.secondaryElementalType"
-								[typeName]="pokemon.secondaryElementalType"
-							></pokeone-type-badge>
-						</td>
-						<td class="col-ability">
-							<div class="ability-container">
-								<div class="ability-slot">Primary</div>
-								<div *ngIf="pokemon.primaryAbility" class="ability-name">
-									{{pokemon.primaryAbility}}
-								</div>
-								<div *ngIf="pokemon.primaryAbility" class="ability-effect-toggle">&gt;</div>
-								<div *ngIf="pokemon.primaryAbility" class="ability-description">
-									{{pokemon.primaryAbilityEffect}}
-								</div>
-								<div *ngIf="!pokemon.primaryAbility" class="ability-none">-</div>
-							</div>
-							<div class="ability-container">
-								<div class="ability-slot">Secondary</div>
-								<div *ngIf="pokemon.secondaryAbility" class="ability-name">
-									{{pokemon.secondaryAbility}}
-								</div>
-								<div *ngIf="pokemon.secondaryAbility" class="ability-effect-toggle">&gt;</div>
-								<div *ngIf="pokemon.secondaryAbility" class="ability-description">
-									{{pokemon.secondaryAbilityEffect}}
-								</div>
-								<div *ngIf="!pokemon.secondaryAbility" class="ability-none">-</div>
-							</div>
-							<div class="ability-container">
-								<div class="ability-slot">Hidden</div>
-								<div *ngIf="pokemon.hiddenAbility" class="ability-name">{{pokemon.hiddenAbility}}</div>
-								<div *ngIf="pokemon.hiddenAbility" class="ability-effect-toggle">&gt;</div>
-								<div *ngIf="pokemon.hiddenAbility" class="ability-description">
-									{{pokemon.hiddenAbilityEffect}}
-								</div>
-								<div *ngIf="!pokemon.hiddenAbility" class="ability-none">-</div>
-							</div>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxHp > 0"
-								[width]="40"
-								[height]="104"
-								label="HP"
-								[statValue]="pokemon.hitPoints"
-								[maxValue]="model.maxHp"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxAtk > 0"
-								[width]="40"
-								[height]="104"
-								label="Attack"
-								[statValue]="pokemon.attack"
-								[maxValue]="model.maxAtk"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxDef > 0"
-								[width]="40"
-								[height]="104"
-								label="Def."
-								[statValue]="pokemon.defense"
-								[maxValue]="model.maxDef"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxSpa > 0"
-								[width]="40"
-								[height]="104"
-								label="Sp. A."
-								[statValue]="pokemon.specialAttack"
-								[maxValue]="model.maxSpa"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxSpd > 0"
-								[width]="40"
-								[height]="104"
-								label="Sp. D."
-								[statValue]="pokemon.specialDefense"
-								[maxValue]="model.maxSpd"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxSpe > 0"
-								[width]="40"
-								[height]="104"
-								label="Speed"
-								[statValue]="pokemon.speed"
-								[maxValue]="model.maxSpe"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-stat">
-							<pokeone-vertical-stat-bar
-								*ngIf="model.maxTotal > 0"
-								[width]="40"
-								[height]="104"
-								label="Total"
-								[statValue]="pokemon.statTotal"
-								[maxValue]="model.maxTotal"
-							>
-							</pokeone-vertical-stat-bar>
-						</td>
-						<td class="col-pvp-tier" [ngClass]="getPvpTierClass(pokemon.pvpTier)">{{pokemon.pvpTier}}</td>
-						<td class="col-links">
-							<div
-								*ngFor="let url of pokemon.urls"
-								class="favicon-container"
-								(click)="$event.stopPropagation()"
-							>
-								<a [href]="getFullUrl(url)" target="_blank">
-									<img [src]="getUrlIcon(url)" />
-								</a>
-								<div class="favicon-tooltip" innerHtml="{{getUrlDisplayName(url)}}">
-									{{getUrlDisplayName(url)}}
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</virtual-scroller>
-	</div>
+<div *ngIf="model.displayedPokemonModels.length > 0" attr.style="height: calc({{scroll.viewPortInfo.maxScrollPosition}}px + 100vh + 200px)">
+<virtual-scroller #scroll [parentScroll]="scroll.window" [items]="model.displayedPokemonModels">
+  
+<table class="main-table sortable rows-clickable" id="pokemon_list">
+    <thead>
+        <tr>
+            <th class="col-availability"></th>
+            <th class="col-number">
+                <div 
+                    [ngClass]="getSortButtonClass(column.PokedexNumber, 1)" 
+                    (click)="sort(column.PokedexNumber, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">#</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.PokedexNumber, -1)" 
+                    (click)="sort(column.PokedexNumber, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-sprite"></th>
+            <th class="col-name">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Name, 1)" 
+                    (click)="sort(column.Name, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">Name</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Name, -1)" 
+                    (click)="sort(column.Name, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-type">Type</th>
+            <th class="col-ability">Abilities</th>
+            <th class="col-stat stat-hp">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Hp, 1)" 
+                    (click)="sort(column.Hp, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">HP</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Hp, -1)" 
+                    (click)="sort(column.Hp, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-attack">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Atk, 1)" 
+                    (click)="sort(column.Atk, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">ATK</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Atk, -1)" 
+                    (click)="sort(column.Atk, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-defense">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Def, 1)" 
+                    (click)="sort(column.Def, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">DEF</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Def, -1)" 
+                    (click)="sort(column.Def, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-special-attack">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spa, 1)" 
+                    (click)="sort(column.Spa, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">SPA</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spa, -1)" 
+                    (click)="sort(column.Spa, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-special-defense">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spd, 1)" 
+                    (click)="sort(column.Spd, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">SPD</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spd, -1)" 
+                    (click)="sort(column.Spd, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-speed">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spe, 1)" 
+                    (click)="sort(column.Spe, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">SPE</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Spe, -1)" 
+                    (click)="sort(column.Spe, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-bulk">
+                <div 
+                    [ngClass]="getSortButtonClass(column.Bulk, 1)" 
+                    (click)="sort(column.Bulk, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="has-tooltip">
+                    <div class="table-header-label">Bulk</div>
+                    <span class="tooltip">Bulk = HP + Def. + Sp.D.</span>
+                </div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.Bulk, -1)" 
+                    (click)="sort(column.Bulk, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-stat stat-total">
+                <div 
+                    [ngClass]="getSortButtonClass(column.StatTotal, 1)" 
+                    (click)="sort(column.StatTotal, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">Total</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.StatTotal, -1)" 
+                    (click)="sort(column.StatTotal, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-pvp-tier">
+                <div 
+                    [ngClass]="getSortButtonClass(column.PvpTier, 1)" 
+                    (click)="sort(column.PvpTier, 1)"
+                    class="table-header-sort">⮝</div>
+                <div class="table-header-label">PvP</div>
+                <div 
+                    [ngClass]="getSortButtonClass(column.PvpTier, -1)" 
+                    (click)="sort(column.PvpTier, -1)"
+                    class="table-header-sort">⮟</div>
+            </th>
+            <th class="col-links">Links</th>
+        </tr>
+    </thead>
+    <tbody #container>
+        <tr *ngFor="let pokemon of scroll.viewPortItems; trackBy: trackById" (click)="navigateToDetailPage(pokemon.resourceName);">
+            <td class="col-availability" [ngClass]="getAvailabilityClass(pokemon.availability)">
+                <i *ngIf="pokemon.availability==='Obtainable'" class="material-icons md-24">check</i>
+                <i *ngIf="pokemon.availability==='Unobtainable'" class="material-icons md-24">clear</i>
+                <i *ngIf="pokemon.availability==='Event-exclusive'" class="material-icons md-24">grade</i>
+                <i *ngIf="pokemon.availability==='Removed'" class="material-icons md-24">delete_forever</i>
+            </td>
+            <td class="col-number">{{("" + pokemon.pokedexNumber).padStart(3, '0')}}</td>
+            <td class="col-sprite">
+                <img *ngIf="pokemon.spriteName" [src]="'./assets/img/sprites/pokemon/medium/' + pokemon.spriteName" />
+            </td>
+            <td class="col-name">
+                {{pokemon.name}}
+            </td>
+            <td class="col-type">
+                <pokeone-type-badge [typeName]="pokemon.primaryElementalType"></pokeone-type-badge>
+                <pokeone-type-badge *ngIf="pokemon.secondaryElementalType" [typeName]="pokemon.secondaryElementalType"></pokeone-type-badge>
+            </td>
+            <td class="col-ability">
+                <div class="ability-container">
+                    <div class="ability-slot">Primary</div>
+                    <div *ngIf="pokemon.primaryAbility" class="ability-name">{{pokemon.primaryAbility}}</div>
+                    <div *ngIf="pokemon.primaryAbility" class="ability-effect-toggle">&gt;</div>
+                    <div *ngIf="pokemon.primaryAbility" class="ability-description">{{pokemon.primaryAbilityEffect}}</div>
+                    <div *ngIf="!pokemon.primaryAbility" class="ability-none">-</div>
+                </div>
+                <div class="ability-container">
+                    <div class="ability-slot">Secondary</div>
+                    <div *ngIf="pokemon.secondaryAbility" class="ability-name">{{pokemon.secondaryAbility}}</div>
+                    <div *ngIf="pokemon.secondaryAbility" class="ability-effect-toggle">&gt;</div>
+                    <div *ngIf="pokemon.secondaryAbility" class="ability-description">{{pokemon.secondaryAbilityEffect}}</div>
+                    <div *ngIf="!pokemon.secondaryAbility" class="ability-none">-</div>
+                </div>
+                <div class="ability-container">
+                    <div class="ability-slot">Hidden</div>
+                    <div *ngIf="pokemon.hiddenAbility" class="ability-name">{{pokemon.hiddenAbility}}</div>
+                    <div *ngIf="pokemon.hiddenAbility" class="ability-effect-toggle">&gt;</div>
+                    <div *ngIf="pokemon.hiddenAbility" class="ability-description">{{pokemon.hiddenAbilityEffect}}</div>
+                    <div *ngIf="!pokemon.hiddenAbility" class="ability-none">-</div>
+                </div>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxHp > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="HP"
+                    [statValue]="pokemon.hitPoints"
+                    [maxValue]="model.maxHp">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxAtk > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Attack"
+                    [statValue]="pokemon.attack"
+                    [maxValue]="model.maxAtk">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxDef > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Def."
+                    [statValue]="pokemon.defense"
+                    [maxValue]="model.maxDef">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxSpa > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Sp. A."
+                    [statValue]="pokemon.specialAttack"
+                    [maxValue]="model.maxSpa">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxSpd > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Sp. D."
+                    [statValue]="pokemon.specialDefense"
+                    [maxValue]="model.maxSpd">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxSpe > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Speed"
+                    [statValue]="pokemon.speed"
+                    [maxValue]="model.maxSpe">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxBulk > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Bulk"
+                    [statValue]="pokemon.bulk"
+                    [maxValue]="model.maxBulk">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-stat">
+                <pokeone-vertical-stat-bar 
+                    *ngIf="model.maxTotal > 0" 
+                    [width]="40"
+                    [height]="104"
+                    label="Total"
+                    [statValue]="pokemon.statTotal"
+                    [maxValue]="model.maxTotal">
+                </pokeone-vertical-stat-bar>
+            </td>
+            <td class="col-pvp-tier" 
+                [ngClass]="getPvpTierClass(pokemon.pvpTier)">{{pokemon.pvpTier}}</td>
+            <td class="col-links">
+                <div *ngFor="let url of pokemon.urls" class="favicon-container" (click)="$event.stopPropagation()">
+                    <a [href]="getFullUrl(url)" target="_blank">
+                        <img [src]="getUrlIcon(url)" />
+                    </a>
+                    <div class="favicon-tooltip" innerHtml={{getUrlDisplayName(url)}}>
+                        {{getUrlDisplayName(url)}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-	<p *ngIf="model.displayedPokemonModels.length === 0" class="pokemon-list-empty">
-		No Pokémon to display. Try to adjust your search criteria.
-	</p>
+</virtual-scroller>
+</div>
+
+<p *ngIf="model.displayedPokemonModels.length === 0" class="pokemon-list-empty">No Pokémon to display. Try to adjust your search criteria.</p>
 </div>
