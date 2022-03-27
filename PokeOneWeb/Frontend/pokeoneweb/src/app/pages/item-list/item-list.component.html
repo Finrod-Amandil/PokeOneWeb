@@ -1,136 +1,141 @@
 <div id="content_title_container">
-    <div id="content_title">
-        Items
-    </div>
+	<div id="content_title">Items</div>
 </div>
 
 <div id="content_main_container">
+	<table class="main-table search-table" id="search_table">
+		<thead>
+			<tr>
+				<th colspan="2">Search and filter</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Search</td>
+				<td>
+					<div>
+						<input
+							[(ngModel)]="model.filter.searchTerm"
+							(input)="onFilterChangedDelayed()"
+							id="input_search"
+							class="inline text-input"
+							type="text"
+						/>
+					</div>
+					<div>
+						<span class="search-option-explanation"> Search for Item name, description and effect </span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Bag Category</td>
+				<td>
+					<div>
+						<ng-select
+							id="input_bagcategory"
+							class="inline"
+							[(ngModel)]="model.filter.selectedBagCategory"
+							(change)="onFilterChanged()"
+							[clearable]="true"
+							[virtualScroll]="true"
+							placeholder="Any"
+						>
+							<ng-option *ngFor="let bagCategory of model.bagCategories" [value]="bagCategory"
+								>{{bagCategory}}</ng-option
+							>
+						</ng-select>
+					</div>
+					<div>
+						<span class="search-option-explanation"> Only show Items from the selected Bag Category </span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Availability</td>
+				<td>
+					<input
+						[(ngModel)]="model.filter.showUnavailable"
+						(change)="onFilterChanged()"
+						id="input_show_unavailable"
+						type="checkbox"
+						checked
+					/>
+					<label for="input_show_unavailable">Show unavailable items</label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<table class="main-table search-table" id="search_table">
-    <thead>
-        <tr>
-            <th colspan="2">Search and filter</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Search</td>
-            <td>
-                <div>
-                    <input 
-                        [(ngModel)]="model.filter.searchTerm" 
-                        (input)="onFilterChangedDelayed()"
-                        id="input_search" 
-                        class="inline text-input" 
-                        type="text">
-                </div>
-                <div>
-                    <span class="search-option-explanation">
-                        Search for Item name, description and effect
-                    </span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Bag Category</td>
-            <td>
-                <div>
-                    <ng-select 
-                        id="input_bagcategory"
-                        class="inline"
-                        [(ngModel)]="model.filter.selectedBagCategory" 
-                        (change)="onFilterChanged()"
-                        [clearable]="true" 
-                        [virtualScroll]="true"
-                        placeholder="Any">
-                        <ng-option *ngFor="let bagCategory of model.bagCategories" [value]="bagCategory">{{bagCategory}}</ng-option>
-                     </ng-select>
-                </div>
-                <div>
-                    <span class="search-option-explanation">
-                        Only show Items from the selected Bag Category
-                    </span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Availability
-            </td>
-            <td>
-                <input 
-                    [(ngModel)]="model.filter.showUnavailable"
-                    (change)="onFilterChanged()"
-                    id="input_show_unavailable" 
-                    type="checkbox" checked>
-                <label for="input_show_unavailable">Show unavailable items</label>
-            </td>
-        </tr>
-    </tbody>
-</table>
+	<p *ngIf="model.displayedItemModels.length > 0" class="item-list-title">
+		Showing {{model.displayedItemModels.length}} of {{model.itemModels.length}} Items
+	</p>
 
-<p *ngIf="model.displayedItemModels.length > 0" class="item-list-title">Showing {{model.displayedItemModels.length}} of {{model.itemModels.length}} Items</p>
+	<div *ngIf="model.displayedItemModels.length > 0">
+		<table class="main-table sortable rows-clickable" id="item_list">
+			<thead>
+				<tr>
+					<th class="col-availability"></th>
+					<th class="col-sprite"></th>
+					<th class="col-name">
+						<div
+							[ngClass]="getSortButtonClass(column.Name, 1)"
+							(click)="sort(column.Name, 1)"
+							class="table-header-sort"
+						>
+							⮝
+						</div>
+						<div class="table-header-label">Name</div>
+						<div
+							[ngClass]="getSortButtonClass(column.Name, -1)"
+							(click)="sort(column.Name, -1)"
+							class="table-header-sort"
+						>
+							⮟
+						</div>
+					</th>
+					<th class="col-bagcategory">
+						<div
+							[ngClass]="getSortButtonClass(column.BagCategory, 1)"
+							(click)="sort(column.BagCategory, 1)"
+							class="table-header-sort"
+						>
+							⮝
+						</div>
+						<div class="table-header-label">Category</div>
+						<div
+							[ngClass]="getSortButtonClass(column.BagCategory, -1)"
+							(click)="sort(column.BagCategory, -1)"
+							class="table-header-sort"
+						>
+							⮟
+						</div>
+					</th>
+					<th class="col-description">Description</th>
+					<th class="col-effect">Effect</th>
+				</tr>
+			</thead>
+			<tbody #container>
+				<tr
+					*ngFor="let item of model.displayedItemModels; trackBy: trackById"
+					(click)="navigateToDetailPage(item.resourceName);"
+				>
+					<td class="col-availability" [ngClass]="getAvailabilityClass(item.isAvailable)">
+						<i *ngIf="item.isAvailable" class="material-icons md-24">check</i>
+						<i *ngIf="!item.isAvailable" class="material-icons md-24">clear</i>
+					</td>
+					<td class="col-sprite">
+						<img *ngIf="item.spriteName" [src]="'./assets/img/sprites/items/small/' + item.spriteName" />
+					</td>
+					<td class="col-name">{{item.name}}</td>
+					<td class="col-bagcategory">{{item.bagCategoryName}}</td>
+					<td class="col-description">{{item.description}}</td>
+					<td class="col-effect">{{item.effect}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-<div *ngIf="model.displayedItemModels.length > 0">
-
-<table class="main-table sortable rows-clickable" id="item_list">
-    <thead>
-        <tr>
-            <th class="col-availability"></th>
-            <th class="col-sprite"></th>
-            <th class="col-name">
-                <div 
-                    [ngClass]="getSortButtonClass(column.Name, 1)" 
-                    (click)="sort(column.Name, 1)"
-                    class="table-header-sort">⮝</div>
-                <div class="table-header-label">Name</div>
-                <div 
-                    [ngClass]="getSortButtonClass(column.Name, -1)" 
-                    (click)="sort(column.Name, -1)"
-                    class="table-header-sort">⮟</div>
-            </th>
-            <th class="col-bagcategory">
-                <div 
-                    [ngClass]="getSortButtonClass(column.BagCategory, 1)" 
-                    (click)="sort(column.BagCategory, 1)"
-                    class="table-header-sort">⮝</div>
-                <div class="table-header-label">Category</div>
-                <div 
-                    [ngClass]="getSortButtonClass(column.BagCategory, -1)" 
-                    (click)="sort(column.BagCategory, -1)"
-                    class="table-header-sort">⮟</div>
-            </th>
-            <th class="col-description">Description</th>
-            <th class="col-effect">Effect</th>
-        </tr>
-    </thead>
-    <tbody #container>
-        <tr *ngFor="let item of model.displayedItemModels; trackBy: trackById" 
-            (click)="navigateToDetailPage(item.resourceName);">
-            <td class="col-availability" [ngClass]="getAvailabilityClass(item.isAvailable)">
-                <i *ngIf="item.isAvailable" class="material-icons md-24">check</i>
-                <i *ngIf="!item.isAvailable" class="material-icons md-24">clear</i>
-            </td>
-            <td class="col-sprite">
-                <img *ngIf="item.spriteName" [src]="'./assets/img/sprites/items/small/' + item.spriteName" />
-            </td>
-            <td class="col-name">
-                {{item.name}}
-            </td>
-            <td class="col-bagcategory">
-                {{item.bagCategoryName}}
-            </td>
-            <td class="col-description">
-                {{item.description}}
-            </td>
-            <td class="col-effect">
-                {{item.effect}}
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-</div>
-
-<p *ngIf="model.displayedItemModels.length === 0" class="item-list-empty">No Items to display. Try to adjust your search criteria.</p>
+	<p *ngIf="model.displayedItemModels.length === 0" class="item-list-empty">
+		No Items to display. Try to adjust your search criteria.
+	</p>
 </div>

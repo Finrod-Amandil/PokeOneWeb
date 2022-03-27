@@ -13,23 +13,18 @@ import { ComponentsModule } from './core/components/components.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        NotFoundComponent,
-        LoadingComponent,
-    ],
-    imports: [
-        ComponentsModule,
-        AppRoutingModule,
-        RouterModule,
-        NgSelectModule,
-        HttpClientModule,
-        NgbModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
+	declarations: [AppComponent, HomeComponent, NotFoundComponent, LoadingComponent],
+	imports: [
+		ComponentsModule,
+		AppRoutingModule,
+		RouterModule,
+		NgSelectModule,
+		HttpClientModule,
+		NgbModule,
+		BrowserModule,
+		BrowserAnimationsModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,24 +1,26 @@
 <p>
-    <ng-container *ngFor="let textElement of textElements">
-        <ng-container *ngIf="textElement.resourceType === resourceType.Text">
-            {{textElement.text}}
-        </ng-container>
-        <ng-container *ngIf="textElement.resourceType === resourceType.Item">
-            <a  (click)="navigate('/' + textElement.resourceName)"
-                [href]="'/' + textElement.resourceName" 
-                class="nobr"><img 
-                    *ngIf="textElement.spriteName" 
-                    [src]="'./assets/img/sprites/items/small/' + textElement.spriteName" />{{textElement.text}}</a>
-        </ng-container>
-        <ng-container *ngIf="textElement.resourceType === resourceType.Location">
-            <a (click)="navigate('/' + textElement.resourceName)" [href]="'/' + textElement.resourceName">{{textElement.text}}</a>
-        </ng-container>
-        <ng-container *ngIf="textElement.resourceType === resourceType.Pokemon">
-            <a  (click)="navigate('/' + textElement.resourceName)"
-                [href]="'/' + textElement.resourceName" 
-                class="nobr"><img 
-                    *ngIf="textElement.spriteName" 
-                    [src]="'./assets/img/sprites/pokemon/small/' + textElement.spriteName" />{{textElement.text}}</a>
-        </ng-container>
-    </ng-container>
+	<ng-container *ngFor="let textElement of textElements">
+		<ng-container *ngIf="textElement.resourceType === resourceType.Text"> {{textElement.text}} </ng-container>
+		<ng-container *ngIf="textElement.resourceType === resourceType.Item">
+			<a (click)="navigate('/' + textElement.resourceName)" [href]="'/' + textElement.resourceName" class="nobr"
+				><img
+					*ngIf="textElement.spriteName"
+					[src]="'./assets/img/sprites/items/small/' + textElement.spriteName"
+				/>{{textElement.text}}</a
+			>
+		</ng-container>
+		<ng-container *ngIf="textElement.resourceType === resourceType.Location">
+			<a (click)="navigate('/' + textElement.resourceName)" [href]="'/' + textElement.resourceName"
+				>{{textElement.text}}</a
+			>
+		</ng-container>
+		<ng-container *ngIf="textElement.resourceType === resourceType.Pokemon">
+			<a (click)="navigate('/' + textElement.resourceName)" [href]="'/' + textElement.resourceName" class="nobr"
+				><img
+					*ngIf="textElement.spriteName"
+					[src]="'./assets/img/sprites/pokemon/small/' + textElement.spriteName"
+				/>{{textElement.text}}</a
+			>
+		</ng-container>
+	</ng-container>
 </p>

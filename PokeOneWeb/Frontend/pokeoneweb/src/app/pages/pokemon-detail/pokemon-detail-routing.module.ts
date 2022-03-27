@@ -1,13 +1,11 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { PokemonDetailComponent } from "./pokemon-detail.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PokemonDetailComponent } from './pokemon-detail.component';
 
-const routes: Routes = [
-    { path: '', component: PokemonDetailComponent }
-]
+const routes: Routes = [{ path: '', component: PokemonDetailComponent }];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
-export class PokemonDetailRoutingModule { }
+export class PokemonDetailRoutingModule {}

@@ -1,13 +1,13 @@
 export interface IPokemonVarietyFormModel {
-    name: string;
-    sortIndex: number;
-    spriteName: string;
-    availability: string;
+	name: string;
+	sortIndex: number;
+	spriteName: string;
+	availability: string;
 }
 
 export class PokemonVarietyFormModel implements IPokemonVarietyFormModel {
-    name = '';
-    sortIndex = 0;
-    spriteName = '';
-    availability = '';
+	name = '';
+	sortIndex = 0;
+	spriteName = '';
+	availability = '';
 }

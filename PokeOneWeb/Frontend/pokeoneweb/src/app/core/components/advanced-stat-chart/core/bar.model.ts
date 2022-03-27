@@ -1,9 +1,9 @@
 export class BarModel {
-    label: String = '';
-    className: String = '';
-    isNegativeDirection: boolean = false;
-    x: number = 0;
-    y: number = 0;
-    width: number = 0;
-    height: number = 0;
+	label: String = '';
+	className: String = '';
+	isNegativeDirection = false;
+	x = 0;
+	y = 0;
+	width = 0;
+	height = 0;
 }

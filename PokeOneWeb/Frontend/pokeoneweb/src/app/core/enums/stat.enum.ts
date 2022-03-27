@@ -1,8 +1,8 @@
 export enum Stat {
-    Atk,
-    Spa,
-    Def,
-    Spd,
-    Spe,
-    Hp
+	Atk,
+	Spa,
+	Def,
+	Spd,
+	Spe,
+	Hp
 }

@@ -1,42 +1,42 @@
 .time-badge {
-    display: inline-block;
-    position: relative;
-    border: 1px solid black;
-    width: 26px;
-    height: 26px;
-    border-radius: 13px;
-    text-align: center;
-    font-weight: 700;
-    color: var(--light-gray);
-    padding-top: 1px;
-    padding-left: 1px;
-    cursor: help;
+	display: inline-block;
+	position: relative;
+	border: 1px solid black;
+	width: 26px;
+	height: 26px;
+	border-radius: 13px;
+	text-align: center;
+	font-weight: 700;
+	color: var(--light-gray);
+	padding-top: 1px;
+	padding-left: 1px;
+	cursor: help;
 }
 
 .time-badge-any {
-    width: 78px;
-    background-color: var(--medium-gray-lighter);
-    cursor: initial;
+	width: 78px;
+	background-color: var(--medium-gray-lighter);
+	cursor: initial;
 }
 
 .tooltip {
-    min-width: 160px;
-    position: absolute;
-    visibility: hidden;
-    background-color: rgba(0,0,0,0.7);
-    border: 1px solid black;
-    color: var(--light-gray);
-    border-radius: 10px;
-    z-index: 1;
-    padding: 4px 8px;
-    margin-top: 4px;
+	min-width: 160px;
+	position: absolute;
+	visibility: hidden;
+	background-color: rgba(0, 0, 0, 0.7);
+	border: 1px solid black;
+	color: var(--light-gray);
+	border-radius: 10px;
+	z-index: 1;
+	padding: 4px 8px;
+	margin-top: 4px;
 }
 
 .tooltip .time-name {
-    font-weight: 700;
+	font-weight: 700;
 }
 
 .time-badge:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }

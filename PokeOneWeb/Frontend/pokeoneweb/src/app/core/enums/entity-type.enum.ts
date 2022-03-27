@@ -1,6 +1,6 @@
 export enum EntityType {
-    Unknown,
-    PokemonVariety,
-    Location,
-    Item
+	Unknown,
+	PokemonVariety,
+	Location,
+	Item
 }

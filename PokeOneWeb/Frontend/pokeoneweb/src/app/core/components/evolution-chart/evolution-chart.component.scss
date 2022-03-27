@@ -1,59 +1,59 @@
 .evolution-node-background {
-    stroke: black;
-    stroke-width: 1;
-    fill: var(--dark-gray);
+	stroke: black;
+	stroke-width: 1;
+	fill: var(--dark-gray);
 }
 
 a:hover .evolution-node-background {
-    fill: var(--medium-gray-lighter);
+	fill: var(--medium-gray-lighter);
 }
 
 .evolution-node-text {
-    font-size: 13px;
-    text-align: center;
-    color: var(--light-gray);
+	font-size: 13px;
+	text-align: center;
+	color: var(--light-gray);
 }
 
 a:hover .evolution-node-text {
-    color: var(--text-accent);
+	color: var(--text-accent);
 }
 
 .evolution-node-text p {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .evolution-node ::ng-deep .type-badge {
-    display: inline-block;
-    font-size: 10px;
-    height: 20px;
-    width: 60px;
-    min-width: 60px;
-    border-radius: 10px;
+	display: inline-block;
+	font-size: 10px;
+	height: 20px;
+	width: 60px;
+	min-width: 60px;
+	border-radius: 10px;
 }
 
 .evolution-link-trigger {
-    font-size: 13px;
-    color: var(--light-gray);
-    text-align: center;
+	font-size: 13px;
+	color: var(--light-gray);
+	text-align: center;
 }
 
 .evolution-link-trigger ::ng-deep img {
-    vertical-align: middle;
-    margin-top: -5px;
-    margin-bottom: -5px;
+	vertical-align: middle;
+	margin-top: -5px;
+	margin-bottom: -5px;
 }
 
 .evolution-link polyline {
-    fill: none;
-    stroke: black;
-    stroke-width: 3;
+	fill: none;
+	stroke: black;
+	stroke-width: 3;
 }
 
 .evolution-link-arrow {
-    fill: black;
+	fill: black;
 }
 
 .evolution-link-unavailable {
-    stroke: red;
-    stroke-width: 5;
+	stroke: red;
+	stroke-width: 5;
 }

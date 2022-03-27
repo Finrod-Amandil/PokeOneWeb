@@ -1,9 +1,9 @@
 export interface IAttackEffectivityModel {
-    typeName: string;
-    effectivity: number;
+	typeName: string;
+	effectivity: number;
 }
 
 export class AttackEffectivityModel implements IAttackEffectivityModel {
-    typeName = '';
-    effectivity = 0;
+	typeName = '';
+	effectivity = 0;
 }

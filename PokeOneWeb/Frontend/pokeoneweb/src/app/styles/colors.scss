@@ -1,190 +1,190 @@
 body {
-    --dark-gray: #262626;
-    --medium-dark-gray: #353535;
-    --medium-gray: #434343;
-    --medium-gray-lighter: #5d5d5d;
-    --medium-light-gray-darker: #707070;
-    --medium-light-gray: #a6a6a6;
-    --light-gray: #dcdcdc;
+	--dark-gray: #262626;
+	--medium-dark-gray: #353535;
+	--medium-gray: #434343;
+	--medium-gray-lighter: #5d5d5d;
+	--medium-light-gray-darker: #707070;
+	--medium-light-gray: #a6a6a6;
+	--light-gray: #dcdcdc;
 
-    --text-accent: #d04729;
+	--text-accent: #d04729;
 
-    --availability-obtainable: #66bb6a;
-    --availability-unobtainable: #ef5350;
-    --availability-event: #ab47bc;
-    --availability-removed: #ffa726;
+	--availability-obtainable: #66bb6a;
+	--availability-unobtainable: #ef5350;
+	--availability-event: #ab47bc;
+	--availability-removed: #ffa726;
 
-    --stat-attack: #f5ac78;
-    --stat-special-attack: #9db7f5;
-    --stat-defense: #fae078;
-    --stat-special-defense: #a7db8d;
-    --stat-speed: #fa92b2;
-    --stat-hp: #ff5959;
+	--stat-attack: #f5ac78;
+	--stat-special-attack: #9db7f5;
+	--stat-defense: #fae078;
+	--stat-special-defense: #a7db8d;
+	--stat-speed: #fa92b2;
+	--stat-hp: #ff5959;
 
-    --type-normal: #a8a77a;
-    --type-fire: #ee8130;
-    --type-water: #6390f0;
-    --type-electric: #f7d02c;
-    --type-grass: #7ac74c;
-    --type-ice: #96d9d6;
-    --type-fighting: #c22e28;
-    --type-poison: #a33ea1;
-    --type-ground: #e2bf65;
-    --type-flying: #a98ff3;
-    --type-psychic: #f95587;
-    --type-bug: #a6b91a;
-    --type-rock: #b6a136;
-    --type-ghost: #735797;
-    --type-dragon: #6f35fc;
-    --type-dark: #705746;
-    --type-steel: #b7b7ce;
-    --type-fairy: #d685ad;
+	--type-normal: #a8a77a;
+	--type-fire: #ee8130;
+	--type-water: #6390f0;
+	--type-electric: #f7d02c;
+	--type-grass: #7ac74c;
+	--type-ice: #96d9d6;
+	--type-fighting: #c22e28;
+	--type-poison: #a33ea1;
+	--type-ground: #e2bf65;
+	--type-flying: #a98ff3;
+	--type-psychic: #f95587;
+	--type-bug: #a6b91a;
+	--type-rock: #b6a136;
+	--type-ghost: #735797;
+	--type-dragon: #6f35fc;
+	--type-dark: #705746;
+	--type-steel: #b7b7ce;
+	--type-fairy: #d685ad;
 
-    --type-physical: #ff4400;
-    --type-special: #2266cc;
-    --type-status: #999999;
+	--type-physical: #ff4400;
+	--type-special: #2266cc;
+	--type-status: #999999;
 
-    --effectivity-4: #aa0000;
-    --effectivity-2: #ff2c2c;
-    --effectivity-1: #dcdcdc;
-    --effectivity-05: #00aa00;
-    --effectivity-025: #006b00;
-    --effectivity-0: #262626;
+	--effectivity-4: #aa0000;
+	--effectivity-2: #ff2c2c;
+	--effectivity-1: #dcdcdc;
+	--effectivity-05: #00aa00;
+	--effectivity-025: #006b00;
+	--effectivity-0: #262626;
 
-    --stat-base: #936dbc;
-    --stat-iv: #fa92b2;
-    --stat-ev: #ff5959;
-    --stat-nature: #f5ac78;
-    --stat-ability: #fae078;
-    --stat-item: #a7db8d;
-    --stat-modifier: #9db7f5;
-    --stat-field: #3d4499;
+	--stat-base: #936dbc;
+	--stat-iv: #fa92b2;
+	--stat-ev: #ff5959;
+	--stat-nature: #f5ac78;
+	--stat-ability: #fae078;
+	--stat-item: #a7db8d;
+	--stat-modifier: #9db7f5;
+	--stat-field: #3d4499;
 }
 
 .availability-obtainable {
-    background-color: var(--availability-obtainable) !important;
+	background-color: var(--availability-obtainable) !important;
 }
 
 .availability-unobtainable {
-    background-color: var(--availability-unobtainable) !important;
+	background-color: var(--availability-unobtainable) !important;
 }
 
 .availability-event {
-    background-color: var(--availability-event) !important;
+	background-color: var(--availability-event) !important;
 }
 
 .availability-removed {
-    background-color: var(--availability-removed) !important;
+	background-color: var(--availability-removed) !important;
 }
 
 .stat-attack {
-    background-color: var(--stat-attack) !important;
+	background-color: var(--stat-attack) !important;
 }
 
 .stat-special-attack {
-    background-color: var(--stat-special-attack) !important;
+	background-color: var(--stat-special-attack) !important;
 }
 
 .stat-defense {
-    background-color: var(--stat-defense) !important;
+	background-color: var(--stat-defense) !important;
 }
 
 .stat-special-defense {
-    background-color: var(--stat-special-defense) !important;
+	background-color: var(--stat-special-defense) !important;
 }
 
 .stat-speed {
-    background-color: var(--stat-speed) !important;
+	background-color: var(--stat-speed) !important;
 }
 
 .stat-hp {
-    background-color: var(--stat-hp) !important;
+	background-color: var(--stat-hp) !important;
 }
 
 .stat-total {
-    background-color: var(--light-gray) !important;
+	background-color: var(--light-gray) !important;
 }
 
 .type-normal {
-    background-color: var(--type-normal);
+	background-color: var(--type-normal);
 }
 
 .type-fire {
-    background-color: var(--type-fire);
+	background-color: var(--type-fire);
 }
 
 .type-water {
-    background-color: var(--type-water);
+	background-color: var(--type-water);
 }
 
 .type-electric {
-    background-color: var(--type-electric);
+	background-color: var(--type-electric);
 }
 
 .type-grass {
-    background-color: var(--type-grass);
+	background-color: var(--type-grass);
 }
 
 .type-ice {
-    background-color: var(--type-ice);
+	background-color: var(--type-ice);
 }
 
 .type-fighting {
-    background-color: var(--type-fighting);
+	background-color: var(--type-fighting);
 }
 
 .type-poison {
-    background-color: var(--type-poison);
+	background-color: var(--type-poison);
 }
 
 .type-ground {
-    background-color: var(--type-ground);
+	background-color: var(--type-ground);
 }
 
 .type-flying {
-    background-color: var(--type-flying);
+	background-color: var(--type-flying);
 }
 
 .type-psychic {
-    background-color: var(--type-psychic);
+	background-color: var(--type-psychic);
 }
 
 .type-bug {
-    background-color: var(--type-bug);
+	background-color: var(--type-bug);
 }
 
 .type-rock {
-    background-color: var(--type-rock);
+	background-color: var(--type-rock);
 }
 
 .type-ghost {
-    background-color: var(--type-ghost);
+	background-color: var(--type-ghost);
 }
 
 .type-dragon {
-    background-color: var(--type-dragon);
+	background-color: var(--type-dragon);
 }
 
 .type-dark {
-    background-color: var(--dark-gray);
+	background-color: var(--dark-gray);
 }
 
 .type-steel {
-    background-color: var(--type-steel);
+	background-color: var(--type-steel);
 }
 
 .type-fairy {
-    background-color: var(--type-fairy);
+	background-color: var(--type-fairy);
 }
 
 .type-physical {
-    background-color: var(--type-physical);
+	background-color: var(--type-physical);
 }
 
 .type-special {
-    background-color: var(--type-special);
+	background-color: var(--type-special);
 }
 
 .type-status {
-    background-color: var(--type-status);
+	background-color: var(--type-status);
 }

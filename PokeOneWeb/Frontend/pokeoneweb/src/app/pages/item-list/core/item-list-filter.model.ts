@@ -1,5 +1,5 @@
 export class ItemListFilterModel {
-    public searchTerm: string = '';
-    public selectedBagCategory: string = '';
-    public showUnavailable: boolean = true;
+	public searchTerm = '';
+	public selectedBagCategory = '';
+	public showUnavailable = true;
 }

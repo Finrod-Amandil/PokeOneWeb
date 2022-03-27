@@ -1,9 +1,9 @@
 export interface IPokemonVarietyUrlModel {
-    name: string;
-    url: string;
+	name: string;
+	url: string;
 }
 
 export class PokemonVarietyUrlModel implements IPokemonVarietyUrlModel {
-    name = '';
-    url = '';
+	name = '';
+	url = '';
 }

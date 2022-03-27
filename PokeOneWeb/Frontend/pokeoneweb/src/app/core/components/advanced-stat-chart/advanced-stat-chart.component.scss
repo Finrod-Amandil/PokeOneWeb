@@ -1,187 +1,186 @@
 .chart-table {
-  width: 100%;
-  margin-top: 30px;
-  border: 1px solid black;
+	width: 100%;
+	margin-top: 30px;
+	border: 1px solid black;
 }
 
 .chart-table thead tr {
-  color: var(--light-gray);
-  font-weight: bold;
-  background-color: var(--dark-gray);
+	color: var(--light-gray);
+	font-weight: bold;
+	background-color: var(--dark-gray);
 }
 
 th.stat-chart-col-bars {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: baseline;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: baseline;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .stat-chart-header-base {
-  color: var(--stat-base);
+	color: var(--stat-base);
 }
 
 .stat-chart-header-iv {
-  color: var(--stat-iv);
+	color: var(--stat-iv);
 }
 
 .stat-chart-header-ev {
-  color: var(--stat-ev);
+	color: var(--stat-ev);
 }
 
 .stat-chart-header-nature {
-  color: var(--stat-nature);
+	color: var(--stat-nature);
 }
 
 .stat-chart-header-ability {
-  color: var(--stat-ability);
+	color: var(--stat-ability);
 }
 
 .stat-chart-header-item {
-  color: var(--stat-item);
+	color: var(--stat-item);
 }
 
 .stat-chart-header-modifier {
-  color: var(--stat-modifier);
+	color: var(--stat-modifier);
 }
 
 .stat-chart-header-field {
-  color: var(--stat-field);
+	color: var(--stat-field);
 }
 
 .chart-table thead tr th {
-  padding-top: 5px;
-  padding-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .ability-boost-conditions {
-  color: var(--light-gray);
-  text-shadow: none;
-  font-weight: normal;
-  font-size: 14px;
-  font-style: italic;
+	color: var(--light-gray);
+	text-shadow: none;
+	font-weight: normal;
+	font-size: 14px;
+	font-style: italic;
 }
 
 .chart-table tbody tr {
-  color: black;
-  font-weight: bold;
+	color: black;
+	font-weight: bold;
 }
 
 .stat-bar-chart {
-  width: 100%;
-  height: 30px;
+	width: 100%;
+	height: 30px;
 }
 
 .stat-chart-col-label,
 .stat-chart-col-basestat,
 .stat-chart-col-total {
-  white-space: nowrap;
-  padding-left: 10px;
-  padding-right: 10px;
+	white-space: nowrap;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 td.stat-chart-col-label,
 td.stat-chart-col-basestat,
 td.stat-chart-col-total {
-  border: 1px solid black;
+	border: 1px solid black;
 }
 
 td.stat-chart-col-label {
-  border-right: none;
+	border-right: none;
 }
 
 td.stat-chart-col-basestat {
-  border-left: none;
+	border-left: none;
 }
 
 .stat-chart-col-basestat,
 .stat-chart-col-total {
-  text-align: right;
+	text-align: right;
 }
 
 .stat-chart-col-bars {
-  width: 99%;
+	width: 99%;
 }
 
 td.stat-chart-col-bars {
-  padding-right: 5px;
-  padding-left: 0px;
-  background-color: var(--dark-gray);
+	padding-right: 5px;
+	padding-left: 0px;
+	background-color: var(--dark-gray);
 }
 
 .stat-row-atk {
-  background-color: var(--stat-attack);
+	background-color: var(--stat-attack);
 }
 
 .stat-row-spa {
-  background-color: var(--stat-special-attack);
+	background-color: var(--stat-special-attack);
 }
 
 .stat-row-def {
-  background-color: var(--stat-defense);
+	background-color: var(--stat-defense);
 }
 
 .stat-row-spd {
-  background-color: var(--stat-special-defense);
+	background-color: var(--stat-special-defense);
 }
 
 .stat-row-spe {
-  background-color: var(--stat-speed);
+	background-color: var(--stat-speed);
 }
 
 .stat-row-hp {
-  background-color: var(--stat-hp);
+	background-color: var(--stat-hp);
 }
 
 .bar {
-  stroke-width: 1px;
-  stroke: black;
+	stroke-width: 1px;
+	stroke: black;
 }
 
 .bar-base {
-  fill: var(--stat-base);
+	fill: var(--stat-base);
 }
 
 .bar-iv {
-  fill: var(--stat-iv);
+	fill: var(--stat-iv);
 }
 
 .bar-ev {
-  fill: var(--stat-ev);
+	fill: var(--stat-ev);
 }
 
 .bar-nature {
-  fill: var(--stat-nature);
+	fill: var(--stat-nature);
 }
 
 .bar-ability {
-  fill: var(--stat-ability);
+	fill: var(--stat-ability);
 }
 
 .bar-item {
-  fill: var(--stat-item);
+	fill: var(--stat-item);
 }
 
 .bar-modifier {
-  fill: var(--stat-modifier);
+	fill: var(--stat-modifier);
 }
 
 .bar-field {
-  fill: var(--stat-field);
+	fill: var(--stat-field);
 }
 
 .total-indicator {
-  stroke: var(--light-gray);
-  stroke-width: 4px;
+	stroke: var(--light-gray);
+	stroke-width: 4px;
 }
 
 .stat-row-total td {
-  background-color: var(--light-gray);
-  color: black;
-  height: 33px;
+	background-color: var(--light-gray);
+	color: black;
+	height: 33px;
 }
 
 .stat-row-total .stat-chart-col-bars {
-  background-color: var(--dark-gray);
+	background-color: var(--dark-gray);
 }

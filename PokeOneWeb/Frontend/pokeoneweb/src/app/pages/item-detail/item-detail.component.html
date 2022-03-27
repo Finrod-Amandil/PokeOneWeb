@@ -1,152 +1,149 @@
 <div id="content_title_container">
-    <div id="content_title">
-        {{model.item ? model.item.name : model.itemName}}
-    </div>
+	<div id="content_title">{{model.item ? model.item.name : model.itemName}}</div>
 </div>
 
 <div id="content_main_container">
-    <div *ngIf="!model.item">Loading...</div>
+	<div *ngIf="!model.item">Loading...</div>
 
-    <div *ngIf="model.item">
-        <div class="item-detail-navigation">
-            <a [routerLink]="'/i'">
-                <div class="item-detail-navigation-center">
-                    <div class="item-detail-navigation-sprite">
-                        <img src="./assets/img/navbar/items.png" />
-                    </div>
-                    <div class="item-detail-navigation-link">Item List</div>
-                    <div class="item-detail-navigation-sprite">
-                        <img src="./assets/img/navbar/items.png" />
-                    </div>
-                </div>
-            </a>
-        </div>
+	<div *ngIf="model.item">
+		<div class="item-detail-navigation">
+			<a [routerLink]="'/i'">
+				<div class="item-detail-navigation-center">
+					<div class="item-detail-navigation-sprite">
+						<img src="./assets/img/navbar/items.png" />
+					</div>
+					<div class="item-detail-navigation-link">Item List</div>
+					<div class="item-detail-navigation-sprite">
+						<img src="./assets/img/navbar/items.png" />
+					</div>
+				</div>
+			</a>
+		</div>
 
-        <h2 name="general">General Info</h2>
-        <div class="no-table-container-outer">
-            <div class="no-table-container-inner">
-                <table id="item_general_info_table">
-                    <tbody>
-                        <tr class="item-general-info-sprite">
-                            <td colspan="3">
-                                <img *ngIf="model.item.spriteName" [src]="'./assets/img/sprites/items/small/' + model.item.spriteName" />
-                                {{model.item.name}}
-                            </td>
-                        </tr>
-                        <tr class="item-general-info-availability">
-                            <td>Availability</td>
-                            <td [ngClass]="getAvailabilityClass(model.item.isAvailable)">
-                                <i *ngIf="model.item.isAvailable" class="material-icons md-24">check</i>
-                                <i *ngIf="!model.item.isAvailable" class="material-icons md-24">clear</i>
-                            </td>
-                            <td *ngIf="model.item.isAvailable">
-                                Obtainable
-                            </td>
-                            <td *ngIf="!model.item.isAvailable">
-                                Unobtainable
-                            </td>
-                        </tr>
-                        <tr class="item-general-info-description">
-                            <td>Description</td>
-                            <td colspan="2">{{model.item.description}}</td>
-                        </tr>
-                        <tr class="item-general-info-effect">
-                            <td>Effect</td>
-                            <td colspan="2">{{model.item.effect}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+		<h2 name="general">General Info</h2>
+		<div class="no-table-container-outer">
+			<div class="no-table-container-inner">
+				<table id="item_general_info_table">
+					<tbody>
+						<tr class="item-general-info-sprite">
+							<td colspan="3">
+								<img
+									*ngIf="model.item.spriteName"
+									[src]="'./assets/img/sprites/items/small/' + model.item.spriteName"
+								/>
+								{{model.item.name}}
+							</td>
+						</tr>
+						<tr class="item-general-info-availability">
+							<td>Availability</td>
+							<td [ngClass]="getAvailabilityClass(model.item.isAvailable)">
+								<i *ngIf="model.item.isAvailable" class="material-icons md-24">check</i>
+								<i *ngIf="!model.item.isAvailable" class="material-icons md-24">clear</i>
+							</td>
+							<td *ngIf="model.item.isAvailable">Obtainable</td>
+							<td *ngIf="!model.item.isAvailable">Unobtainable</td>
+						</tr>
+						<tr class="item-general-info-description">
+							<td>Description</td>
+							<td colspan="2">{{model.item.description}}</td>
+						</tr>
+						<tr class="item-general-info-effect">
+							<td>Effect</td>
+							<td colspan="2">{{model.item.effect}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 
-        <h2 name="locations">Locations</h2>
-        <div *ngIf="model.item.placedItems.length === 0" class="no-table-container-outer">
-            <div class="no-table-container-inner">
-                <p
-                    class="empty">
-                    This Item does not have any known locations where it can be obtained in PokéOne.
-                </p>
-            </div>
-        </div>
+		<h2 name="locations">Locations</h2>
+		<div *ngIf="model.item.placedItems.length === 0" class="no-table-container-outer">
+			<div class="no-table-container-inner">
+				<p class="empty">This Item does not have any known locations where it can be obtained in PokéOne.</p>
+			</div>
+		</div>
 
-        <table *ngIf="model.item.placedItems.length > 0" class="main-table table-compact" id="placedItems_table">
-            <thead>
-                <tr>
-                    <th class="col-item" colspan="2">Item</th>
-                    <th class="col-quantity">Qty.</th>
-                    <th class="col-location" colspan="2">
-                        <div 
-                            [ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, 1)" 
-                            (click)="sortPlacedItems(placedItemsColumn.Location, 1)"
-                            class="table-header-sort">⮝</div>
-                        <div class="table-header-label">Location</div>
-                        <div 
-                            [ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, -1)" 
-                            (click)="sortPlacedItems(placedItemsColumn.Location, -1)"
-                            class="table-header-sort">⮟</div>
-                    </th>
-                    <th class="col-placementdescription">Placement description</th>
-                    <th class="col-isHidden">
-                        <div class="has-tooltip">
-                            <i class="material-icons md-24">visibility_off</i>
-                            <span class="tooltip">Hidden item?</span>
-                        </div>
-                    </th>
-                    <th class="col-isConfirmed">
-                        <div class="has-tooltip">
-                            <i class="material-icons md-24">verified</i>
-                            <span class="tooltip">Location confirmed?</span>
-                        </div>
-                    </th>
-                    <th class="col-notes">Notes</th>
-                    <th class="col-screenshot">Screenshot</th>
-                </tr>
-            </thead>
+		<table *ngIf="model.item.placedItems.length > 0" class="main-table table-compact" id="placedItems_table">
+			<thead>
+				<tr>
+					<th class="col-item" colspan="2">Item</th>
+					<th class="col-quantity">Qty.</th>
+					<th class="col-location" colspan="2">
+						<div
+							[ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, 1)"
+							(click)="sortPlacedItems(placedItemsColumn.Location, 1)"
+							class="table-header-sort"
+						>
+							⮝
+						</div>
+						<div class="table-header-label">Location</div>
+						<div
+							[ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, -1)"
+							(click)="sortPlacedItems(placedItemsColumn.Location, -1)"
+							class="table-header-sort"
+						>
+							⮟
+						</div>
+					</th>
+					<th class="col-placementdescription">Placement description</th>
+					<th class="col-isHidden">
+						<div class="has-tooltip">
+							<i class="material-icons md-24">visibility_off</i>
+							<span class="tooltip">Hidden item?</span>
+						</div>
+					</th>
+					<th class="col-isConfirmed">
+						<div class="has-tooltip">
+							<i class="material-icons md-24">verified</i>
+							<span class="tooltip">Location confirmed?</span>
+						</div>
+					</th>
+					<th class="col-notes">Notes</th>
+					<th class="col-screenshot">Screenshot</th>
+				</tr>
+			</thead>
 
-            <tbody>
-                <tr *ngFor="let placedItem of model.item.placedItems">
-                    <td class="col-sprite">
-                        <img *ngIf="model.item.spriteName" [src]="'./assets/img/sprites/items/small/' + model.item.spriteName" />
-                    </td>
-                    <td class="col-item">
-                        {{model.item.name}}
-                    </td>
-                    <td class="col-quantity">
-                        {{placedItem.quantity}}
-                    </td>
-                    <td class="col-region">
-                        {{placedItem.regionName}}
-                    </td>
-                    <td class="col-location">
-                        <a [routerLink]="'/'+ placedItem.locationResourceName">{{placedItem.locationName}}</a>
-                    </td>
-                    <td class="col-placementdescription">
-                        {{placedItem.placementDescription}}
-                    </td>
-                    <td class="col-isHidden" [ngClass]="
+			<tbody>
+				<tr *ngFor="let placedItem of model.item.placedItems">
+					<td class="col-sprite">
+						<img
+							*ngIf="model.item.spriteName"
+							[src]="'./assets/img/sprites/items/small/' + model.item.spriteName"
+						/>
+					</td>
+					<td class="col-item">{{model.item.name}}</td>
+					<td class="col-quantity">{{placedItem.quantity}}</td>
+					<td class="col-region">{{placedItem.regionName}}</td>
+					<td class="col-location">
+						<a [routerLink]="'/'+ placedItem.locationResourceName">{{placedItem.locationName}}</a>
+					</td>
+					<td class="col-placementdescription">{{placedItem.placementDescription}}</td>
+					<td
+						class="col-isHidden"
+						[ngClass]="
                     {
                         'placeditem-hidden': placedItem.isHidden,
                         'placeditem-not-hidden': !placedItem.isHidden
-                    }">
-                        <i *ngIf="placedItem.isHidden" class="material-icons md-24">visibility_off</i>
-                        <i *ngIf="!placedItem.isHidden" class="material-icons md-24">visibility</i>
-                    </td>
-                    <td class="col-isConfirmed" [ngClass]="
+                    }"
+					>
+						<i *ngIf="placedItem.isHidden" class="material-icons md-24">visibility_off</i>
+						<i *ngIf="!placedItem.isHidden" class="material-icons md-24">visibility</i>
+					</td>
+					<td
+						class="col-isConfirmed"
+						[ngClass]="
                     {
                         'placeditem-confirmed': placedItem.isConfirmed,
                         'placeditem-not-confirmed': !placedItem.isConfirmed
-                    }">
-                        <i *ngIf="placedItem.isConfirmed" class="material-icons md-24">verified</i>
-                        <i *ngIf="!placedItem.isConfirmed" class="material-icons md-24">help_outline</i>
-                    </td>
-                    <td class="col-notes">
-                        {{placedItem.notes}}
-                    </td>
-                    <td class="col-screenshot">
-                        {{placedItem.screenshot}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                    }"
+					>
+						<i *ngIf="placedItem.isConfirmed" class="material-icons md-24">verified</i>
+						<i *ngIf="!placedItem.isConfirmed" class="material-icons md-24">help_outline</i>
+					</td>
+					<td class="col-notes">{{placedItem.notes}}</td>
+					<td class="col-screenshot">{{placedItem.screenshot}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

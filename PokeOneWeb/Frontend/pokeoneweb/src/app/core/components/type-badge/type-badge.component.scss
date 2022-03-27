@@ -1,19 +1,20 @@
 .type-badge {
-    width: 100%;
-    text-shadow: 2px 2px 4px black;
-    height: 24px;
-    padding-top: 1px;
-    border: 1px solid var(--dark-gray);
-    border-radius: 12px;
-    margin: 1px;
-    text-align: center;
-    color: var(--light-gray);
-    font-size: 13px;
-    font-weight: 700;
-    min-width: 74px;
+	width: 100%;
+	text-shadow: 2px 2px 4px black;
+	height: 24px;
+	padding-top: 1px;
+	border: 1px solid var(--dark-gray);
+	border-radius: 12px;
+	margin: 1px;
+	text-align: center;
+	color: var(--light-gray);
+	font-size: 13px;
+	font-weight: 700;
+	min-width: 74px;
 }
 
-.type-any, .type-none {
-    color: var(--dark-gray);
-    text-shadow: none;
+.type-any,
+.type-none {
+	color: var(--dark-gray);
+	text-shadow: none;
 }

@@ -1,10 +1,10 @@
-import { BarModel } from "./bar.model";
+import { BarModel } from './bar.model';
 
 export class BarChartGroupModel {
-    label: string = '';
-    className: string = '';
-    baseStatValue: number = 0;
-    totalValue: number = 0;
-    bars: BarModel[] = [];
-    xTotal: number = 0;
+	label = '';
+	className = '';
+	baseStatValue = 0;
+	totalValue = 0;
+	bars: BarModel[] = [];
+	xTotal = 0;
 }
