@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-locations',
+  selector: 'pokeone-item-list',
   templateUrl: './location-list.component.html',
   styleUrls: ['./location-list.component.scss']
 })
