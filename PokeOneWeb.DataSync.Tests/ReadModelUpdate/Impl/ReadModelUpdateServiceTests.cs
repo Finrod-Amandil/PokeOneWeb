@@ -56,23 +56,23 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _regionRepositoryMock = new Mock<IReadModelRepository<RegionReadModel>>();
             _reporterMock = new Mock<ISpreadsheetImportReporter>();
 
-            _readModelUpdateService = new ReadModelUpdateService(_entityTypeMapperMock.Object
-                , _itemStatBoostPokemonMapperMock.Object
-                , _simpleLearnableMoveMapperMock.Object
-                , _moveMapperMock.Object
-                , _natureMapperMock.Object
-                , _pokemonVarietyMapperMock.Object
-                , _itemMapperMock.Object
-                , _regionMapperMock.Object
-                , _entityTypeRepositoryMock.Object
-                , _itemStatBoostPokemonRepositoryMock.Object
-                , _simpleLearnableMoveRepositoryMock.Object
-                , _moveRepositoryMock.Object
-                , _natureRepositoryMock.Object
-                , _pokemonVarietyRepositoryMock.Object
-                , _itemRepositoryMock.Object
-                , _regionRepositoryMock.Object
-                , _reporterMock.Object);
+            _readModelUpdateService = new ReadModelUpdateService(_entityTypeMapperMock.Object,
+                _itemStatBoostPokemonMapperMock.Object,
+                _simpleLearnableMoveMapperMock.Object,
+                _moveMapperMock.Object,
+                _natureMapperMock.Object,
+                _pokemonVarietyMapperMock.Object,
+                _itemMapperMock.Object,
+                _regionMapperMock.Object,
+                _entityTypeRepositoryMock.Object,
+                _itemStatBoostPokemonRepositoryMock.Object,
+                _simpleLearnableMoveRepositoryMock.Object,
+                _moveRepositoryMock.Object,
+                _natureRepositoryMock.Object,
+                _pokemonVarietyRepositoryMock.Object,
+                _itemRepositoryMock.Object,
+                _regionRepositoryMock.Object,
+                _reporterMock.Object);
         }
 
         [Fact]

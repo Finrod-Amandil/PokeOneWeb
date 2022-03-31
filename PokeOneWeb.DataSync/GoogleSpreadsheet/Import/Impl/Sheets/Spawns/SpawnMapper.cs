@@ -53,8 +53,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 if (!canParse)
                 {
                     Reporter.ReportError(Entity, spawn.IdHash,
-                        $"For spawn of { dto.PokemonForm } in { dto.LocationName } a probability was given that could not be parsed: " +
-                        $"{ dto.SpawnProbability }. Using unknown Commonality instead.");
+                        $"For spawn of {dto.PokemonForm} in {dto.LocationName} a probability was given that could not be parsed: " +
+                        $"{dto.SpawnProbability}. Using unknown Commonality instead.");
 
                     spawn.SpawnCommonality = Spawn.UNKNOWN_COMMONALITY;
                 }

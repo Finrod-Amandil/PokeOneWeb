@@ -23,6 +23,7 @@ namespace PokeOneWeb.WebApi.Tests.Services.Api.Impl
             _entityTypeReadModel = _fixture.Create<EntityTypeReadModel>();
 
             _readModelDbContextMock = new Mock<ReadModelDbContext>();
+
             // _readModelDbContextMock.Setup(m => m.EntityTypeReadModels).Returns(new List<>
             // {
             //    _entityTypeReadModel

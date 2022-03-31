@@ -305,7 +305,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     readModel.HiddenEvolutionAbilities.Add(
                         GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex));
                 }
-            } while (postEvolutions.Any());
+            }
+            while (postEvolutions.Any());
 
             var preEvolutions = new List<PokemonVariety> { variety };
             relativeStageIndex = 0;
@@ -331,7 +332,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     readModel.HiddenEvolutionAbilities.Add(
                         GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex));
                 }
-            } while (preEvolutions.Any());
+            }
+            while (preEvolutions.Any());
         }
 
         public void AttachPreviousAndNext(PokemonVarietyReadModel readModel, int previousId, int nextId)
@@ -396,7 +398,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
                 hasFoundNewEvolutions = newIds.Count > varietyIds.Count;
                 varietyIds = newIds;
-            } while (hasFoundNewEvolutions);
+            }
+            while (hasFoundNewEvolutions);
 
             return varietyIds;
         }
