@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { INatureModel } from '../../models/nature.model';
 import { BaseService } from './base.service';
 
@@ -17,6 +18,6 @@ export class NatureService extends BaseService {
     }
 
     public getNatures(): Observable<INatureModel[]> {
-        return this.http.get<INatureModel[]>(`${this.url}/getall`, this.httpOptions);
+        return this.http.get<INatureModel[]>(`${environment.baseUrl}/natures.json`, this.httpOptions);
     }
 }

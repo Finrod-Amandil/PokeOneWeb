@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IBasicPokemonVarietyModel } from '../../models/basic-pokemon-variety.model';
 import { IPokemonVarietyListModel } from '../../models/pokemon-variety-list.model';
 import { IPokemonVarietyNameModel } from '../../models/pokemon-variety-name.model';
@@ -20,19 +21,19 @@ export class PokemonService extends BaseService {
     }
 
     public getAll(): Observable<IPokemonVarietyListModel[]> {
-        return this.http.get<IPokemonVarietyListModel[]>(`${this.url}/getall`, this.httpOptions);
+        return this.http.get<IPokemonVarietyListModel[]>(`${environment.baseUrl}/varieties.json`, this.httpOptions);
     }
 
     public getAllBasic(): Observable<IBasicPokemonVarietyModel[]> {
-        return this.http.get<IBasicPokemonVarietyModel[]>(`${this.url}/getallbasic`, this.httpOptions);
+        return this.http.get<IBasicPokemonVarietyModel[]>(`${environment.baseUrl}/varieties.json`, this.httpOptions);
     }
 
     public getByNameFull(name: string): Observable<IPokemonVarietyModel> {
-        return this.http.get<IPokemonVarietyModel>(`${this.url}/getbynamefull?name=${name}`, this.httpOptions);
+        return this.http.get<IPokemonVarietyModel>(`${environment.baseUrl}/varieties/${name}.json`, this.httpOptions);
     }
 
     public getBasicByName(name: string): Observable<IPokemonVarietyListModel> {
-        return this.http.get<IPokemonVarietyListModel>(`${this.url}/getbyname?name=${name}`, this.httpOptions);
+        return this.http.get<IPokemonVarietyListModel>(`${environment.baseUrl}/varieties/${name}.json`, this.httpOptions);
     }
 
     public getAllPokemonForMoveSet(

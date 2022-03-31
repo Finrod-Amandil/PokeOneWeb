@@ -9,6 +9,9 @@ export interface IItemStatBoostModel {
     specialDefenseBoost: number;
     speedBoost: number;
     hitPointsBoost: number;
+    
+    hasRequiredPokemon: boolean;
+    requiredPokemonResourceName: string;
 }
 
 export class ItemStatBoostModel implements IItemStatBoostModel {
@@ -22,4 +25,7 @@ export class ItemStatBoostModel implements IItemStatBoostModel {
     specialDefenseBoost = 1;
     speedBoost = 1;
     hitPointsBoost = 1;
+
+    hasRequiredPokemon = false;
+    requiredPokemonResourceName = '';
 }

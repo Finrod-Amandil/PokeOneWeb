@@ -191,6 +191,7 @@ export class StatInputComponent implements OnInit {
             .getItemStatBoostsForPokemon(this.model.pokemon.resourceName)
             .subscribe(response => {
                 this.itemBoosts = response as IItemStatBoostModel[];
+                this.itemBoosts = this.itemBoosts.filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName);
                 this.itemBoosts = this.itemBoosts.sort((n1, n2) => n1.itemName > n2.itemName ? 1 : n1.itemName < n2.itemName ? -1 : 0);
             });
     }

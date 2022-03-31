@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IItemStatBoostModel } from '../../models/item-stat-boost.model';
 import { BaseService } from './base.service';
 
@@ -17,6 +18,6 @@ export class ItemStatBoostService extends BaseService {
     }
 
     public getItemStatBoostsForPokemon(name: string): Observable<IItemStatBoostModel[]> {
-        return this.http.get<IItemStatBoostModel[]>(`${this.url}/getitemstatboostsforpokemon?name=${name}`, this.httpOptions);
+        return this.http.get<IItemStatBoostModel[]>(`${environment.baseUrl}/itemstats.json`, this.httpOptions);
     }
 }
