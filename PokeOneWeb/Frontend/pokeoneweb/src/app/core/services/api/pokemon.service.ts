@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IBasicPokemonVarietyModel } from '../../models/basic-pokemon-variety.model';
 import { IPokemonVarietyListModel } from '../../models/pokemon-variety-list.model';
@@ -12,7 +12,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class PokemonService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 
@@ -43,12 +43,24 @@ export class PokemonService extends BaseService {
         m41: string | undefined, m42: string | undefined, m43: string | undefined, m44: string | undefined)
         : Observable<IPokemonVarietyNameModel[]> {
 
-        var url = `${this.url}/getallformoveset?`;
-        url += `m11=${m11??''}&m12=${m12??''}&m13=${m13??''}&m14=${m14??''}&`
-        url += `m21=${m21??''}&m22=${m22??''}&m23=${m23??''}&m24=${m24??''}&`
-        url += `m31=${m31??''}&m32=${m32??''}&m33=${m33??''}&m34=${m34??''}&`
-        url += `m41=${m41??''}&m42=${m42??''}&m43=${m43??''}&m44=${m44??''}`
+        let results: Observable<IPokemonVarietyNameModel>[] = []
+        if (m11) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m11}.json`, this.httpOptions));
+        if (m12) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m12}.json`, this.httpOptions));
+        if (m13) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m13}.json`, this.httpOptions));
+        if (m14) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m14}.json`, this.httpOptions));
+        if (m21) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m21}.json`, this.httpOptions));
+        if (m22) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m22}.json`, this.httpOptions));
+        if (m23) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m23}.json`, this.httpOptions));
+        if (m24) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m24}.json`, this.httpOptions));
+        if (m31) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m31}.json`, this.httpOptions));
+        if (m32) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m32}.json`, this.httpOptions));
+        if (m33) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m33}.json`, this.httpOptions));
+        if (m34) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m34}.json`, this.httpOptions));
+        if (m41) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m41}.json`, this.httpOptions));
+        if (m42) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m42}.json`, this.httpOptions));
+        if (m43) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m43}.json`, this.httpOptions));
+        if (m44) results.push(this.http.get<IPokemonVarietyNameModel>(`${environment.baseUrl}/learnable-moves/${m44}.json`, this.httpOptions));
 
-        return this.http.get<IPokemonVarietyNameModel[]>(url, this.httpOptions);
+        return forkJoin(results);
     }
 }

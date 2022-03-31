@@ -41,7 +41,7 @@ export class StatInputComponent implements OnInit {
     public abilities: IAbilityModel[] = [];
     public itemBoosts: IItemStatBoostModel[] = [];
     public statModifiers: number[] = [];
-    
+
     constructor(
         private itemBoostService: ItemStatBoostService,
         private pokemonService: PokemonService,
@@ -73,7 +73,7 @@ export class StatInputComponent implements OnInit {
                 this.natures = this.natures.sort((n1, n2) => n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0);
             });
 
-        this.statModifiers = [ 0, 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ];
+        this.statModifiers = [0, 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6];
         this.model.fieldBoosts = this.fieldBoostService.getFieldBoosts();
     }
 
@@ -102,7 +102,7 @@ export class StatInputComponent implements OnInit {
         this.model.iv.def = this.minIv;
         this.model.iv.spd = this.minIv;
         this.model.iv.spe = this.minIv;
-        this.model.iv.hp =  this.minIv;
+        this.model.iv.hp = this.minIv;
         this.onSelectionChanged();
     }
 
@@ -112,7 +112,7 @@ export class StatInputComponent implements OnInit {
         this.model.iv.def = this.maxIv;
         this.model.iv.spd = this.maxIv;
         this.model.iv.spe = this.maxIv;
-        this.model.iv.hp =  this.maxIv;
+        this.model.iv.hp = this.maxIv;
         this.onSelectionChanged();
     }
 
@@ -188,11 +188,16 @@ export class StatInputComponent implements OnInit {
             return;
         }
         this.itemBoostService
-            .getItemStatBoostsForPokemon(this.model.pokemon.resourceName)
+            .getItemStats()
             .subscribe(response => {
                 this.itemBoosts = response as IItemStatBoostModel[];
-                this.itemBoosts = this.itemBoosts.filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName);
-                this.itemBoosts = this.itemBoosts.sort((n1, n2) => n1.itemName > n2.itemName ? 1 : n1.itemName < n2.itemName ? -1 : 0);
+                this.itemBoosts = this.itemBoosts.
+                    filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName).
+                    sort((n1, n2) => {
+                        if (n1.itemName > n2.itemName) return 1;
+                        if (n1.itemName < n2.itemName) return -1
+                        return 0;
+                    });
             });
     }
 
