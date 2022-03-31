@@ -32,7 +32,6 @@ namespace PokeOneWeb.WebApi.Controllers
         [Route("getallnames")]
         [HttpGet]
         public ActionResult<IEnumerable<MoveNameDto>> GetAllNames()
-
         {
             return Ok(_moveApiService.GetAllMoveNames());
         }

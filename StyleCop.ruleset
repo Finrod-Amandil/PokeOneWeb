@@ -84,7 +84,7 @@
 		<!-- Code should not contain empty statements -->
 		<Rule Id="SA1107"  Action="Warning" />
 		<!-- Code should not contain multiple statements on one line -->
-		<Rule Id="SA1108"  Action="Warning" />
+		<Rule Id="SA1108"  Action="None" />
 		<!-- Block statements should not contain embedded comments -->
 		<Rule Id="SA1109"  Action="None" />
 		<!-- Block statements should not contain embedded regions -->
@@ -157,7 +157,7 @@
 		<!-- Elements should be ordered by access -->
 		<Rule Id="SA1203"  Action="Warning" />
 		<!-- Constants should appear before fields -->
-		<Rule Id="SA1204"  Action="Warning" />
+		<Rule Id="SA1204"  Action="None" />
 		<!-- Static elements should appear before instance elements -->
 		<Rule Id="SA1205"  Action="Warning" />
 		<!-- Partial elements should declare access -->
@@ -331,7 +331,7 @@
 		<!-- Element parameter documentation should declare parameter name -->
 		<Rule Id="SA1614"  Action="Warning" />
 		<!-- Element parameter documentation should have text -->
-		<Rule Id="SA1615"  Action="Warning" />
+		<Rule Id="SA1615"  Action="None" />
 		<!-- Element return value should be documented -->
 		<Rule Id="SA1616"  Action="Warning" />
 		<!-- Element return value documentation should have text -->
