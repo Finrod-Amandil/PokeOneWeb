@@ -6,22 +6,22 @@ import { IItemModel } from '../../models/item.model';
 import { BaseService } from './base.service';
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class ItemService extends BaseService {
-	constructor(http: HttpClient) {
-		super(http);
-	}
+    constructor(http: HttpClient) {
+        super(http);
+    }
 
-	public getPathSegment(): string {
-		return 'item';
-	}
+    public getPathSegment(): string {
+        return 'item';
+    }
 
-	public getAll(): Observable<IItemListModel[]> {
-		return this.http.get<IItemListModel[]>(`${this.url}/getall`, this.httpOptions);
-	}
+    public getAll(): Observable<IItemListModel[]> {
+        return this.http.get<IItemListModel[]>(`${this.url}/getall`, this.httpOptions);
+    }
 
-	public getByName(name: string): Observable<IItemModel> {
-		return this.http.get<IItemModel>(`${this.url}/getbyname?name=${name}`, this.httpOptions);
-	}
+    public getByName(name: string): Observable<IItemModel> {
+        return this.http.get<IItemModel>(`${this.url}/getbyname?name=${name}`, this.httpOptions);
+    }
 }

@@ -9,15 +9,15 @@ import { PokemonListRoutingModule } from './pokemon-list-routing.module';
 import { PokemonListComponent } from './pokemon-list.component';
 
 @NgModule({
-	declarations: [PokemonListComponent],
-	imports: [
-		CommonModule,
-		PokemonListRoutingModule,
-		ComponentsModule,
-		NgSelectModule,
-		VirtualScrollerModule,
-		FormsModule,
-		RouterModule
-	]
+    declarations: [PokemonListComponent],
+    imports: [
+        CommonModule,
+        PokemonListRoutingModule,
+        ComponentsModule,
+        NgSelectModule,
+        VirtualScrollerModule,
+        FormsModule,
+        RouterModule
+    ]
 })
 export class PokemonListModule {}

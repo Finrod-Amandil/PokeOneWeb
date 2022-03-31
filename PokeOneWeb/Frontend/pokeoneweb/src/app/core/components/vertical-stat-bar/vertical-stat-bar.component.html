@@ -1,17 +1,17 @@
 <svg class="stat-bar-svg" attr.width="{{width}}px" attr.height="{{height}}px">
-	<rect
-		attr.width="{{width}}px"
-		attr.height="{{getHeight()}}px"
-		attr.y="{{getTop()}}px"
-		attr.style="fill: hsl({{getHue()}}, 80%, 50%)"
-	/>
-	<text
-		class="stat-bar-caption"
-		attr.y="{{getTextPosition()}}"
-		attr.style="fill: {{getTextColor()}}; font-weight: {{getFontWeight()}}"
-		x="50%"
-	>
-		{{statValue}}
-	</text>
-	<text class="stat-bar-label" attr.y="{{getLabelTop()}}" x="50%">{{label}}</text>
+    <rect
+        attr.width="{{width}}px"
+        attr.height="{{getHeight()}}px"
+        attr.y="{{getTop()}}px"
+        attr.style="fill: hsl({{getHue()}}, 80%, 50%)"
+    />
+    <text
+        class="stat-bar-caption"
+        attr.y="{{getTextPosition()}}"
+        attr.style="fill: {{getTextColor()}}; font-weight: {{getFontWeight()}}"
+        x="50%"
+    >
+        {{statValue}}
+    </text>
+    <text class="stat-bar-label" attr.y="{{getLabelTop()}}" x="50%">{{label}}</text>
 </svg>

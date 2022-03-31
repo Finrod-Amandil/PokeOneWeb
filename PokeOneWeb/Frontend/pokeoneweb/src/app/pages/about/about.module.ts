@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-	declarations: [AboutComponent],
-	imports: [CommonModule, AboutRoutingModule, ComponentsModule, FormsModule, RouterModule]
+    declarations: [AboutComponent],
+    imports: [CommonModule, AboutRoutingModule, ComponentsModule, FormsModule, RouterModule]
 })
 export class AboutModule {}

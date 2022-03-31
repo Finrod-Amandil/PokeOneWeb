@@ -1,6 +1,6 @@
 export enum ResourceType {
-	Text,
-	Item,
-	Location,
-	Pokemon
+    Text,
+    Item,
+    Location,
+    Pokemon
 }

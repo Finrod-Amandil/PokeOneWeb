@@ -8,7 +8,7 @@ import { LocationDetailRoutingModule } from './location-detail-routing.module';
 import { LocationDetailComponent } from './location-detail.component';
 
 @NgModule({
-	declarations: [LocationDetailComponent],
-	imports: [CommonModule, LocationDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
+    declarations: [LocationDetailComponent],
+    imports: [CommonModule, LocationDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
 })
 export class LocationDetailModule {}

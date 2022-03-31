@@ -299,14 +299,11 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 foreach (var postEvolution in postEvolutions)
                 {
                     readModel.PrimaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.SecondaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.SecondaryAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.SecondaryAbility ?? postEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.HiddenEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex));
                 }
             } while (postEvolutions.Any());
 
@@ -328,14 +325,11 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 foreach (var preEvolution in preEvolutions)
                 {
                     readModel.PrimaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.SecondaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.SecondaryAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.SecondaryAbility ?? preEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.HiddenEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex));
                 }
             } while (preEvolutions.Any());
         }

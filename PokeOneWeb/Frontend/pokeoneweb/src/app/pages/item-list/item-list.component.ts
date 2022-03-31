@@ -10,83 +10,83 @@ import { ItemListSortService } from './core/item-list-sort.service';
 import { ItemListModel } from './core/item-list.model';
 
 @Component({
-	selector: 'pokeone-item-list',
-	templateUrl: './item-list.component.html',
-	styleUrls: ['./item-list.component.scss']
+    selector: 'pokeone-item-list',
+    templateUrl: './item-list.component.html',
+    styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
-	public model: ItemListModel = new ItemListModel();
+    public model: ItemListModel = new ItemListModel();
 
-	public column = ItemListColumn;
+    public column = ItemListColumn;
 
-	private timeOut: any;
-	private timeOutDuration = 500;
+    private timeOut: any;
+    private timeOutDuration = 500;
 
-	constructor(
-		private titleService: Title,
-		private itemService: ItemService,
-		private filterService: ItemListFilterService,
-		private sortService: ItemListSortService,
-		private router: Router
-	) {}
+    constructor(
+        private titleService: Title,
+        private itemService: ItemService,
+        private filterService: ItemListFilterService,
+        private sortService: ItemListSortService,
+        private router: Router
+    ) {}
 
-	ngOnInit(): void {
-		this.titleService.setTitle(`Items - ${WEBSITE_NAME}`);
+    ngOnInit(): void {
+        this.titleService.setTitle(`Items - ${WEBSITE_NAME}`);
 
-		this.itemService.getAll().subscribe((response) => {
-			this.model.itemModels = response as IItemListModel[];
+        this.itemService.getAll().subscribe((response) => {
+            this.model.itemModels = response as IItemListModel[];
 
-			this.model.displayedItemModels = this.sortService.sort(this.model.itemModels, ItemListColumn.Name, 1);
+            this.model.displayedItemModels = this.sortService.sort(this.model.itemModels, ItemListColumn.Name, 1);
 
-			this.model.bagCategories = [...new Set(this.model.itemModels.map((i) => i.bagCategoryName))];
-			this.model.bagCategories = this.model.bagCategories.sort((a, b) => (a > b ? 1 : -1));
-		});
-	}
+            this.model.bagCategories = [...new Set(this.model.itemModels.map((i) => i.bagCategoryName))];
+            this.model.bagCategories = this.model.bagCategories.sort((a, b) => (a > b ? 1 : -1));
+        });
+    }
 
-	public async onFilterChangedDelayed() {
-		clearTimeout(this.timeOut);
-		this.timeOut = setTimeout(() => {
-			this.onFilterChanged();
-		}, this.timeOutDuration);
-	}
+    public async onFilterChangedDelayed() {
+        clearTimeout(this.timeOut);
+        this.timeOut = setTimeout(() => {
+            this.onFilterChanged();
+        }, this.timeOutDuration);
+    }
 
-	public async onFilterChanged() {
-		const filtered = await this.filterService.applyFilter(this.model.filter, this.model.itemModels);
+    public async onFilterChanged() {
+        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.itemModels);
 
-		this.model.displayedItemModels = this.sortService.sort(
-			filtered,
-			this.model.sortColumn,
-			this.model.sortDirection
-		);
-	}
+        this.model.displayedItemModels = this.sortService.sort(
+            filtered,
+            this.model.sortColumn,
+            this.model.sortDirection
+        );
+    }
 
-	public trackById(index: number, item: IItemListModel): number {
-		return item.sortIndex;
-	}
+    public trackById(index: number, item: IItemListModel): number {
+        return item.sortIndex;
+    }
 
-	public sort(sortColumn: ItemListColumn, sortDirection: number) {
-		this.model.sortColumn = sortColumn;
-		this.model.sortDirection = sortDirection;
+    public sort(sortColumn: ItemListColumn, sortDirection: number) {
+        this.model.sortColumn = sortColumn;
+        this.model.sortDirection = sortDirection;
 
-		this.model.displayedItemModels = this.sortService.sort(
-			this.model.displayedItemModels,
-			sortColumn,
-			sortDirection
-		);
-	}
+        this.model.displayedItemModels = this.sortService.sort(
+            this.model.displayedItemModels,
+            sortColumn,
+            sortDirection
+        );
+    }
 
-	public getSortButtonClass(sortColumn: ItemListColumn, sortDirection: number): string {
-		if (this.model.sortColumn === sortColumn && this.model.sortDirection === sortDirection) {
-			return 'sorted';
-		}
-		return 'unsorted';
-	}
+    public getSortButtonClass(sortColumn: ItemListColumn, sortDirection: number): string {
+        if (this.model.sortColumn === sortColumn && this.model.sortDirection === sortDirection) {
+            return 'sorted';
+        }
+        return 'unsorted';
+    }
 
-	public getAvailabilityClass(isAvailable: boolean): string {
-		return isAvailable ? 'availability-obtainable' : 'availability-unobtainable';
-	}
+    public getAvailabilityClass(isAvailable: boolean): string {
+        return isAvailable ? 'availability-obtainable' : 'availability-unobtainable';
+    }
 
-	public navigateToDetailPage(itemResourceName: string) {
-		this.router.navigate([itemResourceName]);
-	}
+    public navigateToDetailPage(itemResourceName: string) {
+        this.router.navigate([itemResourceName]);
+    }
 }

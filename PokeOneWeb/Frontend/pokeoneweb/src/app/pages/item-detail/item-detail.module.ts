@@ -8,7 +8,7 @@ import { ItemDetailRoutingModule } from './item-detail-routing.module';
 import { ItemDetailComponent } from './item-detail.component';
 
 @NgModule({
-	declarations: [ItemDetailComponent],
-	imports: [CommonModule, ItemDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
+    declarations: [ItemDetailComponent],
+    imports: [CommonModule, ItemDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
 })
 export class ItemDetailModule {}

@@ -122,8 +122,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 (await GoogleClientSecrets.FromStreamAsync(stream)).Secrets, Scopes,
                 "user",
                 CancellationToken.None,
-                new FileDataStore(credPath, true)
-            );
+                new FileDataStore(credPath, true));
 
             return credential;
         }

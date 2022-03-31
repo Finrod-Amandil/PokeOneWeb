@@ -1,84 +1,84 @@
 <!--eslint-disable @angular-eslint/template/eqeqeq-->
 <div>
-	<pokeone-stat-input [pokemonChoosable]="false" [pokemon]="pokemon" (selectionChange)="onStatChanged($event)">
-	</pokeone-stat-input>
-	<table class="chart-table">
-		<thead>
-			<tr>
-				<th class="stat-chart-col-label">Stat</th>
-				<th class="stat-chart-col-basestat">Base</th>
-				<th class="stat-chart-col-bars">
-					<div class="stat-chart-header-base">Base</div>
-					<div class="stat-chart-header-iv" *ngIf="getStatTotal(model.effectiveStats.ivExtent) != 0">IVs</div>
-					<div class="stat-chart-header-ev" *ngIf="getStatTotal(model.effectiveStats.evExtent) != 0">EVs</div>
-					<div
-						class="stat-chart-header-nature"
-						*ngIf="getStatTotal(model.effectiveStats.natureExtent) != 0 && model.statsConfig.nature"
-					>
-						Nature: {{model.statsConfig.nature.name}} {{model.statsConfig.nature.effect}}
-					</div>
-					<div
-						class="stat-chart-header-ability"
-						*ngIf="getStatTotal(model.effectiveStats.abilityExtent) != 0 && model.statsConfig.ability"
-					>
-						<div>Ability: {{model.statsConfig.ability.name}}</div>
-						<div *ngIf="model.statsConfig.ability.boostConditions" class="ability-boost-conditions">
-							({{model.statsConfig.ability.boostConditions}})
-						</div>
-					</div>
-					<div
-						class="stat-chart-header-item"
-						*ngIf="getStatTotal(model.effectiveStats.itemExtent) != 0 && model.statsConfig.item"
-					>
-						Item: {{model.statsConfig.item.itemName}}
-					</div>
-					<div
-						class="stat-chart-header-modifier"
-						*ngIf="getStatTotal(model.effectiveStats.statModifierExtent) != 0"
-					>
-						Stat modifiers
-					</div>
-					<div
-						class="stat-chart-header-field"
-						*ngIf="getStatTotal(model.effectiveStats.fieldBoostsExtent) != 0"
-					>
-						Field boosts
-					</div>
-				</th>
-				<th class="stat-chart-col-total">Final</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let barChartGroup of model.barChartGroups" [ngClass]="'stat-row-' + barChartGroup.className">
-				<td class="stat-chart-col-label">{{barChartGroup.label}}</td>
-				<td class="stat-chart-col-basestat">{{barChartGroup.baseStatValue}}</td>
-				<td class="stat-chart-col-bars">
-					<svg class="stat-bar-chart" [attr.viewBox]="'0 0 ' + viewPortExtent + ' 30'">
-						<rect
-							*ngFor="let bar of barChartGroup.bars"
-							[ngClass]="'bar bar-' + bar.className + (bar.isNegativeDirection ? ' bar-negative' : '')"
-							[attr.x]="bar.x"
-							[attr.y]="bar.y"
-							[attr.width]="bar.width"
-							[attr.height]="bar.height"
-						></rect>
-						<line
-							class="total-indicator"
-							[attr.x1]="barChartGroup.xTotal - 2"
-							[attr.x2]="barChartGroup.xTotal - 2"
-							y1="0"
-							y2="30"
-						></line>
-					</svg>
-				</td>
-				<td class="stat-chart-col-total">{{barChartGroup.totalValue}}</td>
-			</tr>
-			<tr class="stat-row-total">
-				<td class="stat-chart-col-label">Total</td>
-				<td class="stat-chart-col-basestat">{{getStatTotal(model.statsConfig.baseStats)}}</td>
-				<td class="stat-chart-col-bars"></td>
-				<td class="stat-chart-col-total">{{getStatTotal(model.effectiveStats.total)}}</td>
-			</tr>
-		</tbody>
-	</table>
+    <pokeone-stat-input [pokemonChoosable]="false" [pokemon]="pokemon" (selectionChange)="onStatChanged($event)">
+    </pokeone-stat-input>
+    <table class="chart-table">
+        <thead>
+            <tr>
+                <th class="stat-chart-col-label">Stat</th>
+                <th class="stat-chart-col-basestat">Base</th>
+                <th class="stat-chart-col-bars">
+                    <div class="stat-chart-header-base">Base</div>
+                    <div class="stat-chart-header-iv" *ngIf="getStatTotal(model.effectiveStats.ivExtent) != 0">IVs</div>
+                    <div class="stat-chart-header-ev" *ngIf="getStatTotal(model.effectiveStats.evExtent) != 0">EVs</div>
+                    <div
+                        class="stat-chart-header-nature"
+                        *ngIf="getStatTotal(model.effectiveStats.natureExtent) != 0 && model.statsConfig.nature"
+                    >
+                        Nature: {{model.statsConfig.nature.name}} {{model.statsConfig.nature.effect}}
+                    </div>
+                    <div
+                        class="stat-chart-header-ability"
+                        *ngIf="getStatTotal(model.effectiveStats.abilityExtent) != 0 && model.statsConfig.ability"
+                    >
+                        <div>Ability: {{model.statsConfig.ability.name}}</div>
+                        <div *ngIf="model.statsConfig.ability.boostConditions" class="ability-boost-conditions">
+                            ({{model.statsConfig.ability.boostConditions}})
+                        </div>
+                    </div>
+                    <div
+                        class="stat-chart-header-item"
+                        *ngIf="getStatTotal(model.effectiveStats.itemExtent) != 0 && model.statsConfig.item"
+                    >
+                        Item: {{model.statsConfig.item.itemName}}
+                    </div>
+                    <div
+                        class="stat-chart-header-modifier"
+                        *ngIf="getStatTotal(model.effectiveStats.statModifierExtent) != 0"
+                    >
+                        Stat modifiers
+                    </div>
+                    <div
+                        class="stat-chart-header-field"
+                        *ngIf="getStatTotal(model.effectiveStats.fieldBoostsExtent) != 0"
+                    >
+                        Field boosts
+                    </div>
+                </th>
+                <th class="stat-chart-col-total">Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let barChartGroup of model.barChartGroups" [ngClass]="'stat-row-' + barChartGroup.className">
+                <td class="stat-chart-col-label">{{barChartGroup.label}}</td>
+                <td class="stat-chart-col-basestat">{{barChartGroup.baseStatValue}}</td>
+                <td class="stat-chart-col-bars">
+                    <svg class="stat-bar-chart" [attr.viewBox]="'0 0 ' + viewPortExtent + ' 30'">
+                        <rect
+                            *ngFor="let bar of barChartGroup.bars"
+                            [ngClass]="'bar bar-' + bar.className + (bar.isNegativeDirection ? ' bar-negative' : '')"
+                            [attr.x]="bar.x"
+                            [attr.y]="bar.y"
+                            [attr.width]="bar.width"
+                            [attr.height]="bar.height"
+                        ></rect>
+                        <line
+                            class="total-indicator"
+                            [attr.x1]="barChartGroup.xTotal - 2"
+                            [attr.x2]="barChartGroup.xTotal - 2"
+                            y1="0"
+                            y2="30"
+                        ></line>
+                    </svg>
+                </td>
+                <td class="stat-chart-col-total">{{barChartGroup.totalValue}}</td>
+            </tr>
+            <tr class="stat-row-total">
+                <td class="stat-chart-col-label">Total</td>
+                <td class="stat-chart-col-basestat">{{getStatTotal(model.statsConfig.baseStats)}}</td>
+                <td class="stat-chart-col-bars"></td>
+                <td class="stat-chart-col-total">{{getStatTotal(model.effectiveStats.total)}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

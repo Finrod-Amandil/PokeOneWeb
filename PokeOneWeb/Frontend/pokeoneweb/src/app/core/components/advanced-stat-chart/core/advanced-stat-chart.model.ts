@@ -3,8 +3,8 @@ import { IStatsConfigurationModel, StatsConfigurationModel } from 'src/app/core/
 import { BarChartGroupModel } from './bar-chart-group.model';
 
 export class AdvancedStatChartModel {
-	barChartGroups: BarChartGroupModel[] = [];
-	statsConfig: IStatsConfigurationModel = new StatsConfigurationModel();
-	effectiveStats: IEffectiveStatsModel = new EffecticeStatsModel();
-	maxExtent = 1;
+    barChartGroups: BarChartGroupModel[] = [];
+    statsConfig: IStatsConfigurationModel = new StatsConfigurationModel();
+    effectiveStats: IEffectiveStatsModel = new EffecticeStatsModel();
+    maxExtent = 1;
 }

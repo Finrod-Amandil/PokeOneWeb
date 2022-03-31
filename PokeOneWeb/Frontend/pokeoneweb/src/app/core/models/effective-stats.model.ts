@@ -1,57 +1,57 @@
 import { IStatsModel, StatsModel } from './stats.model';
 
 export interface IEffectiveStatsModel {
-	baseStatsExtent: IStatsModel;
-	baseStatsSubtotal: IStatsModel;
+    baseStatsExtent: IStatsModel;
+    baseStatsSubtotal: IStatsModel;
 
-	ivExtent: IStatsModel;
-	ivSubTotal: IStatsModel;
+    ivExtent: IStatsModel;
+    ivSubTotal: IStatsModel;
 
-	evExtent: IStatsModel;
-	evSubTotal: IStatsModel;
+    evExtent: IStatsModel;
+    evSubTotal: IStatsModel;
 
-	natureExtent: IStatsModel;
-	natureSubTotal: IStatsModel;
+    natureExtent: IStatsModel;
+    natureSubTotal: IStatsModel;
 
-	abilityExtent: IStatsModel;
-	abilitySubTotal: IStatsModel;
+    abilityExtent: IStatsModel;
+    abilitySubTotal: IStatsModel;
 
-	itemExtent: IStatsModel;
-	itemSubTotal: IStatsModel;
+    itemExtent: IStatsModel;
+    itemSubTotal: IStatsModel;
 
-	statModifierExtent: IStatsModel;
-	statModifierSubTotal: IStatsModel;
+    statModifierExtent: IStatsModel;
+    statModifierSubTotal: IStatsModel;
 
-	fieldBoostsExtent: IStatsModel;
-	fieldBoostsSubTotal: IStatsModel;
+    fieldBoostsExtent: IStatsModel;
+    fieldBoostsSubTotal: IStatsModel;
 
-	total: IStatsModel;
+    total: IStatsModel;
 }
 
 export class EffecticeStatsModel implements IEffectiveStatsModel {
-	baseStatsExtent = new StatsModel();
-	baseStatsSubtotal = new StatsModel();
+    baseStatsExtent = new StatsModel();
+    baseStatsSubtotal = new StatsModel();
 
-	ivExtent = new StatsModel();
-	ivSubTotal = new StatsModel();
+    ivExtent = new StatsModel();
+    ivSubTotal = new StatsModel();
 
-	evExtent = new StatsModel();
-	evSubTotal = new StatsModel();
+    evExtent = new StatsModel();
+    evSubTotal = new StatsModel();
 
-	natureExtent = new StatsModel();
-	natureSubTotal = new StatsModel();
+    natureExtent = new StatsModel();
+    natureSubTotal = new StatsModel();
 
-	abilityExtent = new StatsModel();
-	abilitySubTotal = new StatsModel();
+    abilityExtent = new StatsModel();
+    abilitySubTotal = new StatsModel();
 
-	itemExtent = new StatsModel();
-	itemSubTotal = new StatsModel();
+    itemExtent = new StatsModel();
+    itemSubTotal = new StatsModel();
 
-	statModifierExtent = new StatsModel();
-	statModifierSubTotal = new StatsModel();
+    statModifierExtent = new StatsModel();
+    statModifierSubTotal = new StatsModel();
 
-	fieldBoostsExtent = new StatsModel();
-	fieldBoostsSubTotal = new StatsModel();
+    fieldBoostsExtent = new StatsModel();
+    fieldBoostsSubTotal = new StatsModel();
 
-	total = new StatsModel();
+    total = new StatsModel();
 }

@@ -8,7 +8,7 @@ import { PokemonDetailRoutingModule } from './pokemon-detail-routing.module';
 import { PokemonDetailComponent } from './pokemon-detail.component';
 
 @NgModule({
-	declarations: [PokemonDetailComponent],
-	imports: [CommonModule, PokemonDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
+    declarations: [PokemonDetailComponent],
+    imports: [CommonModule, PokemonDetailRoutingModule, ComponentsModule, NgSelectModule, FormsModule, RouterModule]
 })
 export class PokemonDetailModule {}

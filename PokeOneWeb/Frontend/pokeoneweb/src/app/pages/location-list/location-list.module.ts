@@ -9,15 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-	declarations: [LocationListComponent],
-	imports: [
-		CommonModule,
-		LocationListRoutingModule,
-		ComponentsModule,
-		NgSelectModule,
-		VirtualScrollerModule,
-		FormsModule,
-		RouterModule
-	]
+    declarations: [LocationListComponent],
+    imports: [
+        CommonModule,
+        LocationListRoutingModule,
+        ComponentsModule,
+        NgSelectModule,
+        VirtualScrollerModule,
+        FormsModule,
+        RouterModule
+    ]
 })
 export class LocationListModule {}

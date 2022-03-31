@@ -1,6 +1,6 @@
 export enum SpawnListColumn {
-	Pokemon,
-	Location,
-	SpawnType,
-	Rarity
+    Pokemon,
+    Location,
+    SpawnType,
+    Rarity
 }

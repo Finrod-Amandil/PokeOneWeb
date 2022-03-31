@@ -5,7 +5,7 @@ import { PokemonDetailComponent } from './pokemon-detail.component';
 const routes: Routes = [{ path: '', component: PokemonDetailComponent }];
 
 @NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class PokemonDetailRoutingModule {}

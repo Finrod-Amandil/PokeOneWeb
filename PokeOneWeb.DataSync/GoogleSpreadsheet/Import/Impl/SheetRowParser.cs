@@ -106,8 +106,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 format,
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-                out var parsed
-            );
+                out var parsed);
 
             if (!canParse)
             {

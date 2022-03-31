@@ -94,8 +94,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
             return (
                 from season in seasons
                 from timeOfDay in timesOfDay
-                select MapSpawnOpportunity(season, timeOfDay)
-            ).ToList();
+                select MapSpawnOpportunity(season, timeOfDay))
+            .ToList();
         }
 
         private SpawnOpportunity MapSpawnOpportunity(Season season, TimeOfDay timeOfDay)

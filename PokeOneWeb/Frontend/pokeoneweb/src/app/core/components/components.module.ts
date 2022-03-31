@@ -18,34 +18,34 @@ import { TypeBadgeComponent } from './type-badge/type-badge.component';
 import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.component';
 
 @NgModule({
-	declarations: [
-		AdvancedStatChartComponent,
-		EvolutionChartComponent,
-		NavbarComponent,
-		NavbarItemComponent,
-		ResourceTextComponent,
-		ScrollToTopComponent,
-		SeasonBadgeComponent,
-		SliderInputComponent,
-		StatInputComponent,
-		TimeBadgeComponent,
-		TypeBadgeComponent,
-		VerticalStatBarComponent
-	],
-	imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
-	exports: [
-		AdvancedStatChartComponent,
-		EvolutionChartComponent,
-		NavbarComponent,
-		NavbarItemComponent,
-		ResourceTextComponent,
-		ScrollToTopComponent,
-		SeasonBadgeComponent,
-		SliderInputComponent,
-		StatInputComponent,
-		TimeBadgeComponent,
-		TypeBadgeComponent,
-		VerticalStatBarComponent
-	]
+    declarations: [
+        AdvancedStatChartComponent,
+        EvolutionChartComponent,
+        NavbarComponent,
+        NavbarItemComponent,
+        ResourceTextComponent,
+        ScrollToTopComponent,
+        SeasonBadgeComponent,
+        SliderInputComponent,
+        StatInputComponent,
+        TimeBadgeComponent,
+        TypeBadgeComponent,
+        VerticalStatBarComponent
+    ],
+    imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
+    exports: [
+        AdvancedStatChartComponent,
+        EvolutionChartComponent,
+        NavbarComponent,
+        NavbarItemComponent,
+        ResourceTextComponent,
+        ScrollToTopComponent,
+        SeasonBadgeComponent,
+        SliderInputComponent,
+        StatInputComponent,
+        TimeBadgeComponent,
+        TypeBadgeComponent,
+        VerticalStatBarComponent
+    ]
 })
 export class ComponentsModule {}

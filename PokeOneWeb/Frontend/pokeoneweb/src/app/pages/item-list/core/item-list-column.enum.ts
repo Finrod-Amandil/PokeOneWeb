@@ -1,6 +1,6 @@
 export enum ItemListColumn {
-	Name,
-	Description,
-	Effect,
-	BagCategory
+    Name,
+    Description,
+    Effect,
+    BagCategory
 }

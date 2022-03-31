@@ -1,124 +1,124 @@
 .item-detail-navigation {
-	display: flex;
-	flex-wrap: nowrap;
-	align-items: center;
-	justify-content: space-around;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .item-detail-navigation a {
-	font-size: 18px;
-	color: var(--light-gray);
+    font-size: 18px;
+    color: var(--light-gray);
 }
 
 .item-detail-navigation-center {
-	text-align: center;
-	background-color: var(--medium-gray);
-	height: 40px;
-	border: 1px solid black;
-	border-radius: 20px;
+    text-align: center;
+    background-color: var(--medium-gray);
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 20px;
 }
 
 .item-detail-navigation-link,
 .item-detail-navigation-sprite {
-	display: inline-block;
+    display: inline-block;
 }
 
 .item-detail-navigation-sprite {
-	padding-top: 5px;
-	width: 40px;
-	height: 40px;
-	background-color: var(--dark-gray);
-	border: 1px solid black;
-	border-radius: 20px;
+    padding-top: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--dark-gray);
+    border: 1px solid black;
+    border-radius: 20px;
 }
 
 .item-detail-navigation-sprite img {
-	max-height: 30px;
+    max-height: 30px;
 }
 
 .item-detail-navigation-center .item-detail-navigation-sprite:first-child {
-	margin-left: -1px;
-	margin-top: -1px;
-	margin-right: 20px;
+    margin-left: -1px;
+    margin-top: -1px;
+    margin-right: 20px;
 }
 
 .item-detail-navigation-center .item-detail-navigation-sprite:last-child {
-	margin-right: -1px;
-	margin-top: -1px;
-	margin-left: 20px;
+    margin-right: -1px;
+    margin-top: -1px;
+    margin-left: 20px;
 }
 
 .item-detail-navigation a:hover .pokemon-detail-navigation-center {
-	background-color: var(--medium-gray-lighter);
+    background-color: var(--medium-gray-lighter);
 }
 
 .item-general-info {
-	display: block;
-	color: var(--light-gray);
+    display: block;
+    color: var(--light-gray);
 }
 
 .item-detail-navigation a:hover .pokemon-detail-navigation-sprite {
-	background-color: var(--medium-gray);
+    background-color: var(--medium-gray);
 }
 
 .item-general-info-header {
-	display: flex;
-	margin-bottom: 10px;
+    display: flex;
+    margin-bottom: 10px;
 }
 
 .item-general-info-header .item-sprite {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: var(--dark-gray);
-	border: 1px solid black;
-	height: 40px;
-	width: 40px;
-	border-radius: 20px;
-	margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-gray);
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
 }
 
 .item-general-info-header .item-name {
-	padding-top: 5px;
+    padding-top: 5px;
 }
 
 .item-general-info-header .item-name h4 {
-	font-size: 20px;
-	text-shadow: 1px 1px black;
+    font-size: 20px;
+    text-shadow: 1px 1px black;
 }
 
 #item_general_info_table {
-	width: 100%;
+    width: 100%;
 }
 
 #item_general_info_table td {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 #item_general_info_table tr td:first-child {
-	padding-right: 20px;
-	padding-bottom: 5px;
+    padding-right: 20px;
+    padding-bottom: 5px;
 }
 
 .item-general-info-sprite .item-sprite img {
-	height: 30px;
-	width: 30px;
+    height: 30px;
+    width: 30px;
 }
 
 .item-general-info-availability td:first-child {
-	padding-top: 5px;
+    padding-top: 5px;
 }
 
 .item-general-info-availability .item-availability {
-	display: flex;
+    display: flex;
 }
 
 .item-general-info-availability .item-availability .availability-icon {
-	line-height: 1;
-	border: 1px solid black;
-	margin-right: 5px;
+    line-height: 1;
+    border: 1px solid black;
+    margin-right: 5px;
 }
 
 .item-general-info-availability .item-availability .availability-name {
-	padding-top: 3px;
+    padding-top: 3px;
 }
