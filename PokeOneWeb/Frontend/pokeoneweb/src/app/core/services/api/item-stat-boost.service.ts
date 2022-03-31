@@ -17,7 +17,7 @@ export class ItemStatBoostService extends BaseService {
         return 'item';
     }
 
-    public getItemStatBoostsForPokemon(name: string): Observable<IItemStatBoostModel[]> {
+    public getItemStats(): Observable<IItemStatBoostModel[]> {
         return this.http.get<IItemStatBoostModel[]>(`${environment.baseUrl}/itemstats.json`, this.httpOptions);
     }
 }
