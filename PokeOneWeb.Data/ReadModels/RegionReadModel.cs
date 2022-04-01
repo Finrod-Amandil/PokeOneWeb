@@ -2,15 +2,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("RegionReadModel")]
     public class RegionReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
-        [Required]
+        [Required, JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string ResourceName { get; set; }
