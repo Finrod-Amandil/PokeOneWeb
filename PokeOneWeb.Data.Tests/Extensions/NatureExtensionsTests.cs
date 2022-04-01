@@ -1,11 +1,6 @@
 ﻿using FluentAssertions;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace PokeOneWeb.Data.Tests.Extensions
@@ -182,7 +177,7 @@ namespace PokeOneWeb.Data.Tests.Extensions
             string description = nature.GetDescription();
 
             // Then
-            description.Should().Be("", "because all values were zero.");
+            description.Should().Be(string.Empty, "because all values were zero.");
         }
 
         [Fact]

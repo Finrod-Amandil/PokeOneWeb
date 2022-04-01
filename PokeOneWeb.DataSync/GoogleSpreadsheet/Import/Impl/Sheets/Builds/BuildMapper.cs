@@ -1,13 +1,14 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
 {
     public class BuildMapper : SpreadsheetEntityMapper<BuildSheetDto, Build>
     {
-        //TODO constants
+        // TODO constants
         private static readonly string OPTION_DIVIDER = "/";
+
         private static readonly string STAT_ATK = "atk";
         private static readonly string STAT_SPA = "spa";
         private static readonly string STAT_DEF = "def";
@@ -21,7 +22,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         private readonly Dictionary<string, Ability> _abilities = new();
         private readonly Dictionary<string, Nature> _natures = new();
 
-        public BuildMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public BuildMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Build;
 
@@ -217,8 +220,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
             foreach (var evPart in dto.EvDistribution.ToLowerInvariant().Split(OPTION_DIVIDER))
             {
                 var evValue = evPart
-                    .Replace(STAT_ATK, "").Replace(STAT_SPA, "").Replace(STAT_DEF, "")
-                    .Replace(STAT_SPD, "").Replace(STAT_SPE, "").Replace(STAT_HP, "");
+                    .Replace(STAT_ATK, string.Empty).Replace(STAT_SPA, string.Empty).Replace(STAT_DEF, string.Empty)
+                    .Replace(STAT_SPD, string.Empty).Replace(STAT_SPE, string.Empty).Replace(STAT_HP, string.Empty);
 
                 if (evValue.Length == evPart.Length)
                 {
@@ -254,6 +257,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
                 {
                     build.SpeedEv = evValueInt;
                 }
+
                 if (evPart.Contains(STAT_HP))
                 {
                     build.HitPointsEv = evValueInt;

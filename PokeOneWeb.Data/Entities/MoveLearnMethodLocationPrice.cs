@@ -31,10 +31,12 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("MoveLearnMethodLocationId")]
         public MoveLearnMethodLocation MoveLearnMethodLocation { get; set; }
+
         public int MoveLearnMethodLocationId { get; set; }
 
         [ForeignKey("CurrencyAmountId")]
         public CurrencyAmount CurrencyAmount { get; set; }
+
         public int CurrencyAmountId { get; set; }
     }
 }

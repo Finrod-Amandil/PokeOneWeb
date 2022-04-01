@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypeRelations
 {
@@ -8,7 +8,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
     {
         private readonly Dictionary<string, ElementalType> _types = new();
 
-        public ElementalTypeRelationMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public ElementalTypeRelationMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.ElementalTypeRelation;
 
@@ -25,7 +27,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
         }
 
         protected override ElementalTypeRelation MapEntity(
-            ElementalTypeRelationSheetDto dto, 
+            ElementalTypeRelationSheetDto dto,
             RowHash rowHash,
             ElementalTypeRelation elementalTypeRelation = null)
         {

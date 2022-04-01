@@ -1,7 +1,7 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {

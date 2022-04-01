@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -29,11 +29,11 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
@@ -42,14 +42,13 @@ namespace PokeOneWeb.Data.Entities
 
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         public string EffectDescription { get; set; }
 
         public string EffectShortDescription { get; set; }
-
 
         [Column(TypeName = "decimal(4,1)")]
         public decimal AttackBoost { get; set; }
@@ -74,7 +73,6 @@ namespace PokeOneWeb.Data.Entities
         public List<PokemonVariety> PokemonVarietiesAsPrimaryAbility { get; set; } = new();
         public List<PokemonVariety> PokemonVarietiesAsSecondaryAbility { get; set; } = new();
         public List<PokemonVariety> PokemonVarietiesAsHiddenAbility { get; set; } = new();
-
 
         public override string ToString()
         {

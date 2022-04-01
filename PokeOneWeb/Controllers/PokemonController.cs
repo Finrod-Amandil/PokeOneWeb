@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.WebApi.Dtos;
 using PokeOneWeb.WebApi.Services.Api;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.WebApi.Controllers
 {
@@ -39,7 +39,7 @@ namespace PokeOneWeb.WebApi.Controllers
         /// <summary>
         /// Returns one specific Pokemon Variety with its full set of details.
         /// </summary>
-        /// <param name="name">The resource name of a specific Pokemon Variety</param>
+        /// <param name="name">The resource name of a specific Pokemon Variety.</param>
         [Route("getbynamefull")]
         [HttpGet]
         public ActionResult<PokemonVarietyDto> GetByNameFull([FromQuery] string name)
@@ -50,7 +50,7 @@ namespace PokeOneWeb.WebApi.Controllers
         /// <summary>
         /// Returns one specific Pokemon Variety with a medium amount of details.
         /// </summary>
-        /// <param name="name">The resource name of a specific Pokemon Variety</param>
+        /// <param name="name">The resource name of a specific Pokemon Variety.</param>
         [Route("getbyname")]
         [HttpGet]
         public ActionResult<PokemonVarietyListDto> GetByName([FromQuery] string name)

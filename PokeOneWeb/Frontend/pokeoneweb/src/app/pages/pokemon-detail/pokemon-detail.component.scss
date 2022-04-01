@@ -56,8 +56,7 @@
     margin-right: -1px;
 }
 
-.pokemon-detail-navigation-center
-    .pokemon-detail-navigation-sprite:first-child {
+.pokemon-detail-navigation-center .pokemon-detail-navigation-sprite:first-child {
     margin-left: -1px;
     margin-top: -1px;
     margin-right: 20px;
@@ -712,7 +711,7 @@ td.stab-power .stab-label {
 }
 
 .learnmethod-unavailable td {
-    background-color: rgb(85,85,85);
+    background-color: rgb(85, 85, 85);
 }
 
 .unobtainable-move {

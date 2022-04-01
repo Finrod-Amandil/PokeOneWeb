@@ -1,7 +1,7 @@
-﻿using PokeOneWeb.Data;
-using PokeOneWeb.Data.ReadModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.ReadModels;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
 {

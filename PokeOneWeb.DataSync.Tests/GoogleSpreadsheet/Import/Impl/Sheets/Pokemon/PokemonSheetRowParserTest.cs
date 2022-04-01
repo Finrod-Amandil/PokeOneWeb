@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
@@ -356,8 +356,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
                 0, 0, "0", "0", "0", "0", "0", "0", "0", false, "0",
                 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0,
-                "0", "", "0", "", "", "", false, false, 0, 0, false, 0.5, 0, 0.5, 0.5, 0,
-                "", "", "", "", "", "", "", "excessive value"
+                "0", string.Empty, "0", string.Empty, string.Empty, string.Empty, false, false, 0, 0, false, 0.5, 0, 0.5, 0.5, 0,
+                string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "excessive value"
             };
 
             // Act

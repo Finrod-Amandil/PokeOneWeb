@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 {
@@ -8,7 +8,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
     {
         private readonly Dictionary<string, Event> _events = new();
 
-        public RegionMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public RegionMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Region;
 
@@ -38,6 +40,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
                     eventEntity = new Event { Name = dto.EventName };
                     _events.Add(dto.EventName, eventEntity);
                 }
+
                 region.Event = eventEntity;
             }
 

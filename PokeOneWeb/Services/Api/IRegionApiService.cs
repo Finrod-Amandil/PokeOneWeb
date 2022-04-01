@@ -1,5 +1,5 @@
-﻿using PokeOneWeb.WebApi.Dtos;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PokeOneWeb.WebApi.Dtos;
 
 namespace PokeOneWeb.WebApi.Services.Api
 {
@@ -8,7 +8,7 @@ namespace PokeOneWeb.WebApi.Services.Api
         /// <summary>
         /// Get a list of all regions stored.
         /// </summary>
-        /// <returns>All regions</returns>
+        /// <returns>All regions.</returns>
         IEnumerable<RegionListDto> GetAllListRegions();
     }
 }

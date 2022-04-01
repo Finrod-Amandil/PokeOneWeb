@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -30,7 +30,7 @@ import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.
         StatInputComponent,
         TimeBadgeComponent,
         TypeBadgeComponent,
-        VerticalStatBarComponent,
+        VerticalStatBarComponent
     ],
     imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
     exports: [
@@ -45,7 +45,7 @@ import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.
         StatInputComponent,
         TimeBadgeComponent,
         TypeBadgeComponent,
-        VerticalStatBarComponent,
-    ],
+        VerticalStatBarComponent
+    ]
 })
 export class ComponentsModule {}

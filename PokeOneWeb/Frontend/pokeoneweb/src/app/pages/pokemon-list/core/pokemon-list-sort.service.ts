@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { IPokemonVarietyListModel } from "src/app/core/models/pokemon-variety-list.model";
-import { PokemonListColumn } from "./pokemon-list-column.enum";
+import { Injectable } from '@angular/core';
+import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
+import { PokemonListColumn } from './pokemon-list-column.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -36,41 +36,39 @@ export class PokemonListSortService {
     }
 
     private sortNumber(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
-        return models.slice()
-            .sort((n1, n2) => {
-                if (n1.pokedexNumber > n2.pokedexNumber) {
-                    return sortDirection * 1;
-                }
+        return models.slice().sort((n1, n2) => {
+            if (n1.pokedexNumber > n2.pokedexNumber) {
+                return sortDirection * 1;
+            }
 
-                if (n1.pokedexNumber < n2.pokedexNumber) {
-                    return sortDirection * -1;
-                }
+            if (n1.pokedexNumber < n2.pokedexNumber) {
+                return sortDirection * -1;
+            }
 
-                if (n1.sortIndex > n2.sortIndex) {
-                    return sortDirection * 1;
-                }
+            if (n1.sortIndex > n2.sortIndex) {
+                return sortDirection * 1;
+            }
 
-                if (n1.sortIndex < n2.sortIndex) {
-                    return sortDirection * -1;
-                }
+            if (n1.sortIndex < n2.sortIndex) {
+                return sortDirection * -1;
+            }
 
-                return 0;
-            });
+            return 0;
+        });
     }
 
     private sortName(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
-        return models.slice()
-            .sort((n1, n2) => {
-                if (n1.name > n2.name) {
-                    return sortDirection * 1;
-                }
+        return models.slice().sort((n1, n2) => {
+            if (n1.name > n2.name) {
+                return sortDirection * 1;
+            }
 
-                if (n1.name < n2.name) {
-                    return sortDirection * -1;
-                }
+            if (n1.name < n2.name) {
+                return sortDirection * -1;
+            }
 
-                return 0;
-            });
+            return 0;
+        });
     }
 
     private sortAttack(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
@@ -106,17 +104,16 @@ export class PokemonListSortService {
     }
 
     private sortPvp(models: IPokemonVarietyListModel[], sortDirection: number): IPokemonVarietyListModel[] {
-        return models.slice()
-            .sort((n1, n2) => {
-                if (n1.pvpTierSortIndex > n2.pvpTierSortIndex) {
-                    return sortDirection * 1;
-                }
+        return models.slice().sort((n1, n2) => {
+            if (n1.pvpTierSortIndex > n2.pvpTierSortIndex) {
+                return sortDirection * 1;
+            }
 
-                if (n1.pvpTierSortIndex < n2.pvpTierSortIndex) {
-                    return sortDirection * -1;
-                }
+            if (n1.pvpTierSortIndex < n2.pvpTierSortIndex) {
+                return sortDirection * -1;
+            }
 
-                return 0;
-            });
+            return 0;
+        });
     }
 }

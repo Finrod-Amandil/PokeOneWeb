@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageCla
 {
     public class MoveDamageClassMapper : SpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass>
     {
-        public MoveDamageClassMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public MoveDamageClassMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.MoveDamageClass;
 
@@ -20,8 +22,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageCla
         }
 
         protected override MoveDamageClass MapEntity(
-            MoveDamageClassSheetDto dto, 
-            RowHash rowHash, 
+            MoveDamageClassSheetDto dto,
+            RowHash rowHash,
             MoveDamageClass moveDamageClass = null)
         {
             moveDamageClass ??= new MoveDamageClass();

@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
 {
@@ -8,7 +8,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
     {
         private readonly Dictionary<string, BagCategory> _bagCategories = new();
 
-        public ItemMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public ItemMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Item;
 

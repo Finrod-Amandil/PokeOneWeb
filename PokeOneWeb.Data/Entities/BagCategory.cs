@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -11,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// PokeOne specific categorization of items.
     /// </summary>
     [Table("BagCategory")]
-    public class BagCategory: IHashedEntity
+    public class BagCategory : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -27,26 +27,26 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         public int SortIndex { get; set; }
 
         public List<Item> Items { get; set; } = new();
-
 
         public override string ToString()
         {

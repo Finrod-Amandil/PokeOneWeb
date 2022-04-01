@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -35,28 +35,29 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string ResourceName { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         /// <summary>
-        /// An item ID used within Pokeone.
+        /// Gets or sets an item ID used within Pokeone.
         /// </summary>
         public int? PokeoneItemId { get; set; }
 
@@ -74,10 +75,10 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("BagCategoryId")]
         public BagCategory BagCategory { get; set; }
+
         public int BagCategoryId { get; set; }
 
         public List<PlacedItem> PlacedItems { get; set; } = new();
-
 
         public override string ToString()
         {

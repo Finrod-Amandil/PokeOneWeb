@@ -13,7 +13,7 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220318150024_add-region-resourcename")]
-    partial class addregionresourcename
+    partial class Addregionresourcename
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

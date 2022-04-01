@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
             ApplicationDbContext dbContext,
             ISheetRowParser<ElementalTypeSheetDto> parser,
             ISpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<ElementalType> DbSet => DbContext.ElementalTypes;
 

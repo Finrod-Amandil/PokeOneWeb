@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Natures
 {
     public class NatureMapper : SpreadsheetEntityMapper<NatureSheetDto, Nature>
     {
-        public NatureMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public NatureMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Nature;
 

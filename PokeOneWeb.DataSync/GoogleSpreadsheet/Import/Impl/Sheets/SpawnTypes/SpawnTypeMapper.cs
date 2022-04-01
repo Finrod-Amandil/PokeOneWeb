@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes
 {
     public class SpawnTypeMapper : SpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType>
     {
-        public SpawnTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public SpawnTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.SpawnType;
 
