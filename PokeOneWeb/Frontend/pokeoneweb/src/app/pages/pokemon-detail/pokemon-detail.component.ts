@@ -55,7 +55,10 @@ export class PokemonDetailComponent implements OnInit {
                     );
 
                     this.model.learnableMoves = this.model.pokemon.learnableMoves;
-
+                    
+                    if(this.model.areEventExclusiveSpawnsHidden) {
+                        this.hideEventExclusiveSpawns();
+                    }
                     this.sortMoveLearnMethods();
                     this.sortForms();
                     this.applyInitialSorting();
@@ -204,11 +207,45 @@ export class PokemonDetailComponent implements OnInit {
         this.model.spawnsSortedByColumn = sortColumn;
         this.model.spawnsSortDirection = sortDirection;
 
-        this.model.pokemon.spawns = this.sortService.sortSpawns(
-            this.model.pokemon.spawns,
+        this.model.visibleSpawns = this.sortService.sortSpawns(
+            this.model.visibleSpawns,
             sortColumn,
             sortDirection
         );
+    }
+
+    public hideEventExclusiveSpawns() {
+        this.model.areEventExclusiveSpawnsHidden = true;
+        if(this.model.pokemon) {
+            this.model.visibleSpawns = [];
+            let today = this.getTodaysDate().split("/");
+
+            for (let spawn of this.model.pokemon.spawns){
+                if(spawn.isEvent){
+                    //Source https://stackoverflow.com/a/16080662
+                    var eventStartDate = this.convertDate(spawn.eventStartDate).split("/");
+                    var eventEndDate = this.convertDate(spawn.eventEndDate).split("/");
+
+                    var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
+                    var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
+                    var check = new Date(parseInt(today[2]), parseInt(today[1])-1, parseInt(today[0]));
+
+                    if (check >= from && check <= to) {
+                        this.model.visibleSpawns.push(spawn)
+                    }
+                }
+                else{
+                    this.model.visibleSpawns.push(spawn);
+                }
+            }
+        }
+    }
+    
+    public showEventExclusiveSpawns() {
+        this.model.areEventExclusiveSpawnsHidden = false;
+        if(this.model.pokemon) {
+            this.model.visibleSpawns = this.model.pokemon.spawns;
+        }
     }
 
     public sortMoves(sortColumn: MoveListColumn, sortDirection: number) {
@@ -316,6 +353,29 @@ export class PokemonDetailComponent implements OnInit {
             });
     }
 
+    private convertDate(date: String) {
+        let dd = (date.split(" ")[1].split(",")[0]).trim().padStart(2, '0');
+        let month = (date.split(" ")[0]).trim().padStart(2, '0');
+        let yyyy = (date.split(", ")[1]).trim();
+
+        let monthNames = ["Jan", "Feb", "Mar", "Apr",
+            "May", "Jun", "Jul", "Aug",
+            "Sep", "Oct", "Nov", "Dec"];
+
+        let mm = monthNames.indexOf(month);
+
+        return dd + '/' + mm + '/' + yyyy;
+    }
+
+    private getTodaysDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        return dd + '/' + mm + '/' + yyyy;
+    }
+
     private applyInitialSorting() {
         if (!this.model.pokemon) return;
 
@@ -359,5 +419,5 @@ export class PokemonDetailComponent implements OnInit {
             this.model.pokemon.forms = this.model.pokemon?.forms
                 .sort((f1, f2) => f1.sortIndex - f2.sortIndex);
         }
-    }
+    }    
 }
