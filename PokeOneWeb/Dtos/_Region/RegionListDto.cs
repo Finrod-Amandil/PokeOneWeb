@@ -17,5 +17,13 @@ namespace PokeOneWeb.WebApi.Dtos
         public DateTime? EventEndDate { get; set; }
 
         public string Color { get; set; }
+
+        public string Description { get; set; }
+
+        public bool IsReleased { get; set; }
+
+        public bool IsMainRegion { get; set; }
+
+        public bool IsSideRegion { get; set; }
     }
 }
