@@ -84,7 +84,7 @@ export class DynamicRouteGuard implements CanActivate {
                 newRoutes.push(route);
             });
 
-            console.log(newRoutes);
+            //console.log(newRoutes);
 
             //Reload routes and navigate.
             this.router.resetConfig(newRoutes);
