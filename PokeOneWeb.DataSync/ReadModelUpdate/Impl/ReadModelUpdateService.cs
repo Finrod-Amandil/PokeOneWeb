@@ -122,15 +122,15 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             };
 
             //
-            // Entities
+            // Entity types
             // 
-            Console.WriteLine("generating json files for entities");
-            ICollection<EntityTypeReadModel> entities = _entityTypeMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/entities.json", JsonSerializer.Serialize(entities, serializeOptions));
+            Console.WriteLine("generating json files for entity types");
+            ICollection<EntityTypeReadModel> entityTypes = _entityTypeMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/entity-types.json", JsonSerializer.Serialize(entityTypes, serializeOptions));
 
-            foreach (var entity in entities)
+            foreach (var entityType in entityTypes)
             {
-                File.WriteAllText("resources/entities/" + entity.ResourceName + ".json", JsonSerializer.Serialize(entity, serializeOptions));
+                File.WriteAllText("resources/entity-types/" + entityType.ResourceName + ".json", JsonSerializer.Serialize(entityType, serializeOptions));
             }
 
             //
@@ -145,7 +145,6 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             //
             Console.WriteLine("generating json files for learnable-moves");
             ICollection<SimpleLearnableMoveReadModel> learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/learnable-moves.json", JsonSerializer.Serialize(learnableMoves, serializeOptions));
 
             foreach (var learnableMove in learnableMoves)
             {
@@ -211,7 +210,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         private void CreateDirectories()
         {
             string[] directories = new string[]{
-                "resources/entities",
+                "resources/entity-types",
                 "resources/itemstats",
                 "resources/learnable-moves",
                 "resources/moves",
