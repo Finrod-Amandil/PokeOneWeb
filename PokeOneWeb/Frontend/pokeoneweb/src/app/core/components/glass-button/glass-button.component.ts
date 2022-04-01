@@ -9,7 +9,7 @@ export class GlassButtonComponent implements OnInit {
   
   @Input() buttonTitle: string = ''
   @Input() buttonImage: string = ''
-  @Input() commingSoon: boolean = false
+  @Input() comingSoon: boolean = false
   @Input() linkDestination: string = ''
 
   constructor() { }

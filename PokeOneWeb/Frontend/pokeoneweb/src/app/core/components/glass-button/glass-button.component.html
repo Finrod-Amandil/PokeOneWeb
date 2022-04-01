@@ -1,5 +1,13 @@
 <div class="container" [style.background-image]="'url('+buttonImage+')'">
-    <div class="overlay">
-        <p>{{buttonTitle}}</p>
-    </div>
+    <a [href]="linkDestination">
+        <div class="overlay">
+            <div class="toptext">
+                <p class ="comingSoon" *ngIf="comingSoon">Comming soon</p>
+            </div>
+            <div class="middletext">
+                <p class="buttonTitle">{{buttonTitle}}</p>
+            </div>
+            <div class="bottomtext"></div>
+        </div>
+    </a>
 </div>
