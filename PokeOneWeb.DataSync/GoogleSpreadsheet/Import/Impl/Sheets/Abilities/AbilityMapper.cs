@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
 {
     public class AbilityMapper : SpreadsheetEntityMapper<AbilitySheetDto, Ability>
     {
-        public AbilityMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public AbilityMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Ability;
 
@@ -26,7 +28,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
             ability.IdHash = rowHash.IdHash;
             ability.Hash = rowHash.ContentHash;
             ability.ImportSheetId = rowHash.ImportSheetId;
-            ability.PokeApiName = dto.PokeApiName;
             ability.Name = dto.Name;
             ability.EffectDescription = dto.Effect;
             ability.EffectShortDescription = dto.ShortEffect;

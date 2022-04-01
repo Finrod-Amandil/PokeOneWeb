@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -16,6 +17,7 @@ namespace PokeOneWeb.Data.Entities
         {
             builder.Entity<Region>().HasIndexedHashes();
             builder.Entity<Region>().HasIndex(r => r.Name).IsUnique();
+            builder.Entity<Region>().HasIndex(r => r.ResourceName).IsUnique();
 
             builder.Entity<Region>()
                 .HasOne(r => r.Event)
@@ -32,21 +34,24 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
+
+        public string ResourceName { get; set; }
 
         public bool IsEventRegion { get; set; }
 
@@ -54,10 +59,10 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("EventId")]
         public Event Event { get; set; }
+
         public int? EventId { get; set; }
 
         public List<LocationGroup> LocationGroups { get; set; } = new();
-
 
         public override string ToString()
         {

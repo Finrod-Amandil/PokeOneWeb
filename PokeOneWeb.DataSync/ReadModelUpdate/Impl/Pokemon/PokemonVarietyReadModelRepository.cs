@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Shared.Extensions;
@@ -21,7 +23,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             {
                 var existingEntity =
                     _dbContext.PokemonVarietyReadModels
-                        .Where(e  => e.ApplicationDbId == entity.ApplicationDbId)
+                        .Where(e => e.ApplicationDbId == entity.ApplicationDbId)
                         .IncludeOptimized(e => e.Varieties)
                         .IncludeOptimized(e => e.Forms)
                         .IncludeOptimized(e => e.Urls)
@@ -197,7 +199,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateUrls(
-            List<PokemonVarietyUrlReadModel> existingUrls, 
+            List<PokemonVarietyUrlReadModel> existingUrls,
             List<PokemonVarietyUrlReadModel> updatedUrls)
         {
             existingUrls.RemoveAll(u =>
@@ -274,7 +276,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
         private void UpdateSpawns(List<SpawnReadModel> existingSpawns, List<SpawnReadModel> updatedSpawns)
         {
-            existingSpawns.RemoveAll(s => 
+            existingSpawns.RemoveAll(s =>
                 !updatedSpawns.Select(u => u.ApplicationDbId).Contains(s.ApplicationDbId));
 
             foreach (var spawn in updatedSpawns)
@@ -412,7 +414,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateLearnableMoves(
-            List<LearnableMoveReadModel> existingLearnableMoves, 
+            List<LearnableMoveReadModel> existingLearnableMoves,
             List<LearnableMoveReadModel> updatedLearnableMoves)
         {
             existingLearnableMoves.RemoveAll(e =>
@@ -472,7 +474,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateHuntingConfigurations(
-            List<HuntingConfigurationReadModel> existingHuntingConfigurations, 
+            List<HuntingConfigurationReadModel> existingHuntingConfigurations,
             List<HuntingConfigurationReadModel> updatedHuntingConfigurations)
         {
             existingHuntingConfigurations.RemoveAll(e =>

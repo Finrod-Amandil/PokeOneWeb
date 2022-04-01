@@ -1,4 +1,5 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
@@ -9,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfig
         private readonly Dictionary<string, Nature> _natures = new();
         private readonly Dictionary<string, Ability> _abilities = new();
 
-        public HuntingConfigurationMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public HuntingConfigurationMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.HuntingConfiguration;
 

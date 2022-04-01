@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -34,16 +35,21 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .OnDelete(DeleteBehavior.ClientCascade);
         }
-        [Key] public int Id { get; set; }
 
-        //INDEXED
-        [Required] public string Hash { get; set; }
+        [Key]
+        public int Id { get; set; }
 
-        //INDEXED
-        [Required] public string IdHash { get; set; }
+        // INDEXED
+        [Required]
+        public string Hash { get; set; }
+
+        // INDEXED
+        [Required]
+        public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         public string Name { get; set; }
@@ -57,10 +63,14 @@ namespace PokeOneWeb.Data.Entities
         public int SpeedEv { get; set; }
         public int HitPointsEv { get; set; }
 
-        [ForeignKey("PokemonVarietyId")] public PokemonVariety PokemonVariety { get; set; }
+        [ForeignKey("PokemonVarietyId")]
+        public PokemonVariety PokemonVariety { get; set; }
+
         public int PokemonVarietyId { get; set; }
 
-        [ForeignKey("AbilityId")] public Ability Ability { get; set; }
+        [ForeignKey("AbilityId")]
+        public Ability Ability { get; set; }
+
         public int AbilityId { get; set; }
 
         public List<NatureOption> NatureOptions { get; set; } = new();
@@ -68,7 +78,6 @@ namespace PokeOneWeb.Data.Entities
         public List<ItemOption> ItemOptions { get; set; } = new();
 
         public List<MoveOption> MoveOptions { get; set; } = new();
-
 
         public override string ToString()
         {

@@ -7,6 +7,7 @@ export enum PokemonListColumn {
     Spd,
     Spe,
     Hp,
+    Bulk,
     StatTotal,
     PvpTier
 }

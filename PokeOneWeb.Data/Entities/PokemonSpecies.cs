@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -26,23 +27,21 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public int PokedexNumber { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         [ForeignKey("DefaultVarietyId")]
         public PokemonVariety DefaultVariety { get; set; }
+
         public int? DefaultVarietyId { get; set; }
 
         public List<PokemonVariety> Varieties { get; set; }
         public List<Evolution> Evolutions { get; set; }
-
 
         public override string ToString()
         {

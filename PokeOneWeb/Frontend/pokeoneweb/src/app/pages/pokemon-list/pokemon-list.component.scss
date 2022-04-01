@@ -1,297 +1,316 @@
 #search_table .stat-input-table .stat-input-minmax {
-  font-weight: 300;
-  color: var(--medium-light-gray);
-  font-size: 14px;
+    font-weight: 300;
+    color: var(--medium-light-gray);
+    font-size: 14px;
 }
 
 #search_table #input_search,
 #search_table #input_availability,
 #search_table #input_pvpTier,
 #search_table #input_ability {
-  min-width: 300px;
+    min-width: 300px;
 }
 
 #search_table #input_type1,
 #search_table #input_type2 {
-  min-width: 145px;
+    min-width: 145px;
 }
 
 #search_table #input_generation {
-  min-width: 500px;
+    min-width: 500px;
 }
 
 #availability_explanation_table,
 #availability_explanation_table td {
-  background-color: var(--dark-gray);
-  border: 1px solid black;
+    background-color: var(--dark-gray);
+    border: 1px solid black;
 }
 
 #availability_explanation_table tr td:first-child {
-  padding-top: 7px;
+    padding-top: 7px;
 }
 
 #availability_explanation_table tr td:last-child {
-  font-weight: 300;
-  color: var(--medium-light-gray);
+    font-weight: 300;
+    color: var(--medium-light-gray);
 }
 
 #availability_explanation_table {
-  margin-top: 10px;
-  font-size: 14px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 #availability_explanation_table td {
-  padding: 2px 5px;
+    padding: 2px 5px;
 }
 
 .ng-select.input-type ::ng-deep .ng-option {
-  padding: 0px 5px;
+    padding: 0px 5px;
 }
 
 .ng-select.input-type ::ng-deep .ng-value {
-  padding-right: 1px;
+    padding-right: 1px;
 }
 
 #search_table .stat-input-table {
-  border: 1px solid black;
-  border-radius: 4px;
-  margin-right: 5px;
-  background-color: var(--dark-gray);
-  margin-bottom: -7px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-right: 5px;
+    background-color: var(--dark-gray);
+    margin-bottom: -7px;
 }
 
 #search_table .stat-input {
-  max-width: 58px;
+    max-width: 58px;
 }
 
 #search_table .stat-input-table td,
 #search_table .stat-input-table th {
-  padding: 4px;
-  text-align: center;
+    padding: 4px;
+    text-align: center;
 }
 
 #search_table .stat-input-table th {
-  border-bottom: 1px solid var(--dark-gray);
-  color: black;
+    border-bottom: 1px solid var(--dark-gray);
+    color: black;
 }
 
 #search_table .stat-input-table .stat-input-minmax {
-  padding-bottom: 0px;
-  padding-top: 8px;
-  line-height: 0.8;
+    padding-bottom: 0px;
+    padding-top: 8px;
+    line-height: 0.8;
 }
 
 #search_table .input-move {
-  width: 200px;
-  padding: 0px 2px;
+    width: 200px;
+    padding: 0px 2px;
 }
 
 p.pokemon-list-title,
 p.pokemon-list-empty {
-  color: var(--light-gray);
-  font-size: 24px;
+    color: var(--light-gray);
+    font-size: 24px;
 }
 
 #pokemon_list th.col-stat,
 #pokemon_list th.col-stat div.table-header-sort.unsorted {
-  color: black;
+    color: black;
 }
 
 #pokemon_list th.stat-total div.table-header-sort.sorted {
-  text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black,
-    0px -1px 1px black;
+    text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
 }
 
 #pokemon_list tr {
-  margin-top: 2px;
+    margin-top: 2px;
 }
 
 #pokemon_list td {
-  padding: 0px;
-  height: 107px;
+    padding: 0px;
+    height: 107px;
 }
 
 #pokemon_list .col-availability {
-  width: 30px;
+    width: 30px;
 }
 
 #pokemon_list td.col-availability {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 #pokemon_list .col-sprite {
-  width: 98px;
-  padding: 1px;
+    width: 98px;
+    padding: 1px;
 }
 #pokemon_list .col-sprite img {
-  max-height: 96px;
-  max-width: 96px;
+    max-height: 96px;
+    max-width: 96px;
 }
 
 #pokemon_list td.col-name {
-  padding: 10px;
-  width: 100%;
-  font-weight: 300;
-  font-size: 20px;
+    padding: 10px;
+    width: 100%;
+    font-weight: 300;
+    font-size: 20px;
 }
 
 #pokemon_list td.col-type {
-  width: 80px;
-  min-width: 80px;
-  padding: 2px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 700;
+    width: 80px;
+    min-width: 80px;
+    padding: 2px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 #pokemon_list td.col-ability {
-  min-width: 300px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+    min-width: 300px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 #pokemon_list td.col-ability :nth-child(2).ability-container {
-  border-left: 1px solid var(--medium-light-gray-darker);
-  border-right: 1px solid var(--medium-light-gray-darker);
+    border-left: 1px solid var(--medium-light-gray-darker);
+    border-right: 1px solid var(--medium-light-gray-darker);
 }
 
 #pokemon_list .ability-container {
-  position: relative;
-  display: inline-block;
-  width: 33%;
-  height: 100px;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
+    position: relative;
+    display: inline-block;
+    width: 33%;
+    height: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: top;
 }
 
 #pokemon_list .ability-slot {
-  color: var(--medium-light-gray);
-  font-size: 14px;
-  font-weight: 300;
+    color: var(--medium-light-gray);
+    font-size: 14px;
+    font-weight: 300;
 }
 
 #pokemon_list .ability-name {
-  padding-top: 3px;
-  line-height: 1.5;
-  height: 59px;
+    padding-top: 3px;
+    line-height: 1.5;
+    height: 59px;
 }
 
 #pokemon_list .ability-effect-toggle {
-  height: 20px;
-  width: 100%;
-  writing-mode: vertical-rl;
-  text-orientation: sideways;
-  text-align: center;
-  line-height: 5.4;
-  margin: auto;
-  border: 1px solid var(--light-gray);
-  border-radius: 10px;
-  font-weight: 300;
-  cursor: pointer;
+    height: 20px;
+    width: 100%;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    text-align: center;
+    line-height: 5.4;
+    margin: auto;
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+    font-weight: 300;
+    cursor: pointer;
 }
 
 #pokemon_list .ability-description {
-  position: absolute;
-  top: 100px;
-  left: 5px;
-  padding: 5px;
-  visibility: hidden;
-  opacity: 0;
-  font-size: 14px;
-  font-weight: 300;
-  background-color: var(--light-gray);
-  color: black;
-  border: 1px solid black;
-  border-radius: 0px 10px 10px 10px;
-  width: 380px;
-  z-index: 10;
+    position: absolute;
+    top: 100px;
+    left: 5px;
+    padding: 5px;
+    visibility: hidden;
+    opacity: 0;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: var(--light-gray);
+    color: black;
+    border: 1px solid black;
+    border-radius: 0px 10px 10px 10px;
+    width: 380px;
+    z-index: 10;
 }
 
 #pokemon_list .ability-effect-toggle:hover {
-  background-color: var(--dark-gray);
-  border: 1px solid black;
-  border-bottom: none;
-  border-radius: 10px 10px 0px 0px;
-  font-weight: 500;
+    background-color: var(--dark-gray);
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+    font-weight: 500;
 }
 
 #pokemon_list .ability-effect-toggle:hover + .ability-description {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #pokemon_list .col-stat {
-  width: 40px;
-  min-width: 40px;
+    width: 40px;
+    max-width: 40px;
+}
+
+#pokemon_list th {
+    padding: 5px 0px;
 }
 
 #pokemon_list .col-pvp-tier {
-  width: 50px;
-  min-width: 50px;
+    width: 50px;
+    min-width: 50px;
 }
 
 #pokemon_list td.col-pvp-tier {
-  text-align: center;
-  font-size: 30px;
+    text-align: center;
+    font-size: 30px;
 }
 
 #pokemon_list td.col-pvp-tier.pvp-banned {
-  font-size: 12px;
-  color: red;
+    font-size: 12px;
+    color: red;
 }
 
 #pokemon_list td.col-pvp-tier.pvp-untiered {
-  font-size: 12px;
-  color: var(--medium-light-gray);
-  font-weight: 300;
+    font-size: 12px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
 }
 
 #pokemon_list .col-links {
-  width: 54px;
-  min-width: 54px;
+    width: 54px;
+    min-width: 54px;
 }
 
 #pokemon_list .col-links .favicon-container {
-  position: relative;
-  display: inline;
-  height: 20px;
-  width: 20px;
-  border: 1px solid var(--light-gray);
-  border-radius: 5px;
-  margin: 0px 2px;
+    position: relative;
+    display: inline;
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    margin: 0px 2px;
 }
 
 #pokemon_list .col-links a {
-  margin: auto;
+    margin: auto;
 }
 
 #pokemon_list .col-links img {
-  height: 16px;
-  width: 16px;
-  margin: 2px;
-  margin-bottom: 6px;
+    height: 16px;
+    width: 16px;
+    margin: 2px;
+    margin-bottom: 6px;
 }
 
 #pokemon_list .col-links .favicon-tooltip {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  top: -1px;
-  right: 21px;
-  background-color: var(--light-gray);
-  color: var(--dark-gray);
-  font-weight: 300;
-  font-size: 12px;
-  text-align: right;
-  border: 1px solid var(--dark-gray);
-  border-radius: 5px;
-  padding-right: 5px;
-  padding-left: 5px;
-  height: 21px;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: -1px;
+    right: 21px;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    font-weight: 300;
+    font-size: 12px;
+    text-align: right;
+    border: 1px solid var(--dark-gray);
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 21px;
 }
 
 #pokemon_list .col-links a:hover + .favicon-tooltip {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
+}
+
+#pokemon_list th.col-stat .tooltip {
+    margin-top: 20px;
+    color: var(--light-gray);
+}
+
+.has-tooltip:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.has-tooltip .table-header-label {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--light-gray);
 }

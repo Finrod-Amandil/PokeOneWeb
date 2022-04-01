@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities;
@@ -52,36 +53,150 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var sheetNames = _settings.Value.Import.SheetNames;
             var sheetPrefixes = _settings.Value.Import.SheetPrefixes;
 
-            if (sheetNames.Abilities.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<AbilitySheetRepository>();
-            if (sheetNames.Availabilities.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<AvailabilitySheetRepository>();
-            if (sheetNames.BagCategories.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<BagCategorySheetRepository>();
-            if (sheetNames.Builds.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<BuildSheetRepository>();
-            if (sheetNames.Currencies.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<CurrencySheetRepository>();
-            if (sheetNames.ElementalTypeRelations.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<ElementalTypeRelationSheetRepository>();
-            if (sheetNames.ElementalTypes.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<ElementalTypeSheetRepository>();
-            if (sheetNames.Events.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<EventSheetRepository>();
-            if (sheetNames.Evolutions.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<EvolutionSheetRepository>();
-            if (sheetNames.HuntingConfigurations.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<HuntingConfigurationSheetRepository>();
-            if (sheetNames.Items.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<ItemSheetRepository>();
-            if (sheetNames.ItemStatBoosts.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<ItemStatBoostSheetRepository>();
-            if (sheetNames.MoveDamageClasses.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<MoveDamageClassSheetRepository>();
-            if (sheetNames.MoveLearnMethodLocations.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<MoveLearnMethodLocationSheetRepository>();
-            if (sheetNames.Moves.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<MoveSheetRepository>();
-            if (sheetNames.MoveTutors.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<MoveTutorSheetRepository>();
-            if (sheetNames.TutorMoves.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<MoveTutorMoveSheetRepository>();
-            if (sheetNames.Natures.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<NatureSheetRepository>();
-            if (sheetNames.Pokemon.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<PokemonSheetRepository>();
-            if (sheetNames.PvpTiers.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<PvpTierSheetRepository>();
-            if (sheetNames.Regions.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<RegionSheetRepository>();
-            if (sheetNames.Seasons.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<SeasonSheetRepository>();
-            if (sheetNames.SeasonTimesOfDay.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<SeasonTimeOfDaySheetRepository>();
-            if (sheetNames.SpawnTypes.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<SpawnTypeSheetRepository>();
-            if (sheetNames.TimesOfDay.EqualsExact(sheetName)) return _serviceProvider.GetRequiredService<TimeOfDaySheetRepository>();
+            if (sheetNames.Abilities.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<AbilitySheetRepository>();
+            }
 
-            if (sheetName.StartsWith(sheetPrefixes.LearnableMoves)) return _serviceProvider.GetRequiredService<LearnableMoveLearnMethodSheetRepository>();
-            if (sheetName.StartsWith(sheetPrefixes.Locations)) return _serviceProvider.GetRequiredService<LocationSheetRepository>();
-            if (sheetName.StartsWith(sheetPrefixes.PlacedItems)) return _serviceProvider.GetRequiredService<PlacedItemSheetRepository>();
-            if (sheetName.StartsWith(sheetPrefixes.Spawns)) return _serviceProvider.GetRequiredService<SpawnSheetRepository>();
+            if (sheetNames.Availabilities.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<AvailabilitySheetRepository>();
+            }
+
+            if (sheetNames.BagCategories.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<BagCategorySheetRepository>();
+            }
+
+            if (sheetNames.Builds.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<BuildSheetRepository>();
+            }
+
+            if (sheetNames.Currencies.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<CurrencySheetRepository>();
+            }
+
+            if (sheetNames.ElementalTypeRelations.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<ElementalTypeRelationSheetRepository>();
+            }
+
+            if (sheetNames.ElementalTypes.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<ElementalTypeSheetRepository>();
+            }
+
+            if (sheetNames.Events.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<EventSheetRepository>();
+            }
+
+            if (sheetNames.Evolutions.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<EvolutionSheetRepository>();
+            }
+
+            if (sheetNames.HuntingConfigurations.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<HuntingConfigurationSheetRepository>();
+            }
+
+            if (sheetNames.Items.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<ItemSheetRepository>();
+            }
+
+            if (sheetNames.ItemStatBoosts.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<ItemStatBoostSheetRepository>();
+            }
+
+            if (sheetNames.MoveDamageClasses.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<MoveDamageClassSheetRepository>();
+            }
+
+            if (sheetNames.MoveLearnMethodLocations.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<MoveLearnMethodLocationSheetRepository>();
+            }
+
+            if (sheetNames.Moves.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<MoveSheetRepository>();
+            }
+
+            if (sheetNames.MoveTutors.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<MoveTutorSheetRepository>();
+            }
+
+            if (sheetNames.TutorMoves.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<MoveTutorMoveSheetRepository>();
+            }
+
+            if (sheetNames.Natures.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<NatureSheetRepository>();
+            }
+
+            if (sheetNames.Pokemon.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<PokemonSheetRepository>();
+            }
+
+            if (sheetNames.PvpTiers.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<PvpTierSheetRepository>();
+            }
+
+            if (sheetNames.Regions.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<RegionSheetRepository>();
+            }
+
+            if (sheetNames.Seasons.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<SeasonSheetRepository>();
+            }
+
+            if (sheetNames.SeasonTimesOfDay.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<SeasonTimeOfDaySheetRepository>();
+            }
+
+            if (sheetNames.SpawnTypes.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<SpawnTypeSheetRepository>();
+            }
+
+            if (sheetNames.TimesOfDay.EqualsExact(sheetName))
+            {
+                return _serviceProvider.GetRequiredService<TimeOfDaySheetRepository>();
+            }
+
+            if (sheetName.StartsWith(sheetPrefixes.LearnableMoves))
+            {
+                return _serviceProvider.GetRequiredService<LearnableMoveLearnMethodSheetRepository>();
+            }
+
+            if (sheetName.StartsWith(sheetPrefixes.Locations))
+            {
+                return _serviceProvider.GetRequiredService<LocationSheetRepository>();
+            }
+
+            if (sheetName.StartsWith(sheetPrefixes.PlacedItems))
+            {
+                return _serviceProvider.GetRequiredService<PlacedItemSheetRepository>();
+            }
+
+            if (sheetName.StartsWith(sheetPrefixes.Spawns))
+            {
+                return _serviceProvider.GetRequiredService<SpawnSheetRepository>();
+            }
 
             throw new ArgumentOutOfRangeException();
         }

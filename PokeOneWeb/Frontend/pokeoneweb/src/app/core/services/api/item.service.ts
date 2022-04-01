@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IItemListModel } from '../../models/item-list.model';
 import { IItemModel } from '../../models/item.model';
@@ -9,7 +9,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class ItemService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 

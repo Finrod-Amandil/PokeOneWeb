@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "pokeoneweb.webapi",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/api/move/getallnames",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "db": "StartWithoutDebugging",
+        "pokeoneweb.webapi": "StartDebugging"
+      }
+    }
+  }
+}

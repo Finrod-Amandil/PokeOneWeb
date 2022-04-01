@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -37,28 +38,30 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         [ForeignKey("MoveId")]
         public Move Move { get; set; }
+
         public int MoveId { get; set; }
 
         [ForeignKey("MoveTutorId")]
         public MoveTutor MoveTutor { get; set; }
+
         public int MoveTutorId { get; set; }
 
         public List<MoveTutorMovePrice> Price { get; set; } = new();
-
 
         public override string ToString()
         {

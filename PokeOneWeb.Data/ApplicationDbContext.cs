@@ -7,7 +7,9 @@ namespace PokeOneWeb.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
@@ -45,9 +47,7 @@ namespace PokeOneWeb.Data
         public DbSet<SpawnType> SpawnTypes { get; set; }
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
 
-
         public DbSet<ImportSheet> ImportSheets { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

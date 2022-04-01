@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Entities.Interfaces;
@@ -77,7 +79,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             var updatedEntities = _mapper.MapOnto(entities, dtosWithHashes).ToList();
             updatedEntities = AttachRelatedEntities(updatedEntities);
-            
+
             DbContext.SaveChanges();
 
             entities.ForEach(e => Reporter.ReportUpdated(Entity, e.IdHash, e.Id));
@@ -114,6 +116,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return entities;
         }
 
-        protected virtual void DeleteOrphans() { }
+        protected virtual void DeleteOrphans()
+        {
+        }
     }
 }

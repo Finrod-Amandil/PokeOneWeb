@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
@@ -6,14 +8,16 @@ using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodSheetRepository 
+    public class LearnableMoveLearnMethodSheetRepository
         : SheetRepository<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod>
     {
         public LearnableMoveLearnMethodSheetRepository(
             ApplicationDbContext dbContext,
             ISheetRowParser<LearnableMoveLearnMethodSheetDto> parser,
             ISpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<LearnableMoveLearnMethod> DbSet => DbContext.LearnableMoveLearnMethods;
 
@@ -91,7 +95,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
 
                 if (entity.MoveTutorMove != null)
                 {
-                    var tutorMove = moveTutorMoves.SingleOrDefault(m => 
+                    var tutorMove = moveTutorMoves.SingleOrDefault(m =>
                         m.MoveTutor.Name.EqualsExact(entity.MoveTutorMove.MoveTutor.Name) &&
                         m.Move.Name.EqualsExact(entity.MoveTutorMove.Move.Name));
                     if (tutorMove is null)

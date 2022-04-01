@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.WebApi.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.WebApi.Dtos;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.WebApi.Services.Api.Impl
@@ -39,7 +39,7 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
         public PokemonVarietyDto GetPokemonVarietyByName(string pokemonVarietyResourceName)
         {
             var variety = _dbContext.PokemonVarietyReadModels
-                .Where(v  => v.ResourceName.Equals(pokemonVarietyResourceName))
+                .Where(v => v.ResourceName.Equals(pokemonVarietyResourceName))
                 .IncludeOptimized(p => p.Varieties)
                 .IncludeOptimized(p => p.Forms)
                 .IncludeOptimized(p => p.Urls)
@@ -74,7 +74,7 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
         public PokemonVarietyListDto GetListPokemonVarietyByName(string pokemonVarietyResourceName)
         {
             var variety = _dbContext.PokemonVarietyReadModels
-                .Where(v  => v.ResourceName.Equals(pokemonVarietyResourceName))
+                .Where(v => v.ResourceName.Equals(pokemonVarietyResourceName))
                 .Include(v => v.Urls)
                 .AsSingleQuery()
                 .AsNoTracking()
@@ -90,9 +90,9 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
         }
 
         public IEnumerable<PokemonVarietyNameDto> GetAllPokemonVarietiesForMoveSet(
-            string move1Option1, string move1Option2, string move1Option3, string move1Option4, 
+            string move1Option1, string move1Option2, string move1Option3, string move1Option4,
             string move2Option1, string move2Option2, string move2Option3, string move2Option4,
-            string move3Option1, string move3Option2, string move3Option3, string move3Option4, 
+            string move3Option1, string move3Option2, string move3Option3, string move3Option4,
             string move4Option1, string move4Option2, string move4Option3, string move4Option4)
         {
             var move1Options = new List<string> { move1Option1, move1Option2, move1Option3, move1Option4 }
@@ -180,7 +180,7 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
                 Height = v.Height,
                 Weight = v.Weight,
                 ExpYield = v.ExpYield,
-                
+
                 AttackEv = v.AttackEv,
                 SpecialAttackEv = v.SpecialAttackEv,
                 DefenseEv = v.DefenseEv,
@@ -429,6 +429,7 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
                 Speed = v.Speed,
                 HitPoints = v.HitPoints,
                 StatTotal = v.Attack + v.SpecialAttack + v.Defense + v.SpecialDefense + v.Speed + v.HitPoints,
+                Bulk = v.Defense + v.HitPoints + v.SpecialDefense,
 
                 PrimaryAbility = v.PrimaryAbility,
                 PrimaryAbilityEffect = v.PrimaryAbilityEffect,

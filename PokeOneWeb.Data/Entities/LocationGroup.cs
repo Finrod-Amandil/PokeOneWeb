@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -26,20 +27,20 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string ResourceName { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         [ForeignKey("RegionId")]
         public Region Region { get; set; }
+
         public int RegionId { get; set; }
 
         public List<Location> Locations { get; set; } = new();
-
 
         public override string ToString()
         {

@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -34,19 +35,20 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
@@ -54,7 +56,7 @@ namespace PokeOneWeb.Data.Entities
         public int SortIndex { get; set; }
 
         /// <summary>
-        /// Locations which are discoverable contribute towards certain in-game achievements ("Discovered X locations")
+        /// Gets or sets a value indicating whether locations which are discoverable contribute towards certain in-game achievements ("Discovered X locations").
         /// </summary>
         public bool IsDiscoverable { get; set; }
 
@@ -62,12 +64,12 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("LocationGroupId")]
         public LocationGroup LocationGroup { get; set; }
+
         public int LocationGroupId { get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; } = new();
 
         public List<PlacedItem> PlacedItems { get; set; } = new();
-
 
         public override string ToString()
         {

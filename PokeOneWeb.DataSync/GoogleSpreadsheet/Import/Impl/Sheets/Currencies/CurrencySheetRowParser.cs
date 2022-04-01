@@ -1,25 +1,15 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
+﻿using System;
+using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
 {
-    public class CurrencySheetRowParser : ISheetRowParser<CurrencySheetDto>
+    public class CurrencySheetRowParser : SheetRowParser<CurrencySheetDto>
     {
-        public CurrencySheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 1;
+
+        protected override List<Action<CurrencySheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 1)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new CurrencySheetDto
-            {
-                ItemName = values[0] as string
-            };
-
-            if (value.ItemName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read Currency, but required field {nameof(value.ItemName)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.ItemName = ParseAsNonEmptyString(value)
+        };
     }
 }

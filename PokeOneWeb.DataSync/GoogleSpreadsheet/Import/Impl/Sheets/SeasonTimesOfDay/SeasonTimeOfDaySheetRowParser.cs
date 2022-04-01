@@ -1,33 +1,18 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
+﻿using System;
+using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
 {
-    public class SeasonTimeOfDaySheetRowParser : ISheetRowParser<SeasonTimeOfDaySheetDto>
+    public class SeasonTimeOfDaySheetRowParser : SheetRowParser<SeasonTimeOfDaySheetDto>
     {
-        public SeasonTimeOfDaySheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 4;
+
+        protected override List<Action<SeasonTimeOfDaySheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 4)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new SeasonTimeOfDaySheetDto
-            {
-                SeasonName = values[0] as string,
-                TimeOfDayName = values[1] as string,
-                StartHour = int.TryParse(values[2].ToString(), out var parsedStartHour) ? parsedStartHour : 0,
-                EndHour = int.TryParse(values[3].ToString(), out var parsedEndHour) ? parsedEndHour : 0
-            };
-
-            if (value.SeasonName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read SeasonTimeOfDay, but required field {nameof(value.SeasonName)} was empty.");
-            }
-
-            if (value.TimeOfDayName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read SeasonTimeOfDay, but required field {nameof(value.TimeOfDayName)} was empty.");
-            }
-
-            return value;
-        }
+            (dto, value) => dto.SeasonName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.TimeOfDayName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.StartHour = ParseAsInt(value),
+            (dto, value) => dto.EndHour = ParseAsInt(value),
+        };
     }
 }

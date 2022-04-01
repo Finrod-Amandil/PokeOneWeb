@@ -1,4 +1,5 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
@@ -8,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
         private readonly Dictionary<string, Item> _items = new();
         private readonly Dictionary<string, Location> _locations = new();
 
-        public PlacedItemMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public PlacedItemMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.PlacedItem;
 
@@ -52,7 +55,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
             Location location;
             if (!_locations.ContainsKey(dto.LocationName))
             {
-                location = new Location {Name = dto.LocationName};
+                location = new Location { Name = dto.LocationName };
                 _locations.Add(dto.LocationName, location);
             }
             else

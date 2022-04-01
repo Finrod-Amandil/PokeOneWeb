@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
@@ -6,14 +8,16 @@ using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveLearnMethodLocations
 {
-    public class MoveLearnMethodLocationSheetRepository 
+    public class MoveLearnMethodLocationSheetRepository
         : SheetRepository<MoveLearnMethodLocationSheetDto, MoveLearnMethodLocation>
     {
         public MoveLearnMethodLocationSheetRepository(
             ApplicationDbContext dbContext,
             ISheetRowParser<MoveLearnMethodLocationSheetDto> parser,
             ISpreadsheetEntityMapper<MoveLearnMethodLocationSheetDto, MoveLearnMethodLocation> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<MoveLearnMethodLocation> DbSet => DbContext.MoveLearnMethodLocations;
 

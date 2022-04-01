@@ -1,4 +1,5 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations
@@ -8,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations
         private readonly Dictionary<string, Region> _regions = new();
         private readonly Dictionary<string, LocationGroup> _locationGroups = new();
 
-        public LocationMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public LocationMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Location;
 

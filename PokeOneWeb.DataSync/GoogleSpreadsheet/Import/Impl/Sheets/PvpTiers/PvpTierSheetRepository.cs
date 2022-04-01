@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PvpTiers
             ApplicationDbContext dbContext,
             ISheetRowParser<PvpTierSheetDto> parser,
             ISpreadsheetEntityMapper<PvpTierSheetDto, PvpTier> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<PvpTier> DbSet => DbContext.PvpTiers;
 

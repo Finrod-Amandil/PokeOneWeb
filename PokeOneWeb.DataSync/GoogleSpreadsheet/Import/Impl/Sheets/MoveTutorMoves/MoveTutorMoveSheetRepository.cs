@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
@@ -12,7 +14,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMove
             ApplicationDbContext dbContext,
             ISheetRowParser<MoveTutorMoveSheetDto> parser,
             ISpreadsheetEntityMapper<MoveTutorMoveSheetDto, MoveTutorMove> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<MoveTutorMove> DbSet => DbContext.MoveTutorMoves;
 
@@ -62,7 +66,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMove
                 {
                     var price = entity.Price[j];
 
-                    var currency = currencies.SingleOrDefault(c => 
+                    var currency = currencies.SingleOrDefault(c =>
                         c.Item.Name.EqualsExact(price.CurrencyAmount.Currency.Item.Name));
 
                     if (currency is null)

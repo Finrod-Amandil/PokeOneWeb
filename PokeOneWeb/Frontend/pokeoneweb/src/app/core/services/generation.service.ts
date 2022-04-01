@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { IGenerationModel } from "../models/generation.model";
+import { Injectable } from '@angular/core';
+import { IGenerationModel } from '../models/generation.model';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,7 @@ export class GenerationService {
             { id: 4, name: 'Gen. 4 (Sinnoh; Diamond / Perl / Platinum, HeartGold / SoulSilver)' },
             { id: 5, name: 'Gen. 5 (Unova; Black / White, Black 2 / White 2)' },
             { id: 6, name: 'Gen. 6 (Kalos; X/Y, Omega Ruby / Alpha Sapphire)' },
-            { id: 7, name: 'Gen. 7 (Alola; Sun / Moon, Ultra Sun / Ultra Moon, Let\'s Go!)' }
-          ];
+            { id: 7, name: "Gen. 7 (Alola; Sun / Moon, Ultra Sun / Ultra Moon, Let's Go!)" }
+        ];
     }
 }

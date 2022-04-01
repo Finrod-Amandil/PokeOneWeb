@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
@@ -104,7 +108,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 var insertedCount = repository.Insert(dataToInsertForHashes);
                 _logger.LogInformation($"Inserted {insertedCount} entries for sheet {sheet.SheetName}.");
             }
-            
+
             // Update
             if (hashListComparisonResult.RowsToUpdate.Any())
             {
@@ -162,6 +166,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             {
                 throw new Exception();
             }
+
             dbSheet.SheetHash = sheetHash;
 
             _dbContext.SaveChanges();

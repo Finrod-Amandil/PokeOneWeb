@@ -1,4 +1,5 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
@@ -7,7 +8,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
     {
         private readonly Dictionary<string, Location> _locations = new();
 
-        public MoveTutorMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public MoveTutorMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.MoveTutor;
 

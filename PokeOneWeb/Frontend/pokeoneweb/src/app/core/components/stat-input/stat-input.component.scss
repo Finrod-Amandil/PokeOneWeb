@@ -1,179 +1,179 @@
 label,
 p,
 h4 {
-  color: var(--light-gray);
+    color: var(--light-gray);
 }
 
 label {
-  margin-bottom: 0px;
-  margin-top: 4px;
+    margin-bottom: 0px;
+    margin-top: 4px;
 }
 
 h4 {
-  font-size: 20px;
-  text-shadow: 1px 1px black;
+    font-size: 20px;
+    text-shadow: 1px 1px black;
 }
 
 .pokemon-input {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .pokemon-input h4 {
-  margin-right: 10px;
-  margin-bottom: 3px;
+    margin-right: 10px;
+    margin-bottom: 3px;
 }
 
 .pokemon-input p {
-  margin-bottom: 0px;
-  margin-right: 10px;
+    margin-bottom: 0px;
+    margin-right: 10px;
 }
 
 .pokemon-input ng-select {
-  min-width: 200px;
-  margin-right: 10px;
+    min-width: 200px;
+    margin-right: 10px;
 }
 
 .pokemon-input .sprite-container {
-  margin-right: 10px;
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
-  border-radius: 50px;
-  background-color: var(--dark-gray);
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: var(--dark-gray);
 }
 
 .pokemon-input img {
-  width: 96px;
-  height: 96px;
+    width: 96px;
+    height: 96px;
 }
 
 .pokemon-input input.text-input {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .stat-input {
-  display: flex;
-  margin-bottom: 10px;
+    display: flex;
+    margin-bottom: 10px;
 }
 
 .stat-input-col {
-  margin-right: 20px;
+    margin-right: 20px;
 }
 
 .stat-input-col:last-child {
-  margin-right: 0px;
+    margin-right: 0px;
 }
 
 .stat-input-col-1 {
-  min-width: 200px;
+    min-width: 200px;
 }
 
 .stat-input-col-1 div {
-  margin-bottom: 6px;
+    margin-bottom: 6px;
 }
 
 .input-stat-extended-options ::ng-deep ng-dropdown-panel {
-  width: 500px;
+    width: 500px;
 }
 
 .input-stat-extended-options ::ng-deep div.ng-option {
-  white-space: normal;
+    white-space: normal;
 }
 
 .item-option p {
-  margin: 0;
+    margin: 0;
 }
 
 .item-option-title {
-  font-weight: 700;
-  color: black;
+    font-weight: 700;
+    color: black;
 }
 
 .item-option-description {
-  font-weight: 300;
-  color: var(--medium-dark-gray);
-  font-size: 12px;
+    font-weight: 300;
+    color: var(--medium-dark-gray);
+    font-size: 12px;
 }
 
 .stat-input-col-2,
 .stat-input-col-3 {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .stat-input-col-2 label,
 .stat-input-col-3 label {
-  width: 30px;
-  margin-right: 5px;
+    width: 30px;
+    margin-right: 5px;
 }
 
 .slider-container {
-  display: flex;
+    display: flex;
 }
 
 .slider-container pokeone-slider-input {
-  display: flex;
-  flex-grow: 1;
+    display: flex;
+    flex-grow: 1;
 }
 
 .stat-input-iv-header {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 }
 
 .stat-input-iv-header h4 {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .stat-input-iv-header button {
-  margin-left: 5px;
-  background-color: var(--light-gray);
-  width: 50px;
-  text-align: center;
+    margin-left: 5px;
+    background-color: var(--light-gray);
+    width: 50px;
+    text-align: center;
 }
 
 .stat-input-ev-header {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .stat-input-ev-header span {
-  width: 70px;
-  text-align: right;
-  color: var(--light-gray);
-  margin-right: 30px;
+    width: 70px;
+    text-align: right;
+    color: var(--light-gray);
+    margin-right: 30px;
 }
 
 .stat-modifier-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .stat-modifier-container ng-select {
-  min-width: 80px;
+    min-width: 80px;
 }
 
 .ng-select.stat-modifier-select {
-  height: 30px;
+    height: 30px;
 }
 
 .ng-select.stat-modifier-select ::ng-deep .ng-select-container {
-  height: 30px;
-  min-height: 30px;
-  border-radius: 0;
-  border-color: var(--medium-gray);
+    height: 30px;
+    min-height: 30px;
+    border-radius: 0;
+    border-color: var(--medium-gray);
 }
 
 .dummy-spacer-stat-input {
-  height: 30px;
+    height: 30px;
 }
 
 .field-boost-input-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .field-boost-checkbox {
-  margin-right: 5px;
+    margin-right: 5px;
 }

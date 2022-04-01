@@ -1,4 +1,4 @@
-import { IPokemonVarietyUrlModel } from "./pokemon-variety-url.model";
+import { IPokemonVarietyUrlModel } from './pokemon-variety-url.model';
 
 export interface IPokemonVarietyListModel {
     resourceName: string;
@@ -17,6 +17,7 @@ export interface IPokemonVarietyListModel {
     speed: number;
     hitPoints: number;
     statTotal: number;
+    bulk: number;
 
     primaryAbility: string;
     primaryAbilityEffect: string;
@@ -54,6 +55,7 @@ export class PokemonVarietyListModel implements IPokemonVarietyListModel {
     speed = 0;
     hitPoints = 0;
     statTotal = 0;
+    bulk = 0;
 
     primaryAbility = '';
     primaryAbilityEffect = '';

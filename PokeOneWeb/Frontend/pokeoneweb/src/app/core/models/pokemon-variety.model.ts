@@ -1,13 +1,13 @@
-import { IAttackEffectivityModel } from "./attack-effectivity.model";
-import { IBuildModel } from "./build.model";
-import { IEvolutionAbilityModel } from "./evolution-ability.model";
-import { IEvolutionModel } from "./evolution.model";
-import { IHuntingConfigurationModel } from "./hunting-configuration.model";
-import { ILearnableMoveModel } from "./learnable-move.model";
-import { IPokemonVarietyFormModel } from "./pokemon-variety-form.model";
-import { IPokemonVarietyUrlModel } from "./pokemon-variety-url.model";
-import { IPokemonVarietyVarietyModel } from "./pokemon-variety-variety.model";
-import { ISpawnModel } from "./spawn.model";
+import { IAttackEffectivityModel } from './attack-effectivity.model';
+import { IBuildModel } from './build.model';
+import { IEvolutionAbilityModel } from './evolution-ability.model';
+import { IEvolutionModel } from './evolution.model';
+import { IHuntingConfigurationModel } from './hunting-configuration.model';
+import { ILearnableMoveModel } from './learnable-move.model';
+import { IPokemonVarietyFormModel } from './pokemon-variety-form.model';
+import { IPokemonVarietyUrlModel } from './pokemon-variety-url.model';
+import { IPokemonVarietyVarietyModel } from './pokemon-variety-variety.model';
+import { ISpawnModel } from './spawn.model';
 
 export interface IPokemonVarietyModel {
     resourceName: string;

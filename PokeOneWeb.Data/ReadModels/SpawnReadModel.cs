@@ -1,5 +1,6 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
@@ -37,6 +38,7 @@ namespace PokeOneWeb.Data.ReadModels
 
         [Column(TypeName = "decimal(18,4)")]
         public decimal RarityValue { get; set; }
+
         public string Notes { get; set; }
     }
 }

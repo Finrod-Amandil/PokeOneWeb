@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes
             ApplicationDbContext dbContext,
             ISheetRowParser<SpawnTypeSheetDto> parser,
             ISpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<SpawnType> DbSet => DbContext.SpawnTypes;
 

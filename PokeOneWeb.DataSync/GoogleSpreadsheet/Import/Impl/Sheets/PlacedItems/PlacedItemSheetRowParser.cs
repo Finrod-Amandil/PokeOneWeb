@@ -1,69 +1,25 @@
-﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
+﻿using System;
+using System.Collections.Generic;
+
+namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
 {
-    public class PlacedItemSheetRowParser : ISheetRowParser<PlacedItemSheetDto>
+    public class PlacedItemSheetRowParser : SheetRowParser<PlacedItemSheetDto>
     {
-        public PlacedItemSheetDto ReadRow(List<object> values)
+        protected override int RequiredValueCount => 5;
+
+        protected override List<Action<PlacedItemSheetDto, object>> MappingDelegates => new()
         {
-            if (values is null || values.Count < 5)
-            {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
-
-            var value = new PlacedItemSheetDto
-            {
-                LocationName = values[0] as string,
-                Quantity = int.TryParse(values[1].ToString(), out var parsedQuantity) ? parsedQuantity : 1,
-                ItemName = values[2] as string,
-                SortIndex = int.TryParse(values[3].ToString(), out var parsedSortIndex) ? parsedSortIndex : 0,
-                Index = int.TryParse(values[4].ToString(), out var parsedIndex) ? parsedIndex : 0,
-            };
-
-            if (value.LocationName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read PlacedItem, but required field {nameof(value.LocationName)} was empty.");
-            }
-
-            if (value.ItemName is null)
-            {
-                throw new InvalidRowDataException($"Tried to read PlacedItem, but required field {nameof(value.ItemName)} was empty.");
-            }
-
-            if (value.Index == 0)
-            {
-                throw new InvalidRowDataException($"Tried to read PlacedItem, but required field {nameof(value.Index)} was zero.");
-            }
-
-            if (values.Count > 5)
-            {
-                value.PlacementDescription = values[5] as string;
-            }
-
-            if (values.Count > 6)
-            {
-                value.IsHidden = bool.TryParse(values[6].ToString(), out var parsed) && parsed;
-            }
-
-            if (values.Count > 7)
-            {
-                value.IsConfirmed = bool.TryParse(values[7].ToString(), out var parsed) && parsed;
-            }
-
-            if (values.Count > 8)
-            {
-                value.Requirements = values[8] as string;
-            }
-
-            if (values.Count > 9)
-            {
-                value.ScreenshotName = values[9] as string;
-            }
-
-            if (values.Count > 10)
-            {
-                value.Notes = values[10] as string;
-            }
-
-            return value;
-        }
+            (dto, value) => dto.LocationName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.Quantity = ParseAsInt(value),
+            (dto, value) => dto.ItemName = ParseAsNonEmptyString(value),
+            (dto, value) => dto.SortIndex = ParseAsInt(value),
+            (dto, value) => dto.Index = ParseAsInt(value),
+            (dto, value) => dto.PlacementDescription = ParseAsString(value),
+            (dto, value) => dto.IsHidden = ParseAsBoolean(value, false),
+            (dto, value) => dto.IsConfirmed = ParseAsBoolean(value, true),
+            (dto, value) => dto.Requirements = ParseAsString(value),
+            (dto, value) => dto.ScreenshotName = ParseAsString(value),
+            (dto, value) => dto.Notes = ParseAsString(value),
+        };
     }
 }

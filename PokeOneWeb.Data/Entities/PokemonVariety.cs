@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -76,32 +77,38 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
         public bool DoInclude { get; set; }
         public bool IsMega { get; set; }
         public bool IsFullyEvolved { get; set; }
         public int Generation { get; set; }
         public int CatchRate { get; set; }
         public bool HasGender { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal MaleRatio { get; set; }
+
         public int EggCycles { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Height { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Weight { get; set; }
+
         public int ExpYield { get; set; }
 
-        //BASE STATS
+        // BASE STATS
         public int Attack { get; set; }
+
         public int Defense { get; set; }
         public int SpecialAttack { get; set; }
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
         public int HitPoints { get; set; }
 
-        //EV Yields
+        // EV Yields
         public int AttackEv { get; set; }
+
         public int DefenseEv { get; set; }
         public int SpecialAttackEv { get; set; }
         public int SpecialDefenseEv { get; set; }
@@ -112,43 +119,49 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("PokemonSpeciesId")]
         public PokemonSpecies PokemonSpecies { get; set; }
+
         public int PokemonSpeciesId { get; set; }
 
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
+
         public int? DefaultFormId { get; set; }
 
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
+
         public int PrimaryTypeId { get; set; }
 
         [ForeignKey("SecondaryTypeId")]
         public ElementalType SecondaryType { get; set; }
+
         public int? SecondaryTypeId { get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
+
         public int PrimaryAbilityId { get; set; }
 
         [ForeignKey("SecondaryAbilityId")]
         public Ability SecondaryAbility { get; set; }
+
         public int? SecondaryAbilityId { get; set; }
 
         [ForeignKey("HiddenAbilityId")]
         public Ability HiddenAbility { get; set; }
+
         public int? HiddenAbilityId { get; set; }
 
         [ForeignKey("PvpTierId")]
         public PvpTier PvpTier { get; set; }
-        public int PvpTierId { get; set; }
 
+        public int PvpTierId { get; set; }
 
         public List<PokemonForm> Forms { get; set; }
         public List<LearnableMove> LearnableMoves { get; set; } = new();
         public List<Build> Builds { get; set; }
         public List<HuntingConfiguration> HuntingConfigurations { get; set; }
         public List<PokemonVarietyUrl> Urls { get; set; } = new();
-
 
         public override string ToString()
         {

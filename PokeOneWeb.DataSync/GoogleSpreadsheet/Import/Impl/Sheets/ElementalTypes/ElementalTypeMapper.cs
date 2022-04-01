@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
 {
     public class ElementalTypeMapper : SpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType>
     {
-        public ElementalTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public ElementalTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.ElementalType;
 
@@ -27,7 +29,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
             elementalType.Hash = rowHash.ContentHash;
             elementalType.ImportSheetId = rowHash.ImportSheetId;
             elementalType.Name = dto.Name;
-            elementalType.PokeApiName = dto.PokeApiName;
 
             return elementalType;
         }

@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
@@ -17,8 +19,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
             foreach (var entity in entities.Keys)
             {
                 var existingEntity = _dbContext.EntityTypeReadModels
-                    .SingleOrDefault(e => 
-                        e.ResourceName.Equals(entity.ResourceName) && 
+                    .SingleOrDefault(e =>
+                        e.ResourceName.Equals(entity.ResourceName) &&
                         e.EntityType == entity.EntityType);
 
                 if (existingEntity != null)
