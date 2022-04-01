@@ -1,5 +1,3 @@
-import { contains } from "cypress/types/jquery";
-
 describe('Pokedex Titel testing', () => {
   beforeEach(() => {
     //mock DB with json Files in Cypress/fixtures
