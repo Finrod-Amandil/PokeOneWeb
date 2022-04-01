@@ -25,13 +25,13 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        [Required] 
+        [Required]
         public string Url { get; set; }
 
         [ForeignKey("VarietyId")]
         public PokemonVariety Variety { get; set; }
-        public int VarietyId { get; set; }
 
+        public int VarietyId { get; set; }
 
         public override string ToString()
         {

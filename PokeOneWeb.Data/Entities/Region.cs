@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -34,19 +34,20 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
@@ -58,10 +59,10 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("EventId")]
         public Event Event { get; set; }
+
         public int? EventId { get; set; }
 
         public List<LocationGroup> LocationGroups { get; set; } = new();
-
 
         public override string ToString()
         {

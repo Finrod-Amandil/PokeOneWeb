@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Seasons
             ApplicationDbContext dbContext,
             ISheetRowParser<SeasonSheetDto> parser,
             ISpreadsheetEntityMapper<SeasonSheetDto, Season> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<Season> DbSet => DbContext.Seasons;
 

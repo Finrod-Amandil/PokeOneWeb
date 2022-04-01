@@ -6,16 +6,16 @@ import { IAbilityModel } from './ability.model';
 import { IFieldBoostModel } from './field-boost.model';
 
 export interface IStatsConfigurationModel {
-    pokemon: IBasicPokemonVarietyModel,
-    baseStats: IStatsModel,
-    level: number,
-    nature: INatureModel | null,
-    ability: IAbilityModel | null,
-    item: IItemStatBoostModel | null,
-    ev: IStatsModel,
-    iv: IStatsModel,
-    statModifiers: IStatsModel,
-    fieldBoosts: IFieldBoostModel[],
+    pokemon: IBasicPokemonVarietyModel;
+    baseStats: IStatsModel;
+    level: number;
+    nature: INatureModel | null;
+    ability: IAbilityModel | null;
+    item: IItemStatBoostModel | null;
+    ev: IStatsModel;
+    iv: IStatsModel;
+    statModifiers: IStatsModel;
+    fieldBoosts: IFieldBoostModel[];
 }
 
 export class StatsConfigurationModel implements IStatsConfigurationModel {

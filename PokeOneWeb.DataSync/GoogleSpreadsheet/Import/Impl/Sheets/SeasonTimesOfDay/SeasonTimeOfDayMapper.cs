@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
 {
@@ -9,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOf
         private readonly Dictionary<string, TimeOfDay> _timesOfDay = new();
         private readonly Dictionary<string, Season> _seasons = new();
 
-        public SeasonTimeOfDayMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public SeasonTimeOfDayMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.SeasonTimeOfDay;
 

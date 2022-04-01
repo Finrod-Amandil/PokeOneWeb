@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
     /// A Hunting Configuration is a recommendation about which combination of ability and nature should be
-    /// looked for when hunting (trying to find and catch) a certain kind of Pokemon. 
+    /// looked for when hunting (trying to find and catch) a certain kind of Pokemon.
     /// </summary>
     [Table("HuntingConfiguration")]
     public class HuntingConfiguration : IHashedEntity
@@ -44,28 +44,32 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
+
         public int PokemonVarietyId { get; set; }
 
         [ForeignKey("NatureId")]
         public Nature Nature { get; set; }
+
         public int NatureId { get; set; }
 
         [ForeignKey("AbilityId")]
         public Ability Ability { get; set; }
+
         public int AbilityId { get; set; }
 
         public override string ToString()

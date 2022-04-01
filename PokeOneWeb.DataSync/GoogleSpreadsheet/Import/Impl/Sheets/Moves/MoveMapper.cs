@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Moves
 {
@@ -9,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Moves
         private readonly Dictionary<string, MoveDamageClass> _damageClasses = new();
         private readonly Dictionary<string, ElementalType> _types = new();
 
-        public MoveMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public MoveMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Move;
 

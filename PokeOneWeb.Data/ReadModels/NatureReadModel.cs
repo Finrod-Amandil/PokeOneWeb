@@ -26,6 +26,5 @@ namespace PokeOneWeb.Data.ReadModels
         public int SpecialDefense { get; set; }
 
         public int Speed { get; set; }
-
     }
 }

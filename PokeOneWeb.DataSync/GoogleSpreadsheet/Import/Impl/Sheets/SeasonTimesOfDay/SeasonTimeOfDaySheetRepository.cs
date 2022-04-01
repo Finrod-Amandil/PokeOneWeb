@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
 {
@@ -13,7 +13,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOf
             ApplicationDbContext dbContext,
             ISheetRowParser<SeasonTimeOfDaySheetDto> parser,
             ISpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<SeasonTimeOfDay> DbSet => DbContext.SeasonTimesOfDay;
 

@@ -11,7 +11,7 @@ import { PlacedItemListColumn } from './core/placed-item-list-column.enum';
 @Component({
     selector: 'pokeone-item-detail',
     templateUrl: './item-detail.component.html',
-    styleUrls: ['./item-detail.component.scss'],
+    styleUrls: ['./item-detail.component.scss']
 })
 export class ItemDetailComponent implements OnInit {
     public model: ItemDetailModel = new ItemDetailModel();
@@ -29,27 +29,18 @@ export class ItemDetailComponent implements OnInit {
         this.route.data.subscribe((result) => {
             this.model.itemName = result['resourceName'];
 
-            this.titleService.setTitle(
-                `${this.model.itemName} - ${WEBSITE_NAME}`
-            );
+            this.titleService.setTitle(`${this.model.itemName} - ${WEBSITE_NAME}`);
 
-            this.itemService
-                .getByName(this.model.itemName)
-                .subscribe((result) => {
-                    this.model.item = result as IItemModel;
+            this.itemService.getByName(this.model.itemName).subscribe((result) => {
+                this.model.item = result as IItemModel;
 
-                    this.titleService.setTitle(
-                        `${this.model.item.name} - ${WEBSITE_NAME}`
-                    );
-                    this.applyInitialSorting();
-                });
+                this.titleService.setTitle(`${this.model.item.name} - ${WEBSITE_NAME}`);
+                this.applyInitialSorting();
+            });
         });
     }
 
-    public sortPlacedItems(
-        sortColumn: PlacedItemListColumn,
-        sortDirection: number
-    ) {
+    public sortPlacedItems(sortColumn: PlacedItemListColumn, sortDirection: number) {
         if (!this.model.item) return;
 
         this.model.placedItemsSortedByColumn = sortColumn;
@@ -62,10 +53,7 @@ export class ItemDetailComponent implements OnInit {
         );
     }
 
-    public getPlacedItemSortButtonClass(
-        sortColumn: PlacedItemListColumn,
-        sortDirection: number
-    ): string {
+    public getPlacedItemSortButtonClass(sortColumn: PlacedItemListColumn, sortDirection: number): string {
         if (
             this.model.placedItemsSortedByColumn === sortColumn &&
             this.model.placedItemsSortDirection === sortDirection
@@ -76,9 +64,7 @@ export class ItemDetailComponent implements OnInit {
     }
 
     public getAvailabilityClass(isAvailable: boolean): string {
-        return isAvailable
-            ? 'availability-obtainable'
-            : 'availability-unobtainable';
+        return isAvailable ? 'availability-obtainable' : 'availability-unobtainable';
     }
 
     private applyInitialSorting() {

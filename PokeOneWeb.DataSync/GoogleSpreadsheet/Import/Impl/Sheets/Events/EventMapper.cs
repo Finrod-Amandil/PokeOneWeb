@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
 {
     public class EventMapper : SpreadsheetEntityMapper<EventSheetDto, Event>
     {
-        public EventMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public EventMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Event;
 

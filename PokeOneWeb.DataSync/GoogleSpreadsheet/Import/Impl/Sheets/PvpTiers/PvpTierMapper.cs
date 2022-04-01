@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PvpTiers
 {
     public class PvpTierMapper : SpreadsheetEntityMapper<PvpTierSheetDto, PvpTier>
     {
-        public PvpTierMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public PvpTierMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.PvpTier;
 

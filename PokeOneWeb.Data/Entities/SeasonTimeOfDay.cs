@@ -36,16 +36,17 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         public int StartHour { get; set; }
@@ -54,12 +55,13 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("SeasonId")]
         public Season Season { get; set; }
+
         public int? SeasonId { get; set; }
-        
+
         [ForeignKey("TimeOfDayId")]
         public TimeOfDay TimeOfDay { get; set; }
-        public int? TimeOfDayId { get; set; }
 
+        public int? TimeOfDayId { get; set; }
 
         public override string ToString()
         {

@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
@@ -32,7 +32,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
             // Arrange
             var parser = new BuildSheetRowParser();
 
-            var pokemonVarietyName =  "PokemonVarietyName";
+            var pokemonVarietyName = "PokemonVarietyName";
             var buildName = "BuildName";
             var buildDescription = "BuildDescription";
             var move1 = "Move 1";
@@ -94,7 +94,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
             var parser = new BuildSheetRowParser();
             var values = new List<object>()
             {
-                "0", "", "", "", "", "", "", "", "", "", "", "excessive value"
+                "0", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "excessive value"
             };
 
             // Act

@@ -28,6 +28,6 @@ export class LearnableMoveModel implements ILearnableMoveModel {
     powerPoints = 0;
     priority = 0;
     effectDescription = '';
-    
+
     learnMethods = [];
 }

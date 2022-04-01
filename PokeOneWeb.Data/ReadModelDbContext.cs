@@ -6,7 +6,9 @@ namespace PokeOneWeb.Data
     public class ReadModelDbContext : DbContext
     {
         public ReadModelDbContext(DbContextOptions<ReadModelDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public DbSet<PokemonVarietyReadModel> PokemonVarietyReadModels { get; set; }
 
