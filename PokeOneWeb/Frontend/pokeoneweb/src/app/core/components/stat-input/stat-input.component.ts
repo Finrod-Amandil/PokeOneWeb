@@ -188,7 +188,7 @@ export class StatInputComponent implements OnInit {
             return;
         }
         this.itemBoostService
-            .getItemStats()
+            .getItemStatBoosts()
             .subscribe(response => {
                 this.itemBoosts = response as IItemStatBoostModel[];
                 this.itemBoosts = this.itemBoosts.

@@ -18,6 +18,6 @@ export class EntityTypeService extends BaseService {
     }
 
     public getEntityTypeForPath(path: string): Observable<IEntityTypeModel> {
-        return this.http.get<IEntityTypeModel>(`${environment.baseUrl}/entities/${path}.json`, this.httpOptions);
+        return this.http.get<IEntityTypeModel>(`${environment.baseUrl}/entity-types/${path}.json`, this.httpOptions);
     }
 }
