@@ -19,7 +19,7 @@ const STEPS_PER_SECOND = 5.908;
 @Component({
     selector: 'pokeone-pokemon-detail',
     templateUrl: './pokemon-detail.component.html',
-    styleUrls: ['./pokemon-detail.component.scss'],
+    styleUrls: ['./pokemon-detail.component.scss']
 })
 export class PokemonDetailComponent implements OnInit {
     public maxMoveDescriptionLength = 200;
@@ -41,18 +41,12 @@ export class PokemonDetailComponent implements OnInit {
         this.route.data.subscribe((result) => {
             this.model.pokemonName = result['resourceName'];
 
-            this.titleService.setTitle(
-                `${this.model.pokemonName} - ${WEBSITE_NAME}`
-            );
+            this.titleService.setTitle(`${this.model.pokemonName} - ${WEBSITE_NAME}`);
 
-            this.pokemonService
-                .getByNameFull(this.model.pokemonName)
-                .subscribe((result) => {
-                    this.model.pokemon = result as IPokemonVarietyModel;
+            this.pokemonService.getByNameFull(this.model.pokemonName).subscribe((result) => {
+                this.model.pokemon = result as IPokemonVarietyModel;
 
-                    this.titleService.setTitle(
-                        `${this.model.pokemon.name} - ${WEBSITE_NAME}`
-                    );
+                    this.titleService.setTitle(`${this.model.pokemon.name} - ${WEBSITE_NAME}`);
 
                     this.model.learnableMoves = this.model.pokemon.learnableMoves;
                     
@@ -90,68 +84,42 @@ export class PokemonDetailComponent implements OnInit {
 
     public getEggHatchingTime(): string {
         if (this.model.pokemon) {
-            let totalMins = Math.floor(
-                this.getEggSteps() / STEPS_PER_SECOND / 60.0
-            );
-            let h = Math.floor(totalMins / 60.0);
-            let m = totalMins % 60;
+            const totalMins = Math.floor(this.getEggSteps() / STEPS_PER_SECOND / 60.0);
+            const h = Math.floor(totalMins / 60.0);
+            const m = totalMins % 60;
 
             return `~${h}h ${m}min`;
         }
         return '';
     }
 
-    public getCatchRate(
-        ballEffectivity: number,
-        healthPercentage: number,
-        statusCondition: string
-    ): number {
+    public getCatchRate(ballEffectivity: number, healthPercentage: number, statusCondition: string): number {
         if (!this.model.pokemon) {
             return 0;
         }
 
-        let m = 100.0;
-        let h = healthPercentage;
-        let b = ballEffectivity;
-        let c = this.model.pokemon.catchRate;
-        let s =
+        const m = 100.0;
+        const h = healthPercentage;
+        const b = ballEffectivity;
+        const c = this.model.pokemon.catchRate;
+        const s =
             statusCondition === 'SLP' || statusCondition === 'FRZ'
                 ? 2.5
-                : statusCondition === 'PAR' ||
-                  statusCondition === 'BRN' ||
-                  statusCondition === 'PSN'
+                : statusCondition === 'PAR' || statusCondition === 'BRN' || statusCondition === 'PSN'
                 ? 1.5
                 : 1.0;
 
-        let x = Math.min(
-            255.0,
-            this.down(
-                this.round(
-                    this.down(
-                        this.round(this.round(3.0 * m - 2.0 * h) * c * b) /
-                            (3.0 * m)
-                    ) * s
-                )
-            )
-        );
+        const x = Math.min(
+            255.0, 
+            this.down(this.round(this.down(this.round(this.round(3.0 * m - 2.0 * h) * c * b) / (3.0 * m)) * s)));
         if (x >= 256.0) return 100.0;
 
-        let y =
-            x === 0
-                ? 0
-                : Math.floor(
-                      this.round(
-                          65536 /
-                              this.round(
-                                  Math.pow(this.round(255.0 / x), 3.0 / 16.0)
-                              )
-                      )
-                  );
+        const y = x === 0 ? 0 : Math.floor(this.round(65536 / this.round(Math.pow(this.round(255.0 / x), 3.0 / 16.0))));
         let y_chance = y / 65536.0;
         if (y_chance > 1) {
             y_chance = 1;
         }
-        let r = Math.pow(y_chance, 4.0);
+        const r = Math.pow(y_chance, 4.0);
         return r * 100.0;
     }
 
@@ -177,21 +145,15 @@ export class PokemonDetailComponent implements OnInit {
         return this.urlService.getDisplayName(url.name);
     }
 
-    public getDefenseEffectivities(
-        effectivity: number
-    ): IAttackEffectivityModel[] {
+    public getDefenseEffectivities(effectivity: number): IAttackEffectivityModel[] {
         if (!this.model.pokemon) {
             return [];
         }
 
-        return this.model.pokemon.defenseAttackEffectivities.filter(
-            (e) => e.effectivity === effectivity
-        );
+        return this.model.pokemon.defenseAttackEffectivities.filter((e) => e.effectivity === effectivity);
     }
 
-    public sortEvolutionAbilities(
-        evolutionAbilities: IEvolutionAbilityModel[]
-    ): IEvolutionAbilityModel[] {
+    public sortEvolutionAbilities(evolutionAbilities: IEvolutionAbilityModel[]): IEvolutionAbilityModel[] {
         return evolutionAbilities.sort((n1, n2) => {
             if (n1.relativeStageIndex !== n2.relativeStageIndex) {
                 return n1.relativeStageIndex - n2.relativeStageIndex;
@@ -207,11 +169,7 @@ export class PokemonDetailComponent implements OnInit {
         this.model.spawnsSortedByColumn = sortColumn;
         this.model.spawnsSortDirection = sortDirection;
 
-        this.model.visibleSpawns = this.sortService.sortSpawns(
-            this.model.visibleSpawns,
-            sortColumn,
-            sortDirection
-        );
+        this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, sortColumn, sortDirection);
     }
 
     public hideEventExclusiveSpawns() {
@@ -254,17 +212,10 @@ export class PokemonDetailComponent implements OnInit {
         this.model.movesSortedByColumn = sortColumn;
         this.model.movesSortDirection = sortDirection;
 
-        this.model.learnableMoves = this.sortService.sortMoves(
-            this.model.learnableMoves,
-            sortColumn,
-            sortDirection
-        );
+        this.model.learnableMoves = this.sortService.sortMoves(this.model.learnableMoves, sortColumn, sortDirection);
     }
 
-    public getSpawnSortButtonClass(
-        sortColumn: SpawnListColumn,
-        sortDirection: number
-    ): string {
+    public getSpawnSortButtonClass(sortColumn: SpawnListColumn, sortDirection: number): string {
         if (
             this.model.spawnsSortedByColumn === sortColumn &&
             this.model.spawnsSortDirection === sortDirection
@@ -274,14 +225,8 @@ export class PokemonDetailComponent implements OnInit {
         return 'unsorted';
     }
 
-    public getMoveSortButtonClass(
-        sortColumn: MoveListColumn,
-        sortDirection: number
-    ): string {
-        if (
-            this.model.movesSortedByColumn === sortColumn &&
-            this.model.movesSortDirection === sortDirection
-        ) {
+    public getMoveSortButtonClass(sortColumn: MoveListColumn, sortDirection: number): string {
+        if (this.model.movesSortedByColumn === sortColumn && this.model.movesSortDirection === sortDirection) {
             return 'sorted';
         }
         return 'unsorted';
@@ -289,14 +234,8 @@ export class PokemonDetailComponent implements OnInit {
 
     public getAbbreviatedMoveDescription(move: ILearnableMoveModel): string {
         if (move.effectDescription.length > this.maxMoveDescriptionLength) {
-            let truncated = move.effectDescription.substring(
-                0,
-                this.maxMoveDescriptionLength
-            );
-            let niceTruncated = truncated.substring(
-                0,
-                truncated.lastIndexOf(' ')
-            );
+            const truncated = move.effectDescription.substring(0, this.maxMoveDescriptionLength);
+            const niceTruncated = truncated.substring( 0, truncated.lastIndexOf(' '));
             return niceTruncated + '... ▼';
         } else {
             return move.effectDescription;
@@ -340,9 +279,7 @@ export class PokemonDetailComponent implements OnInit {
             });
     }
 
-    public getPostEvolutionAbilities(
-        allEvolutionAbilities: IEvolutionAbilityModel[]
-    ): IEvolutionAbilityModel[] {
+    public getPostEvolutionAbilities(allEvolutionAbilities: IEvolutionAbilityModel[]): IEvolutionAbilityModel[] {
         return allEvolutionAbilities
             .filter((e) => e.relativeStageIndex > 0)
             .sort((e1, e2) => {
@@ -379,27 +316,10 @@ export class PokemonDetailComponent implements OnInit {
     private applyInitialSorting() {
         if (!this.model.pokemon) return;
 
-        this.model.pokemon.spawns = this.sortService.sortSpawns(
-            this.model.pokemon.spawns,
-            SpawnListColumn.SpawnType,
-            1
-        );
-        this.model.pokemon.spawns = this.sortService.sortSpawns(
-            this.model.pokemon.spawns,
-            SpawnListColumn.Location,
-            1
-        );
-        this.model.pokemon.spawns = this.sortService.sortSpawns(
-            this.model.pokemon.spawns,
-            SpawnListColumn.Rarity,
-            1
-        );
-
-        this.model.learnableMoves = this.sortService.sortMoves(
-            this.model.learnableMoves,
-            MoveListColumn.Power,
-            1
-        );
+        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.SpawnType, 1);
+        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.Location, 1);
+        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.Rarity, 1);
+        this.model.learnableMoves = this.sortService.sortMoves(this.model.learnableMoves, MoveListColumn.Power, 1);
     }
 
     private sortMoveLearnMethods() {
@@ -416,8 +336,7 @@ export class PokemonDetailComponent implements OnInit {
 
     private sortForms() {
         if (this.model.pokemon != null) {
-            this.model.pokemon.forms = this.model.pokemon?.forms
-                .sort((f1, f2) => f1.sortIndex - f2.sortIndex);
+            this.model.pokemon.forms = this.model.pokemon?.forms.sort((f1, f2) => f1.sortIndex - f2.sortIndex);
         }
     }    
 }
