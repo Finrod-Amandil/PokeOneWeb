@@ -231,7 +231,7 @@ export class PokemonDetailComponent implements OnInit {
                     var check = new Date(parseInt(today[2]), parseInt(today[1])-1, parseInt(today[0]));
 
                     if (check >= from && check <= to) {
-                        this.model.visibleSpawns.push(spawn)
+                        this.model.visibleSpawns.push(spawn);
                     }
                 }
                 else{
@@ -362,7 +362,7 @@ export class PokemonDetailComponent implements OnInit {
             "May", "Jun", "Jul", "Aug",
             "Sep", "Oct", "Nov", "Dec"];
 
-        let mm = monthNames.indexOf(month);
+        let mm = monthNames.indexOf(month) + 1; //January is 0!
 
         return dd + '/' + mm + '/' + yyyy;
     }
