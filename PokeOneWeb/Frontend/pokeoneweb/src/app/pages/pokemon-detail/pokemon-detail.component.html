@@ -645,15 +645,20 @@
         </table>
 
         <h2 name="spawns">Spawns</h2>
-        <div>
-            <button *ngIf="!model.areEventExclusiveSpawnsHidden" type="button" (click)="hideEventExclusiveSpawns()">
-                Hide inactive event-exclusive spawns
-            </button>
-            <button *ngIf="model.areEventExclusiveSpawnsHidden" type="button" (click)="showEventExclusiveSpawns()">
-                Show inactive event-exclusive spawns
-            </button>
+        <div *ngIf="model.visibleSpawns.length > 0">
+            <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable">
+                <button *ngIf="!model.areEventExclusiveSpawnsHidden" type="button" (click)="hideEventExclusiveSpawns()">
+                    Hide inactive event-exclusive spawns
+                </button>
+                <button *ngIf="model.areEventExclusiveSpawnsHidden" type="button" (click)="showEventExclusiveSpawns()">
+                    Show inactive event-exclusive spawns
+                </button>
+            </div>
+            <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable">
+                <p class="empty">This Pokémon is only obtainable while events are running in PokéOne, thus showing event-exclusive spawns.</p>
+            </div>
+            <br>
         </div>
-        <br>
         <div *ngIf="model.visibleSpawns.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
                 <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>

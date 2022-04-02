@@ -197,6 +197,13 @@ export class PokemonDetailComponent implements OnInit {
                     this.model.visibleSpawns.push(spawn);
                 }
             }
+            if(this.model.visibleSpawns.length === 0){
+                this.model.areOnlyEventExclusiveSpawnsAvailable = true;
+                this.model.visibleSpawns = this.model.pokemon.spawns;
+            }
+            else{
+                this.model.areOnlyEventExclusiveSpawnsAvailable = false;
+            }
         }
     }
     
