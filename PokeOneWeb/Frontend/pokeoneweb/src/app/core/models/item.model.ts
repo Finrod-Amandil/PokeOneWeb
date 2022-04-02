@@ -1,6 +1,6 @@
-import { IPlacedItemModel } from "./placed-item.model";
+import { IPlacedItemModel } from './placed-item.model';
 
-export interface IItemModel{
+export interface IItemModel {
     resourceName: string;
     sortIndex: number;
     name: string;

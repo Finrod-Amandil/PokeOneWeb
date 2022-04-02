@@ -110,8 +110,9 @@ export class PokemonDetailComponent implements OnInit {
                 : 1.0;
 
         const x = Math.min(
-            255.0, 
-            this.down(this.round(this.down(this.round(this.round(3.0 * m - 2.0 * h) * c * b) / (3.0 * m)) * s)));
+            255.0,
+            this.down(this.round(this.down(this.round(this.round(3.0 * m - 2.0 * h) * c * b) / (3.0 * m)) * s))
+        );
         if (x >= 256.0) return 100.0;
 
         const y = x === 0 ? 0 : Math.floor(this.round(65536 / this.round(Math.pow(this.round(255.0 / x), 3.0 / 16.0))));
@@ -216,10 +217,7 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     public getSpawnSortButtonClass(sortColumn: SpawnListColumn, sortDirection: number): string {
-        if (
-            this.model.spawnsSortedByColumn === sortColumn &&
-            this.model.spawnsSortDirection === sortDirection
-        ) {
+        if (this.model.spawnsSortedByColumn === sortColumn && this.model.spawnsSortDirection === sortDirection) {
             return 'sorted';
         }
         return 'unsorted';
@@ -235,7 +233,7 @@ export class PokemonDetailComponent implements OnInit {
     public getAbbreviatedMoveDescription(move: ILearnableMoveModel): string {
         if (move.effectDescription.length > this.maxMoveDescriptionLength) {
             const truncated = move.effectDescription.substring(0, this.maxMoveDescriptionLength);
-            const niceTruncated = truncated.substring( 0, truncated.lastIndexOf(' '));
+            const niceTruncated = truncated.substring(0, truncated.lastIndexOf(' '));
             return niceTruncated + '... ▼';
         } else {
             return move.effectDescription;
@@ -266,9 +264,7 @@ export class PokemonDetailComponent implements OnInit {
         return (powerPoints - 5) * (120 / (30 - 5));
     }
 
-    public getPreEvolutionAbilities(
-        allEvolutionAbilities: IEvolutionAbilityModel[]
-    ): IEvolutionAbilityModel[] {
+    public getPreEvolutionAbilities(allEvolutionAbilities: IEvolutionAbilityModel[]): IEvolutionAbilityModel[] {
         return allEvolutionAbilities
             .filter((e) => e.relativeStageIndex < 0)
             .sort((e1, e2) => {

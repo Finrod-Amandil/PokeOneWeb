@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
-using PokeOneWeb.Shared.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -36,9 +36,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 var dbIdHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].IdHash : null;
                 var dbContentHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].ContentHash : null;
 
-                var contentCmp = 
-                    sheetIdHash == null ? -1 : 
-                    dbIdHash == null ? 1 : 
+                var contentCmp =
+                    sheetIdHash == null ? -1 :
+                    dbIdHash == null ? 1 :
                     string.Compare(sheetIdHash, dbIdHash, StringComparison.Ordinal);
 
                 if (contentCmp == 0)
@@ -47,6 +47,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                     {
                         result.RowsToUpdate.Add(sheetHashesOrdered[sheetHashIndex]);
                     }
+
                     sheetHashIndex += 1;
                     dbHashIndex += 1;
                 }
@@ -71,7 +72,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         private void CheckForHashCollisions(IList<RowHash> hashes)
         {
-            var previous = "";
+            var previous = string.Empty;
             for (var i = 0; i < hashes.Count; i++)
             {
                 var current = hashes[i].IdHash;
@@ -81,6 +82,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                     hashes.RemoveAt(i);
                     i -= 1;
                 }
+
                 previous = current;
             }
         }

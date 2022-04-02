@@ -19,11 +19,10 @@ export abstract class BaseService {
     }
 
     public get baseUrl(): string {
-        return `${environment.baseUrl}/api`
+        return `${environment.baseUrl}/api`;
     }
 
     public get httpOptions() {
         return { headers: this.httpHeaders };
     }
 }
-

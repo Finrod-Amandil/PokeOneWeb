@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
@@ -122,7 +122,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
             var parser = new ItemSheetRowParser();
             var values = new List<object>
             {
-                "0", false, false, "0", 1, "0", 1, "", "", "", "excessive value"
+                "0", false, false, "0", 1, "0", 1, string.Empty, string.Empty, string.Empty, "excessive value"
             };
 
             // Act
@@ -182,7 +182,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
             var resourceName = "item-resource-name";
             var sortIndex = 1;
             var bagCategoryName = "Bag Category Name";
-            var pokeOneItemId = ""; // Missing non-string value
+            var pokeOneItemId = string.Empty; // Missing non-string value
 
             var values = new List<object>
             {

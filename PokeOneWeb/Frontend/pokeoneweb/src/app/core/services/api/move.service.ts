@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { IMoveModel } from '../../models/move.model';
@@ -9,7 +9,7 @@ import { IMoveNameModel } from '../../models/move-name.model';
     providedIn: 'root'
 })
 export class MoveService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 

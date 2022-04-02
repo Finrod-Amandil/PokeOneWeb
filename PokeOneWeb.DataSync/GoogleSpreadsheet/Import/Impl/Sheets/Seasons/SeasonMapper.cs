@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Seasons
 {
     public class SeasonMapper : SpreadsheetEntityMapper<SeasonSheetDto, Season>
     {
-        public SeasonMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public SeasonMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Season;
 

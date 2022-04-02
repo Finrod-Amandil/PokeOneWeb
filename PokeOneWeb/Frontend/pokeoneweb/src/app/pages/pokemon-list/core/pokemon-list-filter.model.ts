@@ -1,10 +1,10 @@
-import { SELECT_OPTION_ANY } from "src/app/core/constants/string.constants";
-import { GenerationModel } from "src/app/core/models/generation.model";
-import { IMoveNameModel } from "src/app/core/models/move-name.model";
-import { PvpTierModel } from "src/app/core/models/pvp-tier.model";
+import { SELECT_OPTION_ANY } from 'src/app/core/constants/string.constants';
+import { GenerationModel } from 'src/app/core/models/generation.model';
+import { IMoveNameModel } from 'src/app/core/models/move-name.model';
+import { PvpTierModel } from 'src/app/core/models/pvp-tier.model';
 
 export class PokemonListFilterModel {
-    public searchTerm: string = '';
+    public searchTerm = '';
     public selectedAvailabilities: string[] = [];
     public selectedPvpTiers: PvpTierModel[] = [];
     public selectedType1: string = SELECT_OPTION_ANY;
@@ -41,6 +41,6 @@ export class PokemonListFilterModel {
     public selectedMove4Option3: IMoveNameModel | null = null;
     public selectedMove4Option4: IMoveNameModel | null = null;
     public selectedGenerations: GenerationModel[] = [];
-    public showMegaEvolutions: boolean = true;
-    public showFullyEvolvedOnly: boolean = false;
+    public showMegaEvolutions = true;
+    public showFullyEvolvedOnly = false;
 }

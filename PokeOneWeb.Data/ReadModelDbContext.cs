@@ -6,7 +6,9 @@ namespace PokeOneWeb.Data
     public class ReadModelDbContext : DbContext
     {
         public ReadModelDbContext(DbContextOptions<ReadModelDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public DbSet<PokemonVarietyReadModel> PokemonVarietyReadModels { get; set; }
 
@@ -23,6 +25,8 @@ namespace PokeOneWeb.Data
         public DbSet<ItemReadModel> ItemReadModels { get; set; }
 
         public DbSet<RegionReadModel> RegionReadModels { get; set; }
+
+        public DbSet<LocationGroupReadModel> LocationGroupReadModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

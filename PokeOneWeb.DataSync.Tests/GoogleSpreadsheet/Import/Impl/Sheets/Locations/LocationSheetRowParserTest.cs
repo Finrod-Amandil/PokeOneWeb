@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locations
@@ -104,7 +104,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
             var parser = new LocationSheetRowParser();
             var values = new List<object>()
             {
-                "0", "", "", 1, 1, 1, 1, 1, 1, "", "excessive value"
+                "0", string.Empty, string.Empty, 1, 1, 1, 1, 1, 1, string.Empty, "excessive value"
             };
 
             // Act

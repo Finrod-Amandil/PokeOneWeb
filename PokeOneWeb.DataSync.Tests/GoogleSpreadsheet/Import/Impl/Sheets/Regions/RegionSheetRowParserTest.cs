@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
@@ -95,7 +95,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             var parser = new RegionSheetRowParser();
             var values = new List<object>()
             {
-                "0", "0", "", false, "", "excessive value"
+                "0", "0", string.Empty, false, string.Empty, "excessive value"
             };
 
             // Act
@@ -147,8 +147,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             var name = "Region Name";
             var resourceName = "Resource Name";
             var color = "#000000";
-            var isEventRegion = "";
-            var eventName = "";
+            var isEventRegion = string.Empty;
+            var eventName = string.Empty;
 
             var values = new List<object>
             {

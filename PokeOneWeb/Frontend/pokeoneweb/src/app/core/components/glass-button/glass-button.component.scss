@@ -1,0 +1,62 @@
+.container {
+    height: 250px;
+    width: 150px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0;
+    background-size:cover;
+    background-position: center;
+
+    .toptext{
+        display:flex;
+        align-items: center;
+    }
+
+    .middletext{
+        display: flex;
+        align-items: center;
+    }
+
+    .buttonTitle {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        color: #d04729;
+        text-shadow: 1px 1px black;
+        font-weight: bold;
+    }
+
+    .comingSoon {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+        //line-height: 125px;
+        font-size: 25px;
+        color: #d04729;
+        text-shadow: 1px 1px black;
+        transform: rotate(-23deg);
+        font-family: Brush Script MT;
+    }
+}
+
+.overlay {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    cursor: pointer;
+    grid-template-rows: 75px 100px 75px;
+    background: radial-gradient(circle, rgba(207, 235, 240, 0.349) 0%, rgba(104, 119, 126, 0.301) );
+}
+
+.overlay:hover {
+    box-shadow: 0 0 20px 5px rgb(123, 180, 224);
+}
+
+.overlay:active {
+    box-shadow: 0 0 40px 5px rgb(60, 74, 85);
+    box-shadow: inset 0px 0px 19px -8px #000000;
+    background: radial-gradient(circle, rgba(104, 119, 126, 0.301) 0%, rgba(207, 235, 240, 0.349) );
+} 

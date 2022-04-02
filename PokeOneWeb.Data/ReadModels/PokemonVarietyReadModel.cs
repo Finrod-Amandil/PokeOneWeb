@@ -1,7 +1,7 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
@@ -51,15 +51,21 @@ namespace PokeOneWeb.Data.ReadModels
         public bool IsMega { get; set; }
         public int CatchRate { get; set; }
         public bool HasGender { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal MaleRatio { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal FemaleRatio { get; set; }
+
         public int EggCycles { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Height { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Weight { get; set; }
+
         public int ExpYield { get; set; }
 
         public int AttackEv { get; set; }
@@ -80,44 +86,62 @@ namespace PokeOneWeb.Data.ReadModels
 
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilityAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilitySpecialAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilityDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilitySpecialDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilitySpeedBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal PrimaryAbilityHitPointsBoost { get; set; }
+
         public string PrimaryAbilityBoostConditions { get; set; }
 
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilityAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilitySpecialAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilityDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilitySpecialDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilitySpeedBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal SecondaryAbilityHitPointsBoost { get; set; }
+
         public string SecondaryAbilityBoostConditions { get; set; }
 
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilityAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilitySpecialAttackBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilityDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilitySpecialDefenseBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilitySpeedBoost { get; set; }
+
         [Column(TypeName = "decimal(4,1)")]
         public decimal HiddenAbilityHitPointsBoost { get; set; }
+
         public string HiddenAbilityBoostConditions { get; set; }
 
         public List<PokemonVarietyVarietyReadModel> Varieties { get; set; } = new();

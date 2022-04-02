@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
@@ -77,7 +77,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
             var parser = new EventSheetRowParser();
             var values = new List<object>
             {
-                "0", "01.01.2020", "01.02.2020", "excessive value" 
+                "0", "01.01.2020", "01.02.2020", "excessive value"
             };
 
             // Act
@@ -146,8 +146,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
             var parser = new EventSheetRowParser();
 
             var name = "Event Name";
-            var startDate = "";
-            var endDate = "";
+            var startDate = string.Empty;
+            var endDate = string.Empty;
 
             var values = new List<object>
             {

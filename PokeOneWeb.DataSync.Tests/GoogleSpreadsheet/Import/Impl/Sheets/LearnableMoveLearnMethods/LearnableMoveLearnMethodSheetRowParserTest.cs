@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
@@ -112,7 +112,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Learnab
             var parser = new LearnableMoveLearnMethodSheetRowParser();
             var values = new List<object>()
             {
-                0, "0", "0", "0", false, "", 1, "", "", "", "", "excessive value"
+                0, "0", "0", "0", false, string.Empty, 1, string.Empty, string.Empty, string.Empty, string.Empty, "excessive value"
             };
 
             // Act
@@ -173,7 +173,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Learnab
             var learnMethod = "Learn Method";
             var isAvailable = true;
             var generation = "Generation I";
-            var levelLearnedAt = ""; // Missing non-string value
+            var levelLearnedAt = string.Empty; // Missing non-string value
 
             var values = new List<object>
             {
