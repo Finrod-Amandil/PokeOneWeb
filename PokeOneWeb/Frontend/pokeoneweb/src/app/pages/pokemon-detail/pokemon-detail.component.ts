@@ -14,6 +14,7 @@ import { MoveListColumn } from './core/move-list-column.enum';
 import { PokemonDetailSortService } from './core/pokemon-detail-sort.service';
 import { PokemonDetailModel } from './core/pokemon-detail.model';
 import { SpawnListColumn } from './core/spawn-list-column.enum';
+import { DateService } from 'src/app/core/services/date.service';
 
 const STEPS_PER_SECOND = 5.908;
 
@@ -35,7 +36,8 @@ export class PokemonDetailComponent implements OnInit {
         private pokemonService: PokemonService,
         private sortService: PokemonDetailSortService,
         private titleService: Title,
-        private urlService: PokemonUrlService
+        private urlService: PokemonUrlService,
+        private dateService: DateService
     ) {}
 
     ngOnInit(): void {
@@ -206,9 +208,9 @@ export class PokemonDetailComponent implements OnInit {
 
     private isSpawnCurrentlyAvailable(spawn: ISpawnModel){
         //Source https://stackoverflow.com/a/16080662
-        var todaysDate = this.getTodaysDate().split("/");
-        var eventStartDate = this.convertDate(spawn.eventStartDate).split("/");
-        var eventEndDate = this.convertDate(spawn.eventEndDate).split("/");
+        var todaysDate = this.dateService.getTodaysDate().split("/");
+        var eventStartDate = this.dateService.convertDate(spawn.eventStartDate).split("/");
+        var eventEndDate = this.dateService.convertDate(spawn.eventEndDate).split("/");
 
         var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
         var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
@@ -325,29 +327,6 @@ export class PokemonDetailComponent implements OnInit {
                 }
                 return e1.relativeStageIndex - e2.relativeStageIndex;
             });
-    }
-
-    private convertDate(date: String) {
-        let dd = (date.split(" ")[1].split(",")[0]).trim().padStart(2, '0');
-        let month = (date.split(" ")[0]).trim().padStart(2, '0');
-        let yyyy = (date.split(", ")[1]).trim();
-
-        let monthNames = ["Jan", "Feb", "Mar", "Apr",
-            "May", "Jun", "Jul", "Aug",
-            "Sep", "Oct", "Nov", "Dec"];
-
-        let mm = monthNames.indexOf(month) + 1; //January is 0!
-
-        return dd + '/' + mm + '/' + yyyy;
-    }
-
-    private getTodaysDate() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-
-        return dd + '/' + mm + '/' + yyyy;
     }
 
     private applyInitialSorting() {
