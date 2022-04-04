@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class DateService {
-    public convertDate(date: String) {
+    public convertDate(date: string) {
         let dd = (date.split(" ")[1].split(",")[0]).trim().padStart(2, '0');
         let month = (date.split(" ")[0]).trim().padStart(2, '0');
         let yyyy = (date.split(", ")[1]).trim();

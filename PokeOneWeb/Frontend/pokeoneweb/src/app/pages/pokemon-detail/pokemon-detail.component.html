@@ -664,7 +664,7 @@
                 <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
             </div>
         </div>
-        <table *ngIf="model.visibleSpawns.length > 0" class="main-table table-compact" id="spawn_table">
+        <table *ngIf="model.visibleSpawns.length > 0" class="main-table table-compact" id="spawn_table" aria-label="table containing a list of all spawns of a pokemon">
             <thead>
                 <tr>
                     <th class="col-pokemon" colspan="2">

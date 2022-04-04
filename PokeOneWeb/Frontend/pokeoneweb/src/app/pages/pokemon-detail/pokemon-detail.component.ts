@@ -238,7 +238,7 @@ export class PokemonDetailComponent implements OnInit {
 
         for(let spawn of pokemonSpawns) {
             if(spawn.isEvent) {
-                eventCounter =+ 1;
+                eventCounter += 1;
             }
         }
 
