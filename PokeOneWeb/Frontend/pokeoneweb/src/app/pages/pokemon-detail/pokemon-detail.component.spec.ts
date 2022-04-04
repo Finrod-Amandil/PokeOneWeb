@@ -162,6 +162,16 @@ describe('Pokemon Detail Component', () => {
             expect(component.model.areEventExclusiveSpawnsHidden)
                 .toBeTrue
         });
+        it('hideEventExclusiveSpawns with inactive event no pokemon data', () => {
+            // Act
+            component.hideEventExclusiveSpawns();
+
+            // Assert
+            expect(component.model.visibleSpawns.length)
+                .toBe(0);
+            expect(component.model.pokemon?.spawns.length)
+                .toBeUndefined
+        });
     });
 
     describe('showEventExclusiveSpawns', () => {
@@ -257,6 +267,78 @@ describe('Pokemon Detail Component', () => {
             // Assert
             expect(result)
                 .toMatch('availability-unobtainable');
+        });
+
+        it('getAvailabilityClass with Context Event-exclusive should return availability-event', () => {
+            // Act 
+            var result = component.getAvailabilityClass('Event-exclusive')
+            
+            // Assert
+            expect(result)
+                .toMatch('availability-event');
+        });
+
+        it('getAvailabilityClass with Context Removed should return availability-removed', () => {
+            // Act 
+            var result = component.getAvailabilityClass('Removed')
+            
+            // Assert
+            expect(result)
+                .toMatch('availability-removed');
+        });
+
+        it('getAvailabilityClass with wrong Context should return availability-unobtainable', () => {
+            // Act 
+            var result = component.getAvailabilityClass('wrong')
+            
+            // Assert
+            expect(result)
+                .toMatch('availability-unobtainable');
+        });
+    });
+
+    describe('getEggSteps', () => {
+        it('getEggSteps with eggCycle 15 should return 3840', () => {
+            // Arrange
+            var pokemon = new PokemonVarietyModel() as IPokemonVarietyModel;
+            // like corphish
+            pokemon.eggCycles = 15
+    
+            component.model.pokemon = pokemon
+            // Act 
+            var result = component.getEggSteps()
+            
+            // Assert
+            // describe the test with what to expect
+            expect(result)
+                .toBe(3840);
+        });
+
+        it('getEggSteps with empty pokemon', () => {
+            // Act 
+            var result = component.getEggSteps()
+            
+            // Assert
+            // describe the test with what to expect
+            expect(result)
+                .toBe(0);
+        });
+    });
+
+    describe('getEggHatchingTime', () => {
+        it('getEggHatchingTime with eggCycle 15 should return ~0h 10min', () => {
+            // Arrange
+            var pokemon = new PokemonVarietyModel() as IPokemonVarietyModel;
+            // like corphish
+            pokemon.eggCycles = 15
+    
+            component.model.pokemon = pokemon
+            // Act 
+            var result = component.getEggHatchingTime()
+            
+            // Assert
+            expect(result)
+                .toBe('~0h 10min');
         });
     });
 
