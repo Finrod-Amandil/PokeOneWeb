@@ -10,11 +10,11 @@ import { IPokemonVarietyModel } from 'src/app/core/models/pokemon-variety.model'
 import { ISpawnModel } from 'src/app/core/models/spawn.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonUrlService } from 'src/app/core/services/pokemon-url.service';
+import { DateService } from 'src/app/core/services/date.service';
 import { MoveListColumn } from './core/move-list-column.enum';
 import { PokemonDetailSortService } from './core/pokemon-detail-sort.service';
 import { PokemonDetailModel } from './core/pokemon-detail.model';
 import { SpawnListColumn } from './core/spawn-list-column.enum';
-import { DateService } from 'src/app/core/services/date.service';
 
 const STEPS_PER_SECOND = 5.908;
 
@@ -52,7 +52,7 @@ export class PokemonDetailComponent implements OnInit {
                     this.titleService.setTitle(`${this.model.pokemon.name} - ${WEBSITE_NAME}`);
 
                     this.model.learnableMoves = this.model.pokemon.learnableMoves;
-                    
+
                     this.hideEventExclusiveSpawns();
                     this.sortMoveLearnMethods();
                     this.sortForms();
@@ -176,19 +176,14 @@ export class PokemonDetailComponent implements OnInit {
 
     public hideEventExclusiveSpawns() {
         if (!this.model.pokemon) return;
-        
+
         this.model.areEventExclusiveSpawnsHidden = true;
         this.model.visibleSpawns = [];
 
         this.checkAreNoEventSpawnsAvailable(this.model.pokemon.spawns);
 
         for (let spawn of this.model.pokemon.spawns){
-            if(spawn.isEvent){
-                if(this.isSpawnCurrentlyAvailable(spawn)){
-                    this.model.visibleSpawns.push(spawn);
-                }
-            }
-            else{
+            if(this.isSpawnAvailable(spawn)){
                 this.model.visibleSpawns.push(spawn);
             }
         }
@@ -206,22 +201,28 @@ export class PokemonDetailComponent implements OnInit {
         this.sortSpawns(this.model.spawnsSortedByColumn, this.model.spawnsSortDirection);
     }
 
-    private isSpawnCurrentlyAvailable(spawn: ISpawnModel){
-        //Source https://stackoverflow.com/a/16080662
-        var todaysDate = this.dateService.getTodaysDate().split("/");
-        var eventStartDate = this.dateService.convertDate(spawn.eventStartDate).split("/");
-        var eventEndDate = this.dateService.convertDate(spawn.eventEndDate).split("/");
+    private isSpawnAvailable(spawn: ISpawnModel){
+        if(spawn.isEvent){
+            //Source https://stackoverflow.com/a/16080662
+            var todaysDate = this.dateService.getTodaysDate().split("/");
+            var eventStartDate = this.dateService.convertDate(spawn.eventStartDate).split("/");
+            var eventEndDate = this.dateService.convertDate(spawn.eventEndDate).split("/");
 
-        var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
-        var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
-        var check = new Date(parseInt(todaysDate[2]), parseInt(todaysDate[1])-1, parseInt(todaysDate[0]));
-
-        if (check >= from && check <= to) {
+            var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
+            var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
+            var check = new Date(parseInt(todaysDate[2]), parseInt(todaysDate[1])-1, parseInt(todaysDate[0]));
+    
+            if (check >= from && check <= to) {
+                return true;
+            }
+            return false;
+        }
+        else{
             return true;
         }
-        return false;
+        
     }
-    
+
     public showEventExclusiveSpawns() {
         this.model.areEventExclusiveSpawnsHidden = false;
         this.model.visibleSpawns = [];
@@ -354,5 +355,5 @@ export class PokemonDetailComponent implements OnInit {
         if (this.model.pokemon != null) {
             this.model.pokemon.forms = this.model.pokemon?.forms.sort((f1, f2) => f1.sortIndex - f2.sortIndex);
         }
-    }    
+    }
 }
