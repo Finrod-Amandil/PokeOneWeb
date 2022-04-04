@@ -647,10 +647,10 @@
         <h2 name="spawns">Spawns</h2>
         <div *ngIf="model.visibleSpawns.length > 0">
             <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable">
-                <button *ngIf="!model.areEventExclusiveSpawnsHidden" type="button" (click)="hideEventExclusiveSpawns()">
+                <button mat-raised-button *ngIf="!model.areEventExclusiveSpawnsHidden" (click)="hideEventExclusiveSpawns()">
                     Hide inactive event-exclusive spawns
                 </button>
-                <button *ngIf="model.areEventExclusiveSpawnsHidden" type="button" (click)="showEventExclusiveSpawns()">
+                <button mat-raised-button *ngIf="model.areEventExclusiveSpawnsHidden" (click)="showEventExclusiveSpawns()">
                     Show inactive event-exclusive spawns
                 </button>
             </div>
