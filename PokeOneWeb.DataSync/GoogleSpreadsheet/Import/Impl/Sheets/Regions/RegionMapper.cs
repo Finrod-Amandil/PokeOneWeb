@@ -50,6 +50,10 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             region.Name = dto.Name;
             region.ResourceName = dto.ResourceName;
             region.Color = dto.Color;
+            region.Description = dto.Description;
+            region.IsReleased = dto.IsReleased;
+            region.IsMainRegion = dto.IsMainRegion;
+            region.IsSideRegion = dto.IsSideRegion;
             region.IsEventRegion = dto.IsEventRegion;
 
             return region;
