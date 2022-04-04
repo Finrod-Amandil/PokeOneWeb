@@ -28,7 +28,6 @@ namespace PokeOneWeb.Shared.Tests.Extensions
             output.Should().BeTrue("because the input is the same value.");
         }
 
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]

@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
 {
     public class AbilityMapper : SpreadsheetEntityMapper<AbilitySheetDto, Ability>
     {
-        public AbilityMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public AbilityMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Ability;
 

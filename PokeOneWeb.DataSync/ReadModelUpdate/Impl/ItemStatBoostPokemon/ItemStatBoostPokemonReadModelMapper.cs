@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
 {
@@ -39,7 +39,6 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
                     RequiredPokemonResourceName = x.PokemonVariety.ResourceName
                 })
                 .ToDictionary(x => x, _ => DbAction.Create);
-
         }
     }
 }

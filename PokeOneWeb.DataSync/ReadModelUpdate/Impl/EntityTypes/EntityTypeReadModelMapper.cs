@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Data.ReadModels.Enums;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
 {
@@ -30,7 +30,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
 
             var locationMappings = _dbContext.LocationGroups
                 .AsNoTracking()
-                .Select(l => new EntityTypeReadModel 
+                .Select(l => new EntityTypeReadModel
                 {
                     ResourceName = l.ResourceName,
                     EntityType = EntityType.Location

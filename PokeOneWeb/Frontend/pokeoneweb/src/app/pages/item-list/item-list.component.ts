@@ -12,7 +12,7 @@ import { ItemListModel } from './core/item-list.model';
 @Component({
     selector: 'pokeone-item-list',
     templateUrl: './item-list.component.html',
-    styleUrls: ['./item-list.component.scss'],
+    styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
     public model: ItemListModel = new ItemListModel();
@@ -20,7 +20,7 @@ export class ItemListComponent implements OnInit {
     public column = ItemListColumn;
 
     private timeOut: any;
-    private timeOutDuration: number = 500;
+    private timeOutDuration = 500;
 
     constructor(
         private titleService: Title,
@@ -36,18 +36,10 @@ export class ItemListComponent implements OnInit {
         this.itemService.getAll().subscribe((response) => {
             this.model.itemModels = response as IItemListModel[];
 
-            this.model.displayedItemModels = this.sortService.sort(
-                this.model.itemModels,
-                ItemListColumn.Name,
-                1
-            );
+            this.model.displayedItemModels = this.sortService.sort(this.model.itemModels, ItemListColumn.Name, 1);
 
-            this.model.bagCategories = [
-                ...new Set(this.model.itemModels.map((i) => i.bagCategoryName)),
-            ];
-            this.model.bagCategories = this.model.bagCategories.sort((a, b) =>
-                a > b ? 1 : -1
-            );
+            this.model.bagCategories = [...new Set(this.model.itemModels.map((i) => i.bagCategoryName))];
+            this.model.bagCategories = this.model.bagCategories.sort((a, b) => (a > b ? 1 : -1));
         });
     }
 
@@ -59,10 +51,7 @@ export class ItemListComponent implements OnInit {
     }
 
     public async onFilterChanged() {
-        let filtered = await this.filterService.applyFilter(
-            this.model.filter,
-            this.model.itemModels
-        );
+        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.itemModels);
 
         this.model.displayedItemModels = this.sortService.sort(
             filtered,
@@ -86,23 +75,15 @@ export class ItemListComponent implements OnInit {
         );
     }
 
-    public getSortButtonClass(
-        sortColumn: ItemListColumn,
-        sortDirection: number
-    ): string {
-        if (
-            this.model.sortColumn === sortColumn &&
-            this.model.sortDirection === sortDirection
-        ) {
+    public getSortButtonClass(sortColumn: ItemListColumn, sortDirection: number): string {
+        if (this.model.sortColumn === sortColumn && this.model.sortDirection === sortDirection) {
             return 'sorted';
         }
         return 'unsorted';
     }
 
     public getAvailabilityClass(isAvailable: boolean): string {
-        return isAvailable
-            ? 'availability-obtainable'
-            : 'availability-unobtainable';
+        return isAvailable ? 'availability-obtainable' : 'availability-unobtainable';
     }
 
     public navigateToDetailPage(itemResourceName: string) {

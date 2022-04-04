@@ -27,8 +27,8 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("CurrencyId")]
         public Currency Currency { get; set; }
-        public int CurrencyId { get; set; }
 
+        public int CurrencyId { get; set; }
 
         public override string ToString()
         {

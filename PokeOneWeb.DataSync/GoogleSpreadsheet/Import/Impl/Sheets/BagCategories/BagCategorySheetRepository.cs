@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
             ApplicationDbContext dbContext,
             ISheetRowParser<BagCategorySheetDto> parser,
             ISpreadsheetEntityMapper<BagCategorySheetDto, BagCategory> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<BagCategory> DbSet => DbContext.BagCategories;
 

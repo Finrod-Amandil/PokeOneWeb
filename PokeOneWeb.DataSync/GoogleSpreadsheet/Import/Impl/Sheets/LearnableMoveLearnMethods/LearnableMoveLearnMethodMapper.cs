@@ -1,10 +1,10 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodMapper 
+    public class LearnableMoveLearnMethodMapper
         : SpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod>
     {
         private readonly Dictionary<string, MoveLearnMethod> _moveLearnMethods = new();
@@ -15,7 +15,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
         private readonly Dictionary<string, Move> _moves = new();
         private readonly Dictionary<string, PokemonVariety> _varieties = new();
 
-        public LearnableMoveLearnMethodMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public LearnableMoveLearnMethodMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.LearnableMoveLearnMethod;
 
@@ -116,7 +118,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
             }
             else
             {
-                moveLearnMethod = new MoveLearnMethod {Name = dto.LearnMethod};
+                moveLearnMethod = new MoveLearnMethod { Name = dto.LearnMethod };
                 _moveLearnMethods.Add(dto.LearnMethod, moveLearnMethod);
             }
 
@@ -137,7 +139,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
             }
             else
             {
-                item = new Item {Name = dto.RequiredItemName};
+                item = new Item { Name = dto.RequiredItemName };
                 _items.Add(dto.RequiredItemName, item);
             }
 
@@ -158,7 +160,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
             }
             else
             {
-                tutor = new MoveTutor {Name = dto.TutorName};
+                tutor = new MoveTutor { Name = dto.TutorName };
                 _moveTutors.Add(dto.TutorName, tutor);
             }
 
@@ -169,7 +171,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
             }
             else
             {
-                move = new Move {Name = dto.MoveName};
+                move = new Move { Name = dto.MoveName };
                 _moves.Add(dto.MoveName, move);
             }
 

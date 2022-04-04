@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IEntityTypeModel } from '../../models/entity-type.model';
 import { BaseService } from './base.service';
@@ -8,7 +8,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class EntityTypeService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 

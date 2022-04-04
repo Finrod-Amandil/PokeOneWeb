@@ -4,7 +4,7 @@
 
 namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 {
-    public partial class addregionresourcename : Migration
+    public partial class Addregionresourcename : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

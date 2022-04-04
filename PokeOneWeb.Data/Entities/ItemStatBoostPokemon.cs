@@ -37,26 +37,28 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         [ForeignKey("ItemStatBoostId")]
         public ItemStatBoost ItemStatBoost { get; set; }
+
         public int ItemStatBoostId { get; set; }
 
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
-        public int? PokemonVarietyId { get; set; } //Is null, if no Pokemon is req.
 
+        public int? PokemonVarietyId { get; set; } // Is null, if no Pokemon is req.
 
         public override string ToString()
         {

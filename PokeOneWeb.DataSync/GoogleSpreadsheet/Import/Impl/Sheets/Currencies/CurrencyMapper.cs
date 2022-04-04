@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
 {
     public class CurrencyMapper : SpreadsheetEntityMapper<CurrencySheetDto, Currency>
     {
-        public CurrencyMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public CurrencyMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Currency;
 
@@ -26,7 +28,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
             currency.IdHash = rowHash.IdHash;
             currency.Hash = rowHash.ContentHash;
             currency.ImportSheetId = rowHash.ImportSheetId;
-            currency.Item = new Item {Name = dto.ItemName};
+            currency.Item = new Item { Name = dto.ItemName };
 
             return currency;
         }

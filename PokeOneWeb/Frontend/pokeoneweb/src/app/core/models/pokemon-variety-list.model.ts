@@ -1,4 +1,4 @@
-import { IPokemonVarietyUrlModel } from "./pokemon-variety-url.model";
+import { IPokemonVarietyUrlModel } from './pokemon-variety-url.model';
 
 export interface IPokemonVarietyListModel {
     resourceName: string;

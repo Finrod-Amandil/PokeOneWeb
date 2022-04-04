@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.WebApi.Dtos;
-using System.Collections.Generic;
 using PokeOneWeb.WebApi.Services.Api;
 
 namespace PokeOneWeb.WebApi.Controllers
@@ -32,7 +32,6 @@ namespace PokeOneWeb.WebApi.Controllers
         [Route("getallnames")]
         [HttpGet]
         public ActionResult<IEnumerable<MoveNameDto>> GetAllNames()
-
         {
             return Ok(_moveApiService.GetAllMoveNames());
         }

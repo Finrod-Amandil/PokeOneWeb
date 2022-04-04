@@ -10,7 +10,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
             ApplicationDbContext dbContext,
             ISheetRowParser<TimeOfDaySheetDto> parser,
             ISpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<TimeOfDay> DbSet => DbContext.TimesOfDay;
 

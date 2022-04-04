@@ -1,7 +1,7 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Linq;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels.Enums;
 using PokeOneWeb.WebApi.Dtos;
-using System.Linq;
 
 namespace PokeOneWeb.WebApi.Services.Api.Impl
 {
@@ -18,14 +18,14 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                return new EntityTypeDto {EntityType = EntityType.Unknown};
+                return new EntityTypeDto { EntityType = EntityType.Unknown };
             }
 
             var matchingMapping = _dbContext.EntityTypeReadModels
                 .SingleOrDefault(e => e.ResourceName.Equals(path));
 
-            return matchingMapping is null ? 
-                new EntityTypeDto { EntityType = EntityType.Unknown } : 
+            return matchingMapping is null ?
+                new EntityTypeDto { EntityType = EntityType.Unknown } :
                 new EntityTypeDto { EntityType = matchingMapping.EntityType };
         }
     }

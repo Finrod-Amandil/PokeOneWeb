@@ -1,8 +1,9 @@
-<div 
-    *ngFor="let time of times" 
-    class="time-badge" 
+<div
+    *ngFor="let time of times"
+    class="time-badge"
     [ngClass]="{'time-badge-any': time.abbreviation === 'Any'}"
-    [style]="'background-color: ' + time.color + '; color: ' + getTextColor(time.color)">
+    [style]="'background-color: ' + time.color + '; color: ' + getTextColor(time.color)"
+>
     {{time.abbreviation}}
     <span *ngIf="time.abbreviation !== 'Any'" class="tooltip">
         <span class="time-name">{{time.name}}</span><br />{{time.times}}

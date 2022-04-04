@@ -1,8 +1,8 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
@@ -47,7 +47,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             DeleteOrphans();
 
-            entities.ToList().ForEach(e => 
+            entities.ToList().ForEach(e =>
                 _reporter.ReportDeleted(Entity.PokemonForm, e.IdHash, e.Id));
 
             return entities.Count();
@@ -169,7 +169,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             DeleteOrphans();
 
-            entities.ForEach(e => 
+            entities.ForEach(e =>
                 _reporter.ReportAdded(Entity.PokemonForm, e.IdHash, e.Id));
 
             return entities.Count;
@@ -297,7 +297,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             DeleteOrphans();
 
-            entities.ForEach(e => 
+            entities.ForEach(e =>
                 _reporter.ReportUpdated(Entity.PokemonForm, e.IdHash, e.Id));
 
             return entities.Count;
