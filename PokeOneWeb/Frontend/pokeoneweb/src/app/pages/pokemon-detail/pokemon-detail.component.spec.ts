@@ -45,6 +45,94 @@ describe('Pokemon Detail Component', () => {
         });
     });
 
+    describe('getHueForMoveStrength', () => {
+        it('expect getHueForMoveStrength with 110 to be 140', () => {
+            // Act
+            var result = component.getHueForMoveStrength(110)
+            
+            // Assert
+            expect(result)
+                .toBe(120);
+        });
+
+        it('expect getHueForMoveStrength with 50 to be 20', () => {
+            // Act
+            var result = component.getHueForMoveStrength(50)
+            
+            // Assert
+            expect(result)
+                .toBe(20);
+        });
+        
+        it('expect getHueForMoveStrength with 41 to be 2', () => {
+            // Act
+            var result = component.getHueForMoveStrength(41)
+            
+            // Assert
+            expect(result)
+                .toBe(2);
+        });
+
+        it('expect getHueForMoveStrength with 30 to be 0', () => {
+            // Act
+            var result = component.getHueForMoveStrength(30)
+            
+            // Assert
+            expect(result)
+                .toBe(0);
+        });
+
+        it('expect getHueForMoveStrength with negative value to be 0', () => {
+            // Act
+            var result = component.getHueForMoveStrength(-1)
+            
+            // Assert
+            expect(result)
+                .toBe(0);
+        });
+    });
+
+    describe('getHueForAccuracy', () => {
+        it('expect getHueForAccuracy with 110 to be 120', () => {
+            // Act
+
+            var result = component.getHueForAccuracy(110)
+            
+            // Assert
+            expect(result)
+                .toBe(120);
+        });
+
+        it('expect getHueForAccuracy with 90 to be 60', () => {
+            // Act
+
+            var result = component.getHueForAccuracy(90)
+            
+            // Assert
+            expect(result)
+                .toBe(60);
+        });
+
+        it('expect getHueForAccuracy with 60 to be 0', () => {
+            // Act
+
+            var result = component.getHueForAccuracy(60)
+            
+            // Assert
+            expect(result)
+                .toBe(0);
+        });
+
+        it('expect getHueForAccuracy with negative value to be 0', () => {
+            // Act
+            var result = component.getHueForAccuracy(-1)
+            
+            // Assert
+            expect(result)
+                .toBe(0);
+        });
+    });
+
     describe('getHueForPowerPoints', () => {
         it('expect getHueForPowerPoints with 30 to be 120', () => {
             // Act
