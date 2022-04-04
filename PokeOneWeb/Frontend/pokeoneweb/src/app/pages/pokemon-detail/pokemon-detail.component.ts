@@ -7,6 +7,7 @@ import { IEvolutionAbilityModel } from 'src/app/core/models/evolution-ability.mo
 import { ILearnableMoveModel } from 'src/app/core/models/learnable-move.model';
 import { IPokemonVarietyUrlModel } from 'src/app/core/models/pokemon-variety-url.model';
 import { IPokemonVarietyModel } from 'src/app/core/models/pokemon-variety.model';
+import { ISpawnModel } from 'src/app/core/models/spawn.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonUrlService } from 'src/app/core/services/pokemon-url.service';
 import { MoveListColumn } from './core/move-list-column.enum';
@@ -50,9 +51,7 @@ export class PokemonDetailComponent implements OnInit {
 
                     this.model.learnableMoves = this.model.pokemon.learnableMoves;
                     
-                    if(this.model.areEventExclusiveSpawnsHidden) {
-                        this.hideEventExclusiveSpawns();
-                    }
+                    this.hideEventExclusiveSpawns();
                     this.sortMoveLearnMethods();
                     this.sortForms();
                     this.applyInitialSorting();
@@ -174,43 +173,78 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     public hideEventExclusiveSpawns() {
+        if (!this.model.pokemon) return;
+        
         this.model.areEventExclusiveSpawnsHidden = true;
-        if(this.model.pokemon) {
-            this.model.visibleSpawns = [];
-            let today = this.getTodaysDate().split("/");
+        this.model.visibleSpawns = [];
 
-            for (let spawn of this.model.pokemon.spawns){
-                if(spawn.isEvent){
-                    //Source https://stackoverflow.com/a/16080662
-                    var eventStartDate = this.convertDate(spawn.eventStartDate).split("/");
-                    var eventEndDate = this.convertDate(spawn.eventEndDate).split("/");
+        this.checkAreNoEventSpawnsAvailable(this.model.pokemon.spawns);
 
-                    var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
-                    var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
-                    var check = new Date(parseInt(today[2]), parseInt(today[1])-1, parseInt(today[0]));
-
-                    if (check >= from && check <= to) {
-                        this.model.visibleSpawns.push(spawn);
-                    }
-                }
-                else{
+        for (let spawn of this.model.pokemon.spawns){
+            if(spawn.isEvent){
+                if(this.isSpawnCurrentlyAvailable(spawn)){
                     this.model.visibleSpawns.push(spawn);
                 }
             }
-            if(this.model.visibleSpawns.length === 0){
-                this.model.areOnlyEventExclusiveSpawnsAvailable = true;
-                this.model.visibleSpawns = this.model.pokemon.spawns;
-            }
             else{
-                this.model.areOnlyEventExclusiveSpawnsAvailable = false;
+                this.model.visibleSpawns.push(spawn);
             }
         }
+
+        //if only event-exclusive spawns are available that are not active show them and disable (un-)hide button
+        if(this.model.visibleSpawns.length === 0){
+            this.model.areOnlyEventExclusiveSpawnsAvailable = true;
+            for (let spawn of this.model.pokemon.spawns){
+                this.model.visibleSpawns.push(spawn);
+            }
+        }
+        else{
+            this.model.areOnlyEventExclusiveSpawnsAvailable = false;
+        }
+        this.sortSpawns(this.model.spawnsSortedByColumn, this.model.spawnsSortDirection);
+    }
+
+    private isSpawnCurrentlyAvailable(spawn: ISpawnModel){
+        //Source https://stackoverflow.com/a/16080662
+        var todaysDate = this.getTodaysDate().split("/");
+        var eventStartDate = this.convertDate(spawn.eventStartDate).split("/");
+        var eventEndDate = this.convertDate(spawn.eventEndDate).split("/");
+
+        var from = new Date(parseInt(eventStartDate[2]), parseInt(eventStartDate[1])-1, parseInt(eventStartDate[0]));  // -1 because months are from 0 to 11
+        var to   = new Date(parseInt(eventEndDate[2]), parseInt(eventEndDate[1])-1, parseInt(eventEndDate[0]));
+        var check = new Date(parseInt(todaysDate[2]), parseInt(todaysDate[1])-1, parseInt(todaysDate[0]));
+
+        if (check >= from && check <= to) {
+            return true;
+        }
+        return false;
     }
     
     public showEventExclusiveSpawns() {
         this.model.areEventExclusiveSpawnsHidden = false;
+        this.model.visibleSpawns = [];
+
         if(this.model.pokemon) {
             this.model.visibleSpawns = this.model.pokemon.spawns;
+            this.checkAreNoEventSpawnsAvailable(this.model.pokemon.spawns);
+        }
+        this.sortSpawns(this.model.spawnsSortedByColumn, this.model.spawnsSortDirection);
+    }
+
+    private checkAreNoEventSpawnsAvailable(pokemonSpawns: ISpawnModel[]) {
+        let eventCounter = 0;
+
+        for(let spawn of pokemonSpawns) {
+            if(spawn.isEvent) {
+                eventCounter =+ 1;
+            }
+        }
+
+        if(eventCounter === 0) {
+            this.model.areNoEventSpawnsAvailable = true;
+        }
+        else{
+            this.model.areNoEventSpawnsAvailable = false;
         }
     }
 
@@ -319,9 +353,9 @@ export class PokemonDetailComponent implements OnInit {
     private applyInitialSorting() {
         if (!this.model.pokemon) return;
 
-        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.SpawnType, 1);
-        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.Location, 1);
-        this.model.pokemon.spawns = this.sortService.sortSpawns(this.model.pokemon.spawns, SpawnListColumn.Rarity, 1);
+        this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.SpawnType, 1);
+        this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Location, 1);
+        this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Rarity, 1);
         this.model.learnableMoves = this.sortService.sortMoves(this.model.learnableMoves, MoveListColumn.Power, 1);
     }
 

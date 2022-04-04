@@ -14,6 +14,7 @@ export class PokemonDetailModel {
     public spawnsSortDirection: number = 1;
     public areEventExclusiveSpawnsHidden: boolean = true;
     public areOnlyEventExclusiveSpawnsAvailable: boolean = false;
+    public areNoEventSpawnsAvailable: boolean = false;
     public visibleSpawns: ISpawnModel[] = [];
 
     public movesSortedByColumn: MoveListColumn = MoveListColumn.Power;

@@ -646,7 +646,7 @@
 
         <h2 name="spawns">Spawns</h2>
         <div *ngIf="model.visibleSpawns.length > 0">
-            <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable">
+            <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable">
                 <button *ngIf="!model.areEventExclusiveSpawnsHidden" type="button" (click)="hideEventExclusiveSpawns()">
                     Hide inactive event-exclusive spawns
                 </button>
@@ -655,7 +655,7 @@
                 </button>
             </div>
             <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable">
-                <p class="empty">This Pokémon is only obtainable while events are running in PokéOne, thus showing event-exclusive spawns.</p>
+                <p class="empty" style="color: var(--text-accent)">This Pokémon was only available during events in the past</p>
             </div>
             <br>
         </div>
