@@ -6,6 +6,7 @@ describe('Pokemon Detail Component', () => {
     let srtService: any
     let titService: any
     let url: any
+    let dateService: any
     let component: PokemonDetailComponent
 
     beforeEach(() => {
@@ -17,7 +18,8 @@ describe('Pokemon Detail Component', () => {
         srtService = jasmine.createSpy('PokemonDetailSortService')
         titService = jasmine.createSpy('Title')
         url = jasmine.createSpy('PokemonUrlService')
-        component = new PokemonDetailComponent(route,pkmService,srtService,titService,url);
+        dateService = jasmine.createSpy('DateService')
+        component = new PokemonDetailComponent(route,pkmService,srtService,titService,dateService,url);
     });
 
     // describe which Method is being tested
