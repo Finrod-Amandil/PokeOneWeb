@@ -413,7 +413,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .Where(hc => varietyIds.Contains(hc.PokemonVarietyId))
                 .OrderBy(hc => hc.PokemonVariety.DefaultForm.SortIndex)
-                .ToList()
+                .AsEnumerable()
                 .Select(hc => new HuntingConfigurationReadModel
                 {
                     ApplicationDbId = hc.Id,
@@ -473,7 +473,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .ThenInclude(t => t.SeasonTimes)
                 .ThenInclude(st => st.Season)
                 .AsNoTracking()
-                .ToList()
+                .AsEnumerable()
                 .SelectMany(f => f.PokemonSpawns)
                 .Select(GetSpawnReadModel)
                 .ToList();

@@ -23,7 +23,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves
                 .Include(lm => lm.Move)
                 .Include(lm => lm.LearnMethods)
                 .AsNoTracking()
-                .ToList()
+                .AsEnumerable()
                 .Where(learnableMove => learnableMove.LearnMethods.Any(learnMethod => learnMethod.IsAvailable))
                 .Select(learnableMove => new SimpleLearnableMoveReadModel
                 {
