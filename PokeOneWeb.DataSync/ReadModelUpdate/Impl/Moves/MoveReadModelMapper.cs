@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Moves
 {
@@ -16,7 +16,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Moves
             _dbContext = dbContext;
         }
 
-        public IDictionary<MoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<MoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.Moves
                 .Include(m => m.DamageClass)
