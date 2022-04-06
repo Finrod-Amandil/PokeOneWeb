@@ -1,0 +1,43 @@
+.home-welcomecontainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.home-welcomecontainer h1{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-searchcontainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.home-searchcontainer input{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-navigationcontainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.home-navigationcontainer table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    border-spacing: 10px;
+    border-collapse: separate;
+}
