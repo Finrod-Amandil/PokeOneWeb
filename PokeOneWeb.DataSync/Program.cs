@@ -1,15 +1,15 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
 using PokeOneWeb.DataSync.ReadModelUpdate;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PokeOneWeb.DataSync
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
