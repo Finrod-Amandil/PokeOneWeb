@@ -12,13 +12,14 @@
             <h1 >Welcome to the Unofficial PokéOne Guide!</h1>
         </div>
         <div class="home-searchcontainer">
+            <!--Source https://codepen.io/ahmadbassamemran/pen/rNjMXqg-->
             <div class="search-box">
                 <button class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" class="input-search" placeholder="Type to Search...">
             </div>
         </div>
         <div class="home-navigationcontainer">
-            <table>
+            <table aria-label="table for glass buttons">
                 <tr>
                     <td>
                         <app-glass-button buttonTitle="Pokédex" buttonImage="./assets/img/navbar/pokedex.png" linkDestination="/p"></app-glass-button>
@@ -26,15 +27,15 @@
                     <td>
                         <app-glass-button buttonTitle="Itemdex" buttonImage="./assets/img/navbar/items.png" linkDestination="/i"></app-glass-button>
                     </td>
-                    <th>
+                    <td>
                         <app-glass-button buttonTitle="Region overview" buttonImage="./assets/img/navbar/locations.png" linkDestination="/l"></app-glass-button>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <app-glass-button buttonTitle="Guide overview" buttonImage="./assets/img/navbar/guides.png" linkDestination="/g"></app-glass-button>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <app-glass-button buttonTitle="FAQ" buttonImage="./assets/img/navbar/faq.png" linkDestination="/faq"></app-glass-button>
-                    </th>
+                    </td>
                 </tr>
             </table>
         </div>
