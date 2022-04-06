@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using PokeOneWeb.Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
-using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -36,10 +36,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 var dbIdHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].IdHash : null;
                 var dbContentHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].ContentHash : null;
 
-                var contentCmp =
-                    sheetIdHash == null ? -1 :
-                    dbIdHash == null ? 1 :
-                    string.Compare(sheetIdHash, dbIdHash, StringComparison.Ordinal);
+                var contentCmp = CompareIdHashes(sheetIdHash, dbIdHash);
 
                 if (contentCmp == 0)
                 {
@@ -68,6 +65,21 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             result.RowsToUpdate = SortHashesByOriginalOrder(result.RowsToUpdate, sheetHashes);
 
             return result;
+        }
+
+        private static int CompareIdHashes(string sheetIdHash, string dbIdHash)
+        {
+            if (sheetIdHash == null)
+            {
+                return -1;
+            }
+
+            if (dbIdHash == null)
+            {
+                return 1;
+            }
+
+            return string.Compare(sheetIdHash, dbIdHash, StringComparison.Ordinal);
         }
 
         private void CheckForHashCollisions(IList<RowHash> hashes)
