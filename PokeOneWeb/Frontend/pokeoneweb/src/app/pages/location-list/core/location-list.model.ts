@@ -9,7 +9,7 @@ export class LocationListModel {
     public sortColumn: LocationListColumn = LocationListColumn.Name;
     public sortDirection = 1;
 
-    public bagCategories: string[] = [];
+    public regionName: string = "";
 
     public filter: LocationListFilterModel = new LocationListFilterModel();
 }
