@@ -1,8 +1,8 @@
-﻿using System;
+﻿using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 {
@@ -134,7 +134,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 return seasons;
             }
 
-            foreach (var abbreviation in dto.Season.ToCharArray())
+            foreach (var abbreviation in dto.Season)
             {
                 if (_seasons.ContainsKey(string.Empty + abbreviation))
                 {
@@ -176,7 +176,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 return timesOfDay;
             }
 
-            foreach (var abbreviation in dto.TimeOfDay.ToCharArray())
+            foreach (var abbreviation in dto.TimeOfDay)
             {
                 if (_timesOfDay.ContainsKey(string.Empty + abbreviation))
                 {
