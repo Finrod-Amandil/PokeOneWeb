@@ -22,6 +22,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
         private readonly Mock<IReadModelMapper<PokemonVarietyReadModel>> _pokemonVarietyMapperMock;
         private readonly Mock<IReadModelMapper<ItemReadModel>> _itemMapperMock;
         private readonly Mock<IReadModelMapper<RegionReadModel>> _regionMapperMock;
+        private readonly Mock<IReadModelMapper<LocationGroupReadModel>> _locationGroupMapperMock;
         private readonly Mock<IReadModelRepository<EntityTypeReadModel>> _entityTypeRepositoryMock;
         private readonly Mock<IReadModelRepository<ItemStatBoostPokemonReadModel>> _itemStatBoostPokemonRepositoryMock;
         private readonly Mock<IReadModelRepository<SimpleLearnableMoveReadModel>> _simpleLearnableMoveRepositoryMock;
@@ -30,6 +31,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
         private readonly Mock<IReadModelRepository<PokemonVarietyReadModel>> _pokemonVarietyRepositoryMock;
         private readonly Mock<IReadModelRepository<ItemReadModel>> _itemRepositoryMock;
         private readonly Mock<IReadModelRepository<RegionReadModel>> _regionRepositoryMock;
+        private readonly Mock<IReadModelRepository<LocationGroupReadModel>> _locationGroupRepositoryMock;
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
 
         #endregion Mocks
@@ -46,6 +48,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _pokemonVarietyMapperMock = new Mock<IReadModelMapper<PokemonVarietyReadModel>>();
             _itemMapperMock = new Mock<IReadModelMapper<ItemReadModel>>();
             _regionMapperMock = new Mock<IReadModelMapper<RegionReadModel>>();
+            _locationGroupMapperMock = new Mock<IReadModelMapper<LocationGroupReadModel>>();
             _entityTypeRepositoryMock = new Mock<IReadModelRepository<EntityTypeReadModel>>();
             _itemStatBoostPokemonRepositoryMock = new Mock<IReadModelRepository<ItemStatBoostPokemonReadModel>>();
             _simpleLearnableMoveRepositoryMock = new Mock<IReadModelRepository<SimpleLearnableMoveReadModel>>();
@@ -54,6 +57,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _pokemonVarietyRepositoryMock = new Mock<IReadModelRepository<PokemonVarietyReadModel>>();
             _itemRepositoryMock = new Mock<IReadModelRepository<ItemReadModel>>();
             _regionRepositoryMock = new Mock<IReadModelRepository<RegionReadModel>>();
+            _locationGroupRepositoryMock = new Mock<IReadModelRepository<LocationGroupReadModel>>();
             _reporterMock = new Mock<ISpreadsheetImportReporter>();
 
             _readModelUpdateService = new ReadModelUpdateService(_entityTypeMapperMock.Object,
@@ -64,6 +68,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
                 _pokemonVarietyMapperMock.Object,
                 _itemMapperMock.Object,
                 _regionMapperMock.Object,
+                _locationGroupMapperMock.Object,
                 _entityTypeRepositoryMock.Object,
                 _itemStatBoostPokemonRepositoryMock.Object,
                 _simpleLearnableMoveRepositoryMock.Object,
@@ -72,6 +77,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
                 _pokemonVarietyRepositoryMock.Object,
                 _itemRepositoryMock.Object,
                 _regionRepositoryMock.Object,
+                _locationGroupRepositoryMock.Object,
                 _reporterMock.Object);
         }
 
@@ -93,6 +99,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _itemMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _regionMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
+            _locationGroupMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Once());
             _entityTypeRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<EntityTypeReadModel, DbAction>>()), Times.Once());
             _itemStatBoostPokemonRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemStatBoostPokemonReadModel, DbAction>>()), Times.Once());
             _simpleLearnableMoveRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<SimpleLearnableMoveReadModel, DbAction>>()), Times.Once());
@@ -101,9 +108,10 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _pokemonVarietyRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<PokemonVarietyReadModel, DbAction>>()), Times.Once());
             _itemRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemReadModel, DbAction>>()), Times.Once());
             _regionRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<RegionReadModel, DbAction>>()), Times.Once());
-            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(8));
+            _locationGroupRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<LocationGroupReadModel, DbAction>>()), Times.Once());
+            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(9));
             _reporterMock.Verify(m => m.StartReadModelUpdate(), Times.Once());
-            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(8));
+            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(9));
             _reporterMock.Verify(m => m.StopReadModelUpdate(), Times.Once());
         }
     }

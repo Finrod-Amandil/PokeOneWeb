@@ -39,6 +39,7 @@ namespace PokeOneWeb.WebApi
             services.AddScoped<INatureApiService, NatureApiService>();
             services.AddScoped<IPokemonApiService, PokemonApiService>();
             services.AddScoped<IRegionApiService, RegionApiService>();
+            services.AddScoped<ILocationGroupApiService, LocationGroupApiService>();
 
             services.AddCors(options =>
             {
