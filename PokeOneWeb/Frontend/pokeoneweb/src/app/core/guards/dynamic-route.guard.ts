@@ -80,7 +80,7 @@ export class DynamicRouteGuard implements CanActivate {
                     return;
             }
 
-            routes.slice(wildCardRouteIndex + 1).forEach((route) => {
+            routes.slice(wildCardRouteIndex).forEach((route) => {
                 newRoutes.push(route);
             });
 

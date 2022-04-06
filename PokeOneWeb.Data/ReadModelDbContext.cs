@@ -26,6 +26,8 @@ namespace PokeOneWeb.Data
 
         public DbSet<RegionReadModel> RegionReadModels { get; set; }
 
+        public DbSet<LocationGroupReadModel> LocationGroupReadModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EntityTypeReadModel>()
