@@ -1,4 +1,5 @@
 <head>
+    <title>Pokeoneweb</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
@@ -14,28 +15,30 @@
         <div class="home-searchcontainer">
             <!--Source https://codepen.io/ahmadbassamemran/pen/rNjMXqg-->
             <div class="search-box">
-                <button class="btn-search"><i class="fas fa-search"></i></button>
+                <button class="btn-search">
+                    <em class="fas fa-search"></em>
+                </button>
                 <input type="text" class="input-search" placeholder="Type to Search...">
             </div>
         </div>
         <div class="home-navigationcontainer">
             <table aria-label="table for glass buttons">
                 <tr>
-                    <td>
+                    <th>
                         <app-glass-button buttonTitle="Pokédex" buttonImage="./assets/img/navbar/pokedex.png" linkDestination="/p"></app-glass-button>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <app-glass-button buttonTitle="Itemdex" buttonImage="./assets/img/navbar/items.png" linkDestination="/i"></app-glass-button>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <app-glass-button buttonTitle="Region overview" buttonImage="./assets/img/navbar/locations.png" linkDestination="/l"></app-glass-button>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <app-glass-button buttonTitle="Guide overview" buttonImage="./assets/img/navbar/guides.png" linkDestination="/g"></app-glass-button>
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         <app-glass-button buttonTitle="FAQ" buttonImage="./assets/img/navbar/faq.png" linkDestination="/faq"></app-glass-button>
-                    </td>
+                    </th>
                 </tr>
             </table>
         </div>
