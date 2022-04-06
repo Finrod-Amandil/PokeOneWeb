@@ -85,6 +85,17 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
             return spawn;
         }
 
+        private static SpawnOpportunity MapSpawnOpportunity(Season season, TimeOfDay timeOfDay)
+        {
+            var spawnOpportunity = new SpawnOpportunity
+            {
+                Season = season,
+                TimeOfDay = timeOfDay
+            };
+
+            return spawnOpportunity;
+        }
+
         private List<SpawnOpportunity> MapSpawnOpportunities(
             SpawnSheetDto dto)
         {
@@ -96,17 +107,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 from timeOfDay in timesOfDay
                 select MapSpawnOpportunity(season, timeOfDay))
             .ToList();
-        }
-
-        private SpawnOpportunity MapSpawnOpportunity(Season season, TimeOfDay timeOfDay)
-        {
-            var spawnOpportunity = new SpawnOpportunity
-            {
-                Season = season,
-                TimeOfDay = timeOfDay
-            };
-
-            return spawnOpportunity;
         }
 
         private List<Season> MapSeasons(SpawnSheetDto dto)

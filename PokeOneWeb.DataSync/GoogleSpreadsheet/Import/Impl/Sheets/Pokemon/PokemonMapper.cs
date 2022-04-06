@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 {
@@ -67,6 +67,16 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             form.SpriteName = dto.SpriteName;
 
             return form;
+        }
+
+        private static PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
+        {
+            return dto.DefaultFormName.EqualsExact(form?.Name) ? form : new PokemonForm { Name = dto.DefaultFormName };
+        }
+
+        private static PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
+        {
+            return dto.DefaultVarietyName.EqualsExact(variety?.Name) ? variety : new PokemonVariety { Name = dto.DefaultVarietyName };
         }
 
         private PokemonVariety MapPokemonVariety(PokemonSheetDto dto, PokemonVariety variety = null)
@@ -282,16 +292,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
 
             return type;
-        }
-
-        private PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
-        {
-            return dto.DefaultFormName.EqualsExact(form?.Name) ? form : new PokemonForm { Name = dto.DefaultFormName };
-        }
-
-        private PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
-        {
-            return dto.DefaultVarietyName.EqualsExact(variety?.Name) ? variety : new PokemonVariety { Name = dto.DefaultVarietyName };
         }
 
         private void AddUrls(PokemonVariety variety, PokemonSheetDto dto)

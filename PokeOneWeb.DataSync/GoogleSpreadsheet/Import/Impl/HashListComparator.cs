@@ -82,6 +82,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return string.Compare(sheetIdHash, dbIdHash, StringComparison.Ordinal);
         }
 
+        private static List<RowHash> SortHashesByOriginalOrder(List<RowHash> hashesToSort, List<RowHash> sortedHashes)
+        {
+            return hashesToSort.OrderBy(sortedHashes.IndexOf).ToList();
+        }
+
         private void CheckForHashCollisions(IList<RowHash> hashes)
         {
             var previous = string.Empty;
@@ -97,11 +102,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
                 previous = current;
             }
-        }
-
-        private List<RowHash> SortHashesByOriginalOrder(List<RowHash> hashesToSort, List<RowHash> sortedHashes)
-        {
-            return hashesToSort.OrderBy(sortedHashes.IndexOf).ToList();
         }
     }
 }
