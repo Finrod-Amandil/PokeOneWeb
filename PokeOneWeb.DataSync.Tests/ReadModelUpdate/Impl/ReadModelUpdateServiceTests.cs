@@ -65,7 +65,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _regionMapperMock.SetReturnsDefault((IDictionary<RegionReadModel, DbAction>)new Dictionary<RegionReadModel, DbAction>());
 
             _locationGroupMapperMock = new Mock<IReadModelMapper<LocationGroupReadModel>>();
-            _locationGroupMapperMock.SetReturnsDefault((IDictionary<RegionReadModel, DbAction>)new Dictionary<RegionReadModel, DbAction>());
+            _locationGroupMapperMock.SetReturnsDefault((IDictionary<LocationGroupReadModel, DbAction>)new Dictionary<LocationGroupReadModel, DbAction>());
 
             _entityTypeRepositoryMock = new Mock<IReadModelRepository<EntityTypeReadModel>>();
             _itemStatBoostPokemonRepositoryMock = new Mock<IReadModelRepository<ItemStatBoostPokemonReadModel>>();
@@ -129,9 +129,9 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _regionRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<RegionReadModel, DbAction>>()), Times.Once());
             _locationGroupRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<LocationGroupReadModel, DbAction>>()), Times.Once());
             
-            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(9));
+            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(10));
             _reporterMock.Verify(m => m.StartReadModelUpdate(), Times.Once());
-            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(9));
+            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(10));
             _reporterMock.Verify(m => m.StopReadModelUpdate(), Times.Once());
         }
     }
