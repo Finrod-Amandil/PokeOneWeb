@@ -4,6 +4,7 @@ using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
@@ -75,7 +76,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         public void UpdateReadModel(SpreadsheetImportReport importReport)
         {
             _reporter.StartReadModelUpdate();
-            
+
             _reporter.StartReadModelUpdate("entityTypes");
             _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("entityTypes");
@@ -107,7 +108,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _reporter.StartReadModelUpdate("regions");
             _regionRepository.Update(_regionMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("regions");
-            
+
             _reporter.StartReadModelUpdate("locationGroups");
             _locationGroupRepository.Update(_locationGroupMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("locationGroups");
@@ -217,12 +218,15 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             // location groups
             Console.WriteLine("generating json files for location groups");
             ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/location-groups.json", JsonSerializer.Serialize(locationGroups, serializeOptions));
+            File.WriteAllText("resources/location-groups.json", JsonSerializer.Serialize(locationGroups.
+                GroupBy(g => g.RegionResourceName).
+                ToDictionary(g => g.Key, g => g.ToList()), serializeOptions));
 
             foreach (var locationGroup in locationGroups)
             {
                 File.WriteAllText("resources/location-groups/" + locationGroup.ResourceName + ".json", JsonSerializer.Serialize(locationGroup, serializeOptions));
             }
+
         }
 
         private void CreateDirectories()

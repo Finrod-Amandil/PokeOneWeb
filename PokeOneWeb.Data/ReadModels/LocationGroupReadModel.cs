@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     public class LocationGroupReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
-        [Required]
+        [Required, JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string ResourceName { get; set; }
