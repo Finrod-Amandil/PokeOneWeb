@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -23,11 +23,10 @@ namespace PokeOneWeb.Data.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// For NPC-based methods, a list of all locations where this kind of NPC
+        /// Gets or sets for NPC-based methods, a list of all locations where this kind of NPC
         /// can be found.
         /// </summary>
         public List<MoveLearnMethodLocation> Locations { get; set; } = new();
-
 
         public override string ToString()
         {

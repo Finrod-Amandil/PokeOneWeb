@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Availabilitie
 {
     public class AvailabilityMapper : SpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability>
     {
-        public AvailabilityMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public AvailabilityMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.PokemonAvailability;
 
@@ -22,7 +24,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Availabilitie
         }
 
         protected override PokemonAvailability MapEntity(
-            AvailabilitySheetDto dto, 
+            AvailabilitySheetDto dto,
             RowHash rowHash,
             PokemonAvailability availability = null)
         {

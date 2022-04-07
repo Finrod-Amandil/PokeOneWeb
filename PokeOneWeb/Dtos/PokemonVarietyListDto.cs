@@ -40,4 +40,3 @@ namespace PokeOneWeb.WebApi.Dtos
         public string Notes { get; set; }
     }
 }
-

@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Moves;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Moves
@@ -131,7 +131,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Moves
             var parser = new MoveSheetRowParser();
             var values = new List<object>()
             {
-                "0", false, "0", "0", "0", 0, 0, 0, 0, "", "excessive value"
+                "0", false, "0", "0", "0", 0, 0, 0, 0, string.Empty, "excessive value"
             };
 
             // Act

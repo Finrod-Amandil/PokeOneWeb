@@ -1,7 +1,8 @@
-<div 
-    *ngFor="let season of seasons" 
-    class="season-badge" 
+<div
+    *ngFor="let season of seasons"
+    class="season-badge"
     [ngClass]="{'season-badge-any': season.abbreviation === 'Any'}"
-    [style]="'background-color: ' + season.color + '; color: ' + getTextColor(season.color)">
+    [style]="'background-color: ' + season.color + '; color: ' + getTextColor(season.color)"
+>
     {{season.abbreviation}}
 </div>

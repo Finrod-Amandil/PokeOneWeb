@@ -27,19 +27,20 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
@@ -50,7 +51,6 @@ namespace PokeOneWeb.Data.Entities
         public bool IsInfinite { get; set; }
 
         public string Color { get; set; }
-
 
         public override string ToString()
         {

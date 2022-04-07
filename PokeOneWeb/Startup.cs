@@ -42,6 +42,7 @@ namespace PokeOneWeb.WebApi
             services.AddScoped<INatureApiService, NatureApiService>();
             services.AddScoped<IPokemonApiService, PokemonApiService>();
             services.AddScoped<IRegionApiService, RegionApiService>();
+            services.AddScoped<ILocationGroupApiService, LocationGroupApiService>();
 
             services.AddCors(options =>
             {
@@ -52,7 +53,7 @@ namespace PokeOneWeb.WebApi
                     .SetIsOriginAllowed(host => true));
             });
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts
 {
@@ -9,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoost
         private readonly Dictionary<string, ItemStatBoost> _itemStatBoosts = new();
         private readonly Dictionary<string, PokemonVariety> _pokemonVarieties = new();
 
-        public ItemStatBoostMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public ItemStatBoostMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.ItemStatBoostPokemon;
 
@@ -24,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoost
         }
 
         protected override ItemStatBoostPokemon MapEntity(
-            ItemStatBoostSheetDto dto, 
+            ItemStatBoostSheetDto dto,
             RowHash rowHash,
             ItemStatBoostPokemon itemStatBoostPokemon = null)
         {

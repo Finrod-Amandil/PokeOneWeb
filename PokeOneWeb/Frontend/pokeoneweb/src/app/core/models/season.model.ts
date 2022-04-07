@@ -1,4 +1,4 @@
-export interface ISeasonModel { 
+export interface ISeasonModel {
     sortIndex: number;
     abbreviation: string;
     name: string;

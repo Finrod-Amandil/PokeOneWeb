@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMoves;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMoves
@@ -166,14 +166,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
 
             var moveTutorName = "Move Tutor Name";
             var moveName = "Move Name";
-            var redShardPrice = "";
-            var blueShardPrice = "";
-            var greenShardPrice = "";
-            var yellowShardPrice = "";
-            var pwtBpPrice = "";
-            var bfBpPrice = "";
-            var pokeDollarPrice = "";
-            var pokeGoldPrice = "";
+            var redShardPrice = string.Empty;
+            var blueShardPrice = string.Empty;
+            var greenShardPrice = string.Empty;
+            var yellowShardPrice = string.Empty;
+            var pwtBpPrice = string.Empty;
+            var bfBpPrice = string.Empty;
+            var pokeDollarPrice = string.Empty;
+            var pokeGoldPrice = string.Empty;
 
             var values = new List<object>
             {

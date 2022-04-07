@@ -1,4 +1,4 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 

@@ -9,7 +9,7 @@
 
         public string MoveName { get; set; }
 
-       public string LearnMethod { get; set; }
+        public string LearnMethod { get; set; }
 
         public bool IsAvailable { get; set; }
 

@@ -6,7 +6,7 @@ export interface IHuntingConfigurationModel {
     ability: string;
 }
 
-export class HuntingConfigurationModel implements IHuntingConfigurationModel { 
+export class HuntingConfigurationModel implements IHuntingConfigurationModel {
     pokemonResourceName = '';
     pokemonName = '';
     nature = '';

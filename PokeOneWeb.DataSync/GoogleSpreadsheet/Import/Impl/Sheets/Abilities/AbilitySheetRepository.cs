@@ -11,7 +11,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
             ISheetRowParser<AbilitySheetDto> parser,
             ISpreadsheetEntityMapper<AbilitySheetDto, Ability> mapper,
             ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
-        { }
+        {
+        }
 
         protected override DbSet<Ability> DbSet => DbContext.Abilities;
 

@@ -4,6 +4,7 @@ using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
@@ -18,6 +19,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         private readonly IReadModelMapper<PokemonVarietyReadModel> _pokemonVarietyMapper;
         private readonly IReadModelMapper<ItemReadModel> _itemMapper;
         private readonly IReadModelMapper<RegionReadModel> _regionMapper;
+        private readonly IReadModelMapper<LocationGroupReadModel> _locationGroupMapper;
         private readonly IReadModelRepository<EntityTypeReadModel> _entityTypeRepository;
         private readonly IReadModelRepository<ItemStatBoostPokemonReadModel> _itemStatBoostPokemonRepository;
         private readonly IReadModelRepository<SimpleLearnableMoveReadModel> _simpleLearnableMoveRepository;
@@ -26,6 +28,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         private readonly IReadModelRepository<PokemonVarietyReadModel> _pokemonVarietyRepository;
         private readonly IReadModelRepository<ItemReadModel> _itemRepository;
         private readonly IReadModelRepository<RegionReadModel> _regionRepository;
+        private readonly IReadModelRepository<LocationGroupReadModel> _locationGroupRepository;
         private readonly ISpreadsheetImportReporter _reporter;
 
         public ReadModelUpdateService(
@@ -37,7 +40,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             IReadModelMapper<PokemonVarietyReadModel> pokemonVarietyMapper,
             IReadModelMapper<ItemReadModel> itemMapper,
             IReadModelMapper<RegionReadModel> regionMapper,
-
+            IReadModelMapper<LocationGroupReadModel> locationGroupMapper,
             IReadModelRepository<EntityTypeReadModel> entityTypeRepository,
             IReadModelRepository<ItemStatBoostPokemonReadModel> itemStatBoostPokemonRepository,
             IReadModelRepository<SimpleLearnableMoveReadModel> simpleLearnableMoveRepository,
@@ -46,7 +49,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             IReadModelRepository<PokemonVarietyReadModel> pokemonVarietyRepository,
             IReadModelRepository<ItemReadModel> itemRepository,
             IReadModelRepository<RegionReadModel> regionRepository,
-            
+            IReadModelRepository<LocationGroupReadModel> locationGroupRepository,
             ISpreadsheetImportReporter reporter)
         {
             _entityTypeMapper = entityTypeMapper;
@@ -57,6 +60,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _pokemonVarietyMapper = pokemonVarietyMapper;
             _itemMapper = itemMapper;
             _regionMapper = regionMapper;
+            _locationGroupMapper = locationGroupMapper;
             _entityTypeRepository = entityTypeRepository;
             _itemStatBoostPokemonRepository = itemStatBoostPokemonRepository;
             _simpleLearnableMoveRepository = simpleLearnableMoveRepository;
@@ -65,13 +69,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _pokemonVarietyRepository = pokemonVarietyRepository;
             _itemRepository = itemRepository;
             _regionRepository = regionRepository;
+            _locationGroupRepository = locationGroupRepository;
             _reporter = reporter;
         }
 
         public void UpdateReadModel(SpreadsheetImportReport importReport)
         {
             _reporter.StartReadModelUpdate();
-            
+
             _reporter.StartReadModelUpdate("entityTypes");
             _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("entityTypes");
@@ -103,6 +108,10 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _reporter.StartReadModelUpdate("regions");
             _regionRepository.Update(_regionMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("regions");
+
+            _reporter.StartReadModelUpdate("locationGroups");
+            _locationGroupRepository.Update(_locationGroupMapper.MapFromDatabase(importReport));
+            _reporter.StopReadModelUpdate("locationGroups");
 
             _reporter.StartReadModelUpdate("generate-json-files");
             GenerateJsonFiles(importReport);
@@ -205,6 +214,19 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             {
                 File.WriteAllText("resources/regions/" + region.ResourceName + ".json", JsonSerializer.Serialize(region, serializeOptions));
             }
+
+            // location groups
+            Console.WriteLine("generating json files for location groups");
+            ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/location-groups.json", JsonSerializer.Serialize(locationGroups.
+                GroupBy(g => g.RegionResourceName).
+                ToDictionary(g => g.Key, g => g.ToList()), serializeOptions));
+
+            foreach (var locationGroup in locationGroups)
+            {
+                File.WriteAllText("resources/location-groups/" + locationGroup.ResourceName + ".json", JsonSerializer.Serialize(locationGroup, serializeOptions));
+            }
+
         }
 
         private void CreateDirectories()
@@ -218,6 +240,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                 "resources/varieties",
                 "resources/items",
                 "resources/regions",
+                "resources/location-groups",
             };
 
             foreach (string directory in directories)

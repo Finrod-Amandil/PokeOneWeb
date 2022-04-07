@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { INatureModel } from '../../models/nature.model';
@@ -9,7 +9,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class NatureService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 

@@ -1,20 +1,20 @@
 .season-badge {
-  display: inline-block;
-  position: relative;
-  border: 1px solid black;
-  width: 26px;
-  height: 26px;
-  border-radius: 13px;
-  text-align: center;
-  font-weight: 700;
-  color: var(--light-gray);
-  padding-top: 1px;
-  padding-left: 1px;
-  cursor: help;
+    display: inline-block;
+    position: relative;
+    border: 1px solid black;
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--light-gray);
+    padding-top: 1px;
+    padding-left: 1px;
+    cursor: help;
 }
 
 .season-badge-any {
-  width: 78px;
-  background-color: var(--medium-gray-lighter);
-  cursor: initial;
+    width: 78px;
+    background-color: var(--medium-gray-lighter);
+    cursor: initial;
 }

@@ -1,4 +1,4 @@
-export interface IItemListModel{
+export interface IItemListModel {
     resourceName: string;
     sortIndex: number;
     name: string;

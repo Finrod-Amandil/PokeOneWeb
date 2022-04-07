@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { IFieldBoostModel } from "../models/field-boost.model";
+import { Injectable } from '@angular/core';
+import { IFieldBoostModel } from '../models/field-boost.model';
 
 @Injectable({
     providedIn: 'root'
@@ -56,7 +56,7 @@ export class FieldBoostService {
                 speedBoost: 1,
                 hitPointsBoost: 1,
                 active: false
-            },
+            }
         ];
     }
 }
