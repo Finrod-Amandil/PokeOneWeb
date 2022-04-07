@@ -33,7 +33,7 @@ export class LocationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle(`Locations - ${WEBSITE_NAME}`);
+    this.titleService.setTitle(`Location - ${WEBSITE_NAME}`);
 
     this.route.queryParams.subscribe(params => {
       this.model.regionName = params['regionName'];

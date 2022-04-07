@@ -1,0 +1,62 @@
+[{
+        "resourceName": "pallet-town",
+        "name": "Pallet Town",
+        "sortIndex": 1000,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "route-1",
+        "name": "Route 1",
+        "sortIndex": 1001,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "viridian-city",
+        "name": "Viridian City",
+        "sortIndex": 1002,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "route-22",
+        "name": "Route 22",
+        "sortIndex": 1003,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "route-2",
+        "name": "Route 2",
+        "sortIndex": 1004,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "viridian-forest",
+        "name": "Viridian Forest",
+        "sortIndex": 1007,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "pewter-city",
+        "name": "Pewter City",
+        "sortIndex": 1008,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "route-3",
+        "name": "Route 3",
+        "sortIndex": 1009,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "mt-moon",
+        "name": "Mt. Moon",
+        "sortIndex": 1010,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }, {
+        "resourceName": "route-4",
+        "name": "Route 4",
+        "sortIndex": 1015,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }
+]

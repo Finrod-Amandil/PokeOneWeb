@@ -1,5 +1,5 @@
 <div id="content_title_container">
-    <div id="content_title">Locations in {{model.regionName}}</div>
+    <div id="content_title">{{model.regionName}}</div>
 </div>
 
 <div id="content_main_container">
@@ -30,12 +30,12 @@
         </tbody>
     </table>
 
-    <p *ngIf="model.displayedLocationModels.length > 0" class="item-list-title">
+    <p *ngIf="model.displayedLocationModels.length > 0" class="location-list-title">
         Showing {{model.displayedLocationModels.length}} of {{model.locationModels.length}} Locations
     </p>
 
     <div *ngIf="model.displayedLocationModels.length > 0">
-        <table class="main-table sortable rows-clickable" id="item_list">
+        <table class="main-table sortable rows-clickable" id="location_list">
             <thead>
                 <tr>
                     <th class="col-name">
@@ -68,7 +68,7 @@
         </table>
     </div>
 
-    <p *ngIf="model.displayedLocationModels.length === 0" class="item-list-empty">
+    <p *ngIf="model.displayedLocationModels.length === 0" class="location-list-empty">
         No Locations to display. Try to adjust your search criteria.
     </p>
 </div>

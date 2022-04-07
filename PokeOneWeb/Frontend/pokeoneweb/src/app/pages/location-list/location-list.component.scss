@@ -3,42 +3,42 @@
     min-width: 300px;
 }
 
-p.item-list-title,
-p.item-list-empty {
+p.location-list-title,
+p.location-list-empty {
     color: var(--light-gray);
     font-size: 24px;
 }
 
-#item_list tr {
+#location_list tr {
     margin-top: 2px;
 }
 
-#item_list .col-availability {
+#location_list .col-availability {
     width: 30px;
     padding: 0;
     padding-top: 4px;
     padding-left: 1px;
 }
 
-#item_list td.col-availability {
+#location_list td.col-availability {
     border: 1px solid black;
 }
 
-#item_list td.col-sprite img {
+#location_list td.col-sprite img {
     width: 30px;
     height: 30px;
 }
 
-#item_list td.col-name {
+#location_list td.col-name {
     width: 160px;
     font-weight: 300;
     font-size: 20px;
 }
 
-#item_list td.col-bagcategory {
+#location_list td.col-bagcategory {
     width: 120px;
 }
 
-#item_list td.col-description {
+#location_list td.col-description {
     width: 400px;
 }
