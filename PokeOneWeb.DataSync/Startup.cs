@@ -44,6 +44,7 @@ using PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves;
+using PokeOneWeb.DataSync.ReadModelUpdate.Impl.LocationGroups;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Moves;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon;
@@ -182,6 +183,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IReadModelMapper<PokemonVarietyReadModel>, PokemonReadModelMapper>();
             services.AddScoped<IReadModelMapper<ItemReadModel>, ItemReadModelMapper>();
             services.AddScoped<IReadModelMapper<RegionReadModel>, RegionReadModelMapper>();
+            services.AddScoped<IReadModelMapper<LocationGroupReadModel>, LocationGroupReadModelMapper>();
 
             services.AddScoped<IReadModelRepository<EntityTypeReadModel>, EntityTypeReadModelRepository>();
             services.AddScoped<IReadModelRepository<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelRepository>();
@@ -191,6 +193,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IReadModelRepository<PokemonVarietyReadModel>, PokemonVarietyReadModelRepository>();
             services.AddScoped<IReadModelRepository<ItemReadModel>, ItemReadModelRepository>();
             services.AddScoped<IReadModelRepository<RegionReadModel>, RegionReadModelRepository>();
+            services.AddScoped<IReadModelRepository<LocationGroupReadModel>, LocationGroupReadModelRepository>();
         }
     }
 }
