@@ -1,8 +1,7 @@
 describe('UI-tests for page pokemon-list', () => {
     beforeEach(() => {
       //mock DB with json Files in Cypress/fixtures
-      cy.intercept('GET', 'https://localhost:5001/api/pokemon/getall', { fixture: 'getall.json' })
-      cy.intercept('GET', 'https://localhost:5001/api/move/getallnames', { fixture: 'getallnames.json' })
+      cy.intercept('GET', 'https://localhost:5001/varieties.json', { fixture: 'getall.json' })
   
       //baseURL is localhost:4200 see cypress.json, now visit pokedex (/p)
       cy.visit('/p');
