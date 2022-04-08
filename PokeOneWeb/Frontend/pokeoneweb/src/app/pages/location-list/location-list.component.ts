@@ -10,82 +10,88 @@ import { LocationListSortService } from './core/location-list-sort.service';
 import { LocationListModel } from './core/location-list.model';
 
 @Component({
-  selector: 'pokeone-location-list',
-  templateUrl: './location-list.component.html',
-  styleUrls: ['./location-list.component.scss']
+    selector: 'pokeone-location-list',
+    templateUrl: './location-list.component.html',
+    styleUrls: ['./location-list.component.scss']
 })
-
 export class LocationListComponent implements OnInit {
-  public model: LocationListModel = new LocationListModel();
+    public model: LocationListModel = new LocationListModel();
 
-  public column = LocationListColumn;
+    public column = LocationListColumn;
 
-  private timeOut: any;
-  private timeOutDuration = 500;
+    private timeOut: any;
+    private timeOutDuration = 500;
 
-  constructor(
-    private titleService: Title,
-    private locationService: LocationService,
-    private filterService: LocationListFilterService,
-    private sortService: LocationListSortService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    constructor(
+        private titleService: Title,
+        private locationService: LocationService,
+        private filterService: LocationListFilterService,
+        private sortService: LocationListSortService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {}
 
-  ngOnInit(): void {
-    this.titleService.setTitle(`Location - ${WEBSITE_NAME}`);
+    ngOnInit(): void {
+        this.route.data.subscribe((result) => {
+            this.model.regionName = result['resourceName'];
 
-    this.route.queryParams.subscribe(params => {
-      this.model.regionName = params['regionName'];
-    });
+            this.titleService.setTitle(`${this.model.regionName} - ${WEBSITE_NAME}`);
 
-    this.locationService.getAllForRegion(this.model.regionName).subscribe((response) => {
-      this.model.locationModels = response as ILocationListModel[];
+            this.locationService.getAllForRegion(this.model.regionName).subscribe((result) => {
+                this.model.locationModels = result as ILocationListModel[];
 
-      this.model.displayedLocationModels = this.sortService.sort(this.model.locationModels, LocationListColumn.Name, 1);
-    });
-  }
+                console.log(this.model.locationModels[0].regionName);
+                this.titleService.setTitle(`${this.model.locationModels[0].regionName} - ${WEBSITE_NAME}`);
 
-  public async onFilterChangedDelayed() {
-    clearTimeout(this.timeOut);
-    this.timeOut = setTimeout(() => {
-      this.onFilterChanged();
-    }, this.timeOutDuration);
-  }
-
-  public async onFilterChanged() {
-    const filtered = await this.filterService.applyFilter(this.model.filter, this.model.locationModels);
-
-    this.model.displayedLocationModels = this.sortService.sort(
-      filtered,
-      this.model.sortColumn,
-      this.model.sortDirection
-    );
-  }
-
-  public trackById(index: number, location: ILocationListModel): number {
-    return location.sortIndex;
-  }
-
-  public sort(sortColumn: LocationListColumn, sortDirection: number) {
-    this.model.sortColumn = sortColumn;
-    this.model.sortDirection = sortDirection;
-
-    this.model.displayedLocationModels = this.sortService.sort(
-      this.model.displayedLocationModels,
-        sortColumn,
-        sortDirection
-    );
-  }
-
-  public getSortButtonClass(sortColumn: LocationListColumn, sortDirection: number): string {
-    if (this.model.sortColumn === sortColumn && this.model.sortDirection === sortDirection) {
-      return 'sorted';
+                this.model.displayedLocationModels = this.sortService.sort(
+                    this.model.locationModels,
+                    LocationListColumn.Name,
+                    1
+                );
+            })
+        });
     }
-    return 'unsorted';
-  }
 
-  public navigateToDetailPage(locationResourceName: string) {
-    this.router.navigate([locationResourceName]);
-  }
+    public async onFilterChangedDelayed() {
+        clearTimeout(this.timeOut);
+        this.timeOut = setTimeout(() => {
+            this.onFilterChanged();
+        }, this.timeOutDuration);
+    }
+
+    public async onFilterChanged() {
+        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.locationModels);
+
+        this.model.displayedLocationModels = this.sortService.sort(
+            filtered,
+            this.model.sortColumn,
+            this.model.sortDirection
+        );
+    }
+
+    public trackById(index: number, location: ILocationListModel): number {
+        return location.sortIndex;
+    }
+
+    public sort(sortColumn: LocationListColumn, sortDirection: number) {
+        this.model.sortColumn = sortColumn;
+        this.model.sortDirection = sortDirection;
+
+        this.model.displayedLocationModels = this.sortService.sort(
+            this.model.displayedLocationModels,
+            sortColumn,
+            sortDirection
+        );
+    }
+
+    public getSortButtonClass(sortColumn: LocationListColumn, sortDirection: number): string {
+        if (this.model.sortColumn === sortColumn && this.model.sortDirection === sortDirection) {
+            return 'sorted';
+        }
+        return 'unsorted';
+    }
+
+    public navigateToDetailPage(locationResourceName: string) {
+        this.router.navigate([locationResourceName]);
+    }
 }
