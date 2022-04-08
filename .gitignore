@@ -356,3 +356,6 @@ coverage.opencover.xml
 
 #Mac Shit
 .DS_Store
+
+# Ignore static json file generation
+PokeOneWeb/resources
