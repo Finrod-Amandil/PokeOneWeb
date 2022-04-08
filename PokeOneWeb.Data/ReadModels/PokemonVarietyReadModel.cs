@@ -35,6 +35,12 @@ namespace PokeOneWeb.Data.ReadModels
         public int Speed { get; set; }
         public int HitPoints { get; set; }
 
+        [NotMapped]
+        public int StatTotal { get; set; }
+
+        [NotMapped]
+        public int Bulk { get; set; }
+
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }
         public string SecondaryAbility { get; set; }
