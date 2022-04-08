@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves
 {
@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(SimpleLearnableMoveReadModel existingEntity, SimpleLearnableMoveReadModel entity)
+        private static void UpdateExistingEntity(SimpleLearnableMoveReadModel existingEntity, SimpleLearnableMoveReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.PokemonVarietyApplicationDbId = entity.PokemonVarietyApplicationDbId;
