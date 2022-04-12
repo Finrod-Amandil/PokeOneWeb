@@ -1,1 +1,19 @@
-<p>region-list works!</p>
+<div id="content_title_container">
+    <div id="content_title">Regions</div>
+</div>
+
+<div id="content_main_container">
+    <div class="region-container" *ngFor="let region of model.regions">
+        <div>
+            <app-glass-button
+                [buttonTitle]="region.name"
+                buttonImage="./assets/img/navbar/pokedex.png"
+                [linkDestination]="'/' + region.resourceName"
+                [comingSoon]="!region.isReleased">
+            </app-glass-button>
+        </div>
+        <div>
+            {{region.description}}
+        </div>
+    </div>
+</div>
