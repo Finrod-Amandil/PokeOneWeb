@@ -4,15 +4,20 @@
 
 <div id="content_main_container">
     <div class="region-container" *ngFor="let region of model.regions">
-        <div>
-            <app-glass-button
-                [buttonTitle]="region.name"
-                buttonImage="./assets/img/navbar/pokedex.png"
-                [linkDestination]="'/' + region.resourceName"
-                [comingSoon]="!region.isReleased">
-            </app-glass-button>
+        <div class="region-glass-container">
+            <div class="region-name-container">
+                {{getRegionType(region)}}
+            </div>
+            <div class="region-glass-container">
+                <app-glass-button
+                    [buttonTitle]="region.name"
+                    buttonImage="./assets/img/navbar/pokedex.png"
+                    [linkDestination]="'/' + region.resourceName"
+                    [comingSoon]="!region.isReleased">
+                </app-glass-button>
+            </div>
         </div>
-        <div>
+        <div class="region-description">
             {{region.description}}
         </div>
     </div>

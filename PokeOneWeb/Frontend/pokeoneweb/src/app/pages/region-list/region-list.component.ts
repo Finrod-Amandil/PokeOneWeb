@@ -29,4 +29,18 @@ export class RegionListComponent implements OnInit {
         console.log(this.model.regions);
     });
   }
+
+  public getRegionType(region: IRegionListModel): string {
+    if (region.isMainRegion) {
+        return "Main Region";
+    }
+    if (region.isSideRegion) {
+        return "Side Region";
+    }
+    if (region.isEventRegion) {
+        return "Event Region";
+    }
+    return "unknown";
+    }
 }
+
