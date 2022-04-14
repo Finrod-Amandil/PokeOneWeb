@@ -175,28 +175,28 @@ export class PokemonListFilterService {
         filter: PokemonListFilterModel
     ): Promise<IPokemonVarietyListModel[]> {
         if (
-            !filter.selectedMove1Option1 &&
-            !filter.selectedMove1Option2 &&
-            !filter.selectedMove1Option3 &&
-            !filter.selectedMove1Option4
+            !filter.selectedMoveOption1 &&
+            !filter.selectedMoveOption2 &&
+            !filter.selectedMoveOption3 &&
+            !filter.selectedMoveOption4
         ) {
             return models;
         }
 
         const pokemonWithLearnset = await this.pokemonService
             .getAllPokemonForMoveSet(
-                filter.selectedMove1Option1?.resourceName,
-                filter.selectedMove1Option2?.resourceName,
-                filter.selectedMove1Option3?.resourceName,
-                filter.selectedMove1Option4?.resourceName
+                filter.selectedMoveOption1?.resourceName,
+                filter.selectedMoveOption2?.resourceName,
+                filter.selectedMoveOption3?.resourceName,
+                filter.selectedMoveOption4?.resourceName
             )
             .toPromise();
 
         let filterCount = 0;
-        if (filter.selectedMove1Option1) filterCount++;
-        if (filter.selectedMove1Option2) filterCount++;
-        if (filter.selectedMove1Option3) filterCount++;
-        if (filter.selectedMove1Option4) filterCount++;
+        if (filter.selectedMoveOption1) filterCount++;
+        if (filter.selectedMoveOption2) filterCount++;
+        if (filter.selectedMoveOption3) filterCount++;
+        if (filter.selectedMoveOption4) filterCount++;
 
         let results: IPokemonVarietyNameModel[] = [];
         let resultCounts: any = {};

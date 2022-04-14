@@ -24,10 +24,10 @@ export class PokemonListFilterModel {
     public selectedMaxHp: any = 1;
     public selectedMinTotal: any = 0;
     public selectedMaxTotal: any = 1;
-    public selectedMove1Option1: IMoveNameModel | null = null;
-    public selectedMove1Option2: IMoveNameModel | null = null;
-    public selectedMove1Option3: IMoveNameModel | null = null;
-    public selectedMove1Option4: IMoveNameModel | null = null;
+    public selectedMoveOption1: IMoveNameModel | null = null;
+    public selectedMoveOption2: IMoveNameModel | null = null;
+    public selectedMoveOption3: IMoveNameModel | null = null;
+    public selectedMoveOption4: IMoveNameModel | null = null;
     public selectedGenerations: GenerationModel[] = [];
     public showMegaEvolutions = true;
     public showFullyEvolvedOnly = false;
