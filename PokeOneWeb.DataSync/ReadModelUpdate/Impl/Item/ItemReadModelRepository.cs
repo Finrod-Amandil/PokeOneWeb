@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item
 {
@@ -39,25 +39,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(ItemReadModel existingEntity, ItemReadModel entity)
-        {
-            existingEntity.ApplicationDbId = entity.ApplicationDbId;
-            existingEntity.ResourceName = entity.ResourceName;
-            existingEntity.SortIndex = entity.SortIndex;
-            existingEntity.Name = entity.Name;
-            existingEntity.Description = entity.Description;
-            existingEntity.Effect = entity.Effect;
-            existingEntity.IsAvailable = entity.IsAvailable;
-            existingEntity.SpriteName = entity.SpriteName;
-            existingEntity.BagCategoryName = entity.BagCategoryName;
-            existingEntity.BagCategorySortIndex = entity.BagCategorySortIndex;
-
-            UpdatePlacedItems(existingEntity.PlacedItems, entity.PlacedItems);
-        }
-
-        private void UpdatePlacedItems(
-            List<PlacedItemReadModel> existingPlacedItems,
-            List<PlacedItemReadModel> updatedPlacedItems)
+        private static void UpdatePlacedItems(
+           List<PlacedItemReadModel> existingPlacedItems,
+           List<PlacedItemReadModel> updatedPlacedItems)
         {
             existingPlacedItems.RemoveAll(e =>
                 !updatedPlacedItems.Select(u => u.ApplicationDbId).Contains(e.ApplicationDbId));
@@ -92,6 +76,22 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item
                     existingPlacedItems.Add(placedItem);
                 }
             }
+        }
+
+        private void UpdateExistingEntity(ItemReadModel existingEntity, ItemReadModel entity)
+        {
+            existingEntity.ApplicationDbId = entity.ApplicationDbId;
+            existingEntity.ResourceName = entity.ResourceName;
+            existingEntity.SortIndex = entity.SortIndex;
+            existingEntity.Name = entity.Name;
+            existingEntity.Description = entity.Description;
+            existingEntity.Effect = entity.Effect;
+            existingEntity.IsAvailable = entity.IsAvailable;
+            existingEntity.SpriteName = entity.SpriteName;
+            existingEntity.BagCategoryName = entity.BagCategoryName;
+            existingEntity.BagCategorySortIndex = entity.BagCategorySortIndex;
+
+            UpdatePlacedItems(existingEntity.PlacedItems, entity.PlacedItems);
         }
     }
 }

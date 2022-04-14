@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
 {
@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(
+        private static void UpdateExistingEntity(
             ItemStatBoostPokemonReadModel existingEntity,
             ItemStatBoostPokemonReadModel entity)
         {

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
 {
@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(NatureReadModel existingEntity, NatureReadModel entity)
+        private static void UpdateExistingEntity(NatureReadModel existingEntity, NatureReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.Name = entity.Name;

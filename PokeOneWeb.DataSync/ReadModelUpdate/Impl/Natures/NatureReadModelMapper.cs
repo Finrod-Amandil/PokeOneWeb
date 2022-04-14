@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Extensions;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
 {
@@ -17,7 +17,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
             _dbContext = dbContext;
         }
 
-        public IDictionary<NatureReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<NatureReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.Natures
                 .AsNoTracking()

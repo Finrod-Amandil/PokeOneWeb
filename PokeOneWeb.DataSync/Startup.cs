@@ -52,7 +52,7 @@ using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region;
 
 namespace PokeOneWeb.DataSync
 {
-    public class Startup
+    public static class Startup
     {
         public static void ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
         {

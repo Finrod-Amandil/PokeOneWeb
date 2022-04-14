@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -126,7 +126,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             UpdateSheetHash(sheet.SpreadsheetId, sheet.SheetName, sheetHash);
         }
 
-        private bool HasSheetChanged(ImportSheet sheet, string sheetHash)
+        private static bool HasSheetChanged(ImportSheet sheet, string sheetHash)
         {
             return !string.Equals(sheet.SheetHash, sheetHash, StringComparison.Ordinal);
         }
