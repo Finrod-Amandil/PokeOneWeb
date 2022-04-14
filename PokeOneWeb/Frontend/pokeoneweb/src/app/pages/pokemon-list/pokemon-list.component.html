@@ -441,7 +441,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Move 1:</td>
+                                    <td>Move</td>
                                     <td>
                                         <ng-select
                                             class="input-move"
@@ -455,7 +455,7 @@
                                             >
                                         </ng-select>
                                     </td>
-                                    <td>or</td>
+                                    <td>and</td>
                                     <td>
                                         <ng-select
                                             class="input-move"
@@ -469,7 +469,7 @@
                                             >
                                         </ng-select>
                                     </td>
-                                    <td>or</td>
+                                    <td>and</td>
                                     <td>
                                         <ng-select
                                             class="input-move"
@@ -483,185 +483,11 @@
                                             >
                                         </ng-select>
                                     </td>
-                                    <td>or</td>
+                                    <td>and</td>
                                     <td>
                                         <ng-select
                                             class="input-move"
                                             [(ngModel)]="model.filter.selectedMove1Option4"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Move 2:</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove2Option1"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove2Option2"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove2Option3"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove2Option4"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Move 3:</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove3Option1"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove3Option2"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove3Option3"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove3Option4"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Move 4:</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove4Option1"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove4Option2"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove4Option3"
-                                            (change)="onFilterChanged()"
-                                            [clearable]="true"
-                                            [virtualScroll]="true"
-                                        >
-                                            <ng-option *ngFor="let move of model.moves" [value]="move"
-                                                >{{move.name}}</ng-option
-                                            >
-                                        </ng-select>
-                                    </td>
-                                    <td>or</td>
-                                    <td>
-                                        <ng-select
-                                            class="input-move"
-                                            [(ngModel)]="model.filter.selectedMove4Option4"
                                             (change)="onFilterChanged()"
                                             [clearable]="true"
                                             [virtualScroll]="true"
