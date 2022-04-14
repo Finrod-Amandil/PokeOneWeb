@@ -154,11 +154,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             //
             Console.WriteLine("generating json files for learnable-moves");
             ICollection<SimpleLearnableMoveReadModel> learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase(importReport).Keys;
-
-            foreach (var learnableMove in learnableMoves)
-            {
-                File.WriteAllText("resources/learnable-moves/" + learnableMove.MoveResourceName + ".json", JsonSerializer.Serialize(learnableMove, serializeOptions));
-            }
+            learnableMoves.
+                GroupBy(lmove => lmove.MoveResourceName).
+                ToDictionary(lmove => lmove.Key, lmove => lmove.ToList()).
+                ToList().
+                ForEach(entry =>
+                {
+                    File.WriteAllText("resources/learnable-moves/" + entry.Key + ".json", JsonSerializer.Serialize(entry.Value, serializeOptions));
+                });
 
             //
             // moves
