@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
 import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
+import { IPokemonVarietyNameModel } from 'src/app/core/models/pokemon-variety-name.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonListFilterModel } from './pokemon-list-filter.model';
 
@@ -174,47 +175,43 @@ export class PokemonListFilterService {
         filter: PokemonListFilterModel
     ): Promise<IPokemonVarietyListModel[]> {
         if (
-            !filter.selectedMove1Option1 &&
-            !filter.selectedMove1Option2 &&
-            !filter.selectedMove1Option3 &&
-            !filter.selectedMove1Option4 &&
-            !filter.selectedMove2Option1 &&
-            !filter.selectedMove2Option2 &&
-            !filter.selectedMove2Option3 &&
-            !filter.selectedMove2Option4 &&
-            !filter.selectedMove3Option1 &&
-            !filter.selectedMove3Option2 &&
-            !filter.selectedMove3Option3 &&
-            !filter.selectedMove3Option4 &&
-            !filter.selectedMove4Option1 &&
-            !filter.selectedMove4Option2 &&
-            !filter.selectedMove4Option3 &&
-            !filter.selectedMove4Option4
+            !filter.selectedMoveOption1 &&
+            !filter.selectedMoveOption2 &&
+            !filter.selectedMoveOption3 &&
+            !filter.selectedMoveOption4
         ) {
             return models;
         }
 
         const pokemonWithLearnset = await this.pokemonService
             .getAllPokemonForMoveSet(
-                filter.selectedMove1Option1?.resourceName,
-                filter.selectedMove1Option2?.resourceName,
-                filter.selectedMove1Option3?.resourceName,
-                filter.selectedMove1Option4?.resourceName,
-                filter.selectedMove2Option1?.resourceName,
-                filter.selectedMove2Option2?.resourceName,
-                filter.selectedMove2Option3?.resourceName,
-                filter.selectedMove2Option4?.resourceName,
-                filter.selectedMove3Option1?.resourceName,
-                filter.selectedMove3Option2?.resourceName,
-                filter.selectedMove3Option3?.resourceName,
-                filter.selectedMove3Option4?.resourceName,
-                filter.selectedMove4Option1?.resourceName,
-                filter.selectedMove4Option2?.resourceName,
-                filter.selectedMove4Option3?.resourceName,
-                filter.selectedMove4Option4?.resourceName
+                filter.selectedMoveOption1?.resourceName,
+                filter.selectedMoveOption2?.resourceName,
+                filter.selectedMoveOption3?.resourceName,
+                filter.selectedMoveOption4?.resourceName
             )
             .toPromise();
 
-        return models.filter((p) => pokemonWithLearnset.map((pls) => pls.resourceName).includes(p.resourceName));
+        let filterCount = 0;
+        if (filter.selectedMoveOption1) filterCount++;
+        if (filter.selectedMoveOption2) filterCount++;
+        if (filter.selectedMoveOption3) filterCount++;
+        if (filter.selectedMoveOption4) filterCount++;
+
+        let results: IPokemonVarietyNameModel[] = [];
+        let resultCounts: any = {};
+        for (const learnset of pokemonWithLearnset) {
+            resultCounts[learnset.resourceName] = 1 + (resultCounts[learnset.resourceName] || 0);
+        }
+
+        for (const key of Object.keys(resultCounts)) {
+            if (resultCounts[key] === filterCount) {
+                let tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key)
+                if (!tmp) continue;
+                results.push(tmp);
+            }
+        }
+
+        return models.filter((p) => results.map((pls) => pls.resourceName).includes(p.resourceName));
     }
 }

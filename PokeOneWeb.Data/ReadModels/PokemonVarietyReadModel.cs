@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -8,9 +9,11 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("PokemonVarietyReadModel")]
     public class PokemonVarietyReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         [Required]
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string ResourceName { get; set; }
@@ -32,6 +35,12 @@ namespace PokeOneWeb.Data.ReadModels
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
         public int HitPoints { get; set; }
+
+        [NotMapped]
+        public int StatTotal { get; set; }
+
+        [NotMapped]
+        public int Bulk { get; set; }
 
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }

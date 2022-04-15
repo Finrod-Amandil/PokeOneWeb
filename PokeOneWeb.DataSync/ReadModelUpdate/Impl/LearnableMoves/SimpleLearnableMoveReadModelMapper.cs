@@ -29,6 +29,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves
                 {
                     ApplicationDbId = learnableMove.Id,
                     PokemonVarietyApplicationDbId = learnableMove.PokemonVariety.Id,
+                    Name = learnableMove.PokemonVariety.Name,
+                    ResourceName = learnableMove.PokemonVariety.ResourceName,
                     MoveResourceName = learnableMove.Move.ResourceName
                 })
                 .ToDictionary(x => x, _ => DbAction.Create);

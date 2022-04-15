@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
@@ -11,9 +12,10 @@ using PokeOneWeb.Data;
 namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
 {
     [DbContext(typeof(ReadModelDbContext))]
-    partial class ReadModelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220401141508_AddAdditionalFieldsToRegion")]
+    partial class AddAdditionalFieldsToRegion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,37 +514,6 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
                     b.HasIndex("LearnableMoveReadModelId");
 
                     b.ToTable("LearnMethodReadModel");
-                });
-
-            modelBuilder.Entity("PokeOneWeb.Data.ReadModels.LocationGroupReadModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ApplicationDbId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegionName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegionResourceName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResourceName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SortIndex")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LocationGroupReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveOptionReadModel", b =>
