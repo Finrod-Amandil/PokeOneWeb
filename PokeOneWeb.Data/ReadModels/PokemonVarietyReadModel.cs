@@ -12,7 +12,8 @@ namespace PokeOneWeb.Data.ReadModels
         [JsonIgnore]
         public int Id { get; set; }
 
-        [Required, JsonIgnore]
+        [Required]
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string ResourceName { get; set; }
