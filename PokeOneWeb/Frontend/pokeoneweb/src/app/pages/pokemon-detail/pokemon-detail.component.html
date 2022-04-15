@@ -645,12 +645,26 @@
         </table>
 
         <h2 name="spawns">Spawns</h2>
-        <div *ngIf="model.pokemon.spawns.length === 0" class="no-table-container-outer">
+        <div *ngIf="model.visibleSpawns.length > 0">
+            <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable">
+                <button mat-raised-button *ngIf="!model.areEventExclusiveSpawnsHidden" (click)="hideEventExclusiveSpawns()">
+                    Hide inactive event-exclusive spawns
+                </button>
+                <button mat-raised-button *ngIf="model.areEventExclusiveSpawnsHidden" (click)="showEventExclusiveSpawns()">
+                    Show inactive event-exclusive spawns
+                </button>
+            </div>
+            <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable">
+                <p class="empty" style="color: var(--text-accent)">This Pokémon was only available during events in the past</p>
+            </div>
+            <br>
+        </div>
+        <div *ngIf="model.visibleSpawns.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
                 <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
             </div>
         </div>
-        <table *ngIf="model.pokemon.spawns.length > 0" class="main-table table-compact" id="spawn_table">
+        <table *ngIf="model.visibleSpawns.length > 0" class="main-table table-compact" id="spawn_table" aria-label="table containing a list of all spawns of a pokemon">
             <thead>
                 <tr>
                     <th class="col-pokemon" colspan="2">
@@ -739,7 +753,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let spawn of model.pokemon.spawns">
+                <tr *ngFor="let spawn of model.visibleSpawns">
                     <td class="col-sprite">
                         <a [routerLink]="'/' + spawn.pokemonResourceName">
                             <img

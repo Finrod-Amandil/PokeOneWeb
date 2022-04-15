@@ -1,8 +1,8 @@
-﻿using System;
+﻿using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 {
@@ -85,6 +85,17 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
             return spawn;
         }
 
+        private static SpawnOpportunity MapSpawnOpportunity(Season season, TimeOfDay timeOfDay)
+        {
+            var spawnOpportunity = new SpawnOpportunity
+            {
+                Season = season,
+                TimeOfDay = timeOfDay
+            };
+
+            return spawnOpportunity;
+        }
+
         private List<SpawnOpportunity> MapSpawnOpportunities(
             SpawnSheetDto dto)
         {
@@ -96,17 +107,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 from timeOfDay in timesOfDay
                 select MapSpawnOpportunity(season, timeOfDay))
             .ToList();
-        }
-
-        private SpawnOpportunity MapSpawnOpportunity(Season season, TimeOfDay timeOfDay)
-        {
-            var spawnOpportunity = new SpawnOpportunity
-            {
-                Season = season,
-                TimeOfDay = timeOfDay
-            };
-
-            return spawnOpportunity;
         }
 
         private List<Season> MapSeasons(SpawnSheetDto dto)
@@ -134,7 +134,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 return seasons;
             }
 
-            foreach (var abbreviation in dto.Season.ToCharArray())
+            foreach (var abbreviation in dto.Season)
             {
                 if (_seasons.ContainsKey(string.Empty + abbreviation))
                 {
@@ -176,7 +176,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
                 return timesOfDay;
             }
 
-            foreach (var abbreviation in dto.TimeOfDay.ToCharArray())
+            foreach (var abbreviation in dto.TimeOfDay)
             {
                 if (_timesOfDay.ContainsKey(string.Empty + abbreviation))
                 {
