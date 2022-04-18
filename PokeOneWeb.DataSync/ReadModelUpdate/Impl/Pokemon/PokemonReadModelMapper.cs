@@ -191,6 +191,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 Speed = variety.Speed,
                 HitPoints = variety.HitPoints,
 
+                StatTotal = variety.Attack + variety.SpecialAttack + variety.Defense + variety.SpecialDefense + variety.Speed + variety.HitPoints,
+                Bulk = variety.Defense + variety.HitPoints + variety.SpecialDefense,
+
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
                 SecondaryAbility = variety.SecondaryAbility?.Name,

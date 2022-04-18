@@ -201,12 +201,18 @@ export class StatInputComponent implements OnInit {
             console.log('Could not load item boosts, no Pokémon is selected.');
             return;
         }
-        this.itemBoostService.getItemStatBoostsForPokemon(this.model.pokemon.resourceName).subscribe((response) => {
-            this.itemBoosts = response as IItemStatBoostModel[];
-            this.itemBoosts = this.itemBoosts.sort((n1, n2) =>
-                n1.itemName > n2.itemName ? 1 : n1.itemName < n2.itemName ? -1 : 0
-            );
-        });
+        this.itemBoostService
+            .getItemStatBoosts()
+            .subscribe(response => {
+                this.itemBoosts = response as IItemStatBoostModel[];
+                this.itemBoosts = this.itemBoosts.
+                    filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName).
+                    sort((n1, n2) => {
+                        if (n1.itemName > n2.itemName) return 1;
+                        if (n1.itemName < n2.itemName) return -1
+                        return 0;
+                    });
+            });
     }
 
     private LoadAbilities(pokemon: IPokemonVarietyModel) {

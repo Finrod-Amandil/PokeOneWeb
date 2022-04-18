@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -6,8 +7,12 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("ItemStatBoostPokemonReadModel")]
     public class ItemStatBoostPokemonReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
+
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
+
         public string ItemName { get; set; }
         public string ItemResourceName { get; set; }
         public string ItemEffect { get; set; }

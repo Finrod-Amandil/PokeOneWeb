@@ -542,7 +542,7 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationGroupReadModels");
+                    b.ToTable("LocationGroupReadModel");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveOptionReadModel", b =>
