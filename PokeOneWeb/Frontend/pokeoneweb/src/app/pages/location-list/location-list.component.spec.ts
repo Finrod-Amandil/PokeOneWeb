@@ -102,7 +102,7 @@ describe('Location List Component', () => {
     });
 
     describe('sort', () => {
-        it('expect the location list to be unsorted by name and with direction 1', () => {
+        it('expect the location list to be sorted by name and with direction 1', () => {
             // Act
             component.sort(LocationListColumn.Name, 1);
 
@@ -111,13 +111,31 @@ describe('Location List Component', () => {
             expect(component.model.displayedLocationModels[0].resourceName).toBe('pallet-town');
         });
 
-        it('expect the location list to be unsorted by name and with direction -1', () => {
+        it('expect the location list to be sorted by name and with direction -1', () => {
             // Act
             component.sort(LocationListColumn.Name, -1);
 
             // Assert
             expect(component.model.locationModels.length).toBe(4);
             expect(component.model.displayedLocationModels[0].resourceName).toBe('viridian-city');
+        });
+
+        it('expect the location list to be sorted by sortIndex and with direction 1', () => {
+            // Act
+            component.sort(LocationListColumn.SortIndex, 1);
+
+            // Assert
+            expect(component.model.locationModels.length).toBe(4);
+            expect(component.model.displayedLocationModels[0].resourceName).toBe('route-1');
+        });
+
+        it('expect the location list to be sorted by sortIndex and with direction -1', () => {
+            // Act
+            component.sort(LocationListColumn.SortIndex, -1);
+
+            // Assert
+            expect(component.model.locationModels.length).toBe(4);
+            expect(component.model.displayedLocationModels[0].resourceName).toBe('route-22');
         });
     });
 
@@ -141,6 +159,24 @@ describe('Location List Component', () => {
             expect(component.model.displayedLocationModels.length).toBe(2);
             expect(component.model.displayedLocationModels[0].resourceName).toBe('route-1');
             expect(component.model.displayedLocationModels[1].resourceName).toBe('route-22');
+        });
+
+        it('expect the location list to be empty', async () => {
+            // Act
+            component.model.filter.searchTerm = 'asdf';
+            await component.onFilterChanged();
+
+            // Assert
+            expect(component.model.displayedLocationModels.length).toBe(0);
+        });
+
+        it('expect the location list to be the same', async () => {
+            // Act
+            component.model.filter.searchTerm = '';
+            await component.onFilterChanged();
+
+            // Assert
+            expect(component.model.displayedLocationModels.length).toBe(4);
         });
     });
 });
