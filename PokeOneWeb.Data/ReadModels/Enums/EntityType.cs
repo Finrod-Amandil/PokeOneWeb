@@ -8,6 +8,7 @@
     {
         Unknown,
         PokemonVariety,
+        Region,
         Location,
         Item
     }

@@ -32,20 +32,23 @@ export class LocationListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.titleService.setTitle(`Location - ${WEBSITE_NAME}`);
+        this.route.data.subscribe((result) => {
+            this.model.regionName = result['resourceName'];
 
-        this.route.queryParams.subscribe((params) => {
-            this.model.regionName = params['regionName'];
-        });
+            this.titleService.setTitle(`${this.model.regionName} - ${WEBSITE_NAME}`);
 
-        this.locationService.getAllForRegion(this.model.regionName).subscribe((response) => {
-            this.model.locationModels = response as ILocationListModel[];
+            this.locationService.getAllForRegion(this.model.regionName).subscribe((result) => {
+                this.model.locationModels = result as ILocationListModel[];
 
-            this.model.displayedLocationModels = this.sortService.sort(
-                this.model.locationModels,
-                LocationListColumn.SortIndex,
-                1
-            );
+                console.log(this.model.locationModels[0].regionName);
+                this.titleService.setTitle(`${this.model.locationModels[0].regionName} - ${WEBSITE_NAME}`);
+
+                this.model.displayedLocationModels = this.sortService.sort(
+                    this.model.locationModels,
+                    LocationListColumn.Name,
+                    1
+                );
+            });
         });
     }
 

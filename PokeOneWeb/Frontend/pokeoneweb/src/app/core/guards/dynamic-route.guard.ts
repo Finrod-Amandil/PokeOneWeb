@@ -57,6 +57,16 @@ export class DynamicRouteGuard implements CanActivate {
                         data: { resourceName: path }
                     });
                     break;
+                case EntityType.Region:
+                    newRoutes.push({
+                        path: path,
+                        loadChildren: () =>
+                            import('../../pages/location-list/location-list.module').then(
+                                (m) => m.LocationListModule
+                            ),
+                        data: { resourceName: path }
+                    });
+                    break;
                 case EntityType.Location:
                     newRoutes.push({
                         path: path,
