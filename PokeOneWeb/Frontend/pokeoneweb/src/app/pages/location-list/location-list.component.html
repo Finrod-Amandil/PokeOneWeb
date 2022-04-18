@@ -1,9 +1,15 @@
 <div id="content_title_container">
-    <div id="content_title">{{model.locationModels.length > 0 ? model.locationModels[0].regionName : model.regionName}}</div>
+    <div id="content_title">
+        {{model.locationModels.length > 0 ? model.locationModels[0].regionName : model.regionName}}
+    </div>
 </div>
 
 <div id="content_main_container">
-    <table class="main-table search-table" id="search_table">
+    <table
+        class="main-table search-table"
+        id="search_table"
+        aria-describedby="Filter capabilities for location list page."
+    >
         <thead>
             <tr>
                 <th colspan="2">Search and filter</th>
@@ -35,7 +41,11 @@
     </p>
 
     <div *ngIf="model.displayedLocationModels.length > 0">
-        <table class="main-table sortable rows-clickable" id="location_list">
+        <table
+            class="main-table sortable rows-clickable"
+            id="location_list"
+            aria-describedby="Location list for specific region after applying filters."
+        >
             <thead>
                 <tr>
                     <th class="col-name">

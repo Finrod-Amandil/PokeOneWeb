@@ -32,13 +32,13 @@ export class LocationListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((result) => {
-            this.model.regionName = result['resourceName'];
+        this.route.data.subscribe((result_route) => {
+            this.model.regionName = result_route['resourceName'];
 
             this.titleService.setTitle(`${this.model.regionName} - ${WEBSITE_NAME}`);
 
-            this.locationService.getAllForRegion(this.model.regionName).subscribe((result) => {
-                this.model.locationModels = result as ILocationListModel[];
+            this.locationService.getAllForRegion(this.model.regionName).subscribe((result_region) => {
+                this.model.locationModels = result_region as ILocationListModel[];
 
                 console.log(this.model.locationModels[0].regionName);
                 this.titleService.setTitle(`${this.model.locationModels[0].regionName} - ${WEBSITE_NAME}`);
