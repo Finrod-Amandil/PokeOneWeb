@@ -45,7 +45,7 @@ export class LocationListComponent implements OnInit {
 
                 this.model.displayedLocationModels = this.sortService.sort(
                     this.model.locationModels,
-                    LocationListColumn.Name,
+                    LocationListColumn.SortIndex,
                     1
                 );
             });

@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { ILocationListModel } from 'src/app/core/models/location-list.model';
 import { LocationListColumn } from './core/location-list-column.enum';
 import { LocationListFilterService } from './core/location-list-filter.service';
@@ -17,7 +16,7 @@ describe('Location List Component', () => {
     };
     let location2: ILocationListModel = {
         resourceName: 'pallet-town',
-        name: 'Route 1',
+        name: 'Pallet Town',
         sortIndex: 1001,
         regionResourceName: 'kanto',
         regionName: 'Kanto'
@@ -26,6 +25,13 @@ describe('Location List Component', () => {
         resourceName: 'viridian-city',
         name: 'Viridian City',
         sortIndex: 1002,
+        regionResourceName: 'kanto',
+        regionName: 'Kanto'
+    };
+    let location4: ILocationListModel = {
+        resourceName: 'route-22',
+        name: 'Route 22',
+        sortIndex: 1003,
         regionResourceName: 'kanto',
         regionName: 'Kanto'
     };
@@ -53,8 +59,8 @@ describe('Location List Component', () => {
         );
 
         component.model = new LocationListPageModel();
-        component.model.locationModels = [location1, location2, location3];
-        component.model.displayedLocationModels = [location1, location2, location3];
+        component.model.locationModels = [location1, location2, location3, location4];
+        component.model.displayedLocationModels = [location1, location2, location3, location4];
     });
 
     // describe which Method is being tested
@@ -78,7 +84,7 @@ describe('Location List Component', () => {
     });
 
     describe('trackById', () => {
-        it('expect the location list to be unsorted by name and with direction -1', () => {
+        it('expect the sortIndex ID to be 1000 from location 1', () => {
             // Act
             let sortIndex = component.trackById(0, location1);
 
@@ -86,43 +92,22 @@ describe('Location List Component', () => {
             expect(sortIndex).toBe(1000);
         });
 
-        it('expect the location list to be unsorted by name and with direction -1', () => {
+        it('expect the sortIndex ID to be 1001 from location 2', () => {
             // Act
             let sortIndex = component.trackById(0, location2);
 
             // Assert
-            expect(component.trackById(0, location2)).toBe(1001);
+            expect(sortIndex).toBe(1001);
         });
     });
 
     describe('sort', () => {
-        it('expect the location list to be unsorted by name and with direction -1', () => {
+        it('expect the location list to be unsorted by name and with direction 1', () => {
             // Act
             component.sort(LocationListColumn.Name, 1);
 
             // Assert
-            expect(component.model.locationModels.length).toBe(3);
-            expect(component.model.displayedLocationModels[0].resourceName).toBe('route-1');
-        });
-
-        it('expect the location list to be unsorted by name and with direction -1', () => {
-            // Act
-            component.sort(LocationListColumn.Name, -1);
-
-            // Assert
-            expect(component.model.locationModels.length).toBe(3);
-            expect(component.model.displayedLocationModels[0].resourceName).toBe('viridian-city');
-        });
-    });
-
-    describe('filter', () => {
-        it('expect the location list to be reduced to the element pallet-town', () => {
-            // Act
-            component.model.filter.searchTerm = 'pall';
-            component.onFilterChanged();
-
-            // Assert
-            expect(component.model.displayedLocationModels.length).toBe(1);
+            expect(component.model.locationModels.length).toBe(4);
             expect(component.model.displayedLocationModels[0].resourceName).toBe('pallet-town');
         });
 
@@ -131,8 +116,31 @@ describe('Location List Component', () => {
             component.sort(LocationListColumn.Name, -1);
 
             // Assert
-            expect(component.model.locationModels.length).toBe(2);
+            expect(component.model.locationModels.length).toBe(4);
+            expect(component.model.displayedLocationModels[0].resourceName).toBe('viridian-city');
+        });
+    });
+
+    describe('filter', () => {
+        it('expect the location list to be reduced to the element pallet-town', async () => {
+            // Act
+            component.model.filter.searchTerm = 'pall';
+            await component.onFilterChanged();
+
+            // Assert
+            expect(component.model.displayedLocationModels.length).toBe(1);
+            expect(component.model.displayedLocationModels[0].resourceName).toBe('pallet-town');
+        });
+
+        it('expect the location list to be reduced to elements containint route', async () => {
+            // Act
+            component.model.filter.searchTerm = 'route';
+            await component.onFilterChanged();
+
+            // Assert
+            expect(component.model.displayedLocationModels.length).toBe(2);
             expect(component.model.displayedLocationModels[0].resourceName).toBe('route-1');
+            expect(component.model.displayedLocationModels[1].resourceName).toBe('route-22');
         });
     });
 });
