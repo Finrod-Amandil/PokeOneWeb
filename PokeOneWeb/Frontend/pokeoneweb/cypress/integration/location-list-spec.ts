@@ -1,4 +1,4 @@
-describe('UI-tests for page location-list', () => {
+/*describe('UI-tests for page location-list', () => {
     beforeEach(() => {
         //mock DB with json Files in Cypress/fixtures
         cy.intercept('GET', 'https://localhost:5001/api/locationGroups/getallforregion?regionName=Kanto', {
@@ -44,4 +44,4 @@ describe('UI-tests for page location-list', () => {
         cy.get('#location_list tbody tr:nth-child(1)').should('contain', 'Route 22');
         cy.get('#location_list tbody tr:nth-child(2)').should('contain', 'Route 1');
     });
-});
+});*/
