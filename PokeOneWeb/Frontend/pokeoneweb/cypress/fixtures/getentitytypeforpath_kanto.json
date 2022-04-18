@@ -1,1 +1,4 @@
-{ "entityType": 2 }
+{
+    "resourceName": "kanto",
+    "entityType": 2
+}
