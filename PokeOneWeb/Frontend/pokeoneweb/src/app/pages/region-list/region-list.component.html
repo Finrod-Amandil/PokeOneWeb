@@ -11,7 +11,7 @@
             <div class="region-glass-container">
                 <app-glass-button
                     [buttonTitle]="region.name"
-                    buttonImage="./assets/img/navbar/pokedex.png"
+                    [buttonImage]="'./assets/img/button-images/region-list/' + region.resourceName + '.png'"
                     [linkDestination]="'/' + region.resourceName"
                     [comingSoon]="!region.isReleased">
                 </app-glass-button>
