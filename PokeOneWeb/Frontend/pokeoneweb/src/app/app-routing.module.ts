@@ -52,19 +52,19 @@ const routes: Routes = [
     },
     {
         path: 'l',
-        loadChildren: () => import('./pages/location-list/location-list.module').then((m) => m.LocationListModule)
+        loadChildren: () => import('./pages/region-list/region-list.module').then((m) => m.RegionListModule)
     },
     {
         path: 'locations',
-        loadChildren: () => import('./pages/location-list/location-list.module').then((m) => m.LocationListModule)
+        loadChildren: () => import('./pages/region-list/region-list.module').then((m) => m.RegionListModule)
     },
     {
         path: 'r',
-        loadChildren: () => import('./pages/location-list/location-list.module').then((m) => m.LocationListModule)
+        loadChildren: () => import('./pages/region-list/region-list.module').then((m) => m.RegionListModule)
     },
     {
         path: 'regions',
-        loadChildren: () => import('./pages/location-list/location-list.module').then((m) => m.LocationListModule)
+        loadChildren: () => import('./pages/region-list/region-list.module').then((m) => m.RegionListModule)
     },
     {
         path: 'faq',
