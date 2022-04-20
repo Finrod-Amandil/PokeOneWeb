@@ -1,0 +1,42 @@
+#content_main_container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: stretch;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+.region-container {
+    display: flex;
+    flex-basis: 30%;
+    width: 33.3333%;
+    flex-direction: column;
+    background-color: var(--medium-gray);
+    border: 1px solid black;
+    border-radius: 1px;
+    padding: 10px;
+    box-shadow: 0 0 8px #000;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+.region-description {
+    margin-top: 4px;
+    color: var(--medium-light-gray);
+    font-weight: 300;
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+.region-name-container {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--light-gray);
+    text-shadow: 2px 2px black;
+}
+.region-container .region-glass-container ::ng-deep .comingSoon {
+    font-size: 40px;
+}
+.region-container .region-glass-container ::ng-deep .buttonTitle {
+    font-size: 40px;
+}
