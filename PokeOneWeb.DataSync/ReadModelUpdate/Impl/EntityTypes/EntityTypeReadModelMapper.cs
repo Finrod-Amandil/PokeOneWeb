@@ -28,6 +28,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
                     EntityType = EntityType.PokemonVariety
                 });
 
+            var regionMappings = _dbContext.Regions
+                .AsNoTracking()
+                .Select(r => new EntityTypeReadModel
+                {
+                    ResourceName = r.ResourceName,
+                    EntityType = EntityType.Region
+                });
+
             var locationMappings = _dbContext.LocationGroups
                 .AsNoTracking()
                 .Select(l => new EntityTypeReadModel
@@ -46,6 +54,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes
                 });
 
             var entityTypeMappings = pokemonMappings.ToList();
+            entityTypeMappings.AddRange(regionMappings);
             entityTypeMappings.AddRange(locationMappings);
             entityTypeMappings.AddRange(itemMappings);
 

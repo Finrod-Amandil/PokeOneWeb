@@ -1,11 +1,11 @@
-﻿using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 {
@@ -132,7 +132,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 
             //
             // Entity types
-            // 
+            //
             Console.WriteLine("generating json files for entity types");
             ICollection<EntityTypeReadModel> entityTypes = _entityTypeMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/entity-types.json", JsonSerializer.Serialize(entityTypes, serializeOptions));
@@ -144,7 +144,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 
             //
             // itemstats
-            // 
+            //
             Console.WriteLine("generating json files for itemstats");
             ICollection<ItemStatBoostPokemonReadModel> itemStats = _itemStatBoostPokemonMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/itemstats.json", JsonSerializer.Serialize(itemStats, serializeOptions));
@@ -181,7 +181,6 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             ICollection<NatureReadModel> natures = _natureMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/natures.json", JsonSerializer.Serialize(natures, serializeOptions));
 
-
             //
             // varieties
             //
@@ -213,23 +212,22 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             ICollection<RegionReadModel> regions = _regionMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/regions.json", JsonSerializer.Serialize(regions, serializeOptions));
 
-            foreach (var region in regions)
+            ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
+            var locationGroupsByRegions = locationGroups.GroupBy(g => g.RegionResourceName)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            foreach (var (regionResourceName, locationGroupsForRegion) in locationGroupsByRegions)
             {
-                File.WriteAllText("resources/regions/" + region.ResourceName + ".json", JsonSerializer.Serialize(region, serializeOptions));
+                File.WriteAllText("resources/regions/" + regionResourceName + ".json", JsonSerializer.Serialize(locationGroupsForRegion, serializeOptions));
             }
 
             // location groups
             Console.WriteLine("generating json files for location groups");
-            ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/location-groups.json", JsonSerializer.Serialize(locationGroups.
-                GroupBy(g => g.RegionResourceName).
-                ToDictionary(g => g.Key, g => g.ToList()), serializeOptions));
 
             foreach (var locationGroup in locationGroups)
             {
                 File.WriteAllText("resources/location-groups/" + locationGroup.ResourceName + ".json", JsonSerializer.Serialize(locationGroup, serializeOptions));
             }
-
         }
 
         private void CreateDirectories()
