@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Extensions;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 using PokeOneWeb.Shared.Extensions;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 {
@@ -24,7 +24,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             _dbContext = dbContext;
         }
 
-        public IDictionary<PokemonVarietyReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<PokemonVarietyReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             var varietyIds = _dbContext.PokemonVarieties
                 .Where(v => v.DoInclude)
@@ -190,6 +190,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 SpecialDefense = variety.SpecialDefense,
                 Speed = variety.Speed,
                 HitPoints = variety.HitPoints,
+
+                StatTotal = variety.Attack + variety.SpecialAttack + variety.Defense + variety.SpecialDefense + variety.Speed + variety.HitPoints,
+                Bulk = variety.Defense + variety.HitPoints + variety.SpecialDefense,
 
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
@@ -413,7 +416,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .Where(hc => varietyIds.Contains(hc.PokemonVarietyId))
                 .OrderBy(hc => hc.PokemonVariety.DefaultForm.SortIndex)
-                .ToList()
+                .AsEnumerable()
                 .Select(hc => new HuntingConfigurationReadModel
                 {
                     ApplicationDbId = hc.Id,
@@ -473,7 +476,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .ThenInclude(t => t.SeasonTimes)
                 .ThenInclude(st => st.Season)
                 .AsNoTracking()
-                .ToList()
+                .AsEnumerable()
                 .SelectMany(f => f.PokemonSpawns)
                 .Select(GetSpawnReadModel)
                 .ToList();

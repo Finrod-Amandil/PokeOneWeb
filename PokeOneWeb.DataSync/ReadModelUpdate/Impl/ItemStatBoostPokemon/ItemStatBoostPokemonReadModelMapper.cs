@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
 {
@@ -16,7 +16,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext = dbContext;
         }
 
-        public IDictionary<ItemStatBoostPokemonReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<ItemStatBoostPokemonReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.ItemStatBoostPokemon
                 .Include(i => i.ItemStatBoost.Item)

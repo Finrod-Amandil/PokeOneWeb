@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using PokeOneWeb.Data;
+﻿using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
 {
@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(RegionReadModel existingEntity, RegionReadModel entity)
+        private static void UpdateExistingEntity(RegionReadModel existingEntity, RegionReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.ResourceName = entity.ResourceName;

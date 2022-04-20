@@ -1,19 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-glass-button',
-  templateUrl: './glass-button.component.html',
-  styleUrls: ['./glass-button.component.scss']
+    selector: 'app-glass-button',
+    templateUrl: './glass-button.component.html',
+    styleUrls: ['./glass-button.component.scss']
 })
 export class GlassButtonComponent implements OnInit {
+    @Input() buttonTitle = '';
+    @Input() buttonImage = '';
+    @Input() comingSoon = false;
+    @Input() linkDestination = '';
 
-  @Input() buttonTitle: string = ''
-  @Input() buttonImage: string = ''
-  @Input() comingSoon: boolean = false
-  @Input() linkDestination: string = ''
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {}
 }

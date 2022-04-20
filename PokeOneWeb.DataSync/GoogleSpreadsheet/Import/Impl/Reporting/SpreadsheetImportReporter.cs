@@ -1,6 +1,6 @@
-﻿using System;
+﻿using PokeOneWeb.Data;
+using System;
 using System.Collections.Generic;
-using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
@@ -76,14 +76,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             _importStart = DateTime.UtcNow;
         }
 
-        public void StopImport()
-        {
-            _report.TotalImportTime = DateTime.UtcNow - _importStart;
-        }
-
         public void StartImport(string entity)
         {
             _entityImportStarts.Add(entity, DateTime.UtcNow);
+        }
+
+        public void StopImport()
+        {
+            _report.TotalImportTime = DateTime.UtcNow - _importStart;
         }
 
         public void StopImport(string entity)
@@ -109,14 +109,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             _readModelUpdateStart = DateTime.UtcNow;
         }
 
-        public void StopReadModelUpdate()
-        {
-            _report.TotalReadModelUpdateTime = DateTime.UtcNow - _readModelUpdateStart;
-        }
-
         public void StartReadModelUpdate(string entity)
         {
             _entityReadModelUpdateStarts.Add(entity, DateTime.UtcNow);
+        }
+
+        public void StopReadModelUpdate()
+        {
+            _report.TotalReadModelUpdateTime = DateTime.UtcNow - _readModelUpdateStart;
         }
 
         public void StopReadModelUpdate(string entity)

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Shared.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
@@ -79,8 +79,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             existingEntity.PrimaryAbilityEffect = updatedEntity.PrimaryAbilityEffect;
             existingEntity.SecondaryAbility = updatedEntity.SecondaryAbility;
             existingEntity.SecondaryAbilityEffect = updatedEntity.SecondaryAbilityEffect;
-            existingEntity.HiddenAbility = existingEntity.HiddenAbility;
-            existingEntity.HiddenAbilityEffect = existingEntity.HiddenAbilityEffect;
+            existingEntity.HiddenAbility = updatedEntity.HiddenAbility;
+            existingEntity.HiddenAbilityEffect = updatedEntity.HiddenAbilityEffect;
             existingEntity.Availability = updatedEntity.Availability;
             existingEntity.PvpTier = updatedEntity.PvpTier;
             existingEntity.PvpTierSortIndex = updatedEntity.PvpTierSortIndex;
@@ -404,7 +404,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
                     existingEvolution.EvolutionTrigger = evolution.EvolutionTrigger;
                     existingEvolution.IsReversible = evolution.IsReversible;
-                    existingEvolution.IsAvailable = existingEvolution.IsAvailable;
+                    existingEvolution.IsAvailable = evolution.IsAvailable;
                 }
                 else
                 {

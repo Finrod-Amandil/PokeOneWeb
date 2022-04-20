@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokeOneWeb.Data;
 
@@ -11,9 +12,10 @@ using PokeOneWeb.Data;
 namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
 {
     [DbContext(typeof(ReadModelDbContext))]
-    partial class ReadModelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220401072726_AddLocationGroups")]
+    partial class AddLocationGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -542,7 +544,7 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationGroupReadModel");
+                    b.ToTable("LocationGroupReadModels");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.ReadModels.MoveOptionReadModel", b =>
@@ -1128,9 +1130,6 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("EventEndDate")
                         .HasColumnType("datetime2");
 
@@ -1141,15 +1140,6 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsEventRegion")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsMainRegion")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsReleased")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSideRegion")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
