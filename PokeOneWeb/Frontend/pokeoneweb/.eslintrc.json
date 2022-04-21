@@ -17,7 +17,6 @@
                 "prettier"
             ],
             "rules": {
-                "@angular-eslint/template/eqeqeq": "warn",
                 "@angular-eslint/component-selector": [
                     "warn",
                     {

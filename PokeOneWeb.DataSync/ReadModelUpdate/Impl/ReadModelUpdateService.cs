@@ -1,6 +1,11 @@
 ﻿using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 {
@@ -108,7 +113,143 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _locationGroupRepository.Update(_locationGroupMapper.MapFromDatabase(importReport));
             _reporter.StopReadModelUpdate("locationGroups");
 
+            _reporter.StartReadModelUpdate("generate-json-files");
+            GenerateJsonFiles(importReport);
+            _reporter.StopReadModelUpdate("generate-json-files");
+
             _reporter.StopReadModelUpdate();
+        }
+
+        private void GenerateJsonFiles(SpreadsheetImportReport importReport)
+        {
+            CreateDirectories();
+
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            //
+            // Entity types
+            // 
+            Console.WriteLine("generating json files for entity types");
+            ICollection<EntityTypeReadModel> entityTypes = _entityTypeMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/entity-types.json", JsonSerializer.Serialize(entityTypes, serializeOptions));
+
+            foreach (var entityType in entityTypes)
+            {
+                File.WriteAllText("resources/entity-types/" + entityType.ResourceName + ".json", JsonSerializer.Serialize(entityType, serializeOptions));
+            }
+
+            //
+            // itemstats
+            // 
+            Console.WriteLine("generating json files for itemstats");
+            ICollection<ItemStatBoostPokemonReadModel> itemStats = _itemStatBoostPokemonMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/itemstats.json", JsonSerializer.Serialize(itemStats, serializeOptions));
+
+            //
+            // learnable moves
+            //
+            Console.WriteLine("generating json files for learnable-moves");
+            ICollection<SimpleLearnableMoveReadModel> learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase(importReport).Keys;
+            learnableMoves.
+                GroupBy(lmove => lmove.MoveResourceName).
+                ToDictionary(lmove => lmove.Key, lmove => lmove.ToList()).
+                ToList().
+                ForEach(entry =>
+                {
+                    File.WriteAllText("resources/learnable-moves/" + entry.Key + ".json", JsonSerializer.Serialize(entry.Value, serializeOptions));
+                });
+
+            //
+            // moves
+            //
+            Console.WriteLine("generating json files for moves");
+            ICollection<MoveReadModel> moves = _moveMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/moves.json", JsonSerializer.Serialize(moves, serializeOptions));
+            foreach (var move in moves)
+            {
+                File.WriteAllText("resources/moves/" + move.ResourceName + ".json", JsonSerializer.Serialize(move, serializeOptions));
+            }
+
+            //
+            // natures
+            //
+            Console.WriteLine("generating json files for natures");
+            ICollection<NatureReadModel> natures = _natureMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/natures.json", JsonSerializer.Serialize(natures, serializeOptions));
+
+
+            //
+            // varieties
+            //
+            Console.WriteLine("generating json files for varieties");
+            ICollection<PokemonVarietyReadModel> varieties = _pokemonVarietyMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/varieties.json", JsonSerializer.Serialize(varieties, serializeOptions));
+
+            foreach (var variety in varieties)
+            {
+                File.WriteAllText("resources/varieties/" + variety.ResourceName + ".json", JsonSerializer.Serialize(variety, serializeOptions));
+            }
+
+            //
+            // items
+            //
+            Console.WriteLine("generating json files for items");
+            ICollection<ItemReadModel> items = _itemMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/items.json", JsonSerializer.Serialize(items, serializeOptions));
+
+            foreach (var item in items)
+            {
+                File.WriteAllText("resources/items/" + item.ResourceName + ".json", JsonSerializer.Serialize(item, serializeOptions));
+            }
+
+            //
+            // regions
+            //
+            Console.WriteLine("generating json files for regions");
+            ICollection<RegionReadModel> regions = _regionMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/regions.json", JsonSerializer.Serialize(regions, serializeOptions));
+
+            foreach (var region in regions)
+            {
+                File.WriteAllText("resources/regions/" + region.ResourceName + ".json", JsonSerializer.Serialize(region, serializeOptions));
+            }
+
+            // location groups
+            Console.WriteLine("generating json files for location groups");
+            ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
+            File.WriteAllText("resources/location-groups.json", JsonSerializer.Serialize(locationGroups.
+                GroupBy(g => g.RegionResourceName).
+                ToDictionary(g => g.Key, g => g.ToList()), serializeOptions));
+
+            foreach (var locationGroup in locationGroups)
+            {
+                File.WriteAllText("resources/location-groups/" + locationGroup.ResourceName + ".json", JsonSerializer.Serialize(locationGroup, serializeOptions));
+            }
+
+        }
+
+        private void CreateDirectories()
+        {
+            string[] directories = new string[]{
+                "resources/entity-types",
+                "resources/itemstats",
+                "resources/learnable-moves",
+                "resources/moves",
+                "resources/natures",
+                "resources/varieties",
+                "resources/items",
+                "resources/regions",
+                "resources/location-groups",
+            };
+
+            foreach (string directory in directories)
+            {
+                Directory.CreateDirectory(directory);
+            }
         }
     }
 }

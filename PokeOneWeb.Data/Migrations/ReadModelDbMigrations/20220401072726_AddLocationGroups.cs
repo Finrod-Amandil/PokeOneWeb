@@ -9,7 +9,7 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "LocationGroupReadModels",
+                name: "LocationGroupReadModel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace PokeOneWeb.Data.Migrations.ReadModelDbMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationGroupReadModels", x => x.Id);
+                    table.PrimaryKey("PK_LocationGroupReadModel", x => x.Id);
                 });
         }
 
