@@ -1,10 +1,12 @@
+import { environment } from 'src/environments/environment';
+
 describe('UI-tests for page location-list', () => {
     beforeEach(() => {
         //mock DB with json Files in Cypress/fixtures
-        cy.intercept('GET', 'https://localhost:5001/regions/Kanto.json', {
+        cy.intercept('GET', environment.baseUrl.concat('/regions/Kanto.json'), {
             fixture: 'getallforregion_kanto.json'
         });
-        cy.intercept('GET', 'https://localhost:5001/entity-types/Kanto.json', {
+        cy.intercept('GET', environment.baseUrl.concat('/entity-types/Kanto.json'), {
             fixture: 'getentitytypeforpath_kanto.json'
         });
         //baseURL is localhost:4200 see cypress.json, now visit location kanto

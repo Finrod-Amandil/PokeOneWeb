@@ -359,3 +359,6 @@ coverage.opencover.xml
 
 # Ignore static json file generation
 PokeOneWeb/resources
+
+# Ignore frontend development json files
+resources/
