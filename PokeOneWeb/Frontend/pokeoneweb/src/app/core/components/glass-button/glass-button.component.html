@@ -1,8 +1,8 @@
 <div class="container" [style.background-image]="'url('+buttonImage+')'">
-    <a [href]="linkDestination">
+    <a [routerLink]="linkDestination">
         <div class="overlay">
             <div class="toptext">
-                <p class ="comingSoon" *ngIf="comingSoon">Comming soon</p>
+                <p class ="comingSoon" *ngIf="comingSoon">Coming soon</p>
             </div>
             <div class="middletext">
                 <p class="buttonTitle">{{buttonTitle}}</p>

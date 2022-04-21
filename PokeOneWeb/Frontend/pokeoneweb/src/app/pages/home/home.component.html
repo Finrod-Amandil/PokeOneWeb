@@ -1,6 +1,6 @@
 <head>
     <title>Pokeoneweb</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <div id="content_title_container">
@@ -8,9 +8,9 @@
 </div>
 
 <div id="content_main_container">
-    <div>
+    <div class="button-container">
         <div class="home-welcomecontainer">
-            <h1 >Welcome to the Unofficial PokéOne Guide!</h1>
+            <h1>Welcome to dive Unofficial PokéOne Guide!</h1>
         </div>
         <div class="home-searchcontainer">
             <!--Source https://codepen.io/ahmadbassamemran/pen/rNjMXqg-->
@@ -18,29 +18,45 @@
                 <button class="btn-search">
                     <em class="fas fa-search"></em>
                 </button>
-                <input type="text" class="input-search" placeholder="Type to Search...">
+                <input type="text" class="input-search" placeholder="Type to Search..." />
             </div>
         </div>
         <div class="home-navigationcontainer">
-            <table aria-label="table for glass buttons">
-                <tr>
-                    <th>
-                        <app-glass-button buttonTitle="Pokédex" buttonImage="./assets/img/navbar/pokedex.png" linkDestination="/p"></app-glass-button>
-                    </th>
-                    <th>
-                        <app-glass-button buttonTitle="Itemdex" buttonImage="./assets/img/navbar/items.png" linkDestination="/i"></app-glass-button>
-                    </th>
-                    <th>
-                        <app-glass-button buttonTitle="Region overview" buttonImage="./assets/img/navbar/locations.png" linkDestination="/l"></app-glass-button>
-                    </th>
-                    <th>
-                        <app-glass-button buttonTitle="Guide overview" buttonImage="./assets/img/navbar/guides.png" linkDestination="/g"></app-glass-button>
-                    </th>
-                    <th>
-                        <app-glass-button buttonTitle="FAQ" buttonImage="./assets/img/navbar/faq.png" linkDestination="/faq"></app-glass-button>
-                    </th>
-                </tr>
-            </table>
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="Pokédex"
+                    buttonImage="./assets/img/navbar/pokedex.png"
+                    linkDestination="/p"
+                ></app-glass-button>
+            </div>
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="Itemdex"
+                    buttonImage="./assets/img/navbar/items.png"
+                    linkDestination="/i"
+                ></app-glass-button>
+            </div>
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="Region overview"
+                    buttonImage="./assets/img/navbar/locations.png"
+                    linkDestination="/l"
+                ></app-glass-button>
+            </div>
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="Guide overview"
+                    buttonImage="./assets/img/navbar/guides.png"
+                    linkDestination="/g"
+                ></app-glass-button>
+            </div>
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="FAQ"
+                    buttonImage="./assets/img/navbar/faq.png"
+                    linkDestination="/faq"
+                ></app-glass-button>
+            </div>
         </div>
     </div>
 </div>
