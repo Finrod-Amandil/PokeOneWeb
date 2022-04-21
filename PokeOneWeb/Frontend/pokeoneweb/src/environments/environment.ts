@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrl: './assets/resources'
+    baseUrl: 'http://localhost:4200/assets/resources'
 };
 
 /*
