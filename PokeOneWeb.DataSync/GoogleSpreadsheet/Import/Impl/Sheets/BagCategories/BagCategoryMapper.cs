@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
 {
-    public class BagCategoryMapper : SpreadsheetEntityMapper<BagCategorySheetDto, BagCategory>
+    public class BagCategoryMapper : XSpreadsheetEntityMapper<BagCategorySheetDto, BagCategory>
     {
         public BagCategoryMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories
             bagCategory ??= new BagCategory();
 
             bagCategory.IdHash = rowHash.IdHash;
-            bagCategory.Hash = rowHash.ContentHash;
+            bagCategory.Hash = rowHash.Hash;
             bagCategory.ImportSheetId = rowHash.ImportSheetId;
             bagCategory.Name = dto.Name;
             bagCategory.SortIndex = dto.SortIndex;

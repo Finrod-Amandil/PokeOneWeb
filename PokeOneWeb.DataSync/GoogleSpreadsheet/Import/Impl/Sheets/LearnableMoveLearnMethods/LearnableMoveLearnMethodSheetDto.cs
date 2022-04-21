@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
 {
-    public class LearnableMoveLearnMethodSheetDto : ISpreadsheetEntityDto
+    public class LearnableMoveLearnMethodSheetDto : XISpreadsheetEntityDto
     {
         // Only used for sorting in spreadsheets, no import required
         public int PokemonSpeciesPokedexNumber { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
             var pokemonVarietyName = "Build PokemonVarietyName";
             var values = new List<object> { pokemonVarietyName };
 
@@ -30,7 +30,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
 
             var pokemonVarietyName = "PokemonVarietyName";
             var buildName = "BuildName";
@@ -77,7 +77,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -91,7 +91,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
             var values = new List<object>()
             {
                 "0", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, "excessive value"
@@ -108,7 +108,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -133,7 +133,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Builds
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new BuildSheetRowParser();
+            var parser = new BuildXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

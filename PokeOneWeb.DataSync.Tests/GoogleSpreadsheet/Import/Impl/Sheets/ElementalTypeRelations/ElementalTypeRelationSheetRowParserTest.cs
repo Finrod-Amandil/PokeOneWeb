@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypeRelations;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new ElementalTypeRelationSheetRowParser();
+            var parser = new ElementalTypeRelationXSheetRowParser();
             var attackingTypeName = "Attacking Type Name";
             var defendingTypeName = "Defending Type Name";
             var effectivity = 1M;
@@ -40,7 +40,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeRelationSheetRowParser();
+            var parser = new ElementalTypeRelationXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -54,7 +54,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeRelationSheetRowParser();
+            var parser = new ElementalTypeRelationXSheetRowParser();
             var values = new List<object>
             {
                 "0", 1, 1, "excessive value"
@@ -71,7 +71,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeRelationSheetRowParser();
+            var parser = new ElementalTypeRelationXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -88,7 +88,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new ElementalTypeRelationSheetRowParser();
+            var parser = new ElementalTypeRelationXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
 {
-    public class SeasonTimeOfDaySheetDto : ISpreadsheetEntityDto
+    public class SeasonTimeOfDaySheetDto : XISpreadsheetEntityDto
     {
         public string SeasonName { get; set; }
         public string TimeOfDayName { get; set; }

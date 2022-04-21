@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes;
 using Xunit;
 
@@ -12,7 +12,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new ElementalTypeSheetRowParser();
+            var parser = new ElementalTypeXSheetRowParser();
             var name = "Name";
             var values = new List<object> { name };
 
@@ -32,7 +32,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeSheetRowParser();
+            var parser = new ElementalTypeXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -46,7 +46,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeSheetRowParser();
+            var parser = new ElementalTypeXSheetRowParser();
             var values = new List<object>
             {
                 "0", "excessive value"
@@ -63,7 +63,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeSheetRowParser();
+            var parser = new ElementalTypeXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -77,7 +77,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         public void ReadRow_WithUnparsableValue_ShouldThrow()
         {
             // Arrange
-            var parser = new ElementalTypeSheetRowParser();
+            var parser = new ElementalTypeXSheetRowParser();
             var values = new List<object> { string.Empty };
 
             // Act

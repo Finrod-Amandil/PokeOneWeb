@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
 
             var sortIndex = 0;
             var name = "Time of Day Name";
@@ -44,7 +44,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
 
             var sortIndex = 0;
             var name = "Time of Day Name";
@@ -78,7 +78,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -92,7 +92,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
             var values = new List<object>
             {
                 0, "0", "0", string.Empty, "excessive value"
@@ -109,7 +109,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -127,7 +127,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.TimesOf
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new TimeOfDaySheetRowParser();
+            var parser = new TimeOfDayXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -9,7 +10,7 @@ namespace PokeOneWeb.Data.Entities
     /// whether a sheet contains any changes.
     /// </summary>
     [Table("ImportSheet")]
-    public class ImportSheet
+    public class ImportSheet : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

@@ -5,7 +5,7 @@ using PokeOneWeb.Data.Entities;
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMoveLearnMethods
 {
     public class LearnableMoveLearnMethodMapper
-        : SpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod>
+        : XSpreadsheetEntityMapper<LearnableMoveLearnMethodSheetDto, LearnableMoveLearnMethod>
     {
         private readonly Dictionary<string, MoveLearnMethod> _moveLearnMethods = new();
         private readonly Dictionary<string, Item> _items = new();
@@ -42,7 +42,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.LearnableMove
             learnableMoveLearnMethod ??= new LearnableMoveLearnMethod();
 
             learnableMoveLearnMethod.IdHash = rowHash.IdHash;
-            learnableMoveLearnMethod.Hash = rowHash.ContentHash;
+            learnableMoveLearnMethod.Hash = rowHash.Hash;
             learnableMoveLearnMethod.ImportSheetId = rowHash.ImportSheetId;
             learnableMoveLearnMethod.IsAvailable = dto.IsAvailable;
             learnableMoveLearnMethod.LevelLearnedAt = dto.LevelLearnedAt;

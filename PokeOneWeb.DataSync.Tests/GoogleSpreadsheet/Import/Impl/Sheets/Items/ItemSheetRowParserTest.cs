@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
 
             var name = "Item Name";
             var isAvailable = false;
@@ -53,7 +53,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
 
             var name = "Item Name";
             var isAvailable = false;
@@ -105,7 +105,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -119,7 +119,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
             var values = new List<object>
             {
                 "0", false, false, "0", 1, "0", 1, string.Empty, string.Empty, string.Empty, "excessive value"
@@ -136,7 +136,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -160,7 +160,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act
@@ -174,7 +174,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Items
         public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
         {
             // Arrange
-            var parser = new ItemSheetRowParser();
+            var parser = new ItemXSheetRowParser();
 
             var name = "Item Name";
             var isAvailable = false;

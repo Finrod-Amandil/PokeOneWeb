@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events;
 using Xunit;
 
@@ -14,7 +14,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
             var name = "Event Name";
             var values = new List<object> { name };
 
@@ -31,7 +31,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
 
             var name = "Event Name";
             var startDate = "01.01.2020";
@@ -60,7 +60,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -74,7 +74,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
             var values = new List<object>
             {
                 "0", "01.01.2020", "01.02.2020", "excessive value"
@@ -91,7 +91,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -108,7 +108,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act
@@ -122,7 +122,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithWrongDateTimeFormat_ShouldThrow()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
 
             var name = "Event Name";
             var startDate = "2020-01-01";
@@ -143,7 +143,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Events
         public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
         {
             // Arrange
-            var parser = new EventSheetRowParser();
+            var parser = new EventXSheetRowParser();
 
             var name = "Event Name";
             var startDate = string.Empty;

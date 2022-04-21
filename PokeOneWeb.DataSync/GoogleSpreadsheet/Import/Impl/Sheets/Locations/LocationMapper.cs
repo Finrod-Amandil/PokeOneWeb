@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations
 {
-    public class LocationMapper : SpreadsheetEntityMapper<LocationSheetDto, Location>
+    public class LocationMapper : XSpreadsheetEntityMapper<LocationSheetDto, Location>
     {
         private readonly Dictionary<string, Region> _regions = new();
         private readonly Dictionary<string, LocationGroup> _locationGroups = new();
@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations
             location ??= new Location();
 
             location.IdHash = rowHash.IdHash;
-            location.Hash = rowHash.ContentHash;
+            location.Hash = rowHash.Hash;
             location.ImportSheetId = rowHash.ImportSheetId;
             location.Name = dto.LocationName;
             location.LocationGroup = MapLocationGroup(dto, location.LocationGroup);

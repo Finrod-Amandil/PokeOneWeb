@@ -1,42 +1,35 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Attributes;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
     public class GoogleSpreadsheetImportService : IGoogleSpreadsheetImportService
     {
-        private readonly ILogger<GoogleSpreadsheetImportService> _logger;
         private readonly IOptions<GoogleSpreadsheetsSettings> _settings;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ISpreadsheetDataLoader _dataLoader;
-        private readonly ISheetNameHelper _sheetNameHelper;
         private readonly ISpreadsheetImportReporter _reporter;
-        private readonly IHashListComparator _hashListComparator;
+        private readonly IDictionary<string, ISheetImporter> _sheetImporters;
 
         public GoogleSpreadsheetImportService(
-            ILogger<GoogleSpreadsheetImportService> logger,
             IOptions<GoogleSpreadsheetsSettings> settings,
-            ApplicationDbContext dbContext,
+            IServiceProvider serviceProvider,
             ISpreadsheetDataLoader dataLoader,
-            ISheetNameHelper sheetNameHelper,
-            ISpreadsheetImportReporter reporter,
-            IHashListComparator hashListComparator)
+            ISpreadsheetImportReporter reporter)
         {
-            _logger = logger;
             _settings = settings;
-            _dbContext = dbContext;
+            _serviceProvider = serviceProvider;
             _dataLoader = dataLoader;
-            _sheetNameHelper = sheetNameHelper;
             _reporter = reporter;
-            _hashListComparator = hashListComparator;
+            _sheetImporters = LoadSheetImportersUsingReflection();
         }
 
         public async Task<SpreadsheetImportReport> ImportSpreadsheetData()
@@ -44,25 +37,21 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             _reporter.NewSession();
             _reporter.StartImport();
 
-            var sheetsData = await _dataLoader.LoadRange(
+            // Load list of sheets to import
+            var sheets = await _dataLoader.LoadRange(
                 _settings.Value.Import.SheetsListSpreadsheetId,
                 _settings.Value.Import.SheetsListSheetName,
                 "B2:C");
 
-            foreach (var sheetData in sheetsData)
+            foreach (var sheet in sheets)
             {
-                var spreadsheetId = sheetData[0].ToString();
-                var sheetName = sheetData[1].ToString();
+                var spreadsheetId = sheet[0].ToString();
+                var sheetName = sheet[1].ToString();
+
+                var sheetImporter = FindSheetImporterForSheet(sheetName);
 
                 _reporter.StartImport(sheetName);
-
-                var sheet = GetSheet(spreadsheetId, sheetName);
-
-                await ImportSheet(sheet);
-
-                _dbContext.ChangeTracker.Clear();
-                GC.Collect();
-
+                await sheetImporter.ImportSheet(spreadsheetId, sheetName);
                 _reporter.StopImport(sheetName);
             }
 
@@ -70,113 +59,26 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return _reporter.GetReport();
         }
 
-        private async Task ImportSheet(ImportSheet sheet)
+        private Dictionary<string, ISheetImporter> LoadSheetImportersUsingReflection()
         {
-            var sheetHash = await _dataLoader.LoadSheetHash(sheet.SpreadsheetId, sheet.SheetName);
-            if (!HasSheetChanged(sheet, sheetHash))
-            {
-                _logger.LogInformation($"No changes found in sheet {sheet.SheetName}.");
-                return;
-            }
+            var types = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.IsDefined(typeof(SheetNameAttribute)))
+                .Select(t => new { Type = t, Attribute = t.GetCustomAttribute<SheetNameAttribute>() })
+                .Where(t => t.Attribute != null)
+                .ToDictionary(
+                    t => t.Attribute.SheetName,
+                    t => _serviceProvider.GetRequiredService(t.Type) as ISheetImporter);
 
-            var repository = _sheetNameHelper.GetSheetRepositoryForSheetName(sheet.SheetName);
-            var sheetHashes = await _dataLoader.LoadHashes(sheet.SpreadsheetId, sheet.SheetName, sheet.Id);
-            var dbHashes = repository.ReadDbHashes(sheet);
-
-            // Compare hash list of sheet and DB to find rows that need to be deleted, inserted, updated
-            var hashListComparisonResult = _hashListComparator.CompareHashLists(sheetHashes, dbHashes);
-
-            var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
-
-            // Delete
-            if (hashListComparisonResult.RowsToDelete.Any())
-            {
-                var deletedCount = repository.Delete(hashListComparisonResult.RowsToDelete);
-                _logger.LogInformation($"Deleted {deletedCount} entries for sheet {sheet.SheetName}.");
-            }
-
-            // Insert
-            if (hashListComparisonResult.RowsToInsert.Any())
-            {
-                var insertRowIndexes = GetRowIndexesForIdHashes(hashListComparisonResult.RowsToInsert.Select(rh => rh.IdHash), sheetIdHashes);
-
-                var dataToInsert = await _dataLoader.LoadRows(sheet.SpreadsheetId, sheet.SheetName, insertRowIndexes);
-                var dataToInsertForHashes = hashListComparisonResult.RowsToInsert
-                    .Zip(dataToInsert, (hash, values) => new { hash, values })
-                    .ToDictionary(x => x.hash, x => x.values);
-
-                var insertedCount = repository.Insert(dataToInsertForHashes);
-                _logger.LogInformation($"Inserted {insertedCount} entries for sheet {sheet.SheetName}.");
-            }
-
-            // Update
-            if (hashListComparisonResult.RowsToUpdate.Any())
-            {
-                var updateRowIndexes = GetRowIndexesForIdHashes(hashListComparisonResult.RowsToUpdate.Select(rh => rh.IdHash), sheetIdHashes);
-
-                var dataToUpdate = await _dataLoader.LoadRows(sheet.SpreadsheetId, sheet.SheetName, updateRowIndexes);
-                var dataToUpdateForHashes = hashListComparisonResult.RowsToUpdate
-                    .Zip(dataToUpdate, (hash, values) => new { hash, values })
-                    .ToDictionary(x => x.hash, x => x.values);
-
-                var updatedCount = repository.Update(dataToUpdateForHashes);
-                _logger.LogInformation($"Updated {updatedCount} entries for sheet {sheet.SheetName}.");
-            }
-
-            UpdateSheetHash(sheet.SpreadsheetId, sheet.SheetName, sheetHash);
+            return types;
         }
 
-        private static bool HasSheetChanged(ImportSheet sheet, string sheetHash)
+        private ISheetImporter FindSheetImporterForSheet(string sheetName)
         {
-            return !string.Equals(sheet.SheetHash, sheetHash, StringComparison.Ordinal);
-        }
+            // Sheet name can either be an exact match, or have a suffix, i.e. placed_items_kanto (matches placed_items)
+            var keys = _sheetImporters.Keys.Where(sheetName.StartsWith).ToList();
 
-        private ImportSheet GetSheet(string spreadsheetId, string sheetName)
-        {
-            var sheet = _dbContext.ImportSheets
-                .SingleOrDefault(s =>
-                    s.SpreadsheetId.Equals(spreadsheetId) &&
-                    s.SheetName.Equals(sheetName));
-
-            if (sheet is null)
-            {
-                sheet = new ImportSheet
-                {
-                    SpreadsheetId = spreadsheetId,
-                    SheetName = sheetName,
-                    SheetHash = "No successful import yet."
-                };
-
-                _dbContext.ImportSheets.Add(sheet);
-
-                _dbContext.SaveChanges();
-            }
-
-            return sheet;
-        }
-
-        private void UpdateSheetHash(string spreadsheetId, string sheetName, string sheetHash)
-        {
-            var dbSheet = _dbContext.ImportSheets
-                .SingleOrDefault(s =>
-                    s.SpreadsheetId.Equals(spreadsheetId) &&
-                    s.SheetName.Equals(sheetName));
-
-            if (dbSheet is null)
-            {
-                throw new Exception();
-            }
-
-            dbSheet.SheetHash = sheetHash;
-
-            _dbContext.SaveChanges();
-        }
-
-        private static List<int> GetRowIndexesForIdHashes(IEnumerable<string> selectedHashes, IList<string> allHashes)
-        {
-            var result = selectedHashes.Select(allHashes.IndexOf).OrderBy(i => i).ToList();
-
-            return result;
+            return keys.Count == 1 ? _sheetImporters[keys[0]] :
+                throw new ArgumentOutOfRangeException($"No suitable single importer could be found for sheet with sheet name {sheetName}.");
         }
     }
 }

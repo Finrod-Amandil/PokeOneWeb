@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
@@ -23,52 +23,52 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             return _report;
         }
 
-        public void ReportDeleted(Entity entity, string hash, int applicationDbId)
+        public void ReportDeleted(string entityName, string hash, int applicationDbId)
         {
             _report.Updates.Add(new ImportUpdate
             {
-                Entity = entity,
+                EntityName = entityName,
                 Hash = hash,
                 ApplicationDbId = applicationDbId,
                 DbAction = DbAction.Delete
             });
         }
 
-        public void ReportAdded(Entity entity, string hash, int applicationDbId)
+        public void ReportAdded(string entityName, string hash, int applicationDbId)
         {
             _report.Updates.Add(new ImportUpdate
             {
-                Entity = entity,
+                EntityName = entityName,
                 Hash = hash,
                 ApplicationDbId = applicationDbId,
                 DbAction = DbAction.Create,
             });
         }
 
-        public void ReportUpdated(Entity entity, string hash, int applicationDbId)
+        public void ReportUpdated(string entityName, string hash, int applicationDbId)
         {
             _report.Updates.Add(new ImportUpdate
             {
-                Entity = entity,
+                EntityName = entityName,
                 Hash = hash,
                 ApplicationDbId = applicationDbId,
                 DbAction = DbAction.Update
             });
         }
 
-        public void ReportError(Entity entity, string hash, string message)
+        public void ReportError(string entityName, string hash, string message)
         {
             _report.Errors.Add(new ImportError
             {
-                Entity = entity,
+                EntityName = entityName,
                 Hash = hash,
                 Message = message
             });
         }
 
-        public void ReportError(Entity entity, string hash, Exception exception)
+        public void ReportError(string entityName, string hash, Exception exception)
         {
-            ReportError(entity, hash, $"{exception.GetType().Name}: {exception.Message}");
+            ReportError(entityName, hash, $"{exception.GetType().Name}: {exception.Message}");
         }
 
         public void StartImport()

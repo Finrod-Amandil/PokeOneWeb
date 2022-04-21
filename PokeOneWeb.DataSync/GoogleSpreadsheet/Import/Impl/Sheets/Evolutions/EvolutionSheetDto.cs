@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions
 {
-    public class EvolutionSheetDto : ISpreadsheetEntityDto
+    public class EvolutionSheetDto : XISpreadsheetEntityDto
     {
         public int BasePokemonSpeciesPokedexNumber { get; set; }
 

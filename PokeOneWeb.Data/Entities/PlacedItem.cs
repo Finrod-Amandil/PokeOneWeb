@@ -98,10 +98,22 @@ namespace PokeOneWeb.Data.Entities
 
         public int ItemId { get; set; }
 
+        /// <summary>
+        /// Sets the string-based identifier for the related item. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string ItemName { internal get; set; }
+
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
 
         public int LocationId { get; set; }
+
+        /// <summary>
+        /// Sets the string-based identifier for the related location. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string LocationName { internal get; set; }
 
         public override string ToString()
         {

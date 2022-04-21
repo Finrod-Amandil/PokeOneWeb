@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 {
-    public class SpawnSheetDto : ISpreadsheetEntityDto
+    public class SpawnSheetDto : XISpreadsheetEntityDto
     {
         public string LocationName { get; set; }
 

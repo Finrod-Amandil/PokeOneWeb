@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
 {
-    public class MoveTutorSheetDto : ISpreadsheetEntityDto
+    public class MoveTutorSheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
         public string LocationName { get; set; }

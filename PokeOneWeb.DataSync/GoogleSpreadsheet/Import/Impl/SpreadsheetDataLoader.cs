@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using Microsoft.Extensions.Logging;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -39,7 +41,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var ranges = new List<string> { $"{sheetName}!A1" };
             var values = await LoadData(spreadsheetId, ranges);
 
-            return values[0].Values[0][0].ToString();
+            return values[0][0].ToString();
         }
 
         public async Task<List<RowHash>> LoadHashes(string spreadsheetId, string sheetName, int sheetId)
@@ -50,7 +52,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var hashes = new List<RowHash>();
 
             var i = 0;
-            foreach (var row in values[0].Values)
+            foreach (var row in values)
             {
                 i++;
                 if (row.Count < 2)
@@ -61,7 +63,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
                 hashes.Add(new RowHash
                 {
-                    ContentHash = row[0].ToString(),
+                    Hash = row[0].ToString(),
                     IdHash = row[1].ToString(),
                     ImportSheetId = sheetId
                 });
@@ -70,19 +72,39 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return hashes;
         }
 
-        public async Task<List<List<object>>> LoadRows(string spreadsheetId, string sheetName, List<int> rows = null)
+        public async Task<List<SheetDataRow>> LoadDataRows(ImportSheet sheet, List<string> selectedIdHashes, List<string> allIdHashes)
         {
-            var ranges = rows != null ? GetRangesForRows(rows, sheetName) : new List<string> { $"{sheetName}!C2:ZZ" };
-            var values = await LoadData(spreadsheetId, ranges);
+            var rowIndexes = GetRowIndexesForIdHashes(selectedIdHashes, allIdHashes);
+            var ranges = GetRangesForRows(rowIndexes, sheet.SheetName, "A", true);
+            var values = await LoadData(sheet.SpreadsheetId, ranges);
 
-            var valuesCollapsed = new List<List<object>>();
+            var header = new SheetHeader(values[0].Skip(2).Select(x => x.ToString() ?? string.Empty).ToList());
+            values.RemoveAt(0);
 
-            foreach (var valueRange in values)
+            var dataRows = new List<SheetDataRow>();
+
+            foreach (var row in values)
             {
-                valuesCollapsed.AddRange(valueRange.Values.Select(row => row.ToList()));
+                var rowHash = new RowHash
+                {
+                    IdHash = row[0].ToString(),
+                    Hash = row[1].ToString(),
+                    ImportSheetId = sheet.Id
+                };
+
+                var dataRow = new SheetDataRow(header, rowHash, row.Skip(2).ToList());
+                dataRows.Add(dataRow);
             }
 
-            return valuesCollapsed;
+            return dataRows;
+        }
+
+        public async Task<List<List<object>>> LoadRows(string spreadsheetId, string sheetName, List<int> rows = null)
+        {
+            var ranges = rows != null ? GetRangesForRows(rows, sheetName, "C", false) : new List<string> { $"{sheetName}!C2:ZZ" };
+            var values = await LoadData(spreadsheetId, ranges);
+
+            return values;
         }
 
         public async Task<List<List<object>>> LoadRange(string spreadsheetId, string sheetName, string range)
@@ -90,10 +112,10 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var ranges = new List<string> { range };
             var values = await LoadData(spreadsheetId, ranges);
 
-            return values[0].Values.Select(row => row.ToList()).ToList();
+            return values;
         }
 
-        private async Task<IList<ValueRange>> LoadData(string spreadsheetId, List<string> ranges)
+        private async Task<List<List<object>>> LoadData(string spreadsheetId, List<string> ranges)
         {
             EnsureQuotaLimitNotReached();
 
@@ -111,7 +133,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             var result = await request.ExecuteAsync();
 
-            return result.ValueRanges;
+            var values = new List<List<object>>();
+
+            foreach (var valueRange in result.ValueRanges)
+            {
+                values.AddRange(valueRange.Values.Select(row => row.ToList()));
+            }
+
+            return values;
         }
 
         private static async Task<UserCredential> GetCredentials()
@@ -127,17 +156,26 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return credential;
         }
 
-        private static List<string> GetRangesForRows(List<int> rows, string sheetName)
+        private static List<string> GetRangesForRows(List<int> rows, string sheetName, string startColumn, bool includeHeader)
         {
             var ranges = new List<string>();
-            rows = rows.OrderBy(r => r).ToList();
+            rows = rows
+                .OrderBy(r => r)
+                .Select(r => r + 2) // Offset 2: Header row and 0-indicated to 1-indicated indexes.
+                .ToList();
+
             var startRow = rows[0];
+
+            if (includeHeader)
+            {
+                ranges.Add($"{sheetName}!{startColumn}1:1");
+            }
 
             for (var i = 0; i <= rows.Count; i++)
             {
                 if (i == rows.Count || (i > 0 && rows[i] - rows[i - 1] > 1))
                 {
-                    ranges.Add($"{sheetName}!C{startRow + 2}:{rows[i - 1] + 2}");
+                    ranges.Add($"{sheetName}!{startColumn}{startRow}:{rows[i - 1]}");
 
                     if (i < rows.Count)
                     {
@@ -165,6 +203,13 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 Thread.Sleep(1000);
                 _reporter.StopIdle();
             }
+        }
+
+        private static List<int> GetRowIndexesForIdHashes(IEnumerable<string> selectedHashes, IList<string> allHashes)
+        {
+            var result = selectedHashes.Select(allHashes.IndexOf).OrderBy(i => i).ToList();
+
+            return result;
         }
     }
 }

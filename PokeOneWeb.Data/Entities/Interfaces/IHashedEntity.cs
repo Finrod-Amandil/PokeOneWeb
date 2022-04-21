@@ -3,13 +3,8 @@
     /// <summary>
     /// Common interface for all entities which correspond to a record in a Google Spreadsheet.
     /// </summary>
-    public interface IHashedEntity
+    public interface IHashedEntity : IEntity
     {
-        /// <summary>
-        /// Gets or sets the auto-incremented database ID.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets a hash value calculated over all fields. Can be used to detect changes on this entity.
         /// </summary>

@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
 {
-    public class BuildMapper : SpreadsheetEntityMapper<BuildSheetDto, Build>
+    public class BuildMapper : XSpreadsheetEntityMapper<BuildSheetDto, Build>
     {
         // TODO constants
         private static readonly string OPTION_DIVIDER = "/";
@@ -43,7 +43,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
             build ??= new Build();
 
             build.IdHash = rowHash.IdHash;
-            build.Hash = rowHash.ContentHash;
+            build.Hash = rowHash.Hash;
             build.ImportSheetId = rowHash.ImportSheetId;
             build.Name = dto.BuildName;
             build.Description = dto.BuildDescription;

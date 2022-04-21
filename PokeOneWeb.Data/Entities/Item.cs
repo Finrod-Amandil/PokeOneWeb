@@ -12,7 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// or given to a Pokemon as a held item to gain certain battle effects.
     /// </summary>
     [Table("Item")]
-    public class Item : IHashedEntity
+    public class Item : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

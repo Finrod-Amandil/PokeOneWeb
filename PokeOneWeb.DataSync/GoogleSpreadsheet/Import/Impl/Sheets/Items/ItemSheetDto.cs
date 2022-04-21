@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
 {
-    public class ItemSheetDto : ISpreadsheetEntityDto
+    public class ItemSheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
         public bool IsAvailable { get; set; }

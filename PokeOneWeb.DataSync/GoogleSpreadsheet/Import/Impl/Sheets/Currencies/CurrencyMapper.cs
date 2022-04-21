@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
 {
-    public class CurrencyMapper : SpreadsheetEntityMapper<CurrencySheetDto, Currency>
+    public class CurrencyMapper : XSpreadsheetEntityMapper<CurrencySheetDto, Currency>
     {
         public CurrencyMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Currencies
             currency ??= new Currency();
 
             currency.IdHash = rowHash.IdHash;
-            currency.Hash = rowHash.ContentHash;
+            currency.Hash = rowHash.Hash;
             currency.ImportSheetId = rowHash.ImportSheetId;
             currency.Item = new Item { Name = dto.ItemName };
 

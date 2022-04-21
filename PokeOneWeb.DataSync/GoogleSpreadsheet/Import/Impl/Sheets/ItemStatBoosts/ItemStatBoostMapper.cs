@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts
 {
-    public class ItemStatBoostMapper : SpreadsheetEntityMapper<ItemStatBoostSheetDto, ItemStatBoostPokemon>
+    public class ItemStatBoostMapper : XSpreadsheetEntityMapper<ItemStatBoostSheetDto, ItemStatBoostPokemon>
     {
         private readonly Dictionary<string, ItemStatBoost> _itemStatBoosts = new();
         private readonly Dictionary<string, PokemonVariety> _pokemonVarieties = new();
@@ -33,7 +33,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoost
             itemStatBoostPokemon ??= new ItemStatBoostPokemon();
 
             itemStatBoostPokemon.IdHash = rowHash.IdHash;
-            itemStatBoostPokemon.Hash = rowHash.ContentHash;
+            itemStatBoostPokemon.Hash = rowHash.Hash;
             itemStatBoostPokemon.ImportSheetId = rowHash.ImportSheetId;
 
             ItemStatBoost itemStatBoost;

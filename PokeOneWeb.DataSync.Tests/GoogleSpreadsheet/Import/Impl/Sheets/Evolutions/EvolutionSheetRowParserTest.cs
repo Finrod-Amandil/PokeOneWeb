@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new EvolutionSheetRowParser();
+            var parser = new EvolutionXSheetRowParser();
 
             var basePokemonSpeciesPokedexNumber = 1;
             var basePokemonSpeciesName = "Base Pokemon Species Name";
@@ -65,7 +65,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new EvolutionSheetRowParser();
+            var parser = new EvolutionXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -79,7 +79,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new EvolutionSheetRowParser();
+            var parser = new EvolutionXSheetRowParser();
             var values = new List<object>()
             {
                 1, "0", "0", 0, "0", 1, "0", false, false, false, "excessive value"
@@ -96,7 +96,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new EvolutionSheetRowParser();
+            var parser = new EvolutionXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -120,7 +120,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Evoluti
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new EvolutionSheetRowParser();
+            var parser = new EvolutionXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

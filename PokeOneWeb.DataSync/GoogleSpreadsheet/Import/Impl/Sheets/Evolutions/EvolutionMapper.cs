@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions
 {
-    public class EvolutionMapper : SpreadsheetEntityMapper<EvolutionSheetDto, Evolution>
+    public class EvolutionMapper : XSpreadsheetEntityMapper<EvolutionSheetDto, Evolution>
     {
         private readonly Dictionary<string, PokemonVariety> _varieties = new();
         private readonly Dictionary<string, PokemonSpecies> _species = new();
@@ -66,7 +66,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions
             }
 
             evolution.IdHash = rowHash.IdHash;
-            evolution.Hash = rowHash.ContentHash;
+            evolution.Hash = rowHash.Hash;
             evolution.ImportSheetId = rowHash.ImportSheetId;
             evolution.BasePokemonSpecies = basePokemonSpecies;
             evolution.BasePokemonVariety = baseVariety;

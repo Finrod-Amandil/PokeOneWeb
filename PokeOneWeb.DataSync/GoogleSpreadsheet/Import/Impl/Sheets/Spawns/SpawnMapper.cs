@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
 {
-    public class SpawnMapper : SpreadsheetEntityMapper<SpawnSheetDto, Spawn>
+    public class SpawnMapper : XSpreadsheetEntityMapper<SpawnSheetDto, Spawn>
     {
         private readonly Dictionary<string, Season> _seasons = new();
         private readonly Dictionary<string, TimeOfDay> _timesOfDay = new();
@@ -38,7 +38,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
             spawn ??= new Spawn();
 
             spawn.IdHash = rowHash.IdHash;
-            spawn.Hash = rowHash.ContentHash;
+            spawn.Hash = rowHash.Hash;
             spawn.ImportSheetId = rowHash.ImportSheetId;
             spawn.IsConfirmed = dto.IsConfirmed;
             spawn.LowestLevel = dto.LowestLvl;

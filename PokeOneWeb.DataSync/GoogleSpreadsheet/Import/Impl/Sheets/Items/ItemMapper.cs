@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
 {
-    public class ItemMapper : SpreadsheetEntityMapper<ItemSheetDto, Item>
+    public class ItemMapper : XSpreadsheetEntityMapper<ItemSheetDto, Item>
     {
         private readonly Dictionary<string, BagCategory> _bagCategories = new();
 
@@ -48,7 +48,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Items
             item.BagCategory = bagCategory;
 
             item.IdHash = rowHash.IdHash;
-            item.Hash = rowHash.ContentHash;
+            item.Hash = rowHash.Hash;
             item.ImportSheetId = rowHash.ImportSheetId;
             item.ResourceName = dto.ResourceName;
             item.PokeoneItemId = dto.PokeOneItemId;

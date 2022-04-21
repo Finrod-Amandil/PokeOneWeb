@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 {
-    public class PokemonSheetDto : ISpreadsheetEntityDto
+    public class PokemonSheetDto : XISpreadsheetEntityDto
     {
         public int SortIndex { get; set; }
 

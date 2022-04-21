@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes
 {
-    public class ElementalTypeMapper : SpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType>
+    public class ElementalTypeMapper : XSpreadsheetEntityMapper<ElementalTypeSheetDto, ElementalType>
     {
         public ElementalTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
             elementalType ??= new ElementalType();
 
             elementalType.IdHash = rowHash.IdHash;
-            elementalType.Hash = rowHash.ContentHash;
+            elementalType.Hash = rowHash.Hash;
             elementalType.ImportSheetId = rowHash.ImportSheetId;
             elementalType.Name = dto.Name;
 

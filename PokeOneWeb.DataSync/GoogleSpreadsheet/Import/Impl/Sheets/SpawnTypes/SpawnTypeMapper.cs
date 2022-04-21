@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes
 {
-    public class SpawnTypeMapper : SpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType>
+    public class SpawnTypeMapper : XSpreadsheetEntityMapper<SpawnTypeSheetDto, SpawnType>
     {
         public SpawnTypeMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes
             spawnType ??= new SpawnType();
 
             spawnType.IdHash = rowHash.IdHash;
-            spawnType.Hash = rowHash.ContentHash;
+            spawnType.Hash = rowHash.Hash;
             spawnType.ImportSheetId = rowHash.ImportSheetId;
             spawnType.Name = dto.Name;
             spawnType.SortIndex = dto.SortIndex;

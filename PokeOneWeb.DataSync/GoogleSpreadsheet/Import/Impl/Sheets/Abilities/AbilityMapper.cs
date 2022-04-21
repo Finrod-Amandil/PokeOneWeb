@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
 {
-    public class AbilityMapper : SpreadsheetEntityMapper<AbilitySheetDto, Ability>
+    public class AbilityMapper : XSpreadsheetEntityMapper<AbilitySheetDto, Ability>
     {
         public AbilityMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
             ability ??= new Ability();
 
             ability.IdHash = rowHash.IdHash;
-            ability.Hash = rowHash.ContentHash;
+            ability.Hash = rowHash.Hash;
             ability.ImportSheetId = rowHash.ImportSheetId;
             ability.Name = dto.Name;
             ability.EffectDescription = dto.Effect;

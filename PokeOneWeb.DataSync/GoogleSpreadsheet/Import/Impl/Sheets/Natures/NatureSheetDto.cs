@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Natures
 {
-    public class NatureSheetDto : ISpreadsheetEntityDto
+    public class NatureSheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
 

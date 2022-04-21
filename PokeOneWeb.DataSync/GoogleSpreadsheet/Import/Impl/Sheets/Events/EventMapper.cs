@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
 {
-    public class EventMapper : SpreadsheetEntityMapper<EventSheetDto, Event>
+    public class EventMapper : XSpreadsheetEntityMapper<EventSheetDto, Event>
     {
         public EventMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
             eventEntity ??= new Event();
 
             eventEntity.IdHash = rowHash.IdHash;
-            eventEntity.Hash = rowHash.ContentHash;
+            eventEntity.Hash = rowHash.Hash;
             eventEntity.ImportSheetId = rowHash.ImportSheetId;
             eventEntity.Name = dto.Name;
             eventEntity.StartDate = dto.StartDate;

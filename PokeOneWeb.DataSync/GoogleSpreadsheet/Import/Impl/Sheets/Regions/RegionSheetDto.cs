@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 {
-    public class RegionSheetDto : ISpreadsheetEntityDto
+    public class RegionSheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
         public string ResourceName { get; set; }

@@ -11,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// The Pokemon World is divided into major areas called Regions.
     /// </summary>
     [Table("Region")]
-    public class Region : IHashedEntity
+    public class Region : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

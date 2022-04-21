@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageClasses
 {
-    public class MoveDamageClassMapper : SpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass>
+    public class MoveDamageClassMapper : XSpreadsheetEntityMapper<MoveDamageClassSheetDto, MoveDamageClass>
     {
         public MoveDamageClassMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -29,7 +29,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveDamageCla
             moveDamageClass ??= new MoveDamageClass();
 
             moveDamageClass.IdHash = rowHash.IdHash;
-            moveDamageClass.Hash = rowHash.ContentHash;
+            moveDamageClass.Hash = rowHash.Hash;
             moveDamageClass.ImportSheetId = rowHash.ImportSheetId;
             moveDamageClass.Name = dto.Name;
 

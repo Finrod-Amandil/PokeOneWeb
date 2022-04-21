@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ItemStatBoosts
 {
-    public class ItemStatBoostSheetDto : ISpreadsheetEntityDto
+    public class ItemStatBoostSheetDto : XISpreadsheetEntityDto
     {
         public string ItemName { get; set; }
         public decimal AtkBoost { get; set; }

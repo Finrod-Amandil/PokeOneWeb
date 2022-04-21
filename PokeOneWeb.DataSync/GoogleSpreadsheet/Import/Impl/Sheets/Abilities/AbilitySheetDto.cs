@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
 {
-    public class AbilitySheetDto : ISpreadsheetEntityDto
+    public class AbilitySheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
         public string ShortEffect { get; set; }

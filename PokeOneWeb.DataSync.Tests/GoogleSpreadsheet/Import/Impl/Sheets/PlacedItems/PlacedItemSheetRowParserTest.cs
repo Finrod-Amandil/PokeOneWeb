@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems

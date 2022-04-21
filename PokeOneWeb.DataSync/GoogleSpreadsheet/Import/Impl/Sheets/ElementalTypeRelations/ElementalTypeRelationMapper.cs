@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypeRelations
 {
-    public class ElementalTypeRelationMapper : SpreadsheetEntityMapper<ElementalTypeRelationSheetDto, ElementalTypeRelation>
+    public class ElementalTypeRelationMapper : XSpreadsheetEntityMapper<ElementalTypeRelationSheetDto, ElementalTypeRelation>
     {
         private readonly Dictionary<string, ElementalType> _types = new();
 
@@ -56,7 +56,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalType
             }
 
             elementalTypeRelation.IdHash = rowHash.IdHash;
-            elementalTypeRelation.Hash = rowHash.ContentHash;
+            elementalTypeRelation.Hash = rowHash.Hash;
             elementalTypeRelation.ImportSheetId = rowHash.ImportSheetId;
             elementalTypeRelation.AttackingType = attackingType;
             elementalTypeRelation.DefendingType = defendingType;

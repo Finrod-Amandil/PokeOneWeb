@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Seasons
 {
-    public class SeasonMapper : SpreadsheetEntityMapper<SeasonSheetDto, Season>
+    public class SeasonMapper : XSpreadsheetEntityMapper<SeasonSheetDto, Season>
     {
         public SeasonMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -28,7 +28,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Seasons
             season ??= new Season();
 
             season.IdHash = rowHash.IdHash;
-            season.Hash = rowHash.ContentHash;
+            season.Hash = rowHash.Hash;
             season.ImportSheetId = rowHash.ImportSheetId;
             season.SortIndex = dto.SortIndex;
             season.Name = dto.Name;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.BagCategories;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.BagCate
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new BagCategorySheetRowParser();
+            var parser = new BagCategoryXSheetRowParser();
             var name = "BagCategory Name";
             var sortIndex = 1;
             var values = new List<object> { name, sortIndex };
@@ -35,7 +35,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.BagCate
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new BagCategorySheetRowParser();
+            var parser = new BagCategoryXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -49,7 +49,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.BagCate
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new BagCategorySheetRowParser();
+            var parser = new BagCategoryXSheetRowParser();
             var values = new List<object>
             {
                 "0", 1, "excessive value"
@@ -66,7 +66,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.BagCate
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new BagCategorySheetRowParser();
+            var parser = new BagCategoryXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -82,7 +82,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.BagCate
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new BagCategorySheetRowParser();
+            var parser = new BagCategoryXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

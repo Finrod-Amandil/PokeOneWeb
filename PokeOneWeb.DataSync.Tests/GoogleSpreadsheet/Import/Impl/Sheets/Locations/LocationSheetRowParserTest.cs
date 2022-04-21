@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Locations;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
 
             var regionName = "Region Name";
             var locationGroupName = "Location Group Name";
@@ -49,7 +49,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
 
             var regionName = "Region Name";
             var locationGroupName = "Location Group Name";
@@ -87,7 +87,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -101,7 +101,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
             var values = new List<object>()
             {
                 "0", string.Empty, string.Empty, 1, 1, 1, 1, 1, 1, string.Empty, "excessive value"
@@ -118,7 +118,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -139,7 +139,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Locatio
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new LocationSheetRowParser();
+            var parser = new LocationXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

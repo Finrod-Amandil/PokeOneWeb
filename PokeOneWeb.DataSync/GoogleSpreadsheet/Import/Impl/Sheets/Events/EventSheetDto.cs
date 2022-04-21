@@ -2,7 +2,7 @@
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Events
 {
-    public class EventSheetDto : ISpreadsheetEntityDto
+    public class EventSheetDto : XISpreadsheetEntityDto
     {
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }

@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PvpTiers
 {
-    public class PvpTierMapper : SpreadsheetEntityMapper<PvpTierSheetDto, PvpTier>
+    public class PvpTierMapper : XSpreadsheetEntityMapper<PvpTierSheetDto, PvpTier>
     {
         public PvpTierMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PvpTiers
             pvpTier ??= new PvpTier();
 
             pvpTier.IdHash = rowHash.IdHash;
-            pvpTier.Hash = rowHash.ContentHash;
+            pvpTier.Hash = rowHash.Hash;
             pvpTier.ImportSheetId = rowHash.ImportSheetId;
             pvpTier.Name = dto.Name;
             pvpTier.SortIndex = dto.SortIndex;

@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 {
-    public class RegionMapper : SpreadsheetEntityMapper<RegionSheetDto, Region>
+    public class RegionMapper : XSpreadsheetEntityMapper<RegionSheetDto, Region>
     {
         private readonly Dictionary<string, Event> _events = new();
 
@@ -45,7 +45,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             }
 
             region.IdHash = rowHash.IdHash;
-            region.Hash = rowHash.ContentHash;
+            region.Hash = rowHash.Hash;
             region.ImportSheetId = rowHash.ImportSheetId;
             region.Name = dto.Name;
             region.ResourceName = dto.ResourceName;

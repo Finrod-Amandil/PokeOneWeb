@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new SeasonTimeOfDaySheetRowParser();
+            var parser = new SeasonTimeOfDayXSheetRowParser();
 
             var seasonName = "Season Name";
             var timeOfDayName = "TimeOfDay Name";
@@ -47,7 +47,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SeasonTimeOfDaySheetRowParser();
+            var parser = new SeasonTimeOfDayXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -61,7 +61,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SeasonTimeOfDaySheetRowParser();
+            var parser = new SeasonTimeOfDayXSheetRowParser();
             var values = new List<object>
             {
                 "0", "0", 0, 0, "excessive value"
@@ -78,7 +78,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new SeasonTimeOfDaySheetRowParser();
+            var parser = new SeasonTimeOfDayXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -96,7 +96,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SeasonT
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new SeasonTimeOfDaySheetRowParser();
+            var parser = new SeasonTimeOfDayXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

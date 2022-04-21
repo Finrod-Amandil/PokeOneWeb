@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
 {
-    public class TimeOfDayMapper : SpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay>
+    public class TimeOfDayMapper : XSpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay>
     {
         public TimeOfDayMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -28,7 +28,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
             timeOfDay ??= new TimeOfDay();
 
             timeOfDay.IdHash = rowHash.IdHash;
-            timeOfDay.Hash = rowHash.ContentHash;
+            timeOfDay.Hash = rowHash.Hash;
             timeOfDay.ImportSheetId = rowHash.ImportSheetId;
             timeOfDay.SortIndex = dto.SortIndex;
             timeOfDay.Name = dto.Name;

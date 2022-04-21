@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
 {
-    public class HuntingConfigurationMapper : SpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration>
+    public class HuntingConfigurationMapper : XSpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration>
     {
         private readonly Dictionary<string, PokemonVariety> _pokemonVarieties = new();
         private readonly Dictionary<string, Nature> _natures = new();
@@ -37,7 +37,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfig
             huntingConfiguration ??= new HuntingConfiguration();
 
             huntingConfiguration.IdHash = rowHash.IdHash;
-            huntingConfiguration.Hash = rowHash.ContentHash;
+            huntingConfiguration.Hash = rowHash.Hash;
             huntingConfiguration.ImportSheetId = rowHash.ImportSheetId;
             huntingConfiguration.PokemonVariety = MapPokemonVariety(dto);
             huntingConfiguration.Ability = MapAbility(dto);

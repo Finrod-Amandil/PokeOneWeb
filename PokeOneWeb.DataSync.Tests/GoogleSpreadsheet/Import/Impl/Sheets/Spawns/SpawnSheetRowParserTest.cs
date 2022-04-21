@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Spawns;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
 
             var locationName = "Location Name";
             var pokemonForm = "Pokemon Form";
@@ -50,7 +50,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
 
             var locationName = "Location Name";
             var pokemonForm = "Pokemon Form";
@@ -108,7 +108,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -122,7 +122,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
             var values = new List<object>
             {
                 "0", "0", "0", "0", "0", string.Empty, string.Empty, 0, false, 0, 0, string.Empty, "excessive value"
@@ -139,7 +139,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -165,7 +165,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act
@@ -179,7 +179,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Spawns
         public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
         {
             // Arrange
-            var parser = new SpawnSheetRowParser();
+            var parser = new SpawnXSheetRowParser();
 
             var locationName = "Location Name";
             var pokemonForm = "Pokemon Form";

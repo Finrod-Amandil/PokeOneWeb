@@ -13,7 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// floor of a tower) and so on.
     /// </summary>
     [Table("Location")]
-    public class Location : IHashedEntity
+    public class Location : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

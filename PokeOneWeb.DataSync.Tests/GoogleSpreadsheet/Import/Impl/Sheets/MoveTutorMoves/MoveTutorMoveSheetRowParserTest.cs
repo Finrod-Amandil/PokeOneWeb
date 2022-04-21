@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutorMoves;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
 
             var moveTutorName = "Move Tutor Name";
             var moveName = "Move Name";
@@ -41,7 +41,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithAllValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
 
             var moveTutorName = "Move Tutor Name";
             var moveName = "Move Name";
@@ -93,7 +93,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -107,7 +107,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
             var values = new List<object>()
             {
                 "0", "0", 0, 0, 0, 0, 0, 0, 0, 0, "excessive value"
@@ -124,7 +124,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -148,7 +148,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act
@@ -162,7 +162,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveTut
         public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
         {
             // Arrange
-            var parser = new MoveTutorMoveSheetRowParser();
+            var parser = new MoveTutorMoveXSheetRowParser();
 
             var moveTutorName = "Move Tutor Name";
             var moveName = "Move Name";

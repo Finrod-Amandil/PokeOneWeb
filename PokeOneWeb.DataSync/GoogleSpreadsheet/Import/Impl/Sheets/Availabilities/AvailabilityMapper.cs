@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Availabilities
 {
-    public class AvailabilityMapper : SpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability>
+    public class AvailabilityMapper : XSpreadsheetEntityMapper<AvailabilitySheetDto, PokemonAvailability>
     {
         public AvailabilityMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -31,7 +31,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Availabilitie
             availability ??= new PokemonAvailability();
 
             availability.IdHash = rowHash.IdHash;
-            availability.Hash = rowHash.ContentHash;
+            availability.Hash = rowHash.Hash;
             availability.ImportSheetId = rowHash.ImportSheetId;
             availability.Name = dto.Name;
             availability.Description = dto.Description;

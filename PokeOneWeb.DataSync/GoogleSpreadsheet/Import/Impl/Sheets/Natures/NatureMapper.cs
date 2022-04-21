@@ -3,7 +3,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Natures
 {
-    public class NatureMapper : SpreadsheetEntityMapper<NatureSheetDto, Nature>
+    public class NatureMapper : XSpreadsheetEntityMapper<NatureSheetDto, Nature>
     {
         public NatureMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -26,7 +26,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Natures
             nature ??= new Nature();
 
             nature.IdHash = rowHash.IdHash;
-            nature.Hash = rowHash.ContentHash;
+            nature.Hash = rowHash.Hash;
             nature.ImportSheetId = rowHash.ImportSheetId;
             nature.Name = dto.Name;
             nature.Attack = dto.Attack;

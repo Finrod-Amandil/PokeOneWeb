@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Builds
 {
-    public class BuildSheetDto : ISpreadsheetEntityDto
+    public class BuildSheetDto : XISpreadsheetEntityDto
     {
         public string PokemonVarietyName { get; set; }
 

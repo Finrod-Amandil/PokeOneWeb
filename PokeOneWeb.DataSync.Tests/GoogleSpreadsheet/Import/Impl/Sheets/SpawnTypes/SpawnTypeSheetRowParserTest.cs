@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTypes;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
         public void ReadRow_WithMinimalValidValues_ShouldParse()
         {
             // Arrange
-            var parser = new SpawnTypeSheetRowParser();
+            var parser = new SpawnTypeXSheetRowParser();
 
             var name = "SpawnType Name";
             var sortIndex = 1;
@@ -50,7 +50,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
         public void ReadRow_WithInsufficientValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnTypeSheetRowParser();
+            var parser = new SpawnTypeXSheetRowParser();
             var values = new List<object>();
 
             // Act
@@ -64,7 +64,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
         public void ReadRow_WithTooManyValues_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnTypeSheetRowParser();
+            var parser = new SpawnTypeXSheetRowParser();
             var values = new List<object>
             {
                 "0", 0, false, false, "0", "excessive value"
@@ -81,7 +81,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
         public void ReadRow_WithValuesNull_ShouldThrow()
         {
             // Arrange
-            var parser = new SpawnTypeSheetRowParser();
+            var parser = new SpawnTypeXSheetRowParser();
             List<object> values = null;
 
             // Act
@@ -100,7 +100,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.SpawnTy
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
-            var parser = new SpawnTypeSheetRowParser();
+            var parser = new SpawnTypeXSheetRowParser();
             var values = valuesAsArray.ToList();
 
             // Act

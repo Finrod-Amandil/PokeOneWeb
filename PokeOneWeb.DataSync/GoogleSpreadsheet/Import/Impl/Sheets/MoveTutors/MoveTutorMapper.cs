@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
 {
-    public class MoveTutorMapper : SpreadsheetEntityMapper<MoveTutorSheetDto, MoveTutor>
+    public class MoveTutorMapper : XSpreadsheetEntityMapper<MoveTutorSheetDto, MoveTutor>
     {
         private readonly Dictionary<string, Location> _locations = new();
 
@@ -43,7 +43,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveTutors
             }
 
             moveTutor.IdHash = rowHash.IdHash;
-            moveTutor.Hash = rowHash.ContentHash;
+            moveTutor.Hash = rowHash.Hash;
             moveTutor.ImportSheetId = rowHash.ImportSheetId;
             moveTutor.Name = dto.Name;
             moveTutor.PlacementDescription = dto.PlacementDescription;

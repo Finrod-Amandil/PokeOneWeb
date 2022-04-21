@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 {
-    public class PokemonMapper : SpreadsheetEntityMapper<PokemonSheetDto, PokemonForm>
+    public class PokemonMapper : XSpreadsheetEntityMapper<PokemonSheetDto, PokemonForm>
     {
         private readonly string _smogonUrlName = "Smogon";
         private readonly string _bulbapediaUrlName = "Bulbapedia";
@@ -58,7 +58,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             form ??= new PokemonForm();
 
             form.IdHash = rowHash.IdHash;
-            form.Hash = rowHash.ContentHash;
+            form.Hash = rowHash.Hash;
             form.ImportSheetId = rowHash.ImportSheetId;
             form.SortIndex = dto.SortIndex;
             form.Name = dto.PokemonFormName;

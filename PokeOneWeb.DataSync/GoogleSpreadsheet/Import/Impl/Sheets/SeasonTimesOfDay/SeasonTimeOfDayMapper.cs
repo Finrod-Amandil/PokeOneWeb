@@ -4,7 +4,7 @@ using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOfDay
 {
-    public class SeasonTimeOfDayMapper : SpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay>
+    public class SeasonTimeOfDayMapper : XSpreadsheetEntityMapper<SeasonTimeOfDaySheetDto, SeasonTimeOfDay>
     {
         private readonly Dictionary<string, TimeOfDay> _timesOfDay = new();
         private readonly Dictionary<string, Season> _seasons = new();
@@ -57,7 +57,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.SeasonTimesOf
             }
 
             seasonTimeOfDay.IdHash = rowHash.IdHash;
-            seasonTimeOfDay.Hash = rowHash.ContentHash;
+            seasonTimeOfDay.Hash = rowHash.Hash;
             seasonTimeOfDay.ImportSheetId = rowHash.ImportSheetId;
             seasonTimeOfDay.StartHour = dto.StartHour;
             seasonTimeOfDay.EndHour = dto.EndHour;

@@ -1,6 +1,6 @@
 ﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveLearnMethodLocations
 {
-    public class MoveLearnMethodLocationSheetDto : ISpreadsheetEntityDto
+    public class MoveLearnMethodLocationSheetDto : XISpreadsheetEntityDto
     {
         public string MoveLearnMethodName { get; set; }
         public string TutorType { get; set; }
