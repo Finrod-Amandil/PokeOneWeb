@@ -361,4 +361,4 @@ coverage.opencover.xml
 PokeOneWeb/resources
 
 # Ignore frontend development json files
-PokeOneWeb/PokeOneWeb/Frontend/pokeoneweb/src/assets/resources
+resources/
