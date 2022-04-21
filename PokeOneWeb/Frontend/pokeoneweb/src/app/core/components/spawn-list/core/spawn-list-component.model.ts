@@ -1,5 +1,5 @@
 import { ISpawnModel } from "src/app/core/models/spawn.model";
-import { SpawnListColumn } from "src/app/pages/pokemon-detail/core/spawn-list-column.enum";
+import { SpawnListColumn } from "./spawn-list-column.enum";
 
 export class SpawnListComponentModel {
     public spawnsSortedByColumn: SpawnListColumn = SpawnListColumn.Location;

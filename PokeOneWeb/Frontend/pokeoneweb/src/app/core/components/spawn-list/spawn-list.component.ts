@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SpawnListColumn } from 'src/app/pages/pokemon-detail/core/spawn-list-column.enum';
 import { ISpawnModel } from '../../models/spawn.model';
 import { SpawnListComponentModel } from './core/spawn-list-component.model';
 import { DateService } from 'src/app/core/services/date.service';
-import { PokemonDetailSortService } from 'src/app/pages/pokemon-detail/core/pokemon-detail-sort.service';
+import { SpawnListSortService } from './core/spawn-list-sort.service';
+import { SpawnListColumn } from './core/spawn-list-column.enum';
 
 @Component({
   selector: 'app-spawn-list',
@@ -18,7 +18,7 @@ export class SpawnListComponent implements OnInit {
   
   constructor(
     private dateService: DateService,
-    private sortService: PokemonDetailSortService
+    private sortService: SpawnListSortService
   ) {}
 
   ngOnInit(): void {

@@ -12,7 +12,6 @@ import { PokemonUrlService } from 'src/app/core/services/pokemon-url.service';
 import { MoveListColumn } from './core/move-list-column.enum';
 import { PokemonDetailSortService } from './core/pokemon-detail-sort.service';
 import { PokemonDetailModel } from './core/pokemon-detail.model';
-import { SpawnListColumn } from './core/spawn-list-column.enum';
 
 const STEPS_PER_SECOND = 5.908;
 
