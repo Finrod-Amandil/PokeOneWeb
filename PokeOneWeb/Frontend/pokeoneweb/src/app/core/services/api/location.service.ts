@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ILocationGroupModel } from '../../models/location-group.model';
-import { ILocationModel } from '../../models/location.model';
+import { ILocationListModel } from '../../models/location-list.model';
 import { BaseService } from './base.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -14,10 +14,13 @@ export class LocationService extends BaseService {
     }
 
     public getPathSegment(): string {
-        return 'location';
+        return 'locationGroups';
     }
 
-    public getByLocationGroupResourceNameFull(locationGroupResourceName: string): Observable<ILocationGroupModel> {
-        return this.http.get<ILocationGroupModel>(`${this.url}/getbylocationgroupresourcenamefull?name=${locationGroupResourceName}`, this.httpOptions);
+    public getAllForRegion(regionName: string): Observable<ILocationListModel[]> {
+        return this.http.get<ILocationListModel[]>(
+            `${environment.baseUrl}/regions/${regionName}.json`,
+            this.httpOptions
+        );
     }
 }
