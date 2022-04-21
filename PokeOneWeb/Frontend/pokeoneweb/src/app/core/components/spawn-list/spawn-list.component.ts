@@ -24,6 +24,7 @@ export class SpawnListComponent implements OnInit {
   ngOnInit(): void {
     this.model.spawns = this.spawns;
     this.hideEventExclusiveSpawns();
+    this.applyInitialSorting();
   }
 
   public hideEventExclusiveSpawns() {
@@ -116,5 +117,13 @@ export class SpawnListComponent implements OnInit {
     this.model.spawnsSortDirection = sortDirection;
 
     this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, sortColumn, sortDirection);
+  }
+  
+  private applyInitialSorting() {
+    if (!this.model.spawns) return;
+
+    this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.SpawnType, 1);
+    this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Location, 1);
+    this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Rarity, 1);
   }
 }

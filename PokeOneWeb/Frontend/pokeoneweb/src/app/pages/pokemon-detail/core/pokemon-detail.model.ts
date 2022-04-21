@@ -10,13 +10,6 @@ export class PokemonDetailModel {
 
     public learnableMoves: ILearnableMoveModel[] = [];
 
-    public spawnsSortedByColumn: SpawnListColumn = SpawnListColumn.Location;
-    public spawnsSortDirection: number = 1;
-    public areEventExclusiveSpawnsHidden: boolean = true;
-    public areOnlyEventExclusiveSpawnsAvailable: boolean = false;
-    public areNoEventSpawnsAvailable: boolean = false;
-    public visibleSpawns: ISpawnModel[] = [];
-
     public movesSortedByColumn: MoveListColumn = MoveListColumn.Power;
     public movesSortDirection: number = 1;
 
