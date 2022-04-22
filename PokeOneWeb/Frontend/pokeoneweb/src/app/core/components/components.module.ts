@@ -18,6 +18,7 @@ import { TypeBadgeComponent } from './type-badge/type-badge.component';
 import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.component';
 import { GlassButtonComponent } from './glass-button/glass-button.component';
 import { SpawnListComponent } from './spawn-list/spawn-list.component';
+import { PlacedItemListComponent } from './placed-item-list/placed-item-list.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { SpawnListComponent } from './spawn-list/spawn-list.component';
         VerticalStatBarComponent,
         GlassButtonComponent,
         SpawnListComponent,
+        PlacedItemListComponent,
     ],
     imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
     exports: [

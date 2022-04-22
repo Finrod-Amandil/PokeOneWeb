@@ -89,7 +89,7 @@ export class SpawnListComponent implements OnInit {
     }
     else{
         return true;
-    }   
+    }
   }
 
   public showEventExclusiveSpawns() {
