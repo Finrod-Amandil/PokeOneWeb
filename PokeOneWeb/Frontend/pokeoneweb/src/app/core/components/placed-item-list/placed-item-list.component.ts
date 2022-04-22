@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IItemModel, ItemModel } from '../../models/item.model';
+import { PlacedItemModel } from '../../models/placed-item.model';
 import { PlacedItemListColumn } from './core/placed-item-list-column.enum';
 import { PlacedItemListSortService } from './core/placed-item-list-sort.service';
 import { PlacedItemListModel } from './core/placed-item-list.model';
@@ -10,7 +10,8 @@ import { PlacedItemListModel } from './core/placed-item-list.model';
   styleUrls: ['./placed-item-list.component.scss']
 })
 export class PlacedItemListComponent implements OnInit {
-  @Input() item : IItemModel = new ItemModel;
+  @Input() placedItems : PlacedItemModel[] = [];
+  @Input() spriteName : string = "";
 
   public model : PlacedItemListModel = new PlacedItemListModel();
   public PlacedItemListColumn = PlacedItemListColumn;
@@ -20,18 +21,19 @@ export class PlacedItemListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.model.item = this.item;
+    this.model.placedItems = this.placedItems;
+    this.model.spriteName = this.spriteName;
     this.applyInitialSorting();
   }
 
   public sortPlacedItems(sortColumn: PlacedItemListColumn, sortDirection: number) {
-    if (!this.model.item) return;
+    if (!this.model.placedItems) return;
 
     this.model.placedItemsSortedByColumn = sortColumn;
     this.model.placedItemsSortDirection = sortDirection;
 
-    this.model.item.placedItems = this.sortService.sortPlacedItems(
-        this.model.item.placedItems,
+    this.model.placedItems = this.sortService.sortPlacedItems(
+        this.model.placedItems,
         sortColumn,
         sortDirection
     );
@@ -48,10 +50,10 @@ export class PlacedItemListComponent implements OnInit {
   }
 
   private applyInitialSorting() {
-    if (!this.model.item) return;
+    if (!this.placedItems) return;
 
-    this.model.item.placedItems = this.sortService.sortPlacedItems(
-        this.model.item.placedItems,
+    this.model.placedItems = this.sortService.sortPlacedItems(
+        this.model.placedItems,
         PlacedItemListColumn.Location,
         1
     );
