@@ -5,7 +5,7 @@ import { PlacedItemListColumn } from './placed-item-list-column.enum';
 @Injectable({
     providedIn: 'root'
 })
-export class ItemDetailSortService {
+export class PlacedItemListSortService {
     public sortPlacedItems(
         models: IPlacedItemModel[],
         sortColumn: PlacedItemListColumn,
