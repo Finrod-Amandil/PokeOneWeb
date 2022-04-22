@@ -27,7 +27,7 @@ export class LocationService extends BaseService {
 
     public getLocationGroup(locationGroupName: string): Observable<ILocationGroupModel> {
         return this.http.get<ILocationGroupModel>(
-            `${environment.baseUrl}/locations/${locationGroupName}.json`,
+            `${environment.baseUrl}/location-groups/${locationGroupName}.json`,
             this.httpOptions
         );
     }

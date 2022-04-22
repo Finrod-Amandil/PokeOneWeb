@@ -13,6 +13,7 @@
         </div>
         <div *ngIf="model.locationGroup.locationModel.length > 0">
             <div *ngFor="let sublocation of model.locationGroup.locationModel">
+                <h2>{{sublocation.locationName}}</h2>
                 <app-spawn-list [spawns]="sublocation.spawns"></app-spawn-list>
             </div>
         </div>
