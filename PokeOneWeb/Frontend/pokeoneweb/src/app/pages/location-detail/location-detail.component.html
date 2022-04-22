@@ -5,16 +5,47 @@
 <div id="content_main_container">
     <div *ngIf="!model.locationGroup">Loading...</div>
     <div *ngIf="model.locationGroup">
-        <p>{{model.locationGroup.name}}</p>
+        <div class="location-detail-navigation">
+            <a [routerLink]="'/'+ model.locationGroup.previousLocationGroupResourceName">
+                <div class="location-detail-navigation-left">
+                    <div class="location-detail-navigation-link">⮜ {{model.locationGroup.previousLocationGroupName}}</div>
+                    <div class="location-detail-navigation-sprite">
+                        <p>{{model.locationGroup.previousLocationGroupName}}</p>
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/'+ model.locationGroup.regionResourceName">
+                <div class="location-detail-navigation-center">
+                    <div class="location-detail-navigation-sprite">
+                        <img src="./assets/img/navbar/locations.png" />
+                    </div>
+                    <div class="location-detail-navigation-link">{{model.locationGroup.regionName}}</div>
+                    <div class="location-detail-navigation-sprite">
+                        <img src="./assets/img/navbar/locations.png" />
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/'+ model.locationGroup.nextLocationGroupResourceName">
+                <div class="location-detail-navigation-right">
+                    <div class="location-detail-navigation-sprite">
+                        <p>{{model.locationGroup.nextLocationGroupName}}</p>
+                    </div>
+                    <div class="location-detail-navigation-link">{{model.locationGroup.nextLocationGroupName}} ⮞</div>
+                </div>
+            </a>
+        </div>
+
         <div *ngIf="model.locationGroup.locations.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
-                <p class="empty">This Location does not have any known sublocations in PokéOne.</p>
+                <p class="empty">This Location does not have any known locations in PokéOne.</p>
             </div>
         </div>
         <div *ngIf="model.locationGroup.locations.length > 0">
             <div *ngFor="let location of model.locationGroup.locations">
-                <h2>{{location.name}}</h2>
+                <h2>{{location.name}} - Spawns</h2>
                 <app-spawn-list [spawns]="location.spawns"></app-spawn-list>
+                <h2>{{location.name}} - Placed Items</h2>
+                <app-placed-item-list [placedItems]="location.placedItems"></app-placed-item-list>
             </div>
         </div>
     </div>

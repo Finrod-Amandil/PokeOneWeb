@@ -1,0 +1,85 @@
+.location-detail-navigation {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.location-detail-navigation a {
+    font-size: 18px;
+    color: var(--light-gray);
+}
+
+.location-detail-navigation-center {
+    text-align: center;
+}
+
+.location-detail-navigation-left,
+.location-detail-navigation-center,
+.location-detail-navigation-right {
+    background-color: var(--medium-gray);
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.location-detail-navigation-left {
+    padding-left: 10px;
+}
+
+.location-detail-navigation-right {
+    padding-right: 10px;
+}
+
+.location-detail-navigation-link,
+.location-detail-navigation-sprite {
+    display: inline-block;
+}
+
+.location-detail-navigation-sprite {
+    padding-top: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--dark-gray);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.location-detail-navigation-sprite img {
+    max-height: 30px;
+}
+
+.location-detail-navigation-left .location-detail-navigation-sprite {
+    margin-left: 10px;
+    margin-top: -1px;
+    margin-right: -1px;
+}
+
+.location-detail-navigation-center .location-detail-navigation-sprite:first-child {
+    margin-left: -1px;
+    margin-top: -1px;
+    margin-right: 20px;
+}
+
+.location-detail-navigation-center .location-detail-navigation-sprite:last-child {
+    margin-right: -1px;
+    margin-top: -1px;
+    margin-left: 20px;
+}
+
+.location-detail-navigation-right .location-detail-navigation-sprite {
+    margin-right: 10px;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.location-detail-navigation a:hover .location-detail-navigation-left,
+.location-detail-navigation a:hover .location-detail-navigation-center,
+.location-detail-navigation a:hover .location-detail-navigation-right {
+    background-color: var(--medium-gray-lighter);
+}
+
+.location-detail-navigation a:hover .location-detail-navigation-sprite {
+    background-color: var(--medium-gray);
+}
