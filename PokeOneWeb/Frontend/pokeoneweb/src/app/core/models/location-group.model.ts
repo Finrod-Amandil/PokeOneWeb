@@ -1,8 +1,8 @@
 import { LocationModel } from "./location.model";
 
 export interface ILocationGroupModel {
-    locationGroupResourceName: string;
-    locationGroupName: string;
+    resourceName: string;
+    name: string;
 
     regionResourceName: string;
     regionName: string;
@@ -16,12 +16,12 @@ export interface ILocationGroupModel {
     nextLocationGroupResourceName: string;
     nextLocationGroupName: string;
 
-    locationModel: LocationModel[];
+    locations: LocationModel[];
 }
 
 export class LocationGroupModel implements ILocationGroupModel {
-    locationGroupResourceName = "";
-    locationGroupName = "";
+    resourceName = "";
+    name = "";
     
     regionResourceName = "";
     regionName = "";
@@ -35,5 +35,5 @@ export class LocationGroupModel implements ILocationGroupModel {
     nextLocationGroupResourceName = "";
     nextLocationGroupName = "";
 
-    locationModel = [];
+    locations = [];
 }

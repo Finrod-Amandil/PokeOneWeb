@@ -1,20 +1,20 @@
 <div id="content_title_container">
-    <div id="content_title">{{model.locationGroup ? model.locationGroup.locationGroupName : model.locationGroupResourceName}}</div>
+    <div id="content_title">{{model.locationGroup ? model.locationGroup.name : model.locationGroupResourceName}}</div>
 </div>
 
 <div id="content_main_container">
     <div *ngIf="!model.locationGroup">Loading...</div>
     <div *ngIf="model.locationGroup">
-        <p>{{model.locationGroup ? model.locationGroup.locationGroupName : model.locationGroupResourceName}}</p>
+        <p>{{model.locationGroup.name}}</p>
         <div *ngIf="model.locationGroup.locationModel.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
                 <p class="empty">This Location does not have any known sublocations in PokéOne.</p>
             </div>
         </div>
         <div *ngIf="model.locationGroup.locationModel.length > 0">
-            <div *ngFor="let sublocation of model.locationGroup.locationModel">
-                <h2>{{sublocation.locationName}}</h2>
-                <app-spawn-list [spawns]="sublocation.spawns"></app-spawn-list>
+            <div *ngFor="let location of model.locationGroup.locations">
+                <h2>{{location.name}}</h2>
+                <app-spawn-list [spawns]="location.spawns"></app-spawn-list>
             </div>
         </div>
     </div>

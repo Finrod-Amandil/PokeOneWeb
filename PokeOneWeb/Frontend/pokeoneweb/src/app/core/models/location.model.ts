@@ -2,7 +2,7 @@ import { PlacedItemModel } from "./placed-item.model";
 import { SpawnModel } from "./spawn.model";
 
 export interface ILocationModel {
-    locationName: string;
+    name: string;
     sortIndex: number;
     
     isDiscoverable: boolean;
@@ -13,7 +13,7 @@ export interface ILocationModel {
 }
 
 export class LocationModel implements ILocationModel {
-    locationName = "";
+    name = "";
     sortIndex = 0;
     
     isDiscoverable = false;
