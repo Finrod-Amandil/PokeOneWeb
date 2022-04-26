@@ -12,7 +12,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         protected override void AddIdsForNames(Location entity)
         {
-            entity.LocationGroupId = GetIdForName<LocationGroup>(entity.LocationGroupName);
+            entity.LocationGroupId = GetRequiredIdForName<LocationGroup>(entity.LocationGroupName);
         }
 
         public override void Insert(ICollection<Location> entities)

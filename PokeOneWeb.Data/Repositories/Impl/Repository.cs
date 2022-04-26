@@ -46,40 +46,17 @@ namespace PokeOneWeb.Data.Repositories.Impl
             DbContext.SaveChanges();
         }
 
-        private AggregateException PrepareEntitiesAndAggregateExceptions(ICollection<TEntity> entities)
-        {
-            var exceptions = new List<Exception>();
-
-            foreach (var entity in entities)
-            {
-                try
-                {
-                    AddIdsForNames(entity);
-                }
-                catch (RelatedEntityNotFoundException e)
-                {
-                    exceptions.Add(e);
-                }
-            }
-
-            return exceptions.Any() ? new AggregateException(exceptions) : null;
-        }
-
         protected virtual void AddIdsForNames(TEntity entity)
         {
             // Override this method in entity repositories, if any related entities need to be attached by name.
             // Pattern: entity.RelatedEntityId = GetIdForName<RelatedEntity>(entity.RelatedEntityName);
         }
 
-        /// <summary>
-        /// Looks up the Id of an entity of the given type by looking for an entity which has the given name.
-        /// Returns 0 if no matching entity was found.
-        /// </summary>
-        protected int GetIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
+        protected int? GetOptionalIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
         {
             if (string.IsNullOrWhiteSpace(entityName))
             {
-                return 0;
+                return null;
             }
 
             var typeName = typeof(TNamedEntity).FullName ?? throw new Exception();
@@ -90,20 +67,20 @@ namespace PokeOneWeb.Data.Repositories.Impl
                     .ToDictionary(x => x.Name, x => x.Id));
             }
 
-            return _idsForEntityNames[typeName].TryGetValue(entityName, out var id) ? id : 0;
+            return _idsForEntityNames[typeName].TryGetValue(entityName, out var id) ? id : null;
         }
 
         protected int GetRequiredIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
         {
-            var id = GetIdForName<TNamedEntity>(entityName);
+            var id = GetOptionalIdForName<TNamedEntity>(entityName);
 
-            if (id == 0)
+            if (id is null)
             {
                 throw new RelatedEntityNotFoundException(
                     typeof(TEntity).Name, typeof(TNamedEntity).Name, entityName);
             }
 
-            return id;
+            return (int)id;
         }
 
         /// <summary>
@@ -117,7 +94,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
 
             foreach (var entity in distinctEntities)
             {
-                entity.Id = GetIdForName<TRelatedEntity>(entity.Name);
+                entity.Id = GetOptionalIdForName<TRelatedEntity>(entity.Name);
             }
 
             DbContext.Set<TRelatedEntity>().UpdateRange(distinctEntities);

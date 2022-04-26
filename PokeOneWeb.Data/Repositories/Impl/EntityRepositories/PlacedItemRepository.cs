@@ -10,8 +10,8 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         protected override void AddIdsForNames(PlacedItem entity)
         {
-            entity.LocationId = GetIdForName<Location>(entity.LocationName);
-            entity.ItemId = GetIdForName<Item>(entity.ItemName);
+            entity.LocationId = GetRequiredIdForName<Location>(entity.LocationName);
+            entity.ItemId = GetRequiredIdForName<Item>(entity.ItemName);
         }
     }
 }
