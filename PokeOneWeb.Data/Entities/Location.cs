@@ -63,9 +63,11 @@ namespace PokeOneWeb.Data.Entities
         public string Notes { get; set; }
 
         [ForeignKey("LocationGroupId")]
-        public LocationGroup LocationGroup { get; set; }
+        public LocationGroup LocationGroup { get; set; } = new();
 
         public int LocationGroupId { get; set; }
+
+        internal string LocationGroupName { get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; } = new();
 

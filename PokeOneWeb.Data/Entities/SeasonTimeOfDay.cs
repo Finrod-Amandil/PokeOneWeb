@@ -58,10 +58,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int? SeasonId { get; set; }
 
+        public string SeasonName { get; set; }
+
         [ForeignKey("TimeOfDayId")]
         public TimeOfDay TimeOfDay { get; set; }
 
         public int? TimeOfDayId { get; set; }
+
+        public string TimeOfDayName { get; set; }
 
         public override string ToString()
         {

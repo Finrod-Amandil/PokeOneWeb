@@ -59,6 +59,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int LocationId { get; set; }
 
+        public string LocationName { get; set; }
+
         /// <summary>
         /// Gets or sets the moves that this tutor teaches.
         /// </summary>

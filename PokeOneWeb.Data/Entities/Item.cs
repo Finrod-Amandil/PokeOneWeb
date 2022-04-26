@@ -78,6 +78,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int BagCategoryId { get; set; }
 
+        public string BagCategoryName { internal get; set; }
+
         public List<PlacedItem> PlacedItems { get; set; } = new();
 
         public override string ToString()

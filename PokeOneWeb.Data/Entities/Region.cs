@@ -56,15 +56,21 @@ namespace PokeOneWeb.Data.Entities
         public bool IsEventRegion { get; set; }
 
         public string Color { get; set; }
+
         public string Description { get; set; }
+
         public bool IsReleased { get; set; }
+
         public bool IsMainRegion { get; set; }
+
         public bool IsSideRegion { get; set; }
 
         [ForeignKey("EventId")]
         public Event Event { get; set; }
 
         public int? EventId { get; set; }
+
+        public string EventName { get; set; }
 
         public List<LocationGroup> LocationGroups { get; set; } = new();
 

@@ -25,7 +25,5 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "ScreenshotName", (e, v) => e.ScreenshotName = v.ParseAsString() },
             { "Notes", (e, v) => e.Notes = v.ParseAsString() },
         };
-
-        protected override int RequiredValueCount => 5;
     }
 }

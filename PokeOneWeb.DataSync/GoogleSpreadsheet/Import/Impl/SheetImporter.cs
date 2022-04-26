@@ -15,23 +15,28 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
         private readonly IHashedEntityRepository<TEntity> _repository;
         private readonly ISheetMapper<TEntity> _mapper;
         private readonly IHashListComparator _hashListComparator;
+        private readonly ISpreadsheetImportReporter _reporter;
 
         protected SheetImporter(
             ISpreadsheetDataLoader dataLoader,
             IImportSheetRepository importSheetRepository,
             IHashedEntityRepository<TEntity> repository,
             ISheetMapper<TEntity> mapper,
-            IHashListComparator hashListComparator)
+            IHashListComparator hashListComparator,
+            ISpreadsheetImportReporter reporter)
         {
             _dataLoader = dataLoader;
             _importSheetRepository = importSheetRepository;
             _repository = repository;
             _mapper = mapper;
             _hashListComparator = hashListComparator;
+            _reporter = reporter;
         }
 
         public async Task ImportSheet(string spreadsheetId, string sheetName)
         {
+            _reporter.StartImport(sheetName);
+
             var sheet = _importSheetRepository.FindBySpreadsheetIdAndSheetName(spreadsheetId, sheetName);
             var sheetHash = await _dataLoader.LoadSheetHash(sheet.SpreadsheetId, sheet.SheetName);
 
@@ -54,6 +59,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             // Update sheet hash
             sheet.SheetHash = sheetHash;
             _importSheetRepository.Update(sheet);
+
+            _reporter.StopImport(sheetName);
         }
 
         private static bool HasSheetChanged(ImportSheet sheet, string sheetHash)

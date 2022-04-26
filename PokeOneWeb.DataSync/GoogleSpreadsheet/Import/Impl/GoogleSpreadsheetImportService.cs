@@ -67,7 +67,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 .Where(t => t.Attribute != null)
                 .ToDictionary(
                     t => t.Attribute.SheetName,
-                    t => _serviceProvider.GetRequiredService(t.Type) as ISheetImporter);
+                    t => _serviceProvider.GetRequiredService(typeof(SheetImporter<>).MakeGenericType(t.Type)) as ISheetImporter);
 
             return types;
         }

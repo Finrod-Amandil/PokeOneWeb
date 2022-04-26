@@ -9,11 +9,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
     public abstract class SheetMapper<TEntity> : ISheetMapper<TEntity> where TEntity : class, IHashedEntity, new()
     {
-        private readonly ISpreadsheetImportReporter _reporter;
+        protected readonly ISpreadsheetImportReporter Reporter;
 
         protected SheetMapper(ISpreadsheetImportReporter reporter)
         {
-            _reporter = reporter;
+            Reporter = reporter;
         }
 
         public IEnumerable<TEntity> Map(IEnumerable<SheetDataRow> sheetDataRows)
@@ -23,39 +23,33 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 throw new ArgumentNullException(nameof(sheetDataRows));
             }
 
-            var entities = new List<TEntity>();
-
             foreach (var row in sheetDataRows)
             {
-                try
-                {
-                    entities.Add(MapEntity(row));
-                }
-                catch (Exception e) when (e is InvalidRowDataException or ParseException)
-                {
-                    _reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
-                }
+                yield return MapEntity(row);
             }
-
-            return entities;
         }
 
         protected abstract Dictionary<string, Action<TEntity, object>> ValueToEntityMappings { get; }
 
-        protected abstract int RequiredValueCount { get; }
-
         private TEntity MapEntity(SheetDataRow row)
         {
-            if (row.ValueCount < RequiredValueCount)
+            var entity = new TEntity
             {
-                throw new InvalidRowDataException("Row data does not contain sufficient values.");
-            }
+                IdHash = row.IdHash,
+                Hash = row.Hash,
+                ImportSheetId = row.ImportSheetId
+            };
 
-            var entity = new TEntity();
-
-            foreach (var (columnName, mapping) in ValueToEntityMappings)
+            foreach (var (columnName, mapValueOntoEntity) in ValueToEntityMappings)
             {
-                mapping(entity, row[columnName]);
+                try
+                {
+                    mapValueOntoEntity(entity, row[columnName]);
+                }
+                catch (Exception e) when (e is InvalidRowDataException or ParseException)
+                {
+                    Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
+                }
             }
 
             return entity;

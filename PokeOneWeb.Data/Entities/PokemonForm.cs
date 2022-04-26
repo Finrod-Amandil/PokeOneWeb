@@ -65,7 +65,7 @@ namespace PokeOneWeb.Data.Entities
         public string SpriteName { get; set; }
 
         [ForeignKey("PokemonVarietyId")]
-        public PokemonVariety PokemonVariety { get; set; }
+        public PokemonVariety PokemonVariety { get; set; } = new();
 
         public int PokemonVarietyId { get; set; }
 
@@ -73,6 +73,8 @@ namespace PokeOneWeb.Data.Entities
         public PokemonAvailability Availability { get; set; }
 
         public int AvailabilityId { get; set; }
+
+        public string AvailabilityName { get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; } = new();
 

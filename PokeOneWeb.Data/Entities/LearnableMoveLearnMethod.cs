@@ -66,12 +66,12 @@ namespace PokeOneWeb.Data.Entities
         public string Comments { get; set; }
 
         [ForeignKey("LearnableMoveId")]
-        public LearnableMove LearnableMove { get; set; }
+        public LearnableMove LearnableMove { get; set; } = new();
 
         public int LearnableMoveId { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
-        public MoveLearnMethod MoveLearnMethod { get; set; }
+        public MoveLearnMethod MoveLearnMethod { get; set; } = new();
 
         public int MoveLearnMethodId { get; set; }
 
@@ -80,10 +80,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int? RequiredItemId { get; set; } // Only used for learn method Machine / TM/HM
 
+        public string RequiredItemName { internal get; set; }
+
         [ForeignKey("MoveTutorMoveId")]
         public MoveTutorMove MoveTutorMove { get; set; }
 
         public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
+
+        public string MoveTutorName { internal get; set; }
 
         public override string ToString()
         {

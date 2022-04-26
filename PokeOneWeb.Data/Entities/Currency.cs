@@ -50,6 +50,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int? ItemId { get; set; }
 
+        public string ItemName { internal get; set; }
+
         public override string ToString()
         {
             return $"{Item} (Currency)";

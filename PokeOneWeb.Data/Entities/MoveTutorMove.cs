@@ -56,10 +56,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int MoveId { get; set; }
 
+        public string MoveName { get; set; }
+
         [ForeignKey("MoveTutorId")]
         public MoveTutor MoveTutor { get; set; }
 
         public int MoveTutorId { get; set; }
+
+        public string MoveTutorName { internal get; set; }
 
         public List<MoveTutorMovePrice> Price { get; set; } = new();
 

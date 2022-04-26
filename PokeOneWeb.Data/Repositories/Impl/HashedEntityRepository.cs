@@ -25,7 +25,6 @@ namespace PokeOneWeb.Data.Repositories.Impl
         public virtual void DeleteByIdHashes(ICollection<string> idHashes)
         {
             DbContext.Set<TEntity>().Where(x => idHashes.Contains(x.IdHash)).DeleteFromQuery();
-            DbContext.SaveChanges();
         }
 
         public virtual void UpdateByIdHashes(ICollection<TEntity> entities)

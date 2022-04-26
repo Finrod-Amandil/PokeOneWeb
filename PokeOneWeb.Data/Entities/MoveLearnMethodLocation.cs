@@ -62,7 +62,7 @@ namespace PokeOneWeb.Data.Entities
         public string PlacementDescription { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
-        public MoveLearnMethod MoveLearnMethod { get; set; }
+        public MoveLearnMethod MoveLearnMethod { get; set; } = new();
 
         public int MoveLearnMethodId { get; set; }
 
@@ -70,6 +70,8 @@ namespace PokeOneWeb.Data.Entities
         public Location Location { get; set; }
 
         public int LocationId { get; set; }
+
+        public string LocationName { internal get; set; }
 
         public List<MoveLearnMethodLocationPrice> Price { get; set; } = new();
 

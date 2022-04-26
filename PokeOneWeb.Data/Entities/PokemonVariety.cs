@@ -97,18 +97,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int ExpYield { get; set; }
 
-        // BASE STATS
         public int Attack { get; set; }
-
         public int Defense { get; set; }
         public int SpecialAttack { get; set; }
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
         public int HitPoints { get; set; }
 
-        // EV Yields
         public int AttackEv { get; set; }
-
         public int DefenseEv { get; set; }
         public int SpecialAttackEv { get; set; }
         public int SpecialDefenseEv { get; set; }
@@ -118,7 +114,7 @@ namespace PokeOneWeb.Data.Entities
         public string Notes { get; set; }
 
         [ForeignKey("PokemonSpeciesId")]
-        public PokemonSpecies PokemonSpecies { get; set; }
+        public PokemonSpecies PokemonSpecies { get; set; } = new();
 
         public int PokemonSpeciesId { get; set; }
 
@@ -127,35 +123,49 @@ namespace PokeOneWeb.Data.Entities
 
         public int? DefaultFormId { get; set; }
 
+        public string DefaultFormName { get; set; }
+
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
 
         public int PrimaryTypeId { get; set; }
+
+        public string PrimaryTypeName { get; set; }
 
         [ForeignKey("SecondaryTypeId")]
         public ElementalType SecondaryType { get; set; }
 
         public int? SecondaryTypeId { get; set; }
 
+        public string SecondaryTypeName { get; set; }
+
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
 
         public int PrimaryAbilityId { get; set; }
+
+        public string PrimaryAbilityName { get; set; }
 
         [ForeignKey("SecondaryAbilityId")]
         public Ability SecondaryAbility { get; set; }
 
         public int? SecondaryAbilityId { get; set; }
 
+        public string SecondaryAbilityName { get; set; }
+
         [ForeignKey("HiddenAbilityId")]
         public Ability HiddenAbility { get; set; }
 
         public int? HiddenAbilityId { get; set; }
 
+        public string HiddenAbilityName { get; set; }
+
         [ForeignKey("PvpTierId")]
         public PvpTier PvpTier { get; set; }
 
         public int PvpTierId { get; set; }
+
+        public string PvpTierName { get; set; }
 
         public List<PokemonForm> Forms { get; set; }
         public List<LearnableMove> LearnableMoves { get; set; } = new();

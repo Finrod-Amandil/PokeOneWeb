@@ -51,7 +51,7 @@ namespace PokeOneWeb.Data.Entities
         public int ImportSheetId { get; set; }
 
         [ForeignKey("ItemStatBoostId")]
-        public ItemStatBoost ItemStatBoost { get; set; }
+        public ItemStatBoost ItemStatBoost { get; set; } = new();
 
         public int ItemStatBoostId { get; set; }
 
@@ -59,6 +59,8 @@ namespace PokeOneWeb.Data.Entities
         public PokemonVariety PokemonVariety { get; set; }
 
         public int? PokemonVarietyId { get; set; } // Is null, if no Pokemon is req.
+
+        public string PokemonVarietyName { internal get; set; }
 
         public override string ToString()
         {

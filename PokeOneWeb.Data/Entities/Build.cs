@@ -68,10 +68,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int PokemonVarietyId { get; set; }
 
+        public string PokemonVarietyName { internal get; set; }
+
         [ForeignKey("AbilityId")]
         public Ability Ability { get; set; }
 
         public int AbilityId { get; set; }
+
+        public string AbilityName { internal get; set; }
 
         public List<NatureOption> NatureOptions { get; set; } = new();
 

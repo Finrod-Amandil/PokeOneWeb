@@ -98,15 +98,21 @@ namespace PokeOneWeb.Data.Entities
 
         public int SpawnTypeId { get; set; }
 
+        public string SpawnTypeName { internal get; set; }
+
         [ForeignKey("PokemonFormId")]
         public PokemonForm PokemonForm { get; set; }
 
         public int PokemonFormId { get; set; }
 
+        public string PokemonFormName { internal get; set; }
+
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
 
         public int LocationId { get; set; }
+
+        public string LocationName { get; set; }
 
         public List<SpawnOpportunity> SpawnOpportunities { get; set; } = new();
 

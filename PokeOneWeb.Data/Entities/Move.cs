@@ -99,10 +99,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int DamageClassId { get; set; }
 
+        public string DamageClassName { internal get; set; }
+
         [ForeignKey("ElementalTypeId")]
         public ElementalType ElementalType { get; set; }
 
         public int? ElementalTypeId { get; set; }
+
+        public string ElementalTypeName { internal get; set; }
 
         public override string ToString()
         {

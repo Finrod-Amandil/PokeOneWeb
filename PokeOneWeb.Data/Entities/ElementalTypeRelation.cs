@@ -60,10 +60,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int AttackingTypeId { get; set; }
 
+        public string AttackingTypeName { internal get; set; }
+
         [ForeignKey("DefendingTypeId")]
         public ElementalType DefendingType { get; set; }
 
         public int DefendingTypeId { get; set; }
+
+        public string DefendingTypeName { internal get; set; }
 
         public override string ToString()
         {

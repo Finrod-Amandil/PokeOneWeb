@@ -40,7 +40,10 @@ namespace PokeOneWeb.Data.Entities
 
         public int? DefaultVarietyId { get; set; }
 
+        public string DefaultVarietyName { get; set; }
+
         public List<PokemonVariety> Varieties { get; set; }
+
         public List<Evolution> Evolutions { get; set; }
 
         public override string ToString()

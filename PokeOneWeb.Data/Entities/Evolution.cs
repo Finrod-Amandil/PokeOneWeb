@@ -103,6 +103,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int BasePokemonSpeciesId { get; set; }
 
+        public string BasePokemonSpeciesName { internal get; set; }
+
         /// <summary>
         /// Gets or sets the Pokemon Variety before the evolution took place.
         /// </summary>
@@ -111,6 +113,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int BasePokemonVarietyId { get; set; }
 
+        public string BasePokemonVarietyName { internal get; set; }
+
         /// <summary>
         /// Gets or sets the Pokemon Variety after the evolution took place.
         /// </summary>
@@ -118,6 +122,8 @@ namespace PokeOneWeb.Data.Entities
         public PokemonVariety EvolvedPokemonVariety { get; set; }
 
         public int EvolvedPokemonVarietyId { get; set; }
+
+        public string EvolvedPokemonVarietyName { internal get; set; }
 
         public override string ToString()
         {

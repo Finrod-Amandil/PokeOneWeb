@@ -7,8 +7,6 @@ namespace PokeOneWeb.Data.Repositories
     {
         void Insert(ICollection<TEntity> entities);
 
-        void Insert(TEntity entity);
-
         void Update(ICollection<TEntity> entities);
 
         void Update(TEntity entity);
