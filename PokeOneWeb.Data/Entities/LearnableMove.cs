@@ -35,6 +35,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int MoveId { get; set; }
 
+        [NotMapped]
         public string MoveName { internal get; set; }
 
         [ForeignKey("PokemonVarietyId")]
@@ -42,6 +43,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int PokemonVarietyId { get; set; }
 
+        [NotMapped]
         public string PokemonVarietyName { internal get; set; }
 
         public List<LearnableMoveLearnMethod> LearnMethods { get; set; } = new();

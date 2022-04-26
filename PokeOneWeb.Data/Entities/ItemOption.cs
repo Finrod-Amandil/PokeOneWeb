@@ -33,6 +33,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int ItemId { get; set; }
 
+        [NotMapped]
         public string ItemName { internal get; set; }
 
         [ForeignKey("BuildId")]

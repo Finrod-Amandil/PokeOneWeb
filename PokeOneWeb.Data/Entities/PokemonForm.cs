@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -15,7 +16,8 @@ namespace PokeOneWeb.Data.Entities
     /// Example: Different patterns of Vivillon are forms.
     /// </summary>
     [Table("PokemonForm")]
-    public class PokemonForm : IHashedEntity
+    [Sheet("pokemon")]
+    public class PokemonForm : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -74,7 +76,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int AvailabilityId { get; set; }
 
-        public string AvailabilityName { get; set; }
+        [NotMapped]
+        public string AvailabilityName { internal get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; } = new();
 

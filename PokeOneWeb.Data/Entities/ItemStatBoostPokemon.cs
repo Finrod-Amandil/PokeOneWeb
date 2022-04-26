@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -10,6 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// Denotes, that the given item stat boost is only available for a specific Pokemon Variety.
     /// </summary>
     [Table("ItemStatBoostPokemon")]
+    [Sheet("item_stat_boosts")]
     public class ItemStatBoostPokemon : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -60,6 +62,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int? PokemonVarietyId { get; set; } // Is null, if no Pokemon is req.
 
+        [NotMapped]
         public string PokemonVarietyName { internal get; set; }
 
         public override string ToString()

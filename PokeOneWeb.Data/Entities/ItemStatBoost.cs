@@ -48,7 +48,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int ItemId { get; set; }
 
-        public string ItemName { get; set; }
+        [NotMapped]
+        public string ItemName { internal get; set; }
 
         /// <summary>
         /// Gets or sets for which Pokemon this stat boost is available. If no Pokemon are listed,

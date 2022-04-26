@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,7 +13,8 @@ namespace PokeOneWeb.Data.Entities
     /// Events usually contain catching of some Pokemon which are otherwise unavailable.
     /// </summary>
     [Table("Event")]
-    public class Event : IHashedEntity
+    [Sheet("events")]
+    public class Event : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

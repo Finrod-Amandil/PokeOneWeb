@@ -44,6 +44,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int SeasonId { get; set; }
 
+        [NotMapped]
         public string SeasonAbbreviation { get; set; }
 
         [ForeignKey("TimeOfDayId")]
@@ -51,6 +52,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int TimeOfDayId { get; set; }
 
+        [NotMapped]
         public string TimeOfDayAbbreviation { get; set; }
 
         public override string ToString()

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,6 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// items that are "laying around".
     /// </summary>
     [Table("PlacedItem")]
+    [Sheet("placed_items")]
     public class PlacedItem : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)

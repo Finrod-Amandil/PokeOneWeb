@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,6 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// nature, ability, moves, held items and EV distributions to choose for this Pokemon Variety.
     /// </summary>
     [Table("Build")]
+    [Sheet("builds")]
     public class Build : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -68,6 +70,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int PokemonVarietyId { get; set; }
 
+        [NotMapped]
         public string PokemonVarietyName { internal get; set; }
 
         [ForeignKey("AbilityId")]
@@ -75,6 +78,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int AbilityId { get; set; }
 
+        [NotMapped]
         public string AbilityName { internal get; set; }
 
         public List<NatureOption> NatureOptions { get; set; } = new();

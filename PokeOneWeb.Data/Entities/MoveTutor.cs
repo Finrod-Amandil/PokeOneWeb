@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -13,7 +14,8 @@ namespace PokeOneWeb.Data.Entities
     /// the Pokemon).
     /// </summary>
     [Table("MoveTutor")]
-    public class MoveTutor : IHashedEntity
+    [Sheet("move_tutors")]
+    public class MoveTutor : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -59,6 +61,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int LocationId { get; set; }
 
+        [NotMapped]
         public string LocationName { get; set; }
 
         /// <summary>

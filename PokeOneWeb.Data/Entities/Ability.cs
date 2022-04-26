@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -13,7 +14,8 @@ namespace PokeOneWeb.Data.Entities
     /// These Abilities are labeled Primary, Secondary and Hidden Ability. The latter two may not exist on certain species.
     /// </summary>
     [Table("Ability")]
-    public class Ability : IHashedEntity
+    [Sheet("abilities")]
+    public class Ability : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

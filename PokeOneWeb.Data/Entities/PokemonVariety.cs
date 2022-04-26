@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -12,7 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// differ in visuals, these will be Forms of the same Variety.
     /// </summary>
     [Table("PokemonVariety")]
-    public class PokemonVariety
+    public class PokemonVariety : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -123,49 +124,56 @@ namespace PokeOneWeb.Data.Entities
 
         public int? DefaultFormId { get; set; }
 
-        public string DefaultFormName { get; set; }
+        [NotMapped]
+        public string DefaultFormName { internal get; set; }
 
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
 
         public int PrimaryTypeId { get; set; }
 
-        public string PrimaryTypeName { get; set; }
+        [NotMapped]
+        public string PrimaryTypeName { internal get; set; }
 
         [ForeignKey("SecondaryTypeId")]
         public ElementalType SecondaryType { get; set; }
 
         public int? SecondaryTypeId { get; set; }
 
-        public string SecondaryTypeName { get; set; }
+        [NotMapped]
+        public string SecondaryTypeName { internal get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
 
         public int PrimaryAbilityId { get; set; }
 
-        public string PrimaryAbilityName { get; set; }
+        [NotMapped]
+        public string PrimaryAbilityName { internal get; set; }
 
         [ForeignKey("SecondaryAbilityId")]
         public Ability SecondaryAbility { get; set; }
 
         public int? SecondaryAbilityId { get; set; }
 
-        public string SecondaryAbilityName { get; set; }
+        [NotMapped]
+        public string SecondaryAbilityName { internal get; set; }
 
         [ForeignKey("HiddenAbilityId")]
         public Ability HiddenAbility { get; set; }
 
         public int? HiddenAbilityId { get; set; }
 
-        public string HiddenAbilityName { get; set; }
+        [NotMapped]
+        public string HiddenAbilityName { internal get; set; }
 
         [ForeignKey("PvpTierId")]
         public PvpTier PvpTier { get; set; }
 
         public int PvpTierId { get; set; }
 
-        public string PvpTierName { get; set; }
+        [NotMapped]
+        public string PvpTierName { internal get; set; }
 
         public List<PokemonForm> Forms { get; set; }
         public List<LearnableMove> LearnableMoves { get; set; } = new();

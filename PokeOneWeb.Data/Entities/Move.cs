@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,7 +12,8 @@ namespace PokeOneWeb.Data.Entities
     /// inflict status conditions and many other things.
     /// </summary>
     [Table("Move")]
-    public class Move : IHashedEntity
+    [Sheet("moves")]
+    public class Move : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -99,6 +101,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int DamageClassId { get; set; }
 
+        [NotMapped]
         public string DamageClassName { internal get; set; }
 
         [ForeignKey("ElementalTypeId")]
@@ -106,6 +109,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int? ElementalTypeId { get; set; }
 
+        [NotMapped]
         public string ElementalTypeName { internal get; set; }
 
         public override string ToString()

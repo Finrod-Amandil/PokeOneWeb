@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Attributes
+namespace PokeOneWeb.Data.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SheetNameAttribute : Attribute
+    public class SheetAttribute : Attribute
     {
         public string SheetName { get; }
 
-        public SheetNameAttribute(string sheetName)
+        public SheetAttribute(string sheetName)
         {
             SheetName = sheetName;
         }

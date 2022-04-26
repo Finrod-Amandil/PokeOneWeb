@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -9,7 +10,7 @@ namespace PokeOneWeb.Data.Entities
     /// Describes, by what means a Pokemon can learn a specific move, i.e. by Level-Up, TM, Tutor NPC...
     /// </summary>
     [Table("MoveLearnMethod")]
-    public class MoveLearnMethod
+    public class MoveLearnMethod : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

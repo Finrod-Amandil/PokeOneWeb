@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
     [Table("LearnableMoveLearnMethod")]
+    [Sheet("learnable_move_learn_methods")]
     public class LearnableMoveLearnMethod : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -80,6 +82,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int? RequiredItemId { get; set; } // Only used for learn method Machine / TM/HM
 
+        [NotMapped]
         public string RequiredItemName { internal get; set; }
 
         [ForeignKey("MoveTutorMoveId")]
@@ -87,6 +90,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
 
+        [NotMapped]
         public string MoveTutorName { internal get; set; }
 
         public override string ToString()

@@ -33,9 +33,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             var seasons = new List<string>();
 
-            if (seasonString.Equals(Season.ANY))
+            if (seasonString.Equals(Season.Any))
             {
-                seasons.Add(Season.ANY);
+                seasons.Add(Season.Any);
             }
             else
             {
@@ -65,9 +65,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             var timesOfDay = new List<string>();
 
-            if (timesOfDayString.Equals(TimeOfDay.ANY))
+            if (timesOfDayString.Equals(TimeOfDay.Any))
             {
-                timesOfDay.Add(TimeOfDay.ANY);
+                timesOfDay.Add(TimeOfDay.Any);
             }
             else
             {

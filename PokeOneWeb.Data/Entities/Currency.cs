@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,6 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// Currencies may be PokeDollars, Gold, Reroll Tokens, Game Corner Coins, Heart Scales, Shards, ...
     /// </summary>
     [Table("Currency")]
+    [Sheet("currencies")]
     public class Currency : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -50,6 +52,7 @@ namespace PokeOneWeb.Data.Entities
 
         public int? ItemId { get; set; }
 
+        [NotMapped]
         public string ItemName { internal get; set; }
 
         public override string ToString()

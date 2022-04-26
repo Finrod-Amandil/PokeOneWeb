@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,6 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// The Pokemon World is divided into major areas called Regions.
     /// </summary>
     [Table("Region")]
+    [Sheet("regions")]
     public class Region : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -70,7 +72,8 @@ namespace PokeOneWeb.Data.Entities
 
         public int? EventId { get; set; }
 
-        public string EventName { get; set; }
+        [NotMapped]
+        public string EventName { internal get; set; }
 
         public List<LocationGroup> LocationGroups { get; set; } = new();
 

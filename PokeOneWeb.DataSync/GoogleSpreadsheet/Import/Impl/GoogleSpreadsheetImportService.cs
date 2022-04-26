@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Attributes;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 
@@ -61,15 +61,17 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         private Dictionary<string, ISheetImporter> LoadSheetImportersUsingReflection()
         {
-            var types = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => t.IsDefined(typeof(SheetNameAttribute)))
-                .Select(t => new { Type = t, Attribute = t.GetCustomAttribute<SheetNameAttribute>() })
+            var importersForSheetNames = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsDefined(typeof(SheetAttribute)))
+                .Select(t => new { Type = t, Attribute = t.GetCustomAttribute<SheetAttribute>() })
                 .Where(t => t.Attribute != null)
                 .ToDictionary(
                     t => t.Attribute.SheetName,
-                    t => _serviceProvider.GetRequiredService(typeof(SheetImporter<>).MakeGenericType(t.Type)) as ISheetImporter);
+                    t => _serviceProvider.GetRequiredService(
+                        typeof(SheetImporter<>).MakeGenericType(t.Type)) as ISheetImporter);
 
-            return types;
+            return importersForSheetNames;
         }
 
         private ISheetImporter FindSheetImporterForSheet(string sheetName)
