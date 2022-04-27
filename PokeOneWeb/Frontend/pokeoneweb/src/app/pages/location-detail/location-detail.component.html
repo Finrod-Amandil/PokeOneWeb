@@ -10,7 +10,10 @@
                 <div class="location-detail-navigation-left">
                     <div class="location-detail-navigation-link">⮜ {{model.locationGroup.previousLocationGroupName}}</div>
                     <div class="location-detail-navigation-sprite">
-                        <p>{{model.locationGroup.previousLocationGroupName}}</p>
+                        <!--<img
+                            *ngIf="model.pokemon.previousPokemonSpriteName"
+                            [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.previousPokemonSpriteName"
+                        /></p>-->
                     </div>
                 </div>
             </a>
@@ -28,7 +31,10 @@
             <a [routerLink]="'/'+ model.locationGroup.nextLocationGroupResourceName">
                 <div class="location-detail-navigation-right">
                     <div class="location-detail-navigation-sprite">
-                        <p>{{model.locationGroup.nextLocationGroupName}}</p>
+                        <!--<img
+                            *ngIf="model.pokemon.nextPokemonSpriteName"
+                            [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.nextPokemonSpriteName"
+                        />-->
                     </div>
                     <div class="location-detail-navigation-link">{{model.locationGroup.nextLocationGroupName}} ⮞</div>
                 </div>
@@ -42,9 +48,10 @@
         </div>
         <div *ngIf="model.locationGroup.locations.length > 0">
             <div *ngFor="let location of model.locationGroup.locations">
-                <h2>{{location.name}} - Spawns</h2>
+                <h2>{{location.name}}</h2>
+                <h3>{{location.name}} - Spawns</h3>
                 <app-spawn-list [spawns]="location.spawns"></app-spawn-list>
-                <h2>{{location.name}} - Placed Items</h2>
+                <h3>{{location.name}} - Placed Items</h3>
                 <app-placed-item-list [placedItems]="location.placedItems"></app-placed-item-list>
             </div>
         </div>

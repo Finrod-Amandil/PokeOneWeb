@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PlacedItemModel } from '../../models/placed-item.model';
+import { IPlacedItemModel, PlacedItemModel } from '../../models/placed-item.model';
 import { PlacedItemListColumn } from './core/placed-item-list-column.enum';
 import { PlacedItemListSortService } from './core/placed-item-list-sort.service';
 import { PlacedItemListModel } from './core/placed-item-list.model';
@@ -10,8 +10,7 @@ import { PlacedItemListModel } from './core/placed-item-list.model';
   styleUrls: ['./placed-item-list.component.scss']
 })
 export class PlacedItemListComponent implements OnInit {
-  @Input() placedItems : PlacedItemModel[] = [];
-  @Input() spriteName : string = "";
+  @Input() placedItems : IPlacedItemModel[] = [];
 
   public model : PlacedItemListModel = new PlacedItemListModel();
   public PlacedItemListColumn = PlacedItemListColumn;
@@ -22,7 +21,6 @@ export class PlacedItemListComponent implements OnInit {
 
   ngOnInit(): void {
     this.model.placedItems = this.placedItems;
-    this.model.spriteName = this.spriteName;
     this.applyInitialSorting();
   }
 

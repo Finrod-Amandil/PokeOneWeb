@@ -1,6 +1,7 @@
 export interface IPlacedItemModel {
     itemResourceName: string;
     itemName: string;
+    itemSpriteName: string;
     regionName: string;
     regionColor: string;
     locationName: string;
@@ -19,6 +20,7 @@ export interface IPlacedItemModel {
 export class PlacedItemModel implements IPlacedItemModel {
     itemResourceName = '';
     itemName = '';
+    itemSpriteName = '';
     regionName = '';
     regionColor = '';
     locationName = '';

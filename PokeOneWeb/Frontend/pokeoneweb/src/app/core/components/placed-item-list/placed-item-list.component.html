@@ -48,8 +48,8 @@
         <tr *ngFor="let placedItem of model.placedItems">
             <td class="col-sprite">
                 <img
-                    *ngIf="placedItem.itemResourceName"
-                    [src]="'./assets/img/sprites/items/small/' + model.spriteName"
+                    *ngIf="placedItem.itemSpriteName"
+                    [src]="'./assets/img/sprites/items/small/' + placedItem.itemSpriteName"
                 />
             </td>
             <td class="col-item">{{placedItem.itemName}}</td>

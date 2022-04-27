@@ -5,6 +5,5 @@ export class PlacedItemListModel {
     public placedItemsSortedByColumn: PlacedItemListColumn = PlacedItemListColumn.Location;
     public placedItemsSortDirection = 1;
 
-    public spriteName: string = "";
     public placedItems: PlacedItemModel[] = [];
 }
