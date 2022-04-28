@@ -5,8 +5,8 @@ export interface ILearnableMoveModel {
     moveName: string;
     elementalType: string;
     damageClass: string;
-    baseAttackPower: number;
-    effectiveAttackPower: number;
+    attackPower: number;
+    effectivePower: number;
     hasStab: boolean;
     accuracy: number;
     powerPoints: number;
@@ -21,8 +21,8 @@ export class LearnableMoveModel implements ILearnableMoveModel {
     moveName = '';
     elementalType = '';
     damageClass = '';
-    baseAttackPower = 0;
-    effectiveAttackPower = 0;
+    attackPower = 0;
+    effectivePower = 0;
     hasStab = false;
     accuracy = 0;
     powerPoints = 0;

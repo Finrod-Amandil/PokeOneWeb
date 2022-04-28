@@ -951,16 +951,16 @@
                         <pokeone-type-badge [typeName]="move.damageClass"></pokeone-type-badge>
                     </td>
                     <td
-                        [style]="move.effectiveAttackPower !== 0 ?
-                        'background-color: hsl(' + getHueForMoveStrength(move.effectiveAttackPower) + ',100%,70%); color: black;' : ''"
+                        [style]="move.effectivePower !== 0 ?
+                        'background-color: hsl(' + getHueForMoveStrength(move.effectivePower) + ',100%,70%); color: black;' : ''"
                         class="col-power"
                         [ngClass]="{'stab-power': move.hasStab}"
                     >
-                        <p>{{move.baseAttackPower !== 0 ? move.baseAttackPower : '-'}}</p>
-                        <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab">
-                            {{move.effectiveAttackPower}}
+                        <p>{{move.attackPower !== 0 ? move.attackPower : '-'}}</p>
+                        <p *ngIf="move.hasStab && move.effectivePower > 0" class="stab">
+                            {{move.effectivePower}}
                         </p>
-                        <p *ngIf="move.hasStab && move.effectiveAttackPower > 0" class="stab stab-label">(STAB)</p>
+                        <p *ngIf="move.hasStab && move.effectivePower > 0" class="stab stab-label">(STAB)</p>
                     </td>
                     <td
                         [style]="'background-color: hsl(' + getHueForAccuracy(move.accuracy) + ',100%,70%); color: black;'"
