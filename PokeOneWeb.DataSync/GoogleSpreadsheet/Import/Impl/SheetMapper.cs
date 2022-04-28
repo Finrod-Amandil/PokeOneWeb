@@ -46,7 +46,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 {
                     mapValueOntoEntity(entity, row[columnName]);
                 }
-                catch (Exception e) when (e is InvalidRowDataException or ParseException)
+                catch (Exception e) when (e is InvalidColumnNameException or InvalidRowDataException or ParseException)
                 {
                     Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
                 }

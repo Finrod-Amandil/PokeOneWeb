@@ -207,9 +207,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         private static List<int> GetRowIndexesForIdHashes(IEnumerable<string> selectedHashes, IList<string> allHashes)
         {
-            var result = selectedHashes.Select(allHashes.IndexOf).OrderBy(i => i).ToList();
-
-            return result;
+            return selectedHashes.Select(allHashes.IndexOf).OrderBy(i => i).ToList();
         }
     }
 }

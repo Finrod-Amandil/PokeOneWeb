@@ -36,7 +36,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "SpeEv", (e, v) => e.PokemonVariety.SpeedEv = v.ParseAsInt() },
             { "HpEv", (e, v) => e.PokemonVariety.HitPointsEv = v.ParseAsInt() },
             { "Type1", (e, v) => e.PokemonVariety.PrimaryTypeName = v.ParseAsNonEmptyString() },
-            { "Type2", (e, v) => e.PokemonVariety.PrimaryTypeName = v.ParseAsOptionalString() },
+            { "Type2", (e, v) => e.PokemonVariety.SecondaryTypeName = v.ParseAsOptionalString() },
             { "PrimaryAbility", (e, v) => e.PokemonVariety.PrimaryAbilityName = v.ParseAsNonEmptyString() },
             { "SecondaryAbility", (e, v) => e.PokemonVariety.SecondaryAbilityName = v.ParseAsOptionalString() },
             { "HiddenAbility", (e, v) => e.PokemonVariety.HiddenAbilityName = v.ParseAsOptionalString() },

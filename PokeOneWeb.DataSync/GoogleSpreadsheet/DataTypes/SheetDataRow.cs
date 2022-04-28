@@ -15,8 +15,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 
         public int ImportSheetId => _hash.ImportSheetId;
 
-        public int ValueCount => _values.Count;
-
         public object this[string columnName]
         {
             get
