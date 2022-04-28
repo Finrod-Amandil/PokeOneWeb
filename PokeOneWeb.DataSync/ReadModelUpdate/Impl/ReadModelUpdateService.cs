@@ -186,7 +186,41 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             //
             Console.WriteLine("generating json files for varieties");
             ICollection<PokemonVarietyReadModel> varieties = _pokemonVarietyMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/varieties.json", JsonSerializer.Serialize(varieties, serializeOptions));
+
+            var listVarieties = varieties
+                .Select(v => new
+                {
+                    v.ResourceName,
+                    v.SortIndex,
+                    v.PokedexNumber,
+                    v.Name,
+                    v.SpriteName,
+                    v.PrimaryElementalType,
+                    v.SecondaryElementalType,
+                    v.Attack,
+                    v.SpecialAttack,
+                    v.Defense,
+                    v.SpecialDefense,
+                    v.Speed,
+                    v.HitPoints,
+                    v.StatTotal,
+                    v.Bulk,
+                    v.PrimaryAbility,
+                    v.PrimaryAbilityEffect,
+                    v.SecondaryAbility,
+                    v.SecondaryAbilityEffect,
+                    v.HiddenAbility,
+                    v.HiddenAbilityEffect,
+                    v.Availability,
+                    v.PvpTier,
+                    v.PvpTierSortIndex,
+                    v.Generation,
+                    v.IsFullyEvolved,
+                    v.IsMega,
+                    v.Urls,
+                    v.Notes
+                });
+            File.WriteAllText("resources/varieties.json", JsonSerializer.Serialize(listVarieties, serializeOptions));
 
             foreach (var variety in varieties)
             {
