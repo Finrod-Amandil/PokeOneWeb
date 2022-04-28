@@ -10,10 +10,7 @@
                 <div class="location-detail-navigation-left">
                     <div class="location-detail-navigation-link">⮜ {{model.locationGroup.previousLocationGroupName}}</div>
                     <div class="location-detail-navigation-sprite">
-                        <!--<img
-                            *ngIf="model.pokemon.previousPokemonSpriteName"
-                            [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.previousPokemonSpriteName"
-                        /></p>-->
+                        <img src="./assets/img/navbar/locations.png"/>
                     </div>
                 </div>
             </a>
@@ -31,28 +28,52 @@
             <a [routerLink]="'/'+ model.locationGroup.nextLocationGroupResourceName">
                 <div class="location-detail-navigation-right">
                     <div class="location-detail-navigation-sprite">
-                        <!--<img
-                            *ngIf="model.pokemon.nextPokemonSpriteName"
-                            [src]="'./assets/img/sprites/pokemon/small/' + model.pokemon.nextPokemonSpriteName"
-                        />-->
+                        <img src="./assets/img/navbar/locations.png"/>
                     </div>
                     <div class="location-detail-navigation-link">{{model.locationGroup.nextLocationGroupName}} ⮞</div>
                 </div>
             </a>
         </div>
 
+        <div class="no-table-container-outer quicklink" *ngIf="model.locationGroup.locations.length > 0">
+            <h4>Locations on {{model.locationGroup.name}}</h4>
+            <div class="no-table-container-inner quicklink-container">
+                <div class="quicklink-panel" *ngFor="let location of model.locationGroup.locations">
+                    <a [href]="'/'+ model.locationGroup.resourceName +'#'+ location.name">
+                        <div class="location-detail-navigation-link">{{location.name}}</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="model.locationGroup.locations.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
-                <p class="empty">This Location does not have any known locations in PokéOne.</p>
+                <p class="empty">This LocationGroup does not have any known locations in PokéOne.</p>
             </div>
         </div>
         <div *ngIf="model.locationGroup.locations.length > 0">
-            <div *ngFor="let location of model.locationGroup.locations">
+            <div *ngFor="let location of model.locationGroup.locations" [id]="location.name">
                 <h2>{{location.name}}</h2>
+                <div class="no-table-container-outer" *ngIf="location.notes">
+                    <div class="no-table-container-inner general-info-container">
+                        <div class="general-panel general-notes">
+                            <div class="general-header">
+                                <h4>Notes</h4>
+                            </div>
+                            <div class="general-content">
+                                <p>{{location.notes}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h3>{{location.name}} - Spawns</h3>
                 <app-spawn-list [spawns]="location.spawns"></app-spawn-list>
                 <h3>{{location.name}} - Placed Items</h3>
                 <app-placed-item-list [placedItems]="location.placedItems"></app-placed-item-list>
+                <br>
+                <hr>
+                <br>
             </div>
         </div>
     </div>
