@@ -645,7 +645,12 @@
         </table>
 
         <h2 name="spawns">Spawns</h2>
-        <app-spawn-list [spawns]="model.pokemon.spawns"></app-spawn-list>
+        <div *ngIf="model.pokemon.spawns.length === 0" class="no-table-container-outer">
+            <div class="no-table-container-inner">
+                <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
+            </div>
+        </div>
+        <app-spawn-list *ngIf="model.pokemon.spawns.length > 0" [spawns]="model.pokemon.spawns"></app-spawn-list>
 
         <h2 name="moves">Learnset</h2>
         <div *ngIf="model.learnableMoves.length === 0" class="no-table-container-outer">

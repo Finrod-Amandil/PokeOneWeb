@@ -1,10 +1,4 @@
-<div *ngIf="model.placedItems.length === 0" class="no-table-container-outer">
-    <div class="no-table-container-inner">
-        <p class="empty">This Item does not have any known locations where it can be obtained in PokéOne.</p>
-    </div>
-</div>
-
-<table *ngIf="model.placedItems.length > 0" class="main-table table-compact" id="placedItems_table">
+<table class="main-table table-compact" id="placedItems_table">
     <thead>
         <tr>
             <th class="col-item" colspan="2">Item</th>

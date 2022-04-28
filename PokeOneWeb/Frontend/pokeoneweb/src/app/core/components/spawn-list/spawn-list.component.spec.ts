@@ -1,18 +1,18 @@
-import { PokemonDetailSortService } from 'src/app/pages/pokemon-detail/core/pokemon-detail-sort.service';
 import { ISpawnModel, SpawnModel } from '../../models/spawn.model';
 import { DateService } from '../../services/date.service';
+import { SpawnListSortService } from './core/spawn-list-sort.service';
 import { SpawnListComponent } from './spawn-list.component';
 
 describe('SpawnListComponent', () => {
   let component: SpawnListComponent;
-  let sortService: PokemonDetailSortService;
+  let sortService: SpawnListSortService;
   let dateService: DateService;
 
   beforeEach(() => {
       // Arrange
       //mock all the required entities wich are used in the components constructor
       //they need to have non-empty arrays of mocked functions
-      sortService = new PokemonDetailSortService()
+      sortService = new SpawnListSortService()
       dateService = new DateService()
 
       component = new SpawnListComponent(dateService, sortService);

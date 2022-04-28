@@ -62,6 +62,11 @@
         </div>
 
         <h2 name="locations">Locations</h2>
-        <app-placed-item-list [placedItems]="model.item.placedItems"></app-placed-item-list>
+        <div *ngIf="model.item.placedItems.length === 0" class="no-table-container-outer">
+            <div class="no-table-container-inner">
+                <p class="empty">This location does not have any items that can be picked up.</p>
+            </div>
+        </div>
+        <app-placed-item-list *ngIf="model.item.placedItems.length > 0" [placedItems]="model.item.placedItems"></app-placed-item-list>
     </div>
 </div>
