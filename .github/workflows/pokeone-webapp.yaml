@@ -18,7 +18,7 @@ jobs:
 
     - run: |
         npm ci
-        npm run build -- --configuration production
+        npm run build -- --configuration dev
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
@@ -42,7 +42,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         source: "PokeOneWeb/Frontend/pokeoneweb/dist"
-        target: "/opt/PokeOneWeb.WebApp"
+        target: "/opt/PokeOneWeb.WebApp/dev"
         strip_components: 5
         overwrite: true
 
