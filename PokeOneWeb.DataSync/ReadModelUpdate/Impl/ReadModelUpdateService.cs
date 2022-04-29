@@ -168,7 +168,13 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             //
             Console.WriteLine("generating json files for moves");
             ICollection<MoveReadModel> moves = _moveMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/moves.json", JsonSerializer.Serialize(moves, serializeOptions));
+            var listMoves = moves
+                .Select(v => new
+                {
+                    v.ResourceName,
+                    v.Name
+                });
+            File.WriteAllText("resources/moves.json", JsonSerializer.Serialize(listMoves, serializeOptions));
             foreach (var move in moves)
             {
                 File.WriteAllText("resources/moves/" + move.ResourceName + ".json", JsonSerializer.Serialize(move, serializeOptions));
@@ -232,7 +238,20 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             //
             Console.WriteLine("generating json files for items");
             ICollection<ItemReadModel> items = _itemMapper.MapFromDatabase(importReport).Keys;
-            File.WriteAllText("resources/items.json", JsonSerializer.Serialize(items, serializeOptions));
+            var listItems = items
+                .Select(v => new
+                {
+                    v.ResourceName,
+                    v.SortIndex,
+                    v.Name,
+                    v.Description,
+                    v.Effect,
+                    v.IsAvailable,
+                    v.SpriteName,
+                    v.BagCategoryName,
+                    v.BagCategorySortIndex
+                });
+            File.WriteAllText("resources/items.json", JsonSerializer.Serialize(listItems, serializeOptions));
 
             foreach (var item in items)
             {

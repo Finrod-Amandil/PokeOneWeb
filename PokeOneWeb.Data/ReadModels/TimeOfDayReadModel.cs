@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -6,7 +7,9 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("TimeOfDayReadModel")]
     public class TimeOfDayReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
+
         public int SortIndex { get; set; }
         public string Abbreviation { get; set; }
         public string Name { get; set; }
