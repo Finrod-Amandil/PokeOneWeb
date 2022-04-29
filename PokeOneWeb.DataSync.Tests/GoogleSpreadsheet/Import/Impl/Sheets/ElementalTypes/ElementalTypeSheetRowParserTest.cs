@@ -1,8 +1,7 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.ElementalTypes
@@ -79,7 +78,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Element
         {
             // Arrange
             var parser = new ElementalTypeSheetRowParser();
-            var values = new List<object> { "" };
+            var values = new List<object> { string.Empty };
 
             // Act
             var actual = () => parser.ReadRow(values);

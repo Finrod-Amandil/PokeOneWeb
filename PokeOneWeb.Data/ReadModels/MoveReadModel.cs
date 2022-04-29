@@ -1,13 +1,16 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("MoveReadModel")]
     public class MoveReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string Name { get; set; }

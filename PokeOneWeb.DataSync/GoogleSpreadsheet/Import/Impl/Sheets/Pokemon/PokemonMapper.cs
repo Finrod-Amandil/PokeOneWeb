@@ -9,12 +9,12 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 {
     public class PokemonMapper : SpreadsheetEntityMapper<PokemonSheetDto, PokemonForm>
     {
-        private readonly string SmogonUrlName = "Smogon";
-        private readonly string BulbapediaUrlName = "Bulbapedia";
-        private readonly string PokeoneCommunityUrlName = "PokeoneCommunity";
-        private readonly string PokemonShowdownUrlName = "Pokemon Showdown";
-        private readonly string SerebiiUrlName = "Serebii";
-        private readonly string PokemonDbUrlName = "PokemonDB";
+        private readonly string _smogonUrlName = "Smogon";
+        private readonly string _bulbapediaUrlName = "Bulbapedia";
+        private readonly string _pokeoneCommunityUrlName = "PokeoneCommunity";
+        private readonly string _pokemonShowdownUrlName = "Pokemon Showdown";
+        private readonly string _serebiiUrlName = "Serebii";
+        private readonly string _pokemonDbUrlName = "PokemonDB";
 
         private readonly Dictionary<string, PokemonAvailability> _availabilities = new();
         private readonly Dictionary<string, PvpTier> _pvpTiers = new();
@@ -24,7 +24,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         private readonly Dictionary<string, PokemonSpecies> _species = new();
         private readonly Dictionary<string, PokemonVariety> _varieties = new();
 
-        public PokemonMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public PokemonMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.PokemonForm;
 
@@ -65,6 +67,16 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             form.SpriteName = dto.SpriteName;
 
             return form;
+        }
+
+        private static PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
+        {
+            return dto.DefaultFormName.EqualsExact(form?.Name) ? form : new PokemonForm { Name = dto.DefaultFormName };
+        }
+
+        private static PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
+        {
+            return dto.DefaultVarietyName.EqualsExact(variety?.Name) ? variety : new PokemonVariety { Name = dto.DefaultVarietyName };
         }
 
         private PokemonVariety MapPokemonVariety(PokemonSheetDto dto, PokemonVariety variety = null)
@@ -154,7 +166,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         {
             availability = string.Equals(dto.AvailabilityName, availability?.Name, StringComparison.Ordinal)
                 ? availability
-                : new PokemonAvailability {Name = dto.AvailabilityName};
+                : new PokemonAvailability { Name = dto.AvailabilityName };
             if (!_availabilities.ContainsKey(dto.AvailabilityName))
             {
                 _availabilities.Add(dto.AvailabilityName, availability);
@@ -171,7 +183,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         {
             pvpTier = string.Equals(dto.PvpTierName, pvpTier?.Name, StringComparison.Ordinal)
                 ? pvpTier
-                : new PvpTier {Name = dto.PvpTierName};
+                : new PvpTier { Name = dto.PvpTierName };
             if (!_pvpTiers.ContainsKey(dto.PvpTierName))
             {
                 _pvpTiers.Add(dto.PvpTierName, pvpTier);
@@ -188,7 +200,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
         {
             ability = string.Equals(dto.PrimaryAbilityName, ability?.Name, StringComparison.Ordinal)
                 ? ability
-                : new Ability {Name = dto.PrimaryAbilityName};
+                : new Ability { Name = dto.PrimaryAbilityName };
             if (!_abilities.ContainsKey(dto.PrimaryAbilityName))
             {
                 _abilities.Add(dto.PrimaryAbilityName, ability);
@@ -210,7 +222,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             ability = string.Equals(dto.SecondaryAbilityName, ability?.Name)
                 ? ability
-                : new Ability {Name = dto.SecondaryAbilityName};
+                : new Ability { Name = dto.SecondaryAbilityName };
             if (!_abilities.ContainsKey(dto.SecondaryAbilityName))
             {
                 _abilities.Add(dto.SecondaryAbilityName, ability);
@@ -232,7 +244,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
             ability = string.Equals(dto.HiddenAbilityName, ability?.Name, StringComparison.Ordinal)
                 ? ability
-                : new Ability {Name = dto.HiddenAbilityName};
+                : new Ability { Name = dto.HiddenAbilityName };
             if (!_abilities.ContainsKey(dto.HiddenAbilityName))
             {
                 _abilities.Add(dto.HiddenAbilityName, ability);
@@ -247,8 +259,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
 
         private ElementalType MapPrimaryType(PokemonSheetDto dto, ElementalType type = null)
         {
-            type = string.Equals(dto.Type1Name, type?.Name, StringComparison.Ordinal) ? 
-                type : new ElementalType {Name = dto.Type1Name};
+            type = string.Equals(dto.Type1Name, type?.Name, StringComparison.Ordinal) ?
+                type : new ElementalType { Name = dto.Type1Name };
             if (!_types.ContainsKey(dto.Type1Name))
             {
                 _types.Add(dto.Type1Name, type);
@@ -268,8 +280,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
                 return null;
             }
 
-            type = string.Equals(dto.Type2Name, type?.Name, StringComparison.Ordinal) ? 
-                type : new ElementalType {Name = dto.Type2Name};
+            type = string.Equals(dto.Type2Name, type?.Name, StringComparison.Ordinal) ?
+                type : new ElementalType { Name = dto.Type2Name };
             if (!_types.ContainsKey(dto.Type2Name))
             {
                 _types.Add(dto.Type2Name, type);
@@ -282,23 +294,13 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             return type;
         }
 
-        private PokemonForm MapDefaultForm(PokemonSheetDto dto, PokemonForm form = null)
-        {
-            return dto.DefaultFormName.EqualsExact(form?.Name) ? form : new PokemonForm {Name = dto.DefaultFormName};
-        }
-
-        private PokemonVariety MapDefaultVariety(PokemonSheetDto dto, PokemonVariety variety = null)
-        {
-            return dto.DefaultVarietyName.EqualsExact(variety?.Name) ? variety : new PokemonVariety {Name = dto.DefaultVarietyName};
-        }
-
         private void AddUrls(PokemonVariety variety, PokemonSheetDto dto)
         {
             if (!string.IsNullOrWhiteSpace(dto.SmogonUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(SmogonUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_smogonUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = SmogonUrlName;
+                url.Name = _smogonUrlName;
                 url.Url = dto.SmogonUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -308,14 +310,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(SmogonUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_smogonUrlName));
             }
 
             if (!string.IsNullOrWhiteSpace(dto.BulbapediaUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(BulbapediaUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_bulbapediaUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = BulbapediaUrlName;
+                url.Name = _bulbapediaUrlName;
                 url.Url = dto.BulbapediaUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -325,14 +327,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(BulbapediaUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_bulbapediaUrlName));
             }
 
             if (!string.IsNullOrWhiteSpace(dto.PokeoneCommunityUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(PokeoneCommunityUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_pokeoneCommunityUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = PokeoneCommunityUrlName;
+                url.Name = _pokeoneCommunityUrlName;
                 url.Url = dto.PokeoneCommunityUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -342,14 +344,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(PokeoneCommunityUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_pokeoneCommunityUrlName));
             }
 
             if (!string.IsNullOrWhiteSpace(dto.PokemonShowdownUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(PokemonShowdownUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_pokemonShowdownUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = PokemonShowdownUrlName;
+                url.Name = _pokemonShowdownUrlName;
                 url.Url = dto.PokemonShowdownUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -359,14 +361,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(PokemonShowdownUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_pokemonShowdownUrlName));
             }
 
             if (!string.IsNullOrWhiteSpace(dto.SerebiiUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(SerebiiUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_serebiiUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = SerebiiUrlName;
+                url.Name = _serebiiUrlName;
                 url.Url = dto.SerebiiUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -376,14 +378,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(SerebiiUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_serebiiUrlName));
             }
 
             if (!string.IsNullOrWhiteSpace(dto.PokemonDbUrl))
             {
-                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(PokemonDbUrlName));
+                var url = variety.Urls.SingleOrDefault(u => u.Name.EqualsExact(_pokemonDbUrlName));
                 url ??= new PokemonVarietyUrl();
-                url.Name = PokemonDbUrlName;
+                url.Name = _pokemonDbUrlName;
                 url.Url = dto.PokemonDbUrl;
                 url.Variety = variety;
                 if (!variety.Urls.Contains(url))
@@ -393,7 +395,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Pokemon
             }
             else
             {
-                variety.Urls.RemoveAll(u => u.Name.EqualsExact(PokemonDbUrlName));
+                variety.Urls.RemoveAll(u => u.Name.EqualsExact(_pokemonDbUrlName));
             }
         }
     }

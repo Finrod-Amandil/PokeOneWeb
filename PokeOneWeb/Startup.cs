@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.WebApi.Services.Api;
 using PokeOneWeb.WebApi.Services.Api.Impl;
+using System.IO;
 
 namespace PokeOneWeb.WebApi
 {
@@ -39,6 +42,7 @@ namespace PokeOneWeb.WebApi
             services.AddScoped<INatureApiService, NatureApiService>();
             services.AddScoped<IPokemonApiService, PokemonApiService>();
             services.AddScoped<IRegionApiService, RegionApiService>();
+            services.AddScoped<ILocationGroupApiService, LocationGroupApiService>();
 
             services.AddCors(options =>
             {
@@ -49,7 +53,7 @@ namespace PokeOneWeb.WebApi
                     .SetIsOriginAllowed(host => true));
             });
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -66,6 +70,16 @@ namespace PokeOneWeb.WebApi
 
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
+
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".json"] = "application/json";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "resources")),
+                ContentTypeProvider = provider
+            });
 
             app.UseRouting();
 

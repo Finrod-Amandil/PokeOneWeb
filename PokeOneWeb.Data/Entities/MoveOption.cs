@@ -30,14 +30,15 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("MoveId")]
         public Move Move { get; set; }
+
         public int MoveId { get; set; }
 
         [ForeignKey("BuildId")]
         public Build Build { get; set; }
+
         public int BuildId { get; set; }
 
         public int Slot { get; set; } // 1, 2, 3, 4
-
 
         public override string ToString()
         {

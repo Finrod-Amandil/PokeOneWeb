@@ -17,7 +17,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
             _dbContext = dbContext;
         }
 
-        public IDictionary<NatureReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<NatureReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.Natures
                 .AsNoTracking()

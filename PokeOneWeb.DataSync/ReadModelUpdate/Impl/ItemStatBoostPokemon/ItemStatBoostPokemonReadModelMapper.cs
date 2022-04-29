@@ -16,7 +16,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext = dbContext;
         }
 
-        public IDictionary<ItemStatBoostPokemonReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<ItemStatBoostPokemonReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.ItemStatBoostPokemon
                 .Include(i => i.ItemStatBoost.Item)
@@ -39,7 +39,6 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
                     RequiredPokemonResourceName = x.PokemonVariety.ResourceName
                 })
                 .ToDictionary(x => x, _ => DbAction.Create);
-
         }
     }
 }

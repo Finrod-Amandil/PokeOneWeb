@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -6,8 +7,10 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("NatureReadModel")]
     public class NatureReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string Name { get; set; }
@@ -23,6 +26,5 @@ namespace PokeOneWeb.Data.ReadModels
         public int SpecialDefense { get; set; }
 
         public int Speed { get; set; }
-
     }
 }

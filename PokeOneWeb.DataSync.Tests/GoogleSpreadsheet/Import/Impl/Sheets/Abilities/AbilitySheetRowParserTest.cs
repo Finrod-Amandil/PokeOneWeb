@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Abilities;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Abilities
@@ -93,7 +93,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Abiliti
             var parser = new AbilitySheetRowParser();
             var values = new List<object>()
             {
-                "0", "", "", 1, 1, 1, 1, 1, 1, "", "excessive value"
+                "0", string.Empty, string.Empty, 1, 1, 1, 1, 1, 1, string.Empty, "excessive value"
             };
 
             // Act
@@ -150,12 +150,12 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Abiliti
             var name = "Ability Name";
             var shortEffect = "Short Effect";
             var effect = "Effect";
-            var atkBoost = "";
-            var spaBoost = "";
-            var defBoost = "";
-            var spdBoost = "";
-            var speBoost = "";
-            var hpBoost = "";
+            var atkBoost = string.Empty;
+            var spaBoost = string.Empty;
+            var defBoost = string.Empty;
+            var spdBoost = string.Empty;
+            var speBoost = string.Empty;
+            var hpBoost = string.Empty;
             var boostConditions = "Boost Conditions";
 
             var values = new List<object>

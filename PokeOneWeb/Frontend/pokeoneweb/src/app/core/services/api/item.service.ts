@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IItemListModel } from '../../models/item-list.model';
 import { IItemModel } from '../../models/item.model';
 import { BaseService } from './base.service';
@@ -9,7 +10,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class ItemService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 
@@ -18,10 +19,10 @@ export class ItemService extends BaseService {
     }
 
     public getAll(): Observable<IItemListModel[]> {
-        return this.http.get<IItemListModel[]>(`${this.url}/getall`, this.httpOptions);
+        return this.http.get<IItemListModel[]>(`${environment.baseUrl}/items.json`, this.httpOptions);
     }
 
     public getByName(name: string): Observable<IItemModel> {
-        return this.http.get<IItemModel>(`${this.url}/getbyname?name=${name}`, this.httpOptions);
+        return this.http.get<IItemModel>(`${environment.baseUrl}/items/${name}.json`, this.httpOptions);
     }
 }

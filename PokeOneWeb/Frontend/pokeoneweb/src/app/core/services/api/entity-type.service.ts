@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IEntityTypeModel } from '../../models/entity-type.model';
 import { BaseService } from './base.service';
 
@@ -8,7 +9,7 @@ import { BaseService } from './base.service';
     providedIn: 'root'
 })
 export class EntityTypeService extends BaseService {
-    constructor (http: HttpClient) {
+    constructor(http: HttpClient) {
         super(http);
     }
 
@@ -17,6 +18,6 @@ export class EntityTypeService extends BaseService {
     }
 
     public getEntityTypeForPath(path: string): Observable<IEntityTypeModel> {
-        return this.http.get<IEntityTypeModel>(`${this.baseUrl}/getentitytypeforpath?path=${path}`, this.httpOptions);
+        return this.http.get<IEntityTypeModel>(`${environment.baseUrl}/entity-types/${path}.json`, this.httpOptions);
     }
 }

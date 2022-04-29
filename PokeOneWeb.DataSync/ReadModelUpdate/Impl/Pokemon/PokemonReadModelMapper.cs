@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Extensions;
@@ -7,6 +6,7 @@ using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
 using PokeOneWeb.Shared.Extensions;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
@@ -24,7 +24,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             _dbContext = dbContext;
         }
 
-        public IDictionary<PokemonVarietyReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<PokemonVarietyReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             var varietyIds = _dbContext.PokemonVarieties
                 .Where(v => v.DoInclude)
@@ -66,7 +66,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 var varietyId = varietyIds[i];
 
                 var variety = LoadVariety(varietyId);
-                
+
                 var readModel = GetBasicReadModel(variety);
 
                 AttachVarieties(readModel, variety);
@@ -191,6 +191,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 Speed = variety.Speed,
                 HitPoints = variety.HitPoints,
 
+                StatTotal = variety.Attack + variety.SpecialAttack + variety.Defense + variety.SpecialDefense + variety.Speed + variety.HitPoints,
+                Bulk = variety.Defense + variety.HitPoints + variety.SpecialDefense,
+
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
                 SecondaryAbility = variety.SecondaryAbility?.Name,
@@ -254,34 +257,34 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         private void AttachVarieties(PokemonVarietyReadModel readModel, PokemonVariety variety)
         {
             readModel.Varieties = variety.PokemonSpecies.Varieties.Select(v => new PokemonVarietyVarietyReadModel
-                {
-                    ResourceName = v.ResourceName,
-                    Name = v.Name,
-                    SortIndex = v.DefaultForm.SortIndex,
-                    SpriteName = v.DefaultForm.SpriteName,
-                    Availability = v.DefaultForm.Availability.Name,
-                    PrimaryType = v.PrimaryType.Name,
-                    SecondaryType = v.SecondaryType?.Name
-                })
+            {
+                ResourceName = v.ResourceName,
+                Name = v.Name,
+                SortIndex = v.DefaultForm.SortIndex,
+                SpriteName = v.DefaultForm.SpriteName,
+                Availability = v.DefaultForm.Availability.Name,
+                PrimaryType = v.PrimaryType.Name,
+                SecondaryType = v.SecondaryType?.Name
+            })
                 .ToList();
         }
 
         private void AttachForms(PokemonVarietyReadModel readModel, PokemonVariety variety)
         {
             readModel.Forms = variety.Forms.Select(f => new PokemonVarietyFormReadModel
-                {
-                    Name = f.Name,
-                    SpriteName = f.SpriteName,
-                    SortIndex = f.SortIndex,
-                    Availability = f.Availability.Name
-                })
+            {
+                Name = f.Name,
+                SpriteName = f.SpriteName,
+                SortIndex = f.SortIndex,
+                Availability = f.Availability.Name
+            })
                 .ToList();
         }
 
         private void AttachEvolutionAbilities(PokemonVarietyReadModel readModel, PokemonVariety variety)
         {
             var allCoveredVarieties = new HashSet<string> { variety.ResourceName };
-            var postEvolutions = new List<PokemonVariety> { variety }; 
+            var postEvolutions = new List<PokemonVariety> { variety };
             var relativeStageIndex = 0;
             do
             {
@@ -299,17 +302,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 foreach (var postEvolution in postEvolutions)
                 {
                     readModel.PrimaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.SecondaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.SecondaryAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.SecondaryAbility ?? postEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.HiddenEvolutionAbilities.Add(
-                        GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(postEvolution, postEvolution.HiddenAbility ?? postEvolution.PrimaryAbility, relativeStageIndex));
                 }
-
-            } while (postEvolutions.Any());
+            }
+            while (postEvolutions.Any());
 
             var preEvolutions = new List<PokemonVariety> { variety };
             relativeStageIndex = 0;
@@ -329,17 +329,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 foreach (var preEvolution in preEvolutions)
                 {
                     readModel.PrimaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.SecondaryEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.SecondaryAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.SecondaryAbility ?? preEvolution.PrimaryAbility, relativeStageIndex));
                     readModel.HiddenEvolutionAbilities.Add(
-                        GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex)
-                    );
+                        GetEvolutionAbility(preEvolution, preEvolution.HiddenAbility ?? preEvolution.PrimaryAbility, relativeStageIndex));
                 }
-
-            } while (preEvolutions.Any());
+            }
+            while (preEvolutions.Any());
         }
 
         public void AttachPreviousAndNext(PokemonVarietyReadModel readModel, int previousId, int nextId)
@@ -404,7 +401,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
                 hasFoundNewEvolutions = newIds.Count > varietyIds.Count;
                 varietyIds = newIds;
-            } while (hasFoundNewEvolutions);
+            }
+            while (hasFoundNewEvolutions);
 
             return varietyIds;
         }
@@ -418,16 +416,16 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .AsNoTracking()
                 .Where(hc => varietyIds.Contains(hc.PokemonVarietyId))
                 .OrderBy(hc => hc.PokemonVariety.DefaultForm.SortIndex)
-                .ToList()
-                .Select(hc => new HuntingConfigurationReadModel 
-                    {
-                        ApplicationDbId = hc.Id,
-                        PokemonResourceName = hc.PokemonVariety.ResourceName,
-                        PokemonName = hc.PokemonVariety.Name,
-                        Nature = hc.Nature.Name,
-                        NatureEffect = hc.Nature.GetDescription(),
-                        Ability = hc.Ability.Name
-                    })
+                .AsEnumerable()
+                .Select(hc => new HuntingConfigurationReadModel
+                {
+                    ApplicationDbId = hc.Id,
+                    PokemonResourceName = hc.PokemonVariety.ResourceName,
+                    PokemonName = hc.PokemonVariety.Name,
+                    Nature = hc.Nature.Name,
+                    NatureEffect = hc.Nature.GetDescription(),
+                    Ability = hc.Ability.Name
+                })
                 .ToList();
         }
 
@@ -478,7 +476,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 .ThenInclude(t => t.SeasonTimes)
                 .ThenInclude(st => st.Season)
                 .AsNoTracking()
-                .ToList()
+                .AsEnumerable()
                 .SelectMany(f => f.PokemonSpawns)
                 .Select(GetSpawnReadModel)
                 .ToList();
@@ -566,7 +564,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         {
             if (timeOfDay.Name.Equals(TimeOfDay.ANY))
             {
-                return "";
+                return string.Empty;
             }
 
             var timeStrings = new List<string>();
@@ -637,26 +635,26 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
             return evolutions
                 .Select(e => new EvolutionReadModel
-                    {
-                        ApplicationDbId = e.Id,
-                        BaseName = e.BasePokemonVariety.Name,
-                        BaseResourceName = e.BasePokemonVariety.ResourceName,
-                        BaseSpriteName = e.BasePokemonVariety.DefaultForm.SpriteName,
-                        BasePrimaryElementalType = e.BasePokemonVariety.PrimaryType.Name,
-                        BaseSecondaryElementalType = e.BasePokemonVariety.SecondaryType?.Name,
-                        BaseSortIndex = e.BasePokemonVariety.DefaultForm.SortIndex,
-                        BaseStage = e.BaseStage,
-                        EvolvedName = e.EvolvedPokemonVariety.Name,
-                        EvolvedResourceName = e.EvolvedPokemonVariety.ResourceName,
-                        EvolvedSpriteName = e.EvolvedPokemonVariety.DefaultForm.SpriteName,
-                        EvolvedPrimaryElementalType = e.EvolvedPokemonVariety.PrimaryType.Name,
-                        EvolvedSecondaryElementalType = e.EvolvedPokemonVariety.SecondaryType?.Name,
-                        EvolvedSortIndex = e.EvolvedPokemonVariety.DefaultForm.SortIndex,
-                        EvolvedStage = e.EvolvedStage,
-                        EvolutionTrigger = e.EvolutionTrigger,
-                        IsReversible = e.IsReversible,
-                        IsAvailable = e.IsAvailable
-                    })
+                {
+                    ApplicationDbId = e.Id,
+                    BaseName = e.BasePokemonVariety.Name,
+                    BaseResourceName = e.BasePokemonVariety.ResourceName,
+                    BaseSpriteName = e.BasePokemonVariety.DefaultForm.SpriteName,
+                    BasePrimaryElementalType = e.BasePokemonVariety.PrimaryType.Name,
+                    BaseSecondaryElementalType = e.BasePokemonVariety.SecondaryType?.Name,
+                    BaseSortIndex = e.BasePokemonVariety.DefaultForm.SortIndex,
+                    BaseStage = e.BaseStage,
+                    EvolvedName = e.EvolvedPokemonVariety.Name,
+                    EvolvedResourceName = e.EvolvedPokemonVariety.ResourceName,
+                    EvolvedSpriteName = e.EvolvedPokemonVariety.DefaultForm.SpriteName,
+                    EvolvedPrimaryElementalType = e.EvolvedPokemonVariety.PrimaryType.Name,
+                    EvolvedSecondaryElementalType = e.EvolvedPokemonVariety.SecondaryType?.Name,
+                    EvolvedSortIndex = e.EvolvedPokemonVariety.DefaultForm.SortIndex,
+                    EvolvedStage = e.EvolvedStage,
+                    EvolutionTrigger = e.EvolutionTrigger,
+                    IsReversible = e.IsReversible,
+                    IsAvailable = e.IsAvailable
+                })
                 .ToList();
         }
 
@@ -711,7 +709,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => 
+                            .Select(l =>
                                 $"{l.Location.Name} ({l.NpcName}), " +
                                 $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 3;
@@ -728,9 +726,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     }
                     else
                     {
-                        readModel.Description = "";
+                        readModel.Description = string.Empty;
                     }
-                    
+
                     readModel.SortIndex = 2;
                     break;
 
@@ -739,7 +737,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => 
+                            .Select(l =>
                                 $"{l.Location.Name} ({l.NpcName}), " +
                                 $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 4;
@@ -750,7 +748,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                     readModel.Description = string.Join(", ",
                         learnMethod.MoveLearnMethod.Locations
                             .OrderBy(l => l.Location.SortIndex)
-                            .Select(l => 
+                            .Select(l =>
                                 $"{l.Location.Name} ({l.NpcName}), " +
                                 $"{GetPriceString(l.Price.Select(p => p.CurrencyAmount))}"));
                     readModel.SortIndex = 0;
@@ -758,7 +756,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
                 case "Machine":
                     readModel.LearnMethodName = learnMethod.RequiredItem?.Name ?? "TM/HM (unavailable)";
-                    readModel.Description = "";
+                    readModel.Description = string.Empty;
                     readModel.SortIndex = 1;
                     break;
             }
@@ -774,24 +772,24 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         private List<BuildReadModel> GetBuilds(PokemonVariety variety)
         {
             return variety.Builds.Select(build => new BuildReadModel
-                {
-                    ApplicationDbId = build.Id,
-                    PokemonResourceName = variety.ResourceName,
-                    PokemonName = variety.Name,
-                    BuildName = build.Name,
-                    BuildDescription = build.Description,
-                    MoveOptions = GetBuildMoveOptions(build.MoveOptions),
-                    ItemOptions = GetBuildItemOptions(build.ItemOptions),
-                    NatureOptions = GetBuildNatureOptions(build.NatureOptions),
-                    Ability = build.Ability.Name,
-                    AbilityDescription = build.Ability.EffectDescription,
-                    AtkEv = build.AttackEv,
-                    SpaEv = build.SpecialAttackEv,
-                    DefEv = build.DefenseEv,
-                    SpdEv = build.SpecialDefenseEv,
-                    SpeEv = build.SpeedEv,
-                    HpEv = build.HitPointsEv
-                })
+            {
+                ApplicationDbId = build.Id,
+                PokemonResourceName = variety.ResourceName,
+                PokemonName = variety.Name,
+                BuildName = build.Name,
+                BuildDescription = build.Description,
+                MoveOptions = GetBuildMoveOptions(build.MoveOptions),
+                ItemOptions = GetBuildItemOptions(build.ItemOptions),
+                NatureOptions = GetBuildNatureOptions(build.NatureOptions),
+                Ability = build.Ability.Name,
+                AbilityDescription = build.Ability.EffectDescription,
+                AtkEv = build.AttackEv,
+                SpaEv = build.SpecialAttackEv,
+                DefEv = build.DefenseEv,
+                SpdEv = build.SpecialDefenseEv,
+                SpeEv = build.SpeedEv,
+                HpEv = build.HitPointsEv
+            })
                 .ToList();
         }
 

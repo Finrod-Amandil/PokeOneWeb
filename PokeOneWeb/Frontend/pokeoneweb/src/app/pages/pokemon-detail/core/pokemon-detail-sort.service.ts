@@ -5,14 +5,10 @@ import { MoveListColumn } from './move-list-column.enum';
 import { SpawnListColumn } from './spawn-list-column.enum';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class PokemonDetailSortService {
-    public sortSpawns(
-        models: ISpawnModel[],
-        sortColumn: SpawnListColumn,
-        sortDirection: number
-    ): ISpawnModel[] {
+    public sortSpawns(models: ISpawnModel[], sortColumn: SpawnListColumn, sortDirection: number): ISpawnModel[] {
         switch (sortColumn) {
             case SpawnListColumn.Pokemon:
                 return this.sortSpawnsByPokemon(models, sortDirection);
@@ -52,64 +48,29 @@ export class PokemonDetailSortService {
         return models;
     }
 
-    private sortSpawnsByPokemon(
-        models: ISpawnModel[],
-        sortDirection: number
-    ): ISpawnModel[] {
-        return models
-            .slice()
-            .sort(
-                (n1, n2) =>
-                    sortDirection *
-                    (n1.pokemonFormSortIndex - n2.pokemonFormSortIndex)
-            );
+    private sortSpawnsByPokemon(models: ISpawnModel[], sortDirection: number): ISpawnModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n1.pokemonFormSortIndex - n2.pokemonFormSortIndex));
     }
 
-    private sortSpawnsByLocation(
-        models: ISpawnModel[],
-        sortDirection: number
-    ): ISpawnModel[] {
-        return models
-            .slice()
-            .sort(
-                (n1, n2) =>
-                    sortDirection *
-                    (n1.locationSortIndex - n2.locationSortIndex)
-            );
+    private sortSpawnsByLocation(models: ISpawnModel[], sortDirection: number): ISpawnModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n1.locationSortIndex - n2.locationSortIndex));
     }
 
-    private sortSpawnsBySpawnType(
-        models: ISpawnModel[],
-        sortDirection: number
-    ): ISpawnModel[] {
-        return models
-            .slice()
-            .sort(
-                (n1, n2) =>
-                    sortDirection *
-                    (n1.spawnTypeSortIndex - n2.spawnTypeSortIndex)
-            );
+    private sortSpawnsBySpawnType(models: ISpawnModel[], sortDirection: number): ISpawnModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n1.spawnTypeSortIndex - n2.spawnTypeSortIndex));
     }
 
-    private sortSpawnsByRarity(
-        models: ISpawnModel[],
-        sortDirection: number
-    ): ISpawnModel[] {
+    private sortSpawnsByRarity(models: ISpawnModel[], sortDirection: number): ISpawnModel[] {
         return models.slice().sort((n1, n2) => {
             if (n1.rarityValue !== n2.rarityValue) {
                 return sortDirection * (n2.rarityValue - n1.rarityValue);
             } else {
-                return n1.rarityString > n2.rarityString
-                    ? sortDirection * 1
-                    : sortDirection * -1;
+                return n1.rarityString > n2.rarityString ? sortDirection * 1 : sortDirection * -1;
             }
         });
     }
 
-    private sortMovesByName(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
+    private sortMovesByName(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
         return models.slice().sort((n1, n2) => {
             if (n1.moveName > n2.moveName) {
                 return sortDirection * 1;
@@ -123,10 +84,7 @@ export class PokemonDetailSortService {
         });
     }
 
-    private sortMovesByType(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
+    private sortMovesByType(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
         return models.slice().sort((n1, n2) => {
             if (n1.elementalType > n2.elementalType) {
                 return sortDirection * 1;
@@ -140,10 +98,7 @@ export class PokemonDetailSortService {
         });
     }
 
-    private sortMovesByClass(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
+    private sortMovesByClass(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
         return models.slice().sort((n1, n2) => {
             if (n1.damageClass > n2.damageClass) {
                 return sortDirection * 1;
@@ -157,45 +112,19 @@ export class PokemonDetailSortService {
         });
     }
 
-    private sortMovesByPower(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
-        return models
-            .slice()
-            .sort(
-                (n1, n2) =>
-                    sortDirection *
-                    (n2.effectiveAttackPower - n1.effectiveAttackPower)
-            );
+    private sortMovesByPower(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n2.effectiveAttackPower - n1.effectiveAttackPower));
     }
 
-    private sortMovesByAccuracy(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
-        return models
-            .slice()
-            .sort((n1, n2) => sortDirection * (n2.accuracy - n1.accuracy));
+    private sortMovesByAccuracy(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n2.accuracy - n1.accuracy));
     }
 
-    private sortMovesByPowerPoints(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
-        return models
-            .slice()
-            .sort(
-                (n1, n2) => sortDirection * (n2.powerPoints - n1.powerPoints)
-            );
+    private sortMovesByPowerPoints(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n2.powerPoints - n1.powerPoints));
     }
 
-    private sortMovesByPriority(
-        models: ILearnableMoveModel[],
-        sortDirection: number
-    ): ILearnableMoveModel[] {
-        return models
-            .slice()
-            .sort((n1, n2) => sortDirection * (n2.priority - n1.priority));
+    private sortMovesByPriority(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
+        return models.slice().sort((n1, n2) => sortDirection * (n2.priority - n1.priority));
     }
 }

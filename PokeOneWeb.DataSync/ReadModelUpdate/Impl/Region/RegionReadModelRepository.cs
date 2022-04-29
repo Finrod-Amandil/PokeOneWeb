@@ -34,12 +34,16 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(RegionReadModel existingEntity, RegionReadModel entity)
+        private static void UpdateExistingEntity(RegionReadModel existingEntity, RegionReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.ResourceName = entity.ResourceName;
             existingEntity.Name = entity.Name;
             existingEntity.Color = entity.Color;
+            existingEntity.Description = entity.Description;
+            existingEntity.IsReleased = entity.IsReleased;
+            existingEntity.IsMainRegion = entity.IsMainRegion;
+            existingEntity.IsSideRegion = entity.IsSideRegion;
             existingEntity.IsEventRegion = entity.IsEventRegion;
             existingEntity.EventName = entity.EventName;
             existingEntity.EventStartDate = entity.EventStartDate;

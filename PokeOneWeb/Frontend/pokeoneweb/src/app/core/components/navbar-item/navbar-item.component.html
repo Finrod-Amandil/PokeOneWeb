@@ -1,20 +1,25 @@
 <div class="navbar-item">
     <a [routerLink]="[menuItemLink]">
-    <div class="navbar-item-image-container">
-        <img [src]="menuItemImage" />
-    </div>
-    <div class="navbar-item-caption">
-        {{menuItemCaption}}
-        <div *ngIf="subMenuItems.length > 0" class="navbar-submenu-caption">
-            >
+        <div class="navbar-item-image-container">
+            <img [src]="menuItemImage" />
         </div>
-    </div>
-    <div *ngIf="subMenuItems.length > 0" class="navbar-submenu">
-        <div *ngFor="let subMenuItem of subMenuItems" class="navbar-submenu-item navbar-submenu-item-regular">
-            {{subMenuItem}}
-            <div class="submenu-item-hover-overlay"></div>
+        <div class="navbar-item-caption">
+            {{menuItemCaption}}
+            <div *ngIf="subMenuItems.length > 0" class="navbar-submenu-caption">></div>
         </div>
-    </div> 
-    <div class="hover-overlay"></div>
+        <div *ngIf="subMenuItems.length > 0" class="navbar-submenu">
+            <div 
+                *ngFor="let subMenuItem of subMenuItems" 
+                class="navbar-submenu-item"
+                [class]="subMenuItem.isEventRegion ? 'navbar-submenu-item-event' : 'navbar-submenu-item-regular'">
+                <a [routerLink]="[subMenuItem.link]">
+                    <div class="navbar-submenu-item-caption">
+                        {{subMenuItem.caption}}
+                    </div>
+                    <div class="submenu-item-hover-overlay"></div>
+                </a>
+            </div>
+        </div>
+        <div class="hover-overlay"></div>
     </a>
 </div>

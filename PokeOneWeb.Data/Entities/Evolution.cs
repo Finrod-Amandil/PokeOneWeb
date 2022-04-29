@@ -47,74 +47,77 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         /// <summary>
-        /// Under which conditions the evolution is possible.
+        /// Gets or sets under which conditions the evolution is possible.
         /// </summary>
         [Required]
         public string EvolutionTrigger { get; set; }
 
         /// <summary>
-        /// The position of the unevolved Pokemon in a chain of evolutions.
-        /// May be between 0 and 2 (inclusive)
+        /// Gets or sets the position of the unevolved Pokemon in a chain of evolutions.
+        /// May be between 0 and 2 (inclusive).
         /// </summary>
         public int BaseStage { get; set; }
 
         /// <summary>
-        /// The position of the evolved Pokemon in a chain of evolutions.
-        /// May be between 1 and 3 (inclusive)
+        /// Gets or sets the position of the evolved Pokemon in a chain of evolutions.
+        /// May be between 1 and 3 (inclusive).
         /// </summary>
         public int EvolvedStage { get; set; }
 
         /// <summary>
-        /// Whether the evolution is permanent or can be reversed.
+        /// Gets or sets a value indicating whether whether the evolution is permanent or can be reversed.
         /// </summary>
         public bool IsReversible { get; set; }
 
         /// <summary>
-        /// Whether it is possible to trigger this evolution.
+        /// Gets or sets a value indicating whether whether it is possible to trigger this evolution.
         /// </summary>
         public bool IsAvailable { get; set; }
 
         /// <summary>
-        /// Whether the evolution should be displayed or omitted.
+        /// Gets or sets a value indicating whether whether the evolution should be displayed or omitted.
         /// </summary>
         public bool DoInclude { get; set; }
 
         /// <summary>
-        /// The Pokemon Species of the Pokemon Variety, which forms the start of
+        /// Gets or sets the Pokemon Species of the Pokemon Variety, which forms the start of
         /// the evolution chain. For the evolution of Ivysaur to Venusaur, Bulbasaur would
         /// be the base species of the chain.
         /// </summary>
         [ForeignKey("BasePokemonSpeciesId")]
         public PokemonSpecies BasePokemonSpecies { get; set; }
+
         public int BasePokemonSpeciesId { get; set; }
 
         /// <summary>
-        /// The Pokemon Variety before the evolution took place.
+        /// Gets or sets the Pokemon Variety before the evolution took place.
         /// </summary>
         [ForeignKey("BasePokemonVarietyId")]
         public PokemonVariety BasePokemonVariety { get; set; }
+
         public int BasePokemonVarietyId { get; set; }
 
         /// <summary>
-        /// The Pokemon Variety after the evolution took place.
+        /// Gets or sets the Pokemon Variety after the evolution took place.
         /// </summary>
         [ForeignKey("EvolvedPokemonVarietyId")]
         public PokemonVariety EvolvedPokemonVariety { get; set; }
-        public int EvolvedPokemonVarietyId { get; set; }
 
+        public int EvolvedPokemonVarietyId { get; set; }
 
         public override string ToString()
         {

@@ -34,8 +34,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(
-            ItemStatBoostPokemonReadModel existingEntity, 
+        private static void UpdateExistingEntity(
+            ItemStatBoostPokemonReadModel existingEntity,
             ItemStatBoostPokemonReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;

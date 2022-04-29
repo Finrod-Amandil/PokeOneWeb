@@ -6,12 +6,12 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
     public class SpreadsheetImportReporter : ISpreadsheetImportReporter
     {
+        private readonly Dictionary<string, DateTime> _entityImportStarts = new();
+        private readonly Dictionary<string, DateTime> _entityReadModelUpdateStarts = new();
         private SpreadsheetImportReport _report = new();
         private DateTime _importStart = DateTime.UtcNow;
         private DateTime _lastIdleStart = DateTime.UtcNow;
-        private readonly Dictionary<string, DateTime> _entityImportStarts = new();
         private DateTime _readModelUpdateStart = DateTime.UtcNow;
-        private readonly Dictionary<string, DateTime> _entityReadModelUpdateStarts = new();
 
         public void NewSession()
         {
@@ -76,14 +76,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             _importStart = DateTime.UtcNow;
         }
 
-        public void StopImport()
-        {
-            _report.TotalImportTime = DateTime.UtcNow - _importStart;
-        }
-
         public void StartImport(string entity)
         {
             _entityImportStarts.Add(entity, DateTime.UtcNow);
+        }
+
+        public void StopImport()
+        {
+            _report.TotalImportTime = DateTime.UtcNow - _importStart;
         }
 
         public void StopImport(string entity)
@@ -109,14 +109,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             _readModelUpdateStart = DateTime.UtcNow;
         }
 
-        public void StopReadModelUpdate()
-        {
-            _report.TotalReadModelUpdateTime = DateTime.UtcNow - _readModelUpdateStart;
-        }
-
         public void StartReadModelUpdate(string entity)
         {
             _entityReadModelUpdateStarts.Add(entity, DateTime.UtcNow);
+        }
+
+        public void StopReadModelUpdate()
+        {
+            _report.TotalReadModelUpdateTime = DateTime.UtcNow - _readModelUpdateStart;
         }
 
         public void StopReadModelUpdate(string entity)

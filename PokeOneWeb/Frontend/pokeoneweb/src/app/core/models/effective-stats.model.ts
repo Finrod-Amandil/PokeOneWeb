@@ -1,4 +1,4 @@
-import { IStatsModel, StatsModel } from "./stats.model";
+import { IStatsModel, StatsModel } from './stats.model';
 
 export interface IEffectiveStatsModel {
     baseStatsExtent: IStatsModel;

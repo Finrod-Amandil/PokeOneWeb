@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Regions;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
@@ -17,17 +17,35 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 
             var name = "Region Name";
             var resourceName = "Resource Name";
+            var color = "#000000";
+            var description = "Description";
+            var isReleased = true;
+            var isMainRegion = false;
+            var isSideRegion = true;
+            var isEventRegion = false;
 
             var values = new List<object>
             {
                 name,
-                resourceName
+                resourceName,
+                color,
+                description,
+                isReleased,
+                isMainRegion,
+                isSideRegion,
+                isEventRegion
             };
 
             var expected = new RegionSheetDto
             {
                 Name = name,
-                ResourceName = resourceName
+                ResourceName = resourceName,
+                Color = color,
+                Description = description,
+                IsReleased = isReleased,
+                IsMainRegion = isMainRegion,
+                IsSideRegion = isSideRegion,
+                IsEventRegion = isEventRegion
             };
 
             // Act
@@ -46,6 +64,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             var name = "Region Name";
             var resourceName = "Resource Name";
             var color = "#000000";
+            var description = "Description";
+            var isReleased = true;
+            var isMainRegion = false;
+            var isSideRegion = true;
             var isEventRegion = false;
             var eventName = "Event Name";
 
@@ -54,6 +76,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
                 name,
                 resourceName,
                 color,
+                description,
+                isReleased,
+                isMainRegion,
+                isSideRegion,
                 isEventRegion,
                 eventName
             };
@@ -63,6 +89,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
                 Name = name,
                 ResourceName = resourceName,
                 Color = color,
+                Description = description,
+                IsReleased = isReleased,
+                IsMainRegion = isMainRegion,
+                IsSideRegion = isSideRegion,
                 IsEventRegion = isEventRegion,
                 EventName = eventName
             };
@@ -95,7 +125,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
             var parser = new RegionSheetRowParser();
             var values = new List<object>()
             {
-                "0", "0", "", false, "", "excessive value"
+                "0", "0", string.Empty, string.Empty, false, false, false, false, string.Empty, "excessive value"
             };
 
             // Act
@@ -123,8 +153,12 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
         [InlineData("")] // Name must be non-empty
         [InlineData("0", "")] // ResourceName must be non-empty
         [InlineData("0", "0", 0)] // Color must be string
-        [InlineData("0", "0", "", "notBoolean")] // IsEventRegion must be boolean
-        [InlineData("0", "0", "", false, 0)] // EventName must be string
+        [InlineData("0", "0", "", 0)] // Description must be string
+        [InlineData("0", "0", "", "", "notBoolean")] // IsReleased must be boolean
+        [InlineData("0", "0", "", "", false, "notBoolean")] // IsMainRegion must be boolean
+        [InlineData("0", "0", "", "", false, false, "notBoolean")] // IsSideRegion must be boolean
+        [InlineData("0", "0", "", "", false, false, false, "notBoolean")] // IsEventRegion must be boolean
+        [InlineData("0", "0", "", "", false, false, false, false, 0)] // EventName must be string
         public void ReadRow_WithUnparsableValue_ShouldThrow(params object[] valuesAsArray)
         {
             // Arrange
@@ -136,45 +170,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.Regions
 
             // Assert
             actual.Should().Throw<InvalidRowDataException>();
-        }
-
-        [Fact]
-        public void ReadRow_WithMissingOptionalNonStringValues_ShouldParse()
-        {
-            // Arrange
-            var parser = new RegionSheetRowParser();
-
-            var name = "Region Name";
-            var resourceName = "Resource Name";
-            var color = "#000000";
-            var isEventRegion = "";
-            var eventName = "";
-
-            var values = new List<object>
-            {
-                name,
-                resourceName,
-                color,
-                isEventRegion,
-                eventName
-            };
-
-            var defaultValue = false;
-
-            var expected = new RegionSheetDto
-            {
-                Name = name,
-                ResourceName = resourceName,
-                Color = color,
-                IsEventRegion = defaultValue,
-                EventName = eventName
-            };
-
-            // Act
-            var result = parser.ReadRow(values);
-
-            // Assert
-            result.Should().BeEquivalentTo(expected);
         }
     }
 }

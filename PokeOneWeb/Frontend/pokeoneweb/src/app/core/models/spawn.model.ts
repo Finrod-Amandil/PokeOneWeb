@@ -24,8 +24,8 @@ export interface ISpawnModel {
     lowestLevel: number;
     highestLevel: number;
 
-    seasons: ISeasonModel[]
-    timesOfDay: ITimeOfDayModel[]
+    seasons: ISeasonModel[];
+    timesOfDay: ITimeOfDayModel[];
 
     rarityString: string;
     rarityValue: number;

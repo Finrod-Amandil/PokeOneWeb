@@ -1,6 +1,6 @@
-﻿using PokeOneWeb.Data;
+﻿using System.Collections.Generic;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
-using System.Collections.Generic;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions
 {
@@ -9,7 +9,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.Evolutions
         private readonly Dictionary<string, PokemonVariety> _varieties = new();
         private readonly Dictionary<string, PokemonSpecies> _species = new();
 
-        public EvolutionMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public EvolutionMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.Evolution;
 

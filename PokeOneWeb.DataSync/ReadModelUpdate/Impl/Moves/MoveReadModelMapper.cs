@@ -16,7 +16,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Moves
             _dbContext = dbContext;
         }
 
-        public IDictionary<MoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<MoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.Moves
                 .Include(m => m.DamageClass)

@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.MoveLearnMethodLocations;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveLearnMethodLocations
@@ -104,7 +104,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveLea
             var parser = new MoveLearnMethodLocationSheetRowParser();
             var values = new List<object>
             {
-                "0", "0", "0", "0", "", 0, 0, 0, 0, "excessive value"
+                "0", "0", "0", "0", string.Empty, 0, 0, 0, 0, "excessive value"
             };
 
             // Act
@@ -162,10 +162,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.MoveLea
             var npcName = "NPC Name";
             var locationName = "Location Name";
             var placementDescription = "Placement Description";
-            var pokeDollarPrice = "";
-            var pokeGoldPrice = "";
-            var bigMushroomPrice = "";
-            var heartScalePrice = "";
+            var pokeDollarPrice = string.Empty;
+            var pokeGoldPrice = string.Empty;
+            var bigMushroomPrice = string.Empty;
+            var heartScalePrice = string.Empty;
 
             var values = new List<object>
             {

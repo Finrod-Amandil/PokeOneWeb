@@ -1,20 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Shared.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.HuntingConfigurations
 {
-    public class HuntingConfigurationSheetRepository 
+    public class HuntingConfigurationSheetRepository
         : SheetRepository<HuntingConfigurationSheetDto, HuntingConfiguration>
     {
         public HuntingConfigurationSheetRepository(
             ApplicationDbContext dbContext,
             ISheetRowParser<HuntingConfigurationSheetDto> parser,
             ISpreadsheetEntityMapper<HuntingConfigurationSheetDto, HuntingConfiguration> mapper,
-            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter) { }
+            ISpreadsheetImportReporter reporter) : base(dbContext, parser, mapper, reporter)
+        {
+        }
 
         protected override DbSet<HuntingConfiguration> DbSet => DbContext.HuntingConfigurations;
 

@@ -1,0 +1,30 @@
+[
+    {
+        "resourceName": "pallet-town",
+        "name": "Pallet Town",
+        "sortIndex": 1000,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    },
+    {
+        "resourceName": "route-1",
+        "name": "Route 1",
+        "sortIndex": 1001,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    },
+    {
+        "resourceName": "viridian-city",
+        "name": "Viridian City",
+        "sortIndex": 1002,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    },
+    {
+        "resourceName": "route-22",
+        "name": "Route 22",
+        "sortIndex": 1003,
+        "regionResourceName": "kanto",
+        "regionName": "Kanto"
+    }
+]

@@ -19,8 +19,8 @@ namespace PokeOneWeb.WebApi.Controllers
         /// For a given, unique resource name (i.e. "bulbasaur", "nugget") the entity type that
         /// belongs to this resource name (i.e. pokemon, item, location) is returned.
         /// </summary>
-        /// <param name="path">A unique resource name / URL segment</param>
-        /// <returns>The corresponding entity type. If resource name is unknown, returns EntityType.Unknown</returns>
+        /// <param name="path">A unique resource name / URL segment.</param>
+        /// <returns>The corresponding entity type. If resource name is unknown, returns EntityType.Unknown.</returns>
         [Route("getentitytypeforpath")]
         [HttpGet]
         public ActionResult<EntityTypeDto> GetEntityTypeForPath([FromQuery] string path)

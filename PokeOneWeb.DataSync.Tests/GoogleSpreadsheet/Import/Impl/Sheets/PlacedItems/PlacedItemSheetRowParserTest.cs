@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedItems
@@ -122,7 +122,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedI
             var parser = new PlacedItemSheetRowParser();
             var values = new List<object>()
             {
-                "0", 0, "0", 0, 0, "", false, false, "", "", "", "excessive value"
+                "0", 0, "0", 0, 0, string.Empty, false, false, string.Empty, string.Empty, string.Empty, "excessive value"
             };
 
             // Act
@@ -183,8 +183,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.Sheets.PlacedI
             var sortIndex = 1;
             var index = 2;
             var placementDescription = "Placement Description";
-            var isHidden = "";
-            var isConfirmed = "";
+            var isHidden = string.Empty;
+            var isConfirmed = string.Empty;
 
             var values = new List<object>
             {

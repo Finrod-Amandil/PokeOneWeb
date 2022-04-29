@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using PokeOneWeb.WebApi.Dtos;
-using System.Collections.Generic;
 using PokeOneWeb.WebApi.Services.Api;
 
 namespace PokeOneWeb.WebApi.Controllers
@@ -29,7 +29,7 @@ namespace PokeOneWeb.WebApi.Controllers
         /// <summary>
         /// Returns details of one item.
         /// </summary>
-        /// <param name="name">The resource name of an item</param>
+        /// <param name="name">The resource name of an item.</param>
         [Route("getbyname")]
         [HttpGet]
         public ActionResult<ItemDto> GetByName([FromQuery] string name)
@@ -43,7 +43,7 @@ namespace PokeOneWeb.WebApi.Controllers
         /// Pokémon, Thick Club only on Cubone and Marowak). Such Pokémon-specific items are only included in the list,
         /// if they have an effect for the given Pokémon.
         /// </summary>
-        /// <param name="name">The resource name of a Pokémon Variety</param>
+        /// <param name="name">The resource name of a Pokémon Variety.</param>
         /// <returns>A list of relevant stat-boosting items, along with which stats they boost and by how much.</returns>
         [Route("getitemstatboostsforpokemon")]
         [HttpGet]

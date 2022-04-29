@@ -1,13 +1,13 @@
-﻿using PokeOneWeb.Data;
-using PokeOneWeb.Data.Entities.Interfaces;
-using PokeOneWeb.Shared.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities.Interfaces;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
-    public abstract class SpreadsheetEntityMapper<TDto, TEntity> 
+    public abstract class SpreadsheetEntityMapper<TDto, TEntity>
         : ISpreadsheetEntityMapper<TDto, TEntity>
         where TEntity : class, IHashedEntity
         where TDto : ISpreadsheetEntityDto
@@ -42,6 +42,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                     Reporter.ReportError(Entity, rowHash.IdHash, $"Found duplicate {Entity} '{uniqueName}'. Skipping duplicate.");
                     continue;
                 }
+
                 uniqueNames.Add(uniqueName);
 
                 yield return MapEntity(dto, rowHash);

@@ -2,9 +2,9 @@
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Shared.Extensions;
-using Z.EntityFramework.Plus;
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 {
@@ -23,7 +23,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             {
                 var existingEntity =
                     _dbContext.PokemonVarietyReadModels
-                        .Where(e  => e.ApplicationDbId == entity.ApplicationDbId)
+                        .Where(e => e.ApplicationDbId == entity.ApplicationDbId)
                         .IncludeOptimized(e => e.Varieties)
                         .IncludeOptimized(e => e.Forms)
                         .IncludeOptimized(e => e.Urls)
@@ -79,8 +79,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             existingEntity.PrimaryAbilityEffect = updatedEntity.PrimaryAbilityEffect;
             existingEntity.SecondaryAbility = updatedEntity.SecondaryAbility;
             existingEntity.SecondaryAbilityEffect = updatedEntity.SecondaryAbilityEffect;
-            existingEntity.HiddenAbility = existingEntity.HiddenAbility;
-            existingEntity.HiddenAbilityEffect = existingEntity.HiddenAbilityEffect;
+            existingEntity.HiddenAbility = updatedEntity.HiddenAbility;
+            existingEntity.HiddenAbilityEffect = updatedEntity.HiddenAbilityEffect;
             existingEntity.Availability = updatedEntity.Availability;
             existingEntity.PvpTier = updatedEntity.PvpTier;
             existingEntity.PvpTierSortIndex = updatedEntity.PvpTierSortIndex;
@@ -199,7 +199,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateUrls(
-            List<PokemonVarietyUrlReadModel> existingUrls, 
+            List<PokemonVarietyUrlReadModel> existingUrls,
             List<PokemonVarietyUrlReadModel> updatedUrls)
         {
             existingUrls.RemoveAll(u =>
@@ -276,7 +276,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
         private void UpdateSpawns(List<SpawnReadModel> existingSpawns, List<SpawnReadModel> updatedSpawns)
         {
-            existingSpawns.RemoveAll(s => 
+            existingSpawns.RemoveAll(s =>
                 !updatedSpawns.Select(u => u.ApplicationDbId).Contains(s.ApplicationDbId));
 
             foreach (var spawn in updatedSpawns)
@@ -404,7 +404,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
                     existingEvolution.EvolutionTrigger = evolution.EvolutionTrigger;
                     existingEvolution.IsReversible = evolution.IsReversible;
-                    existingEvolution.IsAvailable = existingEvolution.IsAvailable;
+                    existingEvolution.IsAvailable = evolution.IsAvailable;
                 }
                 else
                 {
@@ -414,7 +414,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateLearnableMoves(
-            List<LearnableMoveReadModel> existingLearnableMoves, 
+            List<LearnableMoveReadModel> existingLearnableMoves,
             List<LearnableMoveReadModel> updatedLearnableMoves)
         {
             existingLearnableMoves.RemoveAll(e =>
@@ -474,7 +474,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
         }
 
         private void UpdateHuntingConfigurations(
-            List<HuntingConfigurationReadModel> existingHuntingConfigurations, 
+            List<HuntingConfigurationReadModel> existingHuntingConfigurations,
             List<HuntingConfigurationReadModel> updatedHuntingConfigurations)
         {
             existingHuntingConfigurations.RemoveAll(e =>

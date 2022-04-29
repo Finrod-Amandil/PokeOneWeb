@@ -22,9 +22,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         public void StartImport();
 
-        public void StopImport();
-
         public void StartImport(string entity);
+
+        public void StopImport();
 
         public void StopImport(string entity);
 
@@ -34,9 +34,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         public void StartReadModelUpdate();
 
-        public void StopReadModelUpdate();
-
         public void StartReadModelUpdate(string entity);
+
+        public void StopReadModelUpdate();
 
         public void StopReadModelUpdate(string entity);
     }

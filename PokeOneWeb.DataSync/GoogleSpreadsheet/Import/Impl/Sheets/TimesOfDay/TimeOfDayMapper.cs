@@ -5,7 +5,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Sheets.TimesOfDay
 {
     public class TimeOfDayMapper : SpreadsheetEntityMapper<TimeOfDaySheetDto, TimeOfDay>
     {
-        public TimeOfDayMapper(ISpreadsheetImportReporter reporter) : base(reporter) { }
+        public TimeOfDayMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        {
+        }
 
         protected override Entity Entity => Entity.TimeOfDay;
 

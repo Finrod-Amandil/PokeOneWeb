@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
 {
@@ -27,6 +27,10 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region
                     Name = region.Name,
                     ResourceName = region.ResourceName,
                     Color = region.Color,
+                    Description = region.Description,
+                    IsReleased = region.IsReleased,
+                    IsMainRegion = region.IsMainRegion,
+                    IsSideRegion = region.IsSideRegion,
                     IsEventRegion = region.IsEventRegion,
                     EventName = region.Event.Name,
                     EventStartDate = region.Event.StartDate,

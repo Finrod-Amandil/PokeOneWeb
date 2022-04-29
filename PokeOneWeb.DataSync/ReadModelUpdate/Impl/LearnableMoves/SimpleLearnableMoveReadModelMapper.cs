@@ -16,19 +16,21 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves
             _dbContext = dbContext;
         }
 
-        public IDictionary<SimpleLearnableMoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport report)
+        public IDictionary<SimpleLearnableMoveReadModel, DbAction> MapFromDatabase(SpreadsheetImportReport importReport)
         {
             return _dbContext.LearnableMoves
                 .Include(lm => lm.PokemonVariety)
                 .Include(lm => lm.Move)
                 .Include(lm => lm.LearnMethods)
                 .AsNoTracking()
-                .ToList()
+                .AsEnumerable()
                 .Where(learnableMove => learnableMove.LearnMethods.Any(learnMethod => learnMethod.IsAvailable))
                 .Select(learnableMove => new SimpleLearnableMoveReadModel
                 {
                     ApplicationDbId = learnableMove.Id,
                     PokemonVarietyApplicationDbId = learnableMove.PokemonVariety.Id,
+                    Name = learnableMove.PokemonVariety.Name,
+                    ResourceName = learnableMove.PokemonVariety.ResourceName,
                     MoveResourceName = learnableMove.Move.ResourceName
                 })
                 .ToDictionary(x => x, _ => DbAction.Create);

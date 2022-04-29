@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data;
-using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.WebApi.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data;
+using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.WebApi.Dtos;
 
 namespace PokeOneWeb.WebApi.Services.Api.Impl
 {
@@ -23,16 +23,20 @@ namespace PokeOneWeb.WebApi.Services.Api.Impl
             return _dbContext.RegionReadModels
                 .AsSingleQuery()
                 .AsNoTracking()
-                .Select(ToListItem());
+                .Select(ToListRegion());
         }
 
-        private static Expression<Func<RegionReadModel, RegionListDto>> ToListItem()
+        private static Expression<Func<RegionReadModel, RegionListDto>> ToListRegion()
         {
             return i => new RegionListDto
             {
                 ResourceName = i.ResourceName,
                 Name = i.Name,
                 Color = i.Color,
+                Description = i.Description,
+                IsReleased = i.IsReleased,
+                IsMainRegion = i.IsMainRegion,
+                IsSideRegion = i.IsSideRegion,
                 EventName = i.EventName,
                 IsEventRegion = i.IsEventRegion,
                 EventStartDate = i.EventStartDate,

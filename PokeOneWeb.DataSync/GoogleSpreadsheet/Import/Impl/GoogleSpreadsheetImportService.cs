@@ -108,7 +108,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 var insertedCount = repository.Insert(dataToInsertForHashes);
                 _logger.LogInformation($"Inserted {insertedCount} entries for sheet {sheet.SheetName}.");
             }
-            
+
             // Update
             if (hashListComparisonResult.RowsToUpdate.Any())
             {
@@ -126,7 +126,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             UpdateSheetHash(sheet.SpreadsheetId, sheet.SheetName, sheetHash);
         }
 
-        private bool HasSheetChanged(ImportSheet sheet, string sheetHash)
+        private static bool HasSheetChanged(ImportSheet sheet, string sheetHash)
         {
             return !string.Equals(sheet.SheetHash, sheetHash, StringComparison.Ordinal);
         }
@@ -166,6 +166,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             {
                 throw new Exception();
             }
+
             dbSheet.SheetHash = sheetHash;
 
             _dbContext.SaveChanges();

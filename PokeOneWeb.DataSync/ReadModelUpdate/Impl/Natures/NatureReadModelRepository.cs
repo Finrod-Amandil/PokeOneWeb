@@ -34,7 +34,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures
             _dbContext.SaveChanges();
         }
 
-        private void UpdateExistingEntity(NatureReadModel existingEntity, NatureReadModel entity)
+        private static void UpdateExistingEntity(NatureReadModel existingEntity, NatureReadModel entity)
         {
             existingEntity.ApplicationDbId = entity.ApplicationDbId;
             existingEntity.Name = entity.Name;
