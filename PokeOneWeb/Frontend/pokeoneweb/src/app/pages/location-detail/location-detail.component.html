@@ -52,7 +52,7 @@
             </div>
         </div>
         <div *ngIf="model.locationGroup.locations.length > 0">
-            <div *ngFor="let location of model.locationGroup.locations" [id]="location.name">
+            <div *ngFor="let location of model.locationGroup.locations; last as isLast" [id]="location.name">
                 <h2>{{location.name}}</h2>
                 <div class="no-table-container-outer" *ngIf="location.notes">
                     <div class="no-table-container-inner general-info-container">
@@ -82,9 +82,11 @@
                     </div>
                 </div>
                 <app-placed-item-list *ngIf="location.placedItems.length > 0" [placedItems]="location.placedItems"></app-placed-item-list>
-                <br>
-                <hr>
-                <br>
+                <div *ngIf="!isLast">
+                    <br>
+                    <hr>
+                    <br>
+                </div>
             </div>
         </div>
     </div>
