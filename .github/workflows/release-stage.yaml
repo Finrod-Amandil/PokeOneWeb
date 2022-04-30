@@ -1,9 +1,9 @@
-name: PokeOneWebApp Pull Request
+name: PokeOneWebApp
 on:
-  pull_request:
+  push:
     branches:
-      - master
-      - development
+      - 'release/**'
+
 jobs:
   build:
     name: Build-PokeOneWebApp
@@ -16,10 +16,10 @@ jobs:
         node-version: '16'
         cache: 'npm'
         cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json
-         
+
     - run: |
         npm ci
-        npm run build -- --configuration dev
+        npm run build -- --configuration stage
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
@@ -34,6 +34,18 @@ jobs:
         wait-on-timeout: 120
         start: npm start
         browser: chrome
+
+    - uses: appleboy/scp-action@master
+      with:
+        host: dev.pokeone.guide
+        username: ubuntu
+        port: 22
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        source: "PokeOneWeb/Frontend/pokeoneweb/dist"
+        target: "/opt/PokeOneWeb.WebApp/stage"
+        strip_components: 5
+        overwrite: true
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master

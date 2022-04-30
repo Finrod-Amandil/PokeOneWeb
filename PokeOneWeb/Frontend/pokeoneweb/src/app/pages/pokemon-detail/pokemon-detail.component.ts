@@ -160,8 +160,6 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     public sortMoves(sortColumn: MoveListColumn, sortDirection: number) {
-        if (!this.model.pokemon) return;
-
         this.model.movesSortedByColumn = sortColumn;
         this.model.movesSortDirection = sortDirection;
 
