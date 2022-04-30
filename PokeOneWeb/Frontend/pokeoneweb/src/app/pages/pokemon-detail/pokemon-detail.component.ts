@@ -203,6 +203,12 @@ export class PokemonDetailComponent implements OnInit {
 
     private isSpawnAvailable(spawn: ISpawnModel){
         if(spawn.isEvent){
+            
+            // If event has no end date: Event is still active and spawns is available
+            if (!spawn.eventEndDate) {
+                return true;
+            }
+
             //Source https://stackoverflow.com/a/16080662
             var todaysDate = this.dateService.getTodaysDate().split("/");
             var eventStartDate = this.dateService.convertDate(spawn.eventStartDate).split("/");
@@ -252,8 +258,6 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     public sortMoves(sortColumn: MoveListColumn, sortDirection: number) {
-        if (!this.model.pokemon) return;
-
         this.model.movesSortedByColumn = sortColumn;
         this.model.movesSortDirection = sortDirection;
 
@@ -331,8 +335,6 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     private applyInitialSorting() {
-        if (!this.model.pokemon) return;
-
         this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.SpawnType, 1);
         this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Location, 1);
         this.model.visibleSpawns = this.sortService.sortSpawns(this.model.visibleSpawns, SpawnListColumn.Rarity, 1);

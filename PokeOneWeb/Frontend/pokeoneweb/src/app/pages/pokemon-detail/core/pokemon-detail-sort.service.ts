@@ -113,7 +113,7 @@ export class PokemonDetailSortService {
     }
 
     private sortMovesByPower(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
-        return models.slice().sort((n1, n2) => sortDirection * (n2.effectiveAttackPower - n1.effectiveAttackPower));
+        return models.slice().sort((n1, n2) => sortDirection * (n2.effectivePower - n1.effectivePower));
     }
 
     private sortMovesByAccuracy(models: ILearnableMoveModel[], sortDirection: number): ILearnableMoveModel[] {
