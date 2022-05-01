@@ -123,7 +123,9 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{PokemonForm} in {Location}, type {SpawnType}";
+            return $"{PokemonForm?.ToString() ?? PokemonFormName} in " +
+                   $"{Location?.ToString() ?? LocationName}, type " +
+                   $"{SpawnType?.ToString() ?? SpawnTypeName}";
         }
     }
 }

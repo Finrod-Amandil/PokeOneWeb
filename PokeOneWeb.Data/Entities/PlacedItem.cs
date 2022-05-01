@@ -12,7 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// items that are "laying around".
     /// </summary>
     [Table("PlacedItem")]
-    [Sheet("placed_items")]
+    [Sheet("placeditems")]
     public class PlacedItem : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -119,7 +119,8 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Item} #{Index} @ {Location}";
+            return $"{Item?.ToString() ?? ItemName} #{Index} @ " +
+                   $"{Location?.ToString() ?? LocationName}";
         }
     }
 }

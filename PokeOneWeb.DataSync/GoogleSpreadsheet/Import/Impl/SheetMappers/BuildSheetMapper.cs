@@ -27,7 +27,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             { "PokemonVarietyName", (e, v) => e.PokemonVarietyName = v.ParseAsNonEmptyString() },
             { "Name", (e, v) => e.Name = v.ParseAsNonEmptyString() },
-            { "Description", (e, v) => e.Name = v.ParseAsString() },
+            { "Description", (e, v) => e.Description = v.ParseAsString() },
             { "Move1Options", (e, v) => e.MoveOptions.AddRange(MapMoves(v.ParseAsString(), 1)) },
             { "Move2Options", (e, v) => e.MoveOptions.AddRange(MapMoves(v.ParseAsString(), 2)) },
             { "Move3Options", (e, v) => e.MoveOptions.AddRange(MapMoves(v.ParseAsString(), 3)) },

@@ -50,7 +50,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{PokedexNumber} {Name}";
+            return $"#{PokedexNumber} {Name}";
         }
     }
 }

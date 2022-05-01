@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Exceptions;
 
@@ -25,6 +25,13 @@ namespace PokeOneWeb.Data.Repositories.Impl
             }
 
             DbContext.Set<TEntity>().AddRange(entities);
+            DbContext.SaveChanges();
+        }
+
+        public void Insert(TEntity entity)
+        {
+            AddIdsForNames(entity);
+            DbContext.Set<TEntity>().Add(entity);
             DbContext.SaveChanges();
         }
 
@@ -59,12 +66,14 @@ namespace PokeOneWeb.Data.Repositories.Impl
                 return null;
             }
 
-            var typeName = typeof(TNamedEntity).FullName ?? throw new Exception();
+            var typeName = typeof(TNamedEntity).Name;
 
-            if (!_idsForEntityNames.ContainsKey(typeName))
+            if (!_idsForEntityNames.ContainsKey(typeName) ||
+                DbContext.Set<TNamedEntity>().Count() != _idsForEntityNames[typeName].Count)
             {
-                _idsForEntityNames.Add(typeName, DbContext.Set<TNamedEntity>()
-                    .ToDictionary(x => x.Name, x => x.Id));
+                _idsForEntityNames[typeName] = DbContext.Set<TNamedEntity>()
+                    .AsNoTracking()
+                    .ToDictionary(x => x.Name, x => x.Id);
             }
 
             return _idsForEntityNames[typeName].TryGetValue(entityName, out var id) ? id : null;
@@ -83,33 +92,23 @@ namespace PokeOneWeb.Data.Repositories.Impl
             return (int)id;
         }
 
-        /// <summary>
-        /// Adds a collection of entities to the database upon which the "core" entities being inserted/updated depend upon
-        /// and which are not tracked by hashes. The dependent entities require a unique name to check whether they already
-        /// exist in the DB. If not, they are inserted, else the existing entities are updated.
-        /// </summary>
         protected void AddOrUpdateRelatedEntitiesByName<TRelatedEntity>(IEnumerable<TRelatedEntity> entities) where TRelatedEntity : class, INamedEntity
         {
             var distinctEntities = entities.DistinctBy(x => x.Name).ToList();
 
+            var existingRelatedEntities = DbContext.Set<TRelatedEntity>()
+                .AsNoTracking()
+                .ToDictionary(x => x.Name, x => x.Id);
+
             foreach (var entity in distinctEntities)
             {
-                entity.Id = GetOptionalIdForName<TRelatedEntity>(entity.Name);
+                // If entity exists, find Id so that EF updates the corresponding entry.
+                // Else set Id to zero, which tells EF to treat it as new entry.
+                entity.Id = existingRelatedEntities.TryGetValue(entity.Name, out var id) ? id : 0;
             }
 
             DbContext.Set<TRelatedEntity>().UpdateRange(distinctEntities);
             DbContext.SaveChanges();
-        }
-
-        /// <summary>
-        /// Deletes all related entities, to which the "core" entities being inserted/updated are children and which have no more
-        /// children after the insertions/updates. Make sure all changes have been saved to the DB before calling this method.
-        /// </summary>
-        /// <param name="getCollectionOfChildren">Selector for the collection of child entities.</param>
-        protected void DeleteUnusedParentalRelatedEntities<TRelatedEntity, TChildEntity>(
-            Func<TRelatedEntity, ICollection<TChildEntity>> getCollectionOfChildren) where TRelatedEntity : class, IEntity
-        {
-            DbContext.Set<TRelatedEntity>().Where(x => !getCollectionOfChildren(x).Any()).DeleteFromQuery();
         }
     }
 }

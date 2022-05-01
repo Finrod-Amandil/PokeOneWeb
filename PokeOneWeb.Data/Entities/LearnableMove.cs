@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -10,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// be learned through one or multiple methods (--> LearnableMoveLearnMethod).
     /// </summary>
     [Table("LearnableMove")]
-    public class LearnableMove
+    public class LearnableMove : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -50,7 +51,8 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{PokemonVariety} learns {Move} ({LearnMethods.Count} methods)";
+            return $"{PokemonVariety?.ToString() ?? PokemonVarietyName} learns " +
+                   $"{Move?.ToString() ?? MoveName} ({LearnMethods.Count} methods)";
         }
     }
 }

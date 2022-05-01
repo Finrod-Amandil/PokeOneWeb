@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Entities
     /// A time and season when a spawn can occur.
     /// </summary>
     [Table("SpawnOpportunity")]
-    public class SpawnOpportunity
+    public class SpawnOpportunity : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -57,7 +58,9 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{PokemonSpawn} @ {Season} {TimeOfDay}";
+            return $"{PokemonSpawn} @ " +
+                   $"{Season?.ToString() ?? SeasonAbbreviation} " +
+                   $"{TimeOfDay?.ToString() ?? TimeOfDayAbbreviation}";
         }
     }
 }

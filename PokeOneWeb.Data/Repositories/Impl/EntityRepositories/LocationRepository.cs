@@ -17,44 +17,38 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         public override void Insert(ICollection<Location> entities)
         {
-            var entitiesAsList = entities.ToList();
-
-            // Add/Insert Location Groups
-            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.LocationGroup));
-
-            // Detach Location Group so that it does not get inserted again
-            entitiesAsList.ForEach(x => x.LocationGroupName = x.LocationGroup.Name);
-            entitiesAsList.ForEach(x => x.LocationGroup = null);
-
-            // Insert Locations
+            PrepareEntitiesForInsertOrUpdate(entities);
             base.Insert(entities);
-
-            // Delete unused LocationGroups
-            DeleteUnusedParentalRelatedEntities<LocationGroup, Location>(x => x.Locations);
+            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
         }
 
         public override void Update(ICollection<Location> entities)
         {
-            var entitiesAsList = entities.ToList();
-
-            // Add/Insert Location Groups
-            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.LocationGroup));
-
-            // Detach Location Group so that it does not get inserted again
-            entitiesAsList.ForEach(x => x.LocationGroupName = x.LocationGroup.Name);
-            entitiesAsList.ForEach(x => x.LocationGroup = null);
-
-            // Update locations
+            PrepareEntitiesForInsertOrUpdate(entities);
             base.Update(entities);
-
-            // Delete unused LocationGroups
-            DeleteUnusedParentalRelatedEntities<LocationGroup, Location>(x => x.Locations);
+            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
         }
 
         public override void DeleteByIdHashes(ICollection<string> idHashes)
         {
             base.DeleteByIdHashes(idHashes);
-            DeleteUnusedParentalRelatedEntities<LocationGroup, Location>(x => x.Locations);
+            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
+        }
+
+        private void PrepareEntitiesForInsertOrUpdate(ICollection<Location> entities)
+        {
+            var entitiesAsList = entities.ToList();
+
+            // Lookup ids of related entities
+            entitiesAsList.ForEach(x =>
+                x.LocationGroup.RegionId = GetRequiredIdForName<Region>(x.LocationGroup.RegionName));
+
+            // Add/Insert Location Groups
+            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.LocationGroup));
+
+            // Detach Location Group so that it does not get inserted again
+            entitiesAsList.ForEach(x => x.LocationGroupName = x.LocationGroup.Name);
+            entitiesAsList.ForEach(x => x.LocationGroup = null);
         }
     }
 }

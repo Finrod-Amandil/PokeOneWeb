@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Entities
     /// A recommendation about which nature to use for a specific build.
     /// </summary>
     [Table("NatureOption")]
-    public class NatureOption
+    public class NatureOption : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -43,7 +44,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Nature} for {Build}";
+            return $"{Nature?.ToString() ?? NatureName} for {Build}";
         }
     }
 }

@@ -76,6 +76,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
         {
             var rowIndexes = GetRowIndexesForIdHashes(selectedIdHashes, allIdHashes);
             var ranges = GetRangesForRows(rowIndexes, sheet.SheetName, "A", true);
+
             var values = await LoadData(sheet.SpreadsheetId, ranges);
 
             var header = new SheetHeader(values[0].Skip(2).Select(x => x.ToString() ?? string.Empty).ToList());

@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.ReadModels;
+using PokeOneWeb.Data.Repositories;
+using PokeOneWeb.Data.Repositories.Impl.EntityRepositories;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
@@ -113,6 +115,37 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISheetMapper<Spawn>, SpawnSheetMapper>();
             services.AddScoped<ISheetMapper<SpawnType>, SpawnTypeSheetMapper>();
             services.AddScoped<ISheetMapper<TimeOfDay>, TimeOfDaySheetMapper>();
+
+            services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
+            services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
+            services.AddScoped<IHashedEntityRepository<PokemonAvailability>, AvailabilityRepository>();
+            services.AddScoped<IHashedEntityRepository<BagCategory>, BagCategoryRepository>();
+            services.AddScoped<IHashedEntityRepository<Build>, BuildRepository>();
+            services.AddScoped<IHashedEntityRepository<Currency>, CurrencyRepository>();
+            services.AddScoped<IHashedEntityRepository<ElementalTypeRelation>, ElementalTypeRelationRepository>();
+            services.AddScoped<IHashedEntityRepository<ElementalType>, ElementalTypeRepository>();
+            services.AddScoped<IHashedEntityRepository<Event>, EventRepository>();
+            services.AddScoped<IHashedEntityRepository<Evolution>, EvolutionRepository>();
+            services.AddScoped<IHashedEntityRepository<HuntingConfiguration>, HuntingConfigurationRepository>();
+            services.AddScoped<IHashedEntityRepository<Item>, ItemRepository>();
+            services.AddScoped<IHashedEntityRepository<ItemStatBoostPokemon>, ItemStatBoostPokemonRepository>();
+            services.AddScoped<IHashedEntityRepository<LearnableMoveLearnMethod>, LearnableMoveLearnMethodRepository>();
+            services.AddScoped<IHashedEntityRepository<Location>, LocationRepository>();
+            services.AddScoped<IHashedEntityRepository<MoveDamageClass>, MoveDamageClassRepository>();
+            services.AddScoped<IHashedEntityRepository<MoveLearnMethodLocation>, MoveLearnMethodLocationRepository>();
+            services.AddScoped<IHashedEntityRepository<Move>, MoveRepository>();
+            services.AddScoped<IHashedEntityRepository<MoveTutorMove>, MoveTutorMoveRepository>();
+            services.AddScoped<IHashedEntityRepository<MoveTutor>, MoveTutorRepository>();
+            services.AddScoped<IHashedEntityRepository<Nature>, NatureRepository>();
+            services.AddScoped<IHashedEntityRepository<PlacedItem>, PlacedItemRepository>();
+            services.AddScoped<IHashedEntityRepository<PokemonForm>, PokemonFormRepository>();
+            services.AddScoped<IHashedEntityRepository<PvpTier>, PvpTierRepository>();
+            services.AddScoped<IHashedEntityRepository<Region>, RegionRepository>();
+            services.AddScoped<IHashedEntityRepository<Season>, SeasonRepository>();
+            services.AddScoped<IHashedEntityRepository<SeasonTimeOfDay>, SeasonTimeOfDayRepository>();
+            services.AddScoped<IHashedEntityRepository<Spawn>, SpawnRepository>();
+            services.AddScoped<IHashedEntityRepository<SpawnType>, SpawnTypeRepository>();
+            services.AddScoped<IHashedEntityRepository<TimeOfDay>, TimeOfDayRepository>();
 
             services.AddScoped<IReadModelUpdateService, ReadModelUpdateService>();
 

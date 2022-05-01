@@ -8,7 +8,7 @@ using PokeOneWeb.Data.Repositories;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
-    public abstract class SheetImporter<TEntity> : ISheetImporter where TEntity : class, IHashedEntity
+    public class SheetImporter<TEntity> : ISheetImporter where TEntity : class, IHashedEntity
     {
         private readonly ISpreadsheetDataLoader _dataLoader;
         private readonly IImportSheetRepository _importSheetRepository;
@@ -17,7 +17,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
         private readonly IHashListComparator _hashListComparator;
         private readonly ISpreadsheetImportReporter _reporter;
 
-        protected SheetImporter(
+        public SheetImporter(
             ISpreadsheetDataLoader dataLoader,
             IImportSheetRepository importSheetRepository,
             IHashedEntityRepository<TEntity> repository,
@@ -53,8 +53,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
 
             Delete(hashListComparisonResult.RowsToDelete);
-            Insert(hashListComparisonResult.RowsToInsert, sheetIdHashes, sheet);
-            Update(hashListComparisonResult.RowsToUpdate, sheetIdHashes, sheet);
+            await Insert(hashListComparisonResult.RowsToInsert, sheetIdHashes, sheet);
+            await Update(hashListComparisonResult.RowsToUpdate, sheetIdHashes, sheet);
 
             // Update sheet hash
             sheet.SheetHash = sheetHash;
@@ -76,7 +76,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             }
         }
 
-        private async void Insert(List<string> rowsToInsert, List<string> sheetIdHashes, ImportSheet sheet)
+        private async Task Insert(List<string> rowsToInsert, List<string> sheetIdHashes, ImportSheet sheet)
         {
             if (rowsToInsert.Any())
             {
@@ -86,7 +86,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             }
         }
 
-        private async void Update(List<string> rowsToUpdate, List<string> sheetIdHashes, ImportSheet sheet)
+        private async Task Update(List<string> rowsToUpdate, List<string> sheetIdHashes, ImportSheet sheet)
         {
             if (rowsToUpdate.Any())
             {

@@ -8,7 +8,7 @@ using PokeOneWeb.Data.Extensions;
 namespace PokeOneWeb.Data.Entities
 {
     [Table("LearnableMoveLearnMethod")]
-    [Sheet("learnable_move_learn_methods")]
+    [Sheet("learnablemoves")]
     public class LearnableMoveLearnMethod : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)

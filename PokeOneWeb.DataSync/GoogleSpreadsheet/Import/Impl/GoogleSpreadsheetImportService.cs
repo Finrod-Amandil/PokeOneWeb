@@ -49,10 +49,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 var sheetName = sheet[1].ToString();
 
                 var sheetImporter = FindSheetImporterForSheet(sheetName);
-
-                _reporter.StartImport(sheetName);
                 await sheetImporter.ImportSheet(spreadsheetId, sheetName);
-                _reporter.StopImport(sheetName);
             }
 
             _reporter.StopImport();
@@ -80,7 +77,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var keys = _sheetImporters.Keys.Where(sheetName.StartsWith).ToList();
 
             return keys.Count == 1 ? _sheetImporters[keys[0]] :
-                throw new ArgumentOutOfRangeException($"No suitable single importer could be found for sheet with sheet name {sheetName}.");
+                throw new Exception($"No suitable single importer could be found for sheet with sheet name {sheetName}.");
         }
     }
 }

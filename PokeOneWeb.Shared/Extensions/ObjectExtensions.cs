@@ -35,7 +35,7 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static decimal ParseAsDecimal(this object value, decimal? defaultValue = null)
         {
-            var stringValue = value.ToString();
+            var stringValue = value as string;
 
             if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
             {
@@ -59,14 +59,14 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static int ParseAsInt(this object value, int? defaultValue = null)
         {
-            var stringValue = value.ToString();
+            var stringValue = value as string;
 
             if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
             {
                 return (int)defaultValue;
             }
 
-            var canParse = int.TryParse(value.ToString(), out var parsed);
+            var canParse = int.TryParse(value as string, out var parsed);
 
             if (!canParse)
             {
@@ -83,7 +83,7 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static DateTime? ParseAsOptionalDate(this object value)
         {
-            if (string.IsNullOrWhiteSpace(value.ToString()))
+            if (string.IsNullOrWhiteSpace(value as string))
             {
                 return null;
             }
@@ -106,7 +106,7 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static bool ParseAsBoolean(this object value, bool? defaultValue = null)
         {
-            var stringValue = value.ToString();
+            var stringValue = value as string;
 
             if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
             {

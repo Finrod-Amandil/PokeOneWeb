@@ -75,7 +75,8 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{AttackingType} -> {DefendingType}: x{AttackEffectivity}";
+            return $"{AttackingType?.ToString() ?? AttackingTypeName} -> " +
+                   $"{DefendingType?.ToString() ?? DefendingTypeName}: x{AttackEffectivity}";
         }
     }
 }

@@ -67,7 +67,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{ItemStatBoost} for {PokemonVariety}";
+            return $"{ItemStatBoost} for {PokemonVariety?.ToString() ?? PokemonVarietyName}";
         }
     }
 }

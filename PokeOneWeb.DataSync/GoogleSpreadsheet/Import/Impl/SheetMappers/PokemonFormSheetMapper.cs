@@ -15,6 +15,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             { "SortIndex", (e, v) => e.SortIndex = v.ParseAsInt() },
             { "PokedexNumber", (e, v) => e.PokemonVariety.PokemonSpecies.PokedexNumber = v.ParseAsInt() },
+            { "PokemonSpecies", (e, v) => e.PokemonVariety.PokemonSpecies.Name = v.ParseAsNonEmptyString() },
             { "DefaultVarietyName", (e, v) => e.PokemonVariety.PokemonSpecies.DefaultVarietyName = v.ParseAsNonEmptyString() },
             { "PokemonVariety", (e, v) => e.PokemonVariety.Name = v.ParseAsNonEmptyString() },
             { "PokemonVarietyResourceName", (e, v) => e.PokemonVariety.ResourceName = v.ParseAsNonEmptyString() },

@@ -18,10 +18,10 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "BaseStage", (e, v) => e.BaseStage = v.ParseAsInt() },
             { "EvolvedPokemonVariety", (e, v) => e.EvolvedPokemonVarietyName = v.ParseAsNonEmptyString() },
             { "EvolvedStage", (e, v) => e.EvolvedStage = v.ParseAsInt() },
-            { "EvolutionTrigger", (e, v) => e.BasePokemonSpeciesName = v.ParseAsString() },
+            { "EvolutionTrigger", (e, v) => e.EvolutionTrigger = v.ParseAsString() },
             { "IsReversible", (e, v) => e.IsReversible = v.ParseAsBoolean(defaultValue: false) },
             { "IsAvailable", (e, v) => e.IsAvailable = v.ParseAsBoolean(defaultValue: true) },
-            { "IsReversible", (e, v) => e.DoInclude = v.ParseAsBoolean(defaultValue: true) },
+            { "DoInclude", (e, v) => e.DoInclude = v.ParseAsBoolean(defaultValue: true) },
         };
     }
 }

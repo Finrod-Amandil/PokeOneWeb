@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Entities
     /// One of potentially multiple items that are recommended to be used in a Build.
     /// </summary>
     [Table("ItemOption")]
-    public class ItemOption
+    public class ItemOption : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -43,7 +44,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Item} for {Build}";
+            return $"{Item?.ToString() ?? ItemName} for {Build}";
         }
     }
 }

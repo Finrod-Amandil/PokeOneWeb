@@ -74,7 +74,9 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{TimeOfDay} in {Season}: {StartHour}:00 - {EndHour}:00";
+            return $"{TimeOfDay?.ToString() ?? TimeOfDayName} in " +
+                   $"{Season?.ToString() ?? SeasonName}: " +
+                   $"{StartHour}:00 - {EndHour}:00";
         }
     }
 }

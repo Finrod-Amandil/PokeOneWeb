@@ -57,7 +57,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Item} (Currency)";
+            return $"{Item?.ToString() ?? ItemName} (Currency)";
         }
     }
 }

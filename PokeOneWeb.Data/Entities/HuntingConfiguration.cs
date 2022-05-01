@@ -85,7 +85,9 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Nature} {Ability} {PokemonVariety}";
+            return $"{Nature?.ToString() ?? NatureName} " +
+                   $"{Ability?.ToString() ?? AbilityName} " +
+                   $"{PokemonVariety?.ToString() ?? PokemonVarietyName}";
         }
     }
 }

@@ -73,7 +73,8 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{MoveTutor} teaches {Move}";
+            return $"{MoveTutor?.ToString() ?? MoveTutorName} teaches " +
+                   $"{Move?.ToString() ?? MoveName}";
         }
     }
 }

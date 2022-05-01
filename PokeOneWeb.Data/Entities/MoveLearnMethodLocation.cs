@@ -80,7 +80,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location}";
+            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location?.ToString() ?? LocationName}";
         }
     }
 }

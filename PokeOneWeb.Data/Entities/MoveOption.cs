@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -9,7 +10,7 @@ namespace PokeOneWeb.Data.Entities
     /// some slots may have more than one viable option for moves.
     /// </summary>
     [Table("MoveOption")]
-    public class MoveOption
+    public class MoveOption : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -45,7 +46,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Move} in Slot {Slot} for {Build}";
+            return $"{Move?.ToString() ?? MoveName} in Slot {Slot} for {Build}";
         }
     }
 }

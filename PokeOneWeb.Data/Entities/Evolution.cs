@@ -132,7 +132,8 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{BasePokemonVariety} --> {EvolvedPokemonVariety}";
+            return $"{BasePokemonVariety?.ToString() ?? BasePokemonVarietyName} -> " +
+                   $"{EvolvedPokemonVariety?.ToString() ?? EvolvedPokemonVarietyName}";
         }
     }
 }

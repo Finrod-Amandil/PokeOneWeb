@@ -71,7 +71,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Name}@{Location.Name}";
+            return $"{Name} @ {Location?.ToString() ?? LocationName}";
         }
     }
 }
