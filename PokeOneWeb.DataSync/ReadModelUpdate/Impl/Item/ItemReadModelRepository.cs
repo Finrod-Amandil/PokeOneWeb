@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item
 {

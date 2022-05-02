@@ -8,12 +8,12 @@ namespace PokeOneWeb.Shared.Extensions
     {
         public static string ParseAsString(this object value)
         {
-            if (value is not string stringValue)
+            if (value is not null && value is not string)
             {
                 throw new ParseException(value, "string");
             }
 
-            return stringValue;
+            return (string)value ?? string.Empty;
         }
 
         public static string ParseAsNonEmptyString(this object value)
@@ -35,14 +35,18 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static decimal ParseAsDecimal(this object value, decimal? defaultValue = null)
         {
-            var stringValue = value as string;
+            if (value is decimal decimalValue)
+            {
+                return decimalValue;
+            }
 
-            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            if ((value is null || string.IsNullOrWhiteSpace(value.ToString())) &&
+                defaultValue is not null)
             {
                 return (decimal)defaultValue;
             }
 
-            var canParse = decimal.TryParse(stringValue, out var parsed);
+            var canParse = decimal.TryParse(value?.ToString(), out var parsed);
 
             if (!canParse)
             {
@@ -54,19 +58,28 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static decimal? ParseAsOptionalDecimal(this object value)
         {
-            return decimal.TryParse(value as string, out var parsed) ? parsed : null;
+            if (value is decimal decimalValue)
+            {
+                return decimalValue;
+            }
+
+            return decimal.TryParse(value?.ToString(), out var parsed) ? parsed : null;
         }
 
         public static int ParseAsInt(this object value, int? defaultValue = null)
         {
-            var stringValue = value as string;
+            if (value is int intValue)
+            {
+                return intValue;
+            }
 
-            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            if ((value is null || string.IsNullOrWhiteSpace(value.ToString())) &&
+                defaultValue is not null)
             {
                 return (int)defaultValue;
             }
 
-            var canParse = int.TryParse(value as string, out var parsed);
+            var canParse = int.TryParse(value?.ToString(), out var parsed);
 
             if (!canParse)
             {
@@ -78,6 +91,11 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static int? ParseAsOptionalInt(this object value)
         {
+            if (value is int intValue)
+            {
+                return intValue;
+            }
+
             return int.TryParse(value as string, out var parsed) ? parsed : null;
         }
 
@@ -106,14 +124,18 @@ namespace PokeOneWeb.Shared.Extensions
 
         public static bool ParseAsBoolean(this object value, bool? defaultValue = null)
         {
-            var stringValue = value as string;
+            if (value is bool boolValue)
+            {
+                return boolValue;
+            }
 
-            if (string.IsNullOrWhiteSpace(stringValue) && defaultValue is not null)
+            if ((value is null || string.IsNullOrWhiteSpace(value.ToString())) &&
+                defaultValue is not null)
             {
                 return (bool)defaultValue;
             }
 
-            var canParse = bool.TryParse(stringValue, out var parsed);
+            var canParse = bool.TryParse(value?.ToString(), out var parsed);
 
             if (!canParse)
             {

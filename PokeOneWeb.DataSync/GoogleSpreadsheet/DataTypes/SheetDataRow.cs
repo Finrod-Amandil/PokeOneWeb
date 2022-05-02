@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
@@ -6,8 +7,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
     public class SheetDataRow
     {
         private readonly RowHash _hash;
-        private readonly IList<object> _values;
-        private readonly SheetHeader _header;
+        private readonly Dictionary<string, object> _values = new();
 
         public string IdHash => _hash.IdHash;
 
@@ -15,21 +15,45 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 
         public int ImportSheetId => _hash.ImportSheetId;
 
-        public object this[string columnName]
+        public object this[string columnName] =>
+            _values.TryGetValue(columnName, out var value)
+                ? value
+                : null;
+
+        public SheetDataRow(IList<string> columnNames, RowHash hash, IList<object> values)
         {
-            get
+            if (columnNames is null)
             {
-                var index = _header.GetColumnIndexForColumnName(columnName);
-
-                return index < _values.Count ? _values[index] : null;
+                throw new ArgumentNullException(nameof(columnNames));
             }
-        }
 
-        public SheetDataRow(SheetHeader header, RowHash hash, IList<object> values)
-        {
-            _header = header;
-            _hash = hash;
-            _values = values;
+            if (values is null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            _hash = hash ?? throw new ArgumentNullException(nameof(hash));
+
+            if (columnNames.Count < values.Count)
+            {
+                throw new ArgumentException("Fewer column names were given than values.");
+            }
+
+            for (var index = 0; index < values.Count; index++)
+            {
+                var columnName = columnNames[index];
+                if (string.IsNullOrWhiteSpace(columnName))
+                {
+                    throw new ArgumentException($"An invalid column name was given for column {index}");
+                }
+
+                if (_values.ContainsKey(columnName))
+                {
+                    throw new ArgumentException($"Duplicate column name: {columnName}");
+                }
+
+                _values.Add(columnNames[index], values[index]);
+            }
         }
     }
 }

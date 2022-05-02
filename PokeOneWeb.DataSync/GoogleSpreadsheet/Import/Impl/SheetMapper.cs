@@ -25,21 +25,29 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             foreach (var row in sheetDataRows)
             {
-                yield return MapEntity(row);
+                var canMap = TryMapEntity(row, out var mappedEntity);
+
+                if (!canMap)
+                {
+                    continue;
+                }
+
+                yield return mappedEntity;
             }
         }
 
         protected abstract Dictionary<string, Action<TEntity, object>> ValueToEntityMappings { get; }
 
-        private TEntity MapEntity(SheetDataRow row)
+        private bool TryMapEntity(SheetDataRow row, out TEntity entity)
         {
-            var entity = new TEntity
+            entity = new TEntity
             {
                 IdHash = row.IdHash,
                 Hash = row.Hash,
                 ImportSheetId = row.ImportSheetId
             };
 
+            var canMap = true;
             foreach (var (columnName, mapValueOntoEntity) in ValueToEntityMappings)
             {
                 try
@@ -49,10 +57,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 catch (Exception e) when (e is InvalidColumnNameException or InvalidRowDataException or ParseException)
                 {
                     Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
+                    canMap = false;
                 }
             }
 
-            return entity;
+            return canMap;
         }
     }
 }

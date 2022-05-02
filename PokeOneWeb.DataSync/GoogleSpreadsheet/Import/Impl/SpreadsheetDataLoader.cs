@@ -77,14 +77,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var rowIndexes = GetRowIndexesForIdHashes(selectedIdHashes, allIdHashes);
             var ranges = GetRangesForRows(rowIndexes, sheet.SheetName, "A", true);
 
-            var values = await LoadData(sheet.SpreadsheetId, ranges);
+            var valuesRanges = await LoadData(sheet.SpreadsheetId, ranges);
 
-            var header = new SheetHeader(values[0].Skip(2).Select(x => x.ToString() ?? string.Empty).ToList());
-            values.RemoveAt(0);
+            var columnNames = valuesRanges[0].Skip(2).Select(x => x.ToString() ?? string.Empty).ToList();
+            valuesRanges.RemoveAt(0);
 
             var dataRows = new List<SheetDataRow>();
 
-            foreach (var row in values)
+            foreach (var row in valuesRanges)
             {
                 var rowHash = new RowHash
                 {
@@ -93,7 +93,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                     ImportSheetId = sheet.Id
                 };
 
-                var dataRow = new SheetDataRow(header, rowHash, row.Skip(2).ToList());
+                var values = row.Skip(2).ToList();
+
+                var dataRow = new SheetDataRow(columnNames, rowHash, values);
                 dataRows.Add(dataRow);
             }
 

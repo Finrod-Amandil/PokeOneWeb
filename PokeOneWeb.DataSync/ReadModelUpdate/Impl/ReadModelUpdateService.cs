@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -130,11 +129,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                 WriteIndented = true
             };
 
-            //
             // Entity types
-            //
             Console.WriteLine("generating json files for entity types");
-            ICollection<EntityTypeReadModel> entityTypes = _entityTypeMapper.MapFromDatabase(importReport).Keys;
+            var entityTypes = _entityTypeMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/entity-types.json", JsonSerializer.Serialize(entityTypes, serializeOptions));
 
             foreach (var entityType in entityTypes)
@@ -142,18 +139,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                 File.WriteAllText("resources/entity-types/" + entityType.ResourceName + ".json", JsonSerializer.Serialize(entityType, serializeOptions));
             }
 
-            //
             // itemstats
-            //
             Console.WriteLine("generating json files for itemstats");
-            ICollection<ItemStatBoostPokemonReadModel> itemStats = _itemStatBoostPokemonMapper.MapFromDatabase(importReport).Keys;
+            var itemStats = _itemStatBoostPokemonMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/itemstats.json", JsonSerializer.Serialize(itemStats, serializeOptions));
 
-            //
             // learnable moves
-            //
             Console.WriteLine("generating json files for learnable-moves");
-            ICollection<SimpleLearnableMoveReadModel> learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase(importReport).Keys;
+            var learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase(importReport).Keys;
             learnableMoves.
                 GroupBy(lmove => lmove.MoveResourceName).
                 ToDictionary(lmove => lmove.Key, lmove => lmove.ToList()).
@@ -163,29 +156,23 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                     File.WriteAllText("resources/learnable-moves/" + entry.Key + ".json", JsonSerializer.Serialize(entry.Value, serializeOptions));
                 });
 
-            //
             // moves
-            //
             Console.WriteLine("generating json files for moves");
-            ICollection<MoveReadModel> moves = _moveMapper.MapFromDatabase(importReport).Keys;
+            var moves = _moveMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/moves.json", JsonSerializer.Serialize(moves, serializeOptions));
             foreach (var move in moves)
             {
                 File.WriteAllText("resources/moves/" + move.ResourceName + ".json", JsonSerializer.Serialize(move, serializeOptions));
             }
 
-            //
             // natures
-            //
             Console.WriteLine("generating json files for natures");
-            ICollection<NatureReadModel> natures = _natureMapper.MapFromDatabase(importReport).Keys;
+            var natures = _natureMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/natures.json", JsonSerializer.Serialize(natures, serializeOptions));
 
-            //
             // varieties
-            //
             Console.WriteLine("generating json files for varieties");
-            ICollection<PokemonVarietyReadModel> varieties = _pokemonVarietyMapper.MapFromDatabase(importReport).Keys;
+            var varieties = _pokemonVarietyMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/varieties.json", JsonSerializer.Serialize(varieties, serializeOptions));
 
             foreach (var variety in varieties)
@@ -193,11 +180,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                 File.WriteAllText("resources/varieties/" + variety.ResourceName + ".json", JsonSerializer.Serialize(variety, serializeOptions));
             }
 
-            //
             // items
-            //
             Console.WriteLine("generating json files for items");
-            ICollection<ItemReadModel> items = _itemMapper.MapFromDatabase(importReport).Keys;
+            var items = _itemMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/items.json", JsonSerializer.Serialize(items, serializeOptions));
 
             foreach (var item in items)
@@ -205,14 +190,12 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                 File.WriteAllText("resources/items/" + item.ResourceName + ".json", JsonSerializer.Serialize(item, serializeOptions));
             }
 
-            //
             // regions
-            //
             Console.WriteLine("generating json files for regions");
-            ICollection<RegionReadModel> regions = _regionMapper.MapFromDatabase(importReport).Keys;
+            var regions = _regionMapper.MapFromDatabase(importReport).Keys;
             File.WriteAllText("resources/regions.json", JsonSerializer.Serialize(regions, serializeOptions));
 
-            ICollection<LocationGroupReadModel> locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
+            var locationGroups = _locationGroupMapper.MapFromDatabase(importReport).Keys;
             var locationGroupsByRegions = locationGroups.GroupBy(g => g.RegionResourceName)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
@@ -232,7 +215,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 
         private void CreateDirectories()
         {
-            string[] directories = new string[]{
+            string[] directories =
+            {
                 "resources/entity-types",
                 "resources/itemstats",
                 "resources/learnable-moves",
