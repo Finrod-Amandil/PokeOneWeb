@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PokeOneWeb.Data.Entities;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
 using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
@@ -18,6 +19,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         private const string StatHp = "hp";
 
         private const int MaxEvsAvailable = 510;
+        private const int MaxEvsPerStat = 252;
 
         public BuildSheetMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
@@ -34,17 +36,18 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "Move4Options", (e, v) => e.MoveOptions.AddRange(MapMoves(v.ParseAsString(), 4)) },
             { "ItemOptions", (e, v) => e.ItemOptions.AddRange(MapItems(v.ParseAsString())) },
             { "NatureOptions", (e, v) => e.NatureOptions.AddRange(MapNatures(v.ParseAsString())) },
-            { "Ability", (e, v) => e.AbilityName = v.ParseAsNonEmptyString() },
+            { "Ability", (e, v) => e.AbilityName = v.ParseAsString() },
             { "EvDistribution", (e, v) => AddEvDistribution(e, v.ParseAsString()) },
         };
 
         private IEnumerable<MoveOption> MapMoves(string moveString, int slot)
         {
             return moveString.Split(OptionDivider)
+                .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => new MoveOption
                 {
-                    MoveName = x.Trim(),
+                    MoveName = x,
                     Slot = slot
                 });
         }
@@ -52,20 +55,22 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
         private IEnumerable<ItemOption> MapItems(string itemString)
         {
             return itemString.Split(OptionDivider)
+                .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => new ItemOption
                 {
-                    ItemName = x.Trim()
+                    ItemName = x
                 });
         }
 
         private IEnumerable<NatureOption> MapNatures(string natureString)
         {
             return natureString.Split(OptionDivider)
+                .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => new NatureOption
                 {
-                    NatureName = x.Trim()
+                    NatureName = x
                 });
         }
 
@@ -81,7 +86,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             if (build.AttackEv + build.SpecialAttackEv + build.DefenseEv +
                 build.SpecialDefenseEv + build.SpeedEv + build.HitPointsEv > MaxEvsAvailable)
             {
-                Reporter.ReportError(nameof(Build), build.IdHash,
+                throw new InvalidRowDataException(
                     $"The EV values given amounted to a total value higher than the allowed " +
                     $"maximum of {MaxEvsAvailable}: {evDistributionString}");
             }
@@ -89,9 +94,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
 
         private int GetEvValue(string statName, string evDistributionString, string idHash)
         {
-            var evParts = evDistributionString
+            var evParts = evDistributionString.ToLower()
                 .Split(OptionDivider)
-                .Where(part => part.Contains(statName))
+                .Select(part => part.Trim())
+                .Where(part => !string.IsNullOrWhiteSpace(part))
+                .Where(part => part.Contains(statName.ToLower()))
                 .ToList();
 
             if (!evParts.Any())
@@ -101,19 +108,24 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
 
             if (evParts.Count > 1)
             {
-                Reporter.ReportError(nameof(Build), idHash,
+                throw new InvalidRowDataException(
                     $"For stat {statName} more than one value was given: {evDistributionString}");
-                return 0;
             }
 
             var evPart = evParts[0];
             var valueString = evPart.Replace(statName, string.Empty).Trim();
 
-            if (!int.TryParse(valueString, out var value))
+            if (!int.TryParse(valueString, out var value) || value < 0)
             {
-                Reporter.ReportError(nameof(Build), idHash,
+                throw new InvalidRowDataException(
                     $"EV-Distribution value for {statName} could not be parsed: {evPart}");
-                return 0;
+            }
+
+            if (value > MaxEvsPerStat)
+            {
+                throw new InvalidRowDataException(
+                    $"EV-Distribution value for {statName} exceeded the maximum value" +
+                    $"per stat of {MaxEvsPerStat}. Value: {value}");
             }
 
             return value;
