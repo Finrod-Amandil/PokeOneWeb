@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPlacedItemModel, PlacedItemModel } from '../../models/placed-item.model';
+import { IPlacedItemModel } from '../../models/placed-item.model';
 import { PlacedItemListColumn } from './core/placed-item-list-column.enum';
 import { PlacedItemListSortService } from './core/placed-item-list-sort.service';
 import { PlacedItemListModel } from './core/placed-item-list.model';
@@ -38,7 +38,7 @@ export class PlacedItemListComponent implements OnInit {
     }
     else{
       this.model.hasOnlyOneLocation = true;
-    };
+    }
   }
 
   public sortPlacedItems(sortColumn: PlacedItemListColumn, sortDirection: number) {

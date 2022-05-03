@@ -41,7 +41,7 @@ export class SpawnListComponent implements OnInit {
     }
     else{
       this.model.hasOnlyOneLocation = true;
-    };
+    }
   }
 
   public hideEventExclusiveSpawns() {

@@ -71,7 +71,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -103,7 +102,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -133,7 +131,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -152,8 +149,6 @@ describe('SpawnListComponent', () => {
         // Assert
         expect(component.model.visibleSpawns.length)
             .toBe(0);
-        //expect(component.model.pokemon?.spawns.length)
-        //    .toBeUndefined
     });
   });
 
@@ -179,7 +174,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.showEventExclusiveSpawns();
 
@@ -211,7 +205,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.showEventExclusiveSpawns();
 
