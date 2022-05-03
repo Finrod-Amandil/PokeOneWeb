@@ -21,7 +21,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "IsMainRegion", (e, v) => e.IsMainRegion = v.ParseAsBoolean() },
             { "IsSideRegion", (e, v) => e.IsSideRegion = v.ParseAsBoolean() },
             { "IsEventRegion", (e, v) => e.IsEventRegion = v.ParseAsBoolean() },
-            { "EventName", (e, v) => e.EventName = v.ParseAsOptionalString() },
+            { "EventName", (e, v) => e.EventName = v.ParseAsString() },
         };
     }
 }

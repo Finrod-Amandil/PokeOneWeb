@@ -16,7 +16,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "SortIndex", (e, v) => e.SortIndex = v.ParseAsInt() },
             { "Name", (e, v) => e.Name = v.ParseAsNonEmptyString() },
             { "Abbreviation", (e, v) => e.Abbreviation = v.ParseAsNonEmptyString() },
-            { "Color", (e, v) => e.Color = v.ParseAsNonEmptyString() },
+            { "Color", (e, v) => e.Color = v.ParseAsString() },
         };
     }
 }

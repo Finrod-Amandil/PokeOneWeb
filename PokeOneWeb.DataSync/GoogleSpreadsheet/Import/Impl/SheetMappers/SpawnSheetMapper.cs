@@ -20,12 +20,12 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "Season", (e, v) => ApplySeasons(e, v.ParseAsNonEmptyString()) },
             { "TimeOfDay", (e, v) => ApplyTimesOfDay(e, v.ParseAsNonEmptyString()) },
             { "SpawnType", (e, v) => e.SpawnTypeName = v.ParseAsNonEmptyString() },
-            { "SpawnCommonality", (e, v) => e.SpawnCommonality = v.ParseAsOptionalString() },
+            { "SpawnCommonality", (e, v) => e.SpawnCommonality = v.ParseAsString() },
             { "SpawnProbability", (e, v) => e.SpawnProbability = ParseSpawnProbability(v.ParseAsString()) },
             { "EncounterCount", (e, v) => e.EncounterCount = v.ParseAsOptionalInt() },
             { "IsConfirmed", (e, v) => e.IsConfirmed = v.ParseAsBoolean(defaultValue: true) },
             { "LowestLevel", (e, v) => e.LowestLevel = v.ParseAsInt(defaultValue: 0) },
-            { "HighestLevel", (e, v) => e.LowestLevel = v.ParseAsInt(defaultValue: 0) },
+            { "HighestLevel", (e, v) => e.HighestLevel = v.ParseAsInt(defaultValue: 0) },
             { "Notes", (e, v) => e.Notes = v.ParseAsString() },
         };
 

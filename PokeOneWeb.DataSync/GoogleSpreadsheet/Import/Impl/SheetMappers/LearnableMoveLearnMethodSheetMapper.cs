@@ -18,9 +18,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers
             { "LearnMethod", (e, v) => e.MoveLearnMethod.Name = v.ParseAsNonEmptyString() },
             { "IsAvailable", (e, v) => e.IsAvailable = v.ParseAsBoolean() },
             { "LevelLearnedAt", (e, v) => e.LevelLearnedAt = v.ParseAsOptionalInt() },
-            { "RequiredItem", (e, v) => e.RequiredItemName = v.ParseAsOptionalString() },
-            { "TutorName", (e, v) => e.MoveTutorName = v.ParseAsOptionalString() },
-            { "Comments", (e, v) => e.Comments = v.ParseAsOptionalString() },
+            { "RequiredItem", (e, v) => e.RequiredItemName = v.ParseAsString() },
+            { "TutorName", (e, v) => e.MoveTutorName = v.ParseAsString() },
+            { "Comments", (e, v) => e.Comments = v.ParseAsString() },
         };
     }
 }

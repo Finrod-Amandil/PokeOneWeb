@@ -28,11 +28,6 @@ namespace PokeOneWeb.Shared.Extensions
             return stringValue;
         }
 
-        public static string ParseAsOptionalString(this object value)
-        {
-            return value as string;
-        }
-
         public static decimal ParseAsDecimal(this object value, decimal? defaultValue = null)
         {
             if (value is decimal decimalValue)
@@ -63,7 +58,14 @@ namespace PokeOneWeb.Shared.Extensions
                 return decimalValue;
             }
 
-            return decimal.TryParse(value?.ToString(), out var parsed) ? parsed : null;
+            if (value is null || string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return null;
+            }
+
+            return decimal.TryParse(value.ToString(), out var parsed)
+                ? parsed
+                : throw new ParseException(value, "decimal");
         }
 
         public static int ParseAsInt(this object value, int? defaultValue = null)
@@ -96,7 +98,14 @@ namespace PokeOneWeb.Shared.Extensions
                 return intValue;
             }
 
-            return int.TryParse(value as string, out var parsed) ? parsed : null;
+            if (value is null || string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return null;
+            }
+
+            return int.TryParse(value as string, out var parsed)
+                ? parsed
+                : throw new ParseException(value, "int");
         }
 
         public static DateTime? ParseAsOptionalDate(this object value)
