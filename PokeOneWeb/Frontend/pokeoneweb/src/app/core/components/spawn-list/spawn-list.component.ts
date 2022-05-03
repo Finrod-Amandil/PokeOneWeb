@@ -28,7 +28,7 @@ export class SpawnListComponent implements OnInit {
     this.applyInitialSorting();
   }
 
-  private checkLocations() {
+  public checkLocations() {
     if(!this.model.spawns) return;
     
     let regionlist = [];
