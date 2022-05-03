@@ -9,27 +9,21 @@
             <a [routerLink]="'/'+ model.locationGroup.previousLocationGroupResourceName">
                 <div class="location-detail-navigation-left">
                     <div class="location-detail-navigation-link">⮜ {{model.locationGroup.previousLocationGroupName}}</div>
-                    <div class="location-detail-navigation-sprite">
-                        <img src="./assets/img/navbar/locations.png"/>
-                    </div>
                 </div>
             </a>
             <a [routerLink]="'/'+ model.locationGroup.regionResourceName">
                 <div class="location-detail-navigation-center">
                     <div class="location-detail-navigation-sprite">
-                        <img src="./assets/img/button-images/region-list/{{model.locationGroup.regionResourceName}}.png" />
+                        <img src="./assets/img/navbar/locations.png" />
                     </div>
                     <div class="location-detail-navigation-link">{{model.locationGroup.regionName}}</div>
                     <div class="location-detail-navigation-sprite">
-                        <img src="./assets/img/button-images/region-list/{{model.locationGroup.regionResourceName}}.png" />
+                        <img src="./assets/img/navbar/locations.png" />
                     </div>
                 </div>
             </a>
             <a [routerLink]="'/'+ model.locationGroup.nextLocationGroupResourceName">
                 <div class="location-detail-navigation-right">
-                    <div class="location-detail-navigation-sprite">
-                        <img src="./assets/img/navbar/locations.png"/>
-                    </div>
                     <div class="location-detail-navigation-link">{{model.locationGroup.nextLocationGroupName}} ⮞</div>
                 </div>
             </a>
