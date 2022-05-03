@@ -29,14 +29,23 @@
     padding-top: 5px;
 }
 
+.location-detail-navigation-left .location-detail-navigation-link{
+    padding-right: 10px;
+}
+
 .location-detail-navigation-right {
     padding-left: 10px;
     padding-top: 5px;
 }
 
+.location-detail-navigation-right .location-detail-navigation-link{
+    padding-right: 10px;
+}
+
 .location-detail-navigation-link,
 .location-detail-navigation-sprite {
     display: inline-block;
+    
 }
 
 .location-detail-navigation-sprite {

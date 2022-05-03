@@ -6,4 +6,5 @@ export class PlacedItemListModel {
     public placedItemsSortDirection = 1;
 
     public placedItems: PlacedItemModel[] = [];
+    public hasOnlyOneLocation: boolean = false;
 }

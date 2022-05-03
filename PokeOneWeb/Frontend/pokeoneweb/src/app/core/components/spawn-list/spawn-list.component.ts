@@ -23,8 +23,25 @@ export class SpawnListComponent implements OnInit {
 
   ngOnInit(): void {
     this.model.spawns = this.spawns;
+    this.checkLocations();
     this.hideEventExclusiveSpawns();
     this.applyInitialSorting();
+  }
+
+  private checkLocations() {
+    if(!this.model.spawns) return;
+    
+    let regionlist = [];
+    for(let spawn of this.model.spawns){
+      regionlist.push(spawn.regionName)
+    }
+
+    if(Array.from(new Set(regionlist)).length > 1){
+      this.model.hasOnlyOneLocation = false;
+    }
+    else{
+      this.model.hasOnlyOneLocation = true;
+    };
   }
 
   public hideEventExclusiveSpawns() {

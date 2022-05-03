@@ -34,6 +34,7 @@
             </th>
             <th class="col-location" colspan="2">
                 <div
+                    *ngIf="!model.hasOnlyOneLocation"
                     [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, 1)"
                     (click)="sortSpawns(spawnsColumn.Location, 1)"
                     class="table-header-sort"
@@ -42,6 +43,7 @@
                 </div>
                 <div class="table-header-label">Location</div>
                 <div
+                    *ngIf="!model.hasOnlyOneLocation"
                     [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, -1)"
                     (click)="sortSpawns(spawnsColumn.Location, -1)"
                     class="table-header-sort"

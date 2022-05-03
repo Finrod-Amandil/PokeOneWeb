@@ -11,4 +11,6 @@ export class SpawnListComponentModel {
     
     public spawns: ISpawnModel[] = [];
     public visibleSpawns: ISpawnModel[] = [];
+
+    public hasOnlyOneLocation: boolean = false;
 }

@@ -21,7 +21,24 @@ export class PlacedItemListComponent implements OnInit {
 
   ngOnInit(): void {
     this.model.placedItems = this.placedItems;
+    this.checkLocations();
     this.applyInitialSorting();
+  }
+
+  private checkLocations() {
+    if(!this.model.placedItems) return;
+
+    let regionlist = [];
+    for(let item of this.model.placedItems){
+      regionlist.push(item.regionName)
+    }
+
+    if(Array.from(new Set(regionlist)).length > 1){
+      this.model.hasOnlyOneLocation = false;
+    }
+    else{
+      this.model.hasOnlyOneLocation = true;
+    };
   }
 
   public sortPlacedItems(sortColumn: PlacedItemListColumn, sortDirection: number) {
