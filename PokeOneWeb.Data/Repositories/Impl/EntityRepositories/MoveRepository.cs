@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Move entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Move entity)
         {
             entity.DamageClassId = GetRequiredIdForName<MoveDamageClass>(entity.DamageClassName);
             entity.ElementalTypeId = GetRequiredIdForName<ElementalType>(entity.ElementalTypeName);

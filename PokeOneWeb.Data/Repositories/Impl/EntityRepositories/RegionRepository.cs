@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Region entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Region entity)
         {
             entity.EventId = GetOptionalIdForName<Event>(entity.EventName);
         }

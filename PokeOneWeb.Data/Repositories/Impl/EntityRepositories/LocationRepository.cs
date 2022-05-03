@@ -10,7 +10,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Location entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Location entity)
         {
             entity.LocationGroupId = GetRequiredIdForName<LocationGroup>(entity.LocationGroupName);
         }

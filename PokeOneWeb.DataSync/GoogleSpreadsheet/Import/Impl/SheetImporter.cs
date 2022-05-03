@@ -31,6 +31,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             _mapper = mapper;
             _hashListComparator = hashListComparator;
             _reporter = reporter;
+
+            _repository.UpdateOrInsertExceptionOccurred += (_, args) =>
+                _reporter.ReportError(args.EntityType.Name, args.Exception);
         }
 
         public async Task ImportSheet(string spreadsheetId, string sheetName)

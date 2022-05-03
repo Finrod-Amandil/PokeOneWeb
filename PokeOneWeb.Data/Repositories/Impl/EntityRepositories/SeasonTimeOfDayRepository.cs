@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(SeasonTimeOfDay entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(SeasonTimeOfDay entity)
         {
             entity.SeasonId = GetRequiredIdForName<Season>(entity.SeasonName);
             entity.TimeOfDayId = GetRequiredIdForName<TimeOfDay>(entity.TimeOfDayName);

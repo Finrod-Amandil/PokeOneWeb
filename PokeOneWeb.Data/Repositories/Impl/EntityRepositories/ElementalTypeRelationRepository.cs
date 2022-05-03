@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(ElementalTypeRelation entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(ElementalTypeRelation entity)
         {
             entity.AttackingTypeId = GetRequiredIdForName<ElementalType>(entity.AttackingTypeName);
             entity.DefendingTypeId = GetRequiredIdForName<ElementalType>(entity.DefendingTypeName);

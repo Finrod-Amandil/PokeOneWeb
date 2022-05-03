@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Evolution entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Evolution entity)
         {
             entity.BasePokemonSpeciesId = GetRequiredIdForName<PokemonSpecies>(entity.BasePokemonSpeciesName);
             entity.BasePokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.BasePokemonVarietyName);

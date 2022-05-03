@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities.Interfaces;
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly Dictionary<string, Dictionary<string, int>> _idsForEntityNames = new();
+        public event EventHandler<UpdateOrInsertExceptionOccurredEventArgs> UpdateOrInsertExceptionOccurred;
 
         protected readonly ApplicationDbContext DbContext;
 
@@ -19,44 +20,30 @@ namespace PokeOneWeb.Data.Repositories.Impl
 
         public virtual void Insert(ICollection<TEntity> entities)
         {
-            foreach (var entity in entities)
-            {
-                AddIdsForNames(entity);
-            }
-
+            PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().AddRange(entities);
             DbContext.SaveChanges();
         }
 
         public void Insert(TEntity entity)
         {
-            AddIdsForNames(entity);
-            DbContext.Set<TEntity>().Add(entity);
-            DbContext.SaveChanges();
+            Insert(new List<TEntity> { entity });
         }
 
         public virtual void Update(ICollection<TEntity> entities)
         {
-            foreach (var entity in entities)
-            {
-                AddIdsForNames(entity);
-            }
-
+            PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().UpdateRange(entities);
             DbContext.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
-            AddIdsForNames(entity);
-            DbContext.Set<TEntity>().Update(entity);
-            DbContext.SaveChanges();
+            Update(new List<TEntity> { entity });
         }
 
-        protected virtual void AddIdsForNames(TEntity entity)
+        protected virtual void PrepareEntitiesForInsertOrUpdate(ICollection<TEntity> entity)
         {
-            // Override this method in entity repositories, if any related entities need to be attached by name.
-            // Pattern: entity.RelatedEntityId = GetIdForName<RelatedEntity>(entity.RelatedEntityName);
         }
 
         protected int? GetOptionalIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
@@ -66,17 +53,12 @@ namespace PokeOneWeb.Data.Repositories.Impl
                 return null;
             }
 
-            var typeName = typeof(TNamedEntity).Name;
+            var id = DbContext.Set<TNamedEntity>()
+                .Where(x => x.Name.Equals(entityName))
+                .Select(x => x.Id)
+                .FirstOrDefault();
 
-            if (!_idsForEntityNames.ContainsKey(typeName) ||
-                DbContext.Set<TNamedEntity>().Count() != _idsForEntityNames[typeName].Count)
-            {
-                _idsForEntityNames[typeName] = DbContext.Set<TNamedEntity>()
-                    .AsNoTracking()
-                    .ToDictionary(x => x.Name, x => x.Id);
-            }
-
-            return _idsForEntityNames[typeName].TryGetValue(entityName, out var id) ? id : null;
+            return id;
         }
 
         protected int GetRequiredIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
@@ -85,8 +67,9 @@ namespace PokeOneWeb.Data.Repositories.Impl
 
             if (id is null)
             {
-                throw new RelatedEntityNotFoundException(
-                    typeof(TEntity).Name, typeof(TNamedEntity).Name, entityName);
+                var exception = new RelatedEntityNotFoundException(typeof(TEntity).Name, typeof(TNamedEntity).Name, entityName);
+                ReportInsertOrUpdateException(typeof(TNamedEntity), exception);
+                throw exception;
             }
 
             return (int)id;
@@ -109,6 +92,11 @@ namespace PokeOneWeb.Data.Repositories.Impl
 
             DbContext.Set<TRelatedEntity>().UpdateRange(distinctEntities);
             DbContext.SaveChanges();
+        }
+
+        protected void ReportInsertOrUpdateException(Type entityType, Exception exception)
+        {
+            UpdateOrInsertExceptionOccurred?.Invoke(this, new UpdateOrInsertExceptionOccurredEventArgs(entityType, exception));
         }
     }
 }

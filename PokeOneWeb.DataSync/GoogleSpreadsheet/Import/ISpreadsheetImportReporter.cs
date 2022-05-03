@@ -15,6 +15,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         void ReportUpdated(string entity, string hash, int applicationDbId);
 
+        void ReportError(string entity, Exception exception);
+
         void ReportError(string entity, string hash, string message);
 
         void ReportError(string entity, string hash, Exception exception);

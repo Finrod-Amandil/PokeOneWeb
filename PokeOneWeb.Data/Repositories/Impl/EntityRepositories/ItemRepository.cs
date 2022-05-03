@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Item entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Item entity)
         {
             entity.BagCategoryId = GetRequiredIdForName<BagCategory>(entity.BagCategoryName);
         }

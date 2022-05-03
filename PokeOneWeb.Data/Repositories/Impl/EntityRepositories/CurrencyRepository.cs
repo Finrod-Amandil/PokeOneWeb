@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(Currency entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(Currency entity)
         {
             entity.ItemId = GetRequiredIdForName<Item>(entity.ItemName);
         }

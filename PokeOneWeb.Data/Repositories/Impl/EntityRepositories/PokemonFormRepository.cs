@@ -88,7 +88,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             DbContext.SaveChanges();
         }
 
-        protected override void AddIdsForNames(PokemonForm entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(PokemonForm entity)
         {
         }
     }

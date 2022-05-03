@@ -8,7 +8,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void AddIdsForNames(HuntingConfiguration entity)
+        protected override void PrepareEntitiesForInsertOrUpdate(HuntingConfiguration entity)
         {
             entity.PokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.PokemonVarietyName);
             entity.AbilityId = GetRequiredIdForName<Ability>(entity.AbilityName);
