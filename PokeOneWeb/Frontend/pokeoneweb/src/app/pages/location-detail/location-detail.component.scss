@@ -30,7 +30,8 @@
 }
 
 .location-detail-navigation-left .location-detail-navigation-link{
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 15px;
 }
 
 .location-detail-navigation-right {
@@ -39,7 +40,8 @@
 }
 
 .location-detail-navigation-right .location-detail-navigation-link{
-    padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 15px;
 }
 
 .location-detail-navigation-link,
@@ -168,4 +170,8 @@
 
 .general-notes p {
     margin-bottom: 0px;
+}
+
+hr {
+    border: 0.5px solid black;
 }
