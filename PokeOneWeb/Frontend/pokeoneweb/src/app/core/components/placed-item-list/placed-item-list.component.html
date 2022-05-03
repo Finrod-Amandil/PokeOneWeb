@@ -1,10 +1,27 @@
-<table class="main-table table-compact" id="placedItems_table">
+<table class="main-table table-compact" id="placedItems_table" aria-label="table containing a list of all items obtainable">
     <thead>
         <tr>
-            <th class="col-item" colspan="2">Item</th>
+            <th class="col-item" colspan="2">
+                <div
+                    [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Name, 1)"
+                    (click)="sortPlacedItems(PlacedItemListColumn.Name, 1)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Item</div>
+                <div
+                    [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Name, -1)"
+                    (click)="sortPlacedItems(PlacedItemListColumn.Name, -1)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
             <th class="col-quantity">Qty.</th>
             <th class="col-location" colspan="2">
                 <div
+                    *ngIf="!model.hasOnlyOneLocation"
                     [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Location, 1)"
                     (click)="sortPlacedItems(PlacedItemListColumn.Location, 1)"
                     class="table-header-sort"
@@ -13,6 +30,7 @@
                 </div>
                 <div class="table-header-label">Location</div>
                 <div
+                    *ngIf="!model.hasOnlyOneLocation"
                     [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Location, -1)"
                     (click)="sortPlacedItems(PlacedItemListColumn.Location, -1)"
                     class="table-header-sort"
@@ -46,9 +64,12 @@
                     [src]="'./assets/img/sprites/items/small/' + placedItem.itemSpriteName"
                 />
             </td>
-            <td class="col-item">{{placedItem.itemName}}</td>
+            <td class="col-item">
+                <a [routerLink]="'/'+ placedItem.itemResourceName">{{placedItem.itemName}}</a>
+                
+            </td>
             <td class="col-quantity">{{placedItem.quantity}}</td>
-            <td class="col-region">{{placedItem.regionName}}</td>
+            <td class="col-region" [style]="'background-color: ' + placedItem.regionColor">{{placedItem.regionName}}</td>
             <td class="col-location">
                 <a [routerLink]="'/'+ placedItem.locationResourceName">{{placedItem.locationName}}</a>
             </td>
