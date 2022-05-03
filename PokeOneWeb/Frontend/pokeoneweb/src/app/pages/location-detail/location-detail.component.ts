@@ -26,7 +26,7 @@ export class LocationDetailComponent implements OnInit {
             this.model.locationGroupResourceName = result['resourceName'];
             
             this.LocationService.getLocationGroup(this.model.locationGroupResourceName).subscribe((result) => {
-                this.model.locationGroup = result as ILocationGroupModel;
+                this.model.locationGroup = result;
 
                 this.titleService.setTitle(`${this.model.locationGroup.name} - ${WEBSITE_NAME}`);
             });
