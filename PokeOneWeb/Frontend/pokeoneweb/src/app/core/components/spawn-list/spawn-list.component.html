@@ -89,7 +89,7 @@
             </th>
             <th class="col-syncable">
                 <div class="has-tooltip">
-                    <img src="./assets/img/sprites/pokemon/small/63.png" />
+                    <img src="./assets/img/sprites/pokemon/small/63.png" alt="Thumbnail for synchronizable"/>
                     <span class="tooltip">Synchronize possible?</span>
                 </div>
             </th>
@@ -109,6 +109,7 @@
                     <img
                         *ngIf="spawn.spriteName"
                         [src]="'./assets/img/sprites/pokemon/small/' + spawn.spriteName"
+                        [alt]="'Picture of Pokemon ' + spawn.pokemonName"
                     />
                 </a>
             </td>
