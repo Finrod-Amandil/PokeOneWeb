@@ -10,45 +10,78 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Location entity)
-        {
-            entity.LocationGroupId = GetRequiredIdForName<LocationGroup>(entity.LocationGroupName);
-        }
-
         public override void Insert(ICollection<Location> entities)
         {
-            PrepareEntitiesForInsertOrUpdate(entities);
             base.Insert(entities);
-            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
+            DeleteUnusedParentEntities();
         }
 
         public override void Update(ICollection<Location> entities)
         {
-            PrepareEntitiesForInsertOrUpdate(entities);
             base.Update(entities);
-            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
+            DeleteUnusedParentEntities();
         }
 
         public override void DeleteByIdHashes(ICollection<string> idHashes)
         {
             base.DeleteByIdHashes(idHashes);
-            DbContext.LocationGroups.Where(x => x.Locations.Count == 0).DeleteFromQuery();
+            DeleteUnusedParentEntities();
         }
 
-        private void PrepareEntitiesForInsertOrUpdate(ICollection<Location> entities)
+        protected override ICollection<Location> PrepareEntitiesForInsertOrUpdate(ICollection<Location> entities)
         {
-            var entitiesAsList = entities.ToList();
+            AddOrUpdateLocationGroups(entities);
 
-            // Lookup ids of related entities
-            entitiesAsList.ForEach(x =>
-                x.LocationGroup.RegionId = GetRequiredIdForName<Region>(x.LocationGroup.RegionName));
+            var verifiedEntities = new List<Location>(entities);
+            foreach (var entity in entities)
+            {
+                var canInsertOrUpdate = true;
 
-            // Add/Insert Location Groups
-            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.LocationGroup));
+                canInsertOrUpdate &= TrySetIdForName<LocationGroup>(
+                    entity.LocationGroup.Name,
+                    id => entity.LocationGroupId = id);
 
-            // Detach Location Group so that it does not get inserted again
-            entitiesAsList.ForEach(x => x.LocationGroupName = x.LocationGroup.Name);
-            entitiesAsList.ForEach(x => x.LocationGroup = null);
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
+                }
+
+                entity.LocationGroup = null;
+            }
+
+            return base.PrepareEntitiesForInsertOrUpdate(verifiedEntities);
+        }
+
+        private void DeleteUnusedParentEntities()
+        {
+            DbContext.LocationGroups
+                .Where(x => x.Locations.Count == 0)
+                .DeleteFromQuery();
+        }
+
+        private void AddOrUpdateLocationGroups(ICollection<Location> entities)
+        {
+            var distinctLocationGroups = entities
+                .Select(x => x.LocationGroup)
+                .DistinctBy(x => x.Name)
+                .ToList();
+
+            var verifiedLocationGroups = new List<LocationGroup>(distinctLocationGroups);
+            foreach (var locationGroup in distinctLocationGroups)
+            {
+                var canInsertOrUpdate = true;
+
+                canInsertOrUpdate &= TrySetIdForName<Region>(
+                    locationGroup.Name,
+                    id => locationGroup.RegionId = id);
+
+                if (!canInsertOrUpdate)
+                {
+                    verifiedLocationGroups.Remove(locationGroup);
+                }
+            }
+
+            AddOrUpdateRelatedEntitiesByName(verifiedLocationGroups);
         }
     }
 }

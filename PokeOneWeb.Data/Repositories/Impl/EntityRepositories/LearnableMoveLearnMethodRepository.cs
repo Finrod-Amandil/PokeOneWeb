@@ -14,7 +14,58 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         public override void Insert(ICollection<LearnableMoveLearnMethod> entities)
         {
-            // Update/Insert learnable moves
+            base.Insert(entities);
+            DeleteUnusedParentEntities();
+        }
+
+        public override void Update(ICollection<LearnableMoveLearnMethod> entities)
+        {
+            base.Update(entities);
+            DeleteUnusedParentEntities();
+        }
+
+        public override void DeleteByIdHashes(ICollection<string> idHashes)
+        {
+            base.DeleteByIdHashes(idHashes);
+            DeleteUnusedParentEntities();
+        }
+
+        protected override ICollection<LearnableMoveLearnMethod> PrepareEntitiesForInsertOrUpdate(ICollection<LearnableMoveLearnMethod> entities)
+        {
+            AddOrUpdateLearnableMoves(entities);
+            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.MoveLearnMethod));
+
+            var learnableMoves = DbContext.LearnableMoves
+                .Include(x => x.PokemonVariety)
+                .Include(x => x.Move)
+                .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
+
+            var verifiedEntities = new List<LearnableMoveLearnMethod>(entities);
+            foreach (var entity in entities)
+            {
+                var canInsertOrUpdate = true;
+
+                canInsertOrUpdate &= TryAddMoveLearnMethod(entity);
+                canInsertOrUpdate &= TryAddLearnableMove(entity, learnableMoves);
+
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
+                }
+            }
+
+            return base.PrepareEntitiesForInsertOrUpdate(verifiedEntities);
+        }
+
+        private void DeleteUnusedParentEntities()
+        {
+            DbContext.LearnableMoves
+                .Where(x => x.LearnMethods.Count == 0)
+                .DeleteFromQuery();
+        }
+
+        private void AddOrUpdateLearnableMoves(ICollection<LearnableMoveLearnMethod> entities)
+        {
             var distinctLearnableMoves = entities
                 .Select(x => x.LearnableMove)
                 .DistinctBy(x => x.PokemonVarietyName + x.MoveName)
@@ -23,50 +74,70 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             var existingLearnableMoves = DbContext.LearnableMoves
                 .Include(x => x.PokemonVariety)
                 .Include(x => x.Move)
-                .AsNoTracking()
                 .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
 
+            var verifiedLearnableMoves = new List<LearnableMove>(distinctLearnableMoves);
             foreach (var learnableMove in distinctLearnableMoves)
             {
-                learnableMove.PokemonVarietyId = GetRequiredIdForName<PokemonVariety>(learnableMove.PokemonVarietyName);
-                learnableMove.MoveId = GetRequiredIdForName<Move>(learnableMove.MoveName);
+                var canInsertOrUpdate = true;
+
+                canInsertOrUpdate &= TrySetIdForName<PokemonVariety>(
+                    learnableMove.PokemonVarietyName,
+                    id => learnableMove.PokemonVarietyId = id);
+
+                canInsertOrUpdate &= TrySetIdForName<Move>(
+                    learnableMove.MoveName,
+                    id => learnableMove.MoveId = id);
 
                 // If entity exists, find Id so that EF updates the corresponding entry.
                 // Else set Id to zero, which tells EF to treat it as new entry.
                 learnableMove.Id = existingLearnableMoves.TryGetValue(
                     (learnableMove.PokemonVarietyName, learnableMove.MoveName),
-                    out var id) ? id : 0;
+                    out var learnableMoveId) ? learnableMoveId : 0;
+
+                if (!canInsertOrUpdate)
+                {
+                    verifiedLearnableMoves.Remove(learnableMove);
+                }
             }
 
-            DbContext.LearnableMoves.UpdateRange(distinctLearnableMoves);
+            DbContext.LearnableMoves.UpdateRange(verifiedLearnableMoves);
             DbContext.SaveChanges();
+        }
 
-            AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.MoveLearnMethod));
+        private bool TryAddMoveLearnMethod(LearnableMoveLearnMethod entity)
+        {
+            var success = TrySetIdForName<MoveLearnMethod>(
+                entity.MoveLearnMethod.Name,
+                id => entity.MoveLearnMethodId = id);
 
-            var learnableMoves = DbContext.LearnableMoves
-                .Include(x => x.PokemonVariety)
-                .Include(x => x.Move)
-                .AsNoTracking()
-                .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
+            entity.MoveLearnMethod = null;
 
-            foreach (var entity in entities)
+            return success;
+        }
+
+        private bool TryAddLearnableMove(LearnableMoveLearnMethod entity, Dictionary<(string, string), int> learnableMoves)
+        {
+            var success = learnableMoves.TryGetValue(
+                (entity.LearnableMove.PokemonVarietyName, entity.LearnableMove.MoveName),
+                out var learnableMoveId);
+
+            if (!success)
             {
-                entity.MoveLearnMethodId = GetRequiredIdForName<MoveLearnMethod>(entity.MoveLearnMethod.Name);
-                entity.MoveLearnMethod = null;
+                var exception = new RelatedEntityNotFoundException(
+                    nameof(LearnableMoveLearnMethod),
+                    nameof(LearnableMove),
+                    entity.LearnableMove.PokemonVarietyName + entity.LearnableMove.MoveName);
 
-                entity.LearnableMoveId = learnableMoves.TryGetValue(
-                    (entity.LearnableMove.PokemonVarietyName, entity.LearnableMove.MoveName),
-                    out var id)
-                    ? id
-                    : throw new RelatedEntityNotFoundException(
-                        nameof(LearnableMoveLearnMethod),
-                        nameof(LearnableMove),
-                        entity.LearnableMove.PokemonVarietyName + entity.LearnableMove.MoveName);
-
+                ReportInsertOrUpdateException(typeof(LearnableMoveLearnMethod), exception);
+            }
+            else
+            {
+                entity.LearnableMoveId = learnableMoveId;
                 entity.LearnableMove = null;
             }
 
-            base.Insert(entities);
+            return success;
         }
     }
 }
