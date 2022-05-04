@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
@@ -24,5 +25,23 @@ namespace PokeOneWeb.Data.ReadModels
         public string RegionName { get; set; }
 
         public string RegionResourceName { get; set; }
+
+        public bool IsEventRegion { get; set; }
+
+        public string EventName { get; set; }
+
+        public string EventStartDate { get; set; }
+
+        public string EventEndDate { get; set; }
+
+        public string PreviousLocationGroupResourceName { get; set; }
+
+        public string PreviousLocationGroupName { get; set; }
+
+        public string NextLocationGroupResourceName { get; set; }
+
+        public string NextLocationGroupName { get; set; }
+
+        public List<LocationReadModel> Locations { get; set; } = new();
     }
 }

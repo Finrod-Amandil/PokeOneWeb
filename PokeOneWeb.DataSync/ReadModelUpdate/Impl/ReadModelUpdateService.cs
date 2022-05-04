@@ -77,42 +77,6 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         {
             _reporter.StartReadModelUpdate();
 
-            _reporter.StartReadModelUpdate("entityTypes");
-            _entityTypeRepository.Update(_entityTypeMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("entityTypes");
-
-            _reporter.StartReadModelUpdate("itemStatBoosts");
-            _itemStatBoostPokemonRepository.Update(_itemStatBoostPokemonMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("itemStatBoosts");
-
-            _reporter.StartReadModelUpdate("simpleLearnableMoves");
-            _simpleLearnableMoveRepository.Update(_simpleLearnableMoveMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("simpleLearnableMoves");
-
-            _reporter.StartReadModelUpdate("moves");
-            _moveRepository.Update(_moveMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("moves");
-
-            _reporter.StartReadModelUpdate("natures");
-            _natureRepository.Update(_natureMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("natures");
-
-            _reporter.StartReadModelUpdate("pokemonVarieties");
-            _pokemonVarietyRepository.Update(_pokemonVarietyMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("pokemonVarieties");
-
-            _reporter.StartReadModelUpdate("items");
-            _itemRepository.Update(_itemMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("items");
-
-            _reporter.StartReadModelUpdate("regions");
-            _regionRepository.Update(_regionMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("regions");
-
-            _reporter.StartReadModelUpdate("locationGroups");
-            _locationGroupRepository.Update(_locationGroupMapper.MapFromDatabase(importReport));
-            _reporter.StopReadModelUpdate("locationGroups");
-
             _reporter.StartReadModelUpdate("generate-json-files");
             GenerateJsonFiles(importReport);
             _reporter.StopReadModelUpdate("generate-json-files");

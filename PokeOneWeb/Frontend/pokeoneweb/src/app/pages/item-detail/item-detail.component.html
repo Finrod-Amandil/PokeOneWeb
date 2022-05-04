@@ -64,91 +64,9 @@
         <h2 name="locations">Locations</h2>
         <div *ngIf="model.item.placedItems.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
-                <p class="empty">This Item does not have any known locations where it can be obtained in PokéOne.</p>
+                <p class="empty">This location does not have any items that can be picked up.</p>
             </div>
         </div>
-
-        <table *ngIf="model.item.placedItems.length > 0" class="main-table table-compact" id="placedItems_table">
-            <thead>
-                <tr>
-                    <th class="col-item" colspan="2">Item</th>
-                    <th class="col-quantity">Qty.</th>
-                    <th class="col-location" colspan="2">
-                        <div
-                            [ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, 1)"
-                            (click)="sortPlacedItems(placedItemsColumn.Location, 1)"
-                            class="table-header-sort"
-                        >
-                            ⮝
-                        </div>
-                        <div class="table-header-label">Location</div>
-                        <div
-                            [ngClass]="getPlacedItemSortButtonClass(placedItemsColumn.Location, -1)"
-                            (click)="sortPlacedItems(placedItemsColumn.Location, -1)"
-                            class="table-header-sort"
-                        >
-                            ⮟
-                        </div>
-                    </th>
-                    <th class="col-placementdescription">Placement description</th>
-                    <th class="col-isHidden">
-                        <div class="has-tooltip">
-                            <i class="material-icons md-24">visibility_off</i>
-                            <span class="tooltip">Hidden item?</span>
-                        </div>
-                    </th>
-                    <th class="col-isConfirmed">
-                        <div class="has-tooltip">
-                            <i class="material-icons md-24">verified</i>
-                            <span class="tooltip">Location confirmed?</span>
-                        </div>
-                    </th>
-                    <th class="col-notes">Notes</th>
-                    <th class="col-screenshot">Screenshot</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let placedItem of model.item.placedItems">
-                    <td class="col-sprite">
-                        <img
-                            *ngIf="model.item.spriteName"
-                            [src]="'./assets/img/sprites/items/small/' + model.item.spriteName"
-                        />
-                    </td>
-                    <td class="col-item">{{model.item.name}}</td>
-                    <td class="col-quantity">{{placedItem.quantity}}</td>
-                    <td class="col-region">{{placedItem.regionName}}</td>
-                    <td class="col-location">
-                        <a [routerLink]="'/'+ placedItem.locationResourceName">{{placedItem.locationName}}</a>
-                    </td>
-                    <td class="col-placementdescription">{{placedItem.placementDescription}}</td>
-                    <td
-                        class="col-isHidden"
-                        [ngClass]="
-                    {
-                        'placeditem-hidden': placedItem.isHidden,
-                        'placeditem-not-hidden': !placedItem.isHidden
-                    }"
-                    >
-                        <i *ngIf="placedItem.isHidden" class="material-icons md-24">visibility_off</i>
-                        <i *ngIf="!placedItem.isHidden" class="material-icons md-24">visibility</i>
-                    </td>
-                    <td
-                        class="col-isConfirmed"
-                        [ngClass]="
-                    {
-                        'placeditem-confirmed': placedItem.isConfirmed,
-                        'placeditem-not-confirmed': !placedItem.isConfirmed
-                    }"
-                    >
-                        <i *ngIf="placedItem.isConfirmed" class="material-icons md-24">verified</i>
-                        <i *ngIf="!placedItem.isConfirmed" class="material-icons md-24">help_outline</i>
-                    </td>
-                    <td class="col-notes">{{placedItem.notes}}</td>
-                    <td class="col-screenshot">{{placedItem.screenshot}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <app-placed-item-list *ngIf="model.item.placedItems.length > 0" [placedItems]="model.item.placedItems"></app-placed-item-list>
     </div>
 </div>
