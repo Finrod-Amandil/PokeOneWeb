@@ -36,7 +36,6 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         VerticalStatBarComponent,
         GlassButtonComponent,
         SpawnListComponent,
-        PlacedItemListComponent,
         PlacedItemListComponent
     ],
     imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
@@ -56,6 +55,6 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         GlassButtonComponent,
         SpawnListComponent,
         PlacedItemListComponent
-    ],
+    ]
 })
 export class ComponentsModule {}
