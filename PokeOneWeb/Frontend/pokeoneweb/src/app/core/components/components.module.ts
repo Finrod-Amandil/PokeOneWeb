@@ -17,6 +17,7 @@ import { TimeBadgeComponent } from './time-badge/time-badge.component';
 import { TypeBadgeComponent } from './type-badge/type-badge.component';
 import { VerticalStatBarComponent } from './vertical-stat-bar/vertical-stat-bar.component';
 import { GlassButtonComponent } from './glass-button/glass-button.component';
+import { AppVersionComponent } from './app-version/app-version.component';
 import { SpawnListComponent } from './spawn-list/spawn-list.component';
 import { PlacedItemListComponent } from './placed-item-list/placed-item-list.component';
 
@@ -35,6 +36,7 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         TypeBadgeComponent,
         VerticalStatBarComponent,
         GlassButtonComponent,
+        AppVersionComponent,
         SpawnListComponent,
         PlacedItemListComponent
     ],
@@ -53,8 +55,9 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         TypeBadgeComponent,
         VerticalStatBarComponent,
         GlassButtonComponent,
+        AppVersionComponent,
         SpawnListComponent,
         PlacedItemListComponent
-    ]
+    ],
 })
 export class ComponentsModule {}

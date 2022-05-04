@@ -18,6 +18,7 @@ jobs:
 
     - run: |
         npm ci
+        npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
         npm run build -- --configuration dev
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
