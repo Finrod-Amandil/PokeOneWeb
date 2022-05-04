@@ -41,7 +41,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
         public ReadModelUpdateServiceTests()
         {
             _entityTypeMapperMock = new Mock<IReadModelMapper<EntityTypeReadModel>>();
-            _entityTypeMapperMock.SetReturnsDefault((IDictionary<EntityTypeReadModel, DbAction>) new Dictionary<EntityTypeReadModel, DbAction>());
+            _entityTypeMapperMock.SetReturnsDefault((IDictionary<EntityTypeReadModel, DbAction>)new Dictionary<EntityTypeReadModel, DbAction>());
 
             _itemStatBoostPokemonMapperMock = new Mock<IReadModelMapper<ItemStatBoostPokemonReadModel>>();
             _itemStatBoostPokemonMapperMock.SetReturnsDefault((IDictionary<ItemStatBoostPokemonReadModel, DbAction>)new Dictionary<ItemStatBoostPokemonReadModel, DbAction>());
@@ -109,29 +109,19 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
             _readModelUpdateService.UpdateReadModel(spreadsheetImportReport);
 
             // Then
-            _entityTypeMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _itemStatBoostPokemonMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _simpleLearnableMoveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _moveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _natureMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _itemMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _regionMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
-            _locationGroupMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(2));
+            _entityTypeMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _itemStatBoostPokemonMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _simpleLearnableMoveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _moveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _natureMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _itemMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _regionMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _locationGroupMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
 
-            _entityTypeRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<EntityTypeReadModel, DbAction>>()), Times.Once());
-            _itemStatBoostPokemonRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemStatBoostPokemonReadModel, DbAction>>()), Times.Once());
-            _simpleLearnableMoveRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<SimpleLearnableMoveReadModel, DbAction>>()), Times.Once());
-            _moveRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<MoveReadModel, DbAction>>()), Times.Once());
-            _natureRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<NatureReadModel, DbAction>>()), Times.Once());
-            _pokemonVarietyRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<PokemonVarietyReadModel, DbAction>>()), Times.Once());
-            _itemRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<ItemReadModel, DbAction>>()), Times.Once());
-            _regionRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<RegionReadModel, DbAction>>()), Times.Once());
-            _locationGroupRepositoryMock.Verify(m => m.Update(It.IsAny<IDictionary<LocationGroupReadModel, DbAction>>()), Times.Once());
-            
-            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(10));
+            _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(1));
             _reporterMock.Verify(m => m.StartReadModelUpdate(), Times.Once());
-            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(10));
+            _reporterMock.Verify(m => m.StopReadModelUpdate(It.IsAny<string>()), Times.Exactly(1));
             _reporterMock.Verify(m => m.StopReadModelUpdate(), Times.Once());
         }
     }

@@ -1,0 +1,155 @@
+<div *ngIf="model.visibleSpawns.length > 0">
+    <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable">
+        <button mat-raised-button *ngIf="!model.areEventExclusiveSpawnsHidden" (click)="hideEventExclusiveSpawns()">
+            Hide inactive event-exclusive spawns
+        </button>
+        <button mat-raised-button *ngIf="model.areEventExclusiveSpawnsHidden" (click)="showEventExclusiveSpawns()">
+            Show inactive event-exclusive spawns
+        </button>
+    </div>
+    <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable">
+        <p class="empty" style="color: var(--text-accent)">This Pokémon was only available during events in the past</p>
+    </div>
+    <br>
+</div>
+<table class="main-table table-compact" id="spawn_table" aria-label="table containing a list of all spawns of a pokemon">
+    <thead>
+        <tr>
+            <th class="col-pokemon" colspan="2">
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, 1)"
+                    (click)="sortSpawns(spawnsColumn.Pokemon, 1)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Pokemon</div>
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, -1)"
+                    (click)="sortSpawns(spawnsColumn.Pokemon, -1)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-location" colspan="2">
+                <div
+                    *ngIf="!model.hasOnlyOneLocation"
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, 1)"
+                    (click)="sortSpawns(spawnsColumn.Location, 1)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Location</div>
+                <div
+                    *ngIf="!model.hasOnlyOneLocation"
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Location, -1)"
+                    (click)="sortSpawns(spawnsColumn.Location, -1)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-method">
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, 1)"
+                    (click)="sortSpawns(spawnsColumn.SpawnType, 1)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Method</div>
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.SpawnType, -1)"
+                    (click)="sortSpawns(spawnsColumn.SpawnType, -1)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-season">Season</th>
+            <th class="col-time">Time</th>
+            <th class="col-rarity">
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, 1)"
+                    (click)="sortSpawns(spawnsColumn.Rarity, 1)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Rarity</div>
+                <div
+                    [ngClass]="getSpawnSortButtonClass(spawnsColumn.Rarity, -1)"
+                    (click)="sortSpawns(spawnsColumn.Rarity, -1)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-syncable">
+                <div class="has-tooltip">
+                    <img src="./assets/img/sprites/pokemon/small/63.png" alt="Thumbnail for synchronizable"/>
+                    <span class="tooltip">Synchronize possible?</span>
+                </div>
+            </th>
+            <th class="col-event">
+                <div class="has-tooltip">
+                    <i class="material-icons md-24">date_range</i>
+                    <span class="tooltip">Event-exclusive spawn</span>
+                </div>
+            </th>
+            <th class="col-notes">Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let spawn of model.visibleSpawns">
+            <td class="col-sprite">
+                <a [routerLink]="'/' + spawn.pokemonResourceName">
+                    <img
+                        *ngIf="spawn.spriteName"
+                        [src]="'./assets/img/sprites/pokemon/small/' + spawn.spriteName"
+                        [alt]="'Picture of Pokemon ' + spawn.pokemonName"
+                    />
+                </a>
+            </td>
+            <td class="col-pokemon">
+                <a [routerLink]="'/'+ spawn.pokemonResourceName">{{spawn.pokemonName}}</a>
+            </td>
+            <td class="col-region" [style]="'background-color: ' + spawn.regionColor">{{spawn.regionName}}</td>
+            <td class="col-location">
+                <a [routerLink]="'/'+ spawn.locationResourceName">{{spawn.locationName}}</a>
+            </td>
+            <td class="col-method" [style]="'background-color: ' + spawn.spawnTypeColor">
+                {{spawn.spawnType}}
+            </td>
+            <td class="col-season">
+                <pokeone-season-badge [seasons]="spawn.seasons"></pokeone-season-badge>
+            </td>
+            <td class="col-time">
+                <pokeone-time-badge [times]="spawn.timesOfDay"></pokeone-time-badge>
+            </td>
+            <td class="col-rarity">{{spawn.rarityString}}</td>
+            <td
+                class="col-syncable"
+                [ngClass]="
+            {
+                'sync-true': spawn.isSyncable,
+                'sync-false': !spawn.isSyncable
+            }"
+            >
+                <i *ngIf="spawn.isSyncable" class="material-icons md-24">check</i>
+                <i *ngIf="!spawn.isSyncable" class="material-icons md-24">clear</i>
+            </td>
+            <td class="col-event" [ngClass]="{ 'availability-event': spawn.isEvent }">
+                <div *ngIf="spawn.isEvent" class="has-tooltip">
+                    <i class="material-icons md-24">grade</i>
+                    <span class="tooltip"
+                        >{{spawn.eventName}}<br />({{spawn.eventStartDate}} - {{spawn.eventEndDate}})</span
+                    >
+                </div>
+            </td>
+            <td class="col-notes">{{spawn.notes}}</td>
+        </tr>
+    </tbody>
+</table>
