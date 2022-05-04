@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,10 +10,10 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Move entity)
+        protected override List<Func<Move, bool>> PreparationSteps => new()
         {
-            entity.DamageClassId = GetRequiredIdForName<MoveDamageClass>(entity.DamageClassName);
-            entity.ElementalTypeId = GetRequiredIdForName<ElementalType>(entity.ElementalTypeName);
-        }
+            entity => TrySetIdForName<MoveDamageClass>(entity.DamageClassName, id => entity.DamageClassId = id),
+            entity => TrySetIdForName<ElementalType>(entity.ElementalTypeName, id => entity.ElementalTypeId = id),
+        };
     }
 }

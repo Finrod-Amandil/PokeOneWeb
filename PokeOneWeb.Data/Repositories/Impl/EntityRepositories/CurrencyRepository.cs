@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,9 +10,9 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Currency entity)
+        protected override List<Func<Currency, bool>> PreparationSteps => new()
         {
-            entity.ItemId = GetRequiredIdForName<Item>(entity.ItemName);
-        }
+            entity => TrySetIdForName<Item>(entity.ItemName, id => entity.ItemId = id)
+        };
     }
 }

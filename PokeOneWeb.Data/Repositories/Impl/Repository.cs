@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Exceptions;
 
@@ -10,13 +9,6 @@ namespace PokeOneWeb.Data.Repositories.Impl
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         public event EventHandler<UpdateOrInsertExceptionOccurredEventArgs> UpdateOrInsertExceptionOccurred;
-
-        protected readonly ApplicationDbContext DbContext;
-
-        protected Repository(ApplicationDbContext dbContext)
-        {
-            DbContext = dbContext;
-        }
 
         public virtual void Insert(ICollection<TEntity> entities)
         {
@@ -42,8 +34,33 @@ namespace PokeOneWeb.Data.Repositories.Impl
             Update(new List<TEntity> { entity });
         }
 
-        protected virtual void PrepareEntitiesForInsertOrUpdate(ICollection<TEntity> entity)
+        protected readonly ApplicationDbContext DbContext;
+
+        protected virtual List<Func<TEntity, bool>> PreparationSteps => new();
+
+        protected Repository(ApplicationDbContext dbContext)
         {
+            DbContext = dbContext;
+        }
+
+        protected virtual ICollection<TEntity> PrepareEntitiesForInsertOrUpdate(ICollection<TEntity> entities)
+        {
+            var verifiedEntities = new List<TEntity>(entities);
+            foreach (var entity in entities)
+            {
+                var canBeInsertedOrUpdated = true;
+                foreach (var preparationStep in PreparationSteps)
+                {
+                    canBeInsertedOrUpdated &= preparationStep(entity);
+                }
+
+                if (!canBeInsertedOrUpdated)
+                {
+                    verifiedEntities.Remove(entity);
+                }
+            }
+
+            return verifiedEntities;
         }
 
         protected int? GetOptionalIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
@@ -61,7 +78,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
             return id;
         }
 
-        protected int GetRequiredIdForName<TNamedEntity>(string entityName) where TNamedEntity : class, INamedEntity
+        protected bool TrySetIdForName<TNamedEntity>(string entityName, Action<int> setId) where TNamedEntity : class, INamedEntity
         {
             var id = GetOptionalIdForName<TNamedEntity>(entityName);
 
@@ -69,25 +86,22 @@ namespace PokeOneWeb.Data.Repositories.Impl
             {
                 var exception = new RelatedEntityNotFoundException(typeof(TEntity).Name, typeof(TNamedEntity).Name, entityName);
                 ReportInsertOrUpdateException(typeof(TNamedEntity), exception);
-                throw exception;
+            }
+            else
+            {
+                setId((int)id);
             }
 
-            return (int)id;
+            return id is not null;
         }
 
         protected void AddOrUpdateRelatedEntitiesByName<TRelatedEntity>(IEnumerable<TRelatedEntity> entities) where TRelatedEntity : class, INamedEntity
         {
             var distinctEntities = entities.DistinctBy(x => x.Name).ToList();
 
-            var existingRelatedEntities = DbContext.Set<TRelatedEntity>()
-                .AsNoTracking()
-                .ToDictionary(x => x.Name, x => x.Id);
-
             foreach (var entity in distinctEntities)
             {
-                // If entity exists, find Id so that EF updates the corresponding entry.
-                // Else set Id to zero, which tells EF to treat it as new entry.
-                entity.Id = existingRelatedEntities.TryGetValue(entity.Name, out var id) ? id : 0;
+                entity.Id = GetOptionalIdForName<TRelatedEntity>(entity.Name) ?? 0;
             }
 
             DbContext.Set<TRelatedEntity>().UpdateRange(distinctEntities);

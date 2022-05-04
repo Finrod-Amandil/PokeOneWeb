@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,10 +10,10 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(SeasonTimeOfDay entity)
+        protected override List<Func<SeasonTimeOfDay, bool>> PreparationSteps => new()
         {
-            entity.SeasonId = GetRequiredIdForName<Season>(entity.SeasonName);
-            entity.TimeOfDayId = GetRequiredIdForName<TimeOfDay>(entity.TimeOfDayName);
-        }
+            entity => TrySetIdForName<Season>(entity.SeasonName, id => entity.SeasonId = id),
+            entity => TrySetIdForName<TimeOfDay>(entity.TimeOfDayName, id => entity.TimeOfDayId = id),
+        };
     }
 }

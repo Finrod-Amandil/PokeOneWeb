@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,9 +10,13 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Region entity)
+        protected override List<Func<Region, bool>> PreparationSteps => new()
         {
-            entity.EventId = GetOptionalIdForName<Event>(entity.EventName);
-        }
+            entity =>
+            {
+                entity.EventId = GetOptionalIdForName<Event>(entity.EventName);
+                return true;
+            }
+        };
     }
 }

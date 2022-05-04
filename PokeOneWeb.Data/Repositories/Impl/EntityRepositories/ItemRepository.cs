@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,9 +10,9 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Item entity)
+        protected override List<Func<Item, bool>> PreparationSteps => new()
         {
-            entity.BagCategoryId = GetRequiredIdForName<BagCategory>(entity.BagCategoryName);
-        }
+            entity => TrySetIdForName<BagCategory>(entity.BagCategoryName, id => entity.BagCategoryId = id)
+        };
     }
 }

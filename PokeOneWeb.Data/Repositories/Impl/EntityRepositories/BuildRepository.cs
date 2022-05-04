@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,25 +10,37 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Build entity)
+        protected override List<Func<Build, bool>> PreparationSteps => new()
         {
-            entity.PokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.PokemonVarietyName);
-            entity.AbilityId = GetRequiredIdForName<Ability>(entity.AbilityName);
-
-            entity.NatureOptions.ForEach(natureOption =>
+            entity => TrySetIdForName<PokemonVariety>(entity.PokemonVarietyName, id => entity.PokemonVarietyId = id),
+            entity => TrySetIdForName<Ability>(entity.AbilityName, id => entity.AbilityId = id),
+            entity =>
             {
-                natureOption.NatureId = GetRequiredIdForName<Nature>(natureOption.NatureName);
-            });
-
-            entity.ItemOptions.ForEach(itemOption =>
+                var canInsertOrUpdate = true;
+                entity.NatureOptions.ForEach(natureOption =>
+                {
+                    canInsertOrUpdate &= TrySetIdForName<Nature>(natureOption.NatureName, id => natureOption.NatureId = id);
+                });
+                return canInsertOrUpdate;
+            },
+            entity =>
             {
-                itemOption.ItemId = GetRequiredIdForName<Item>(itemOption.ItemName);
-            });
-
-            entity.MoveOptions.ForEach(moveOption =>
+                var canInsertOrUpdate = true;
+                entity.MoveOptions.ForEach(moveOption =>
+                {
+                    canInsertOrUpdate &= TrySetIdForName<Move>(moveOption.MoveName, id => moveOption.MoveId = id);
+                });
+                return canInsertOrUpdate;
+            },
+            entity =>
             {
-                moveOption.MoveId = GetRequiredIdForName<Move>(moveOption.MoveName);
-            });
-        }
+                var canInsertOrUpdate = true;
+                entity.ItemOptions.ForEach(itemOption =>
+                {
+                    canInsertOrUpdate &= TrySetIdForName<Nature>(itemOption.ItemName, id => itemOption.ItemId = id);
+                });
+                return canInsertOrUpdate;
+            }
+        };
     }
 }

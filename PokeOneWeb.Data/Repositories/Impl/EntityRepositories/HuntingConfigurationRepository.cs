@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,11 +10,11 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(HuntingConfiguration entity)
+        protected override List<Func<HuntingConfiguration, bool>> PreparationSteps => new()
         {
-            entity.PokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.PokemonVarietyName);
-            entity.AbilityId = GetRequiredIdForName<Ability>(entity.AbilityName);
-            entity.NatureId = GetRequiredIdForName<Nature>(entity.NatureName);
-        }
+            entity => TrySetIdForName<PokemonVariety>(entity.PokemonVarietyName, id => entity.PokemonVarietyId = id),
+            entity => TrySetIdForName<Ability>(entity.AbilityName, id => entity.AbilityId = id),
+            entity => TrySetIdForName<Nature>(entity.NatureName, id => entity.NatureId = id),
+        };
     }
 }

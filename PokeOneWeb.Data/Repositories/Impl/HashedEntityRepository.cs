@@ -38,8 +38,10 @@ namespace PokeOneWeb.Data.Repositories.Impl
             {
                 if (!idsForHashes.ContainsKey(entity.IdHash))
                 {
-                    throw new ArgumentOutOfRangeException(
+                    var exception = new ArgumentOutOfRangeException(
                         $"No matching {typeof(TEntity).Name} could be found for IdHash {entity.IdHash}, skipping update.");
+
+                    ReportInsertOrUpdateException(typeof(TEntity), exception);
                 }
 
                 entity.Id = idsForHashes[entity.IdHash];

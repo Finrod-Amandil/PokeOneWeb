@@ -1,4 +1,6 @@
-﻿using PokeOneWeb.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PokeOneWeb.Data.Entities;
 
 namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 {
@@ -8,11 +10,11 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        protected override void PrepareEntitiesForInsertOrUpdate(Evolution entity)
+        protected override List<Func<Evolution, bool>> PreparationSteps => new()
         {
-            entity.BasePokemonSpeciesId = GetRequiredIdForName<PokemonSpecies>(entity.BasePokemonSpeciesName);
-            entity.BasePokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.BasePokemonVarietyName);
-            entity.EvolvedPokemonVarietyId = GetRequiredIdForName<PokemonVariety>(entity.EvolvedPokemonVarietyName);
-        }
+            entity => TrySetIdForName<PokemonSpecies>(entity.BasePokemonSpeciesName, id => entity.BasePokemonSpeciesId = id),
+            entity => TrySetIdForName<PokemonVariety>(entity.BasePokemonVarietyName, id => entity.BasePokemonVarietyId = id),
+            entity => TrySetIdForName<PokemonVariety>(entity.EvolvedPokemonVarietyName, id => entity.EvolvedPokemonVarietyId = id),
+        };
     }
 }
