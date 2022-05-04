@@ -12,7 +12,7 @@ export class AppVersionComponent implements OnInit {
   containerClass = "app-version-container";
 
   constructor() { 
-    this.appVersionText = environment.stage + ' ' + packageJson.version;
+    this.appVersionText = environment.stage + " " + packageJson.version;
   }
 
   ngOnInit(): void {

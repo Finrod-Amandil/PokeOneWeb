@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppVersionComponent } from './app-version.component';
+import { environment } from 'src/environments/environment';
+import packageJson from '../../../../../package.json';
 
 describe('AppVersionComponent', () => {
   let component: AppVersionComponent;
@@ -19,7 +21,8 @@ describe('AppVersionComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should initialize values', () => {
+    expect(component.appVersionText).toEqual(environment.stage + " " + packageJson.version);
+    expect(component.containerClass).toMatch("app-version-container-" + environment.stage);
   });
 });
