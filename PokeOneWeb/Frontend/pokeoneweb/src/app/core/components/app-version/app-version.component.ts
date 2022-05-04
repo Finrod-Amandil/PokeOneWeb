@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import packageJson from '../../../../../package.json';
 
 @Component({
   selector: 'pokeone-app-version',
@@ -11,11 +12,11 @@ export class AppVersionComponent implements OnInit {
   containerClass = "app-version-container";
 
   constructor() { 
-    this.appVersionText = environment.stage + ' ' + environment.appVersion;
+    this.appVersionText = environment.stage + ' ' + packageJson.version;
   }
 
   ngOnInit(): void {
-    this.containerClass += "-" + environment.stage;    
+    this.containerClass += "-" + environment.stage;   
   }
 
 }
