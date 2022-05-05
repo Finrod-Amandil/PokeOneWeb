@@ -11,7 +11,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        public override void Insert(ICollection<Spawn> entities)
+        protected override ICollection<Spawn> PrepareEntitiesForInsertOrUpdate(ICollection<Spawn> entities)
         {
             var seasons = DbContext.Seasons
                 .ToDictionary(x => x.Abbreviation, x => x.Id);
@@ -19,31 +19,77 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             var timesOfDay = DbContext.TimesOfDay
                 .ToDictionary(x => x.Abbreviation, x => x.Id);
 
+            var verifiedEntities = new List<Spawn>(entities);
             foreach (var entity in entities)
             {
-                entity.PokemonFormId = GetRequiredIdForName<PokemonForm>(entity.PokemonFormName);
-                entity.LocationId = GetRequiredIdForName<Location>(entity.LocationName);
-                entity.SpawnTypeId = GetRequiredIdForName<SpawnType>(entity.SpawnTypeName);
+                var canInsertOrUpdate = true;
 
+                canInsertOrUpdate &= TrySetIdForName<PokemonForm>(
+                    entity.PokemonFormName,
+                    id => entity.PokemonFormId = id);
+
+                canInsertOrUpdate &= TrySetIdForName<Location>(
+                    entity.LocationName,
+                    id => entity.LocationId = id);
+
+                canInsertOrUpdate &= TrySetIdForName<SpawnType>(
+                    entity.SpawnTypeName,
+                    id => entity.SpawnTypeId = id);
+
+                // If any opportunity fails to be attached, skip entire spawn
                 foreach (var opportunity in entity.SpawnOpportunities)
                 {
-                    opportunity.SeasonId = seasons.TryGetValue(opportunity.SeasonAbbreviation, out var seasonId)
-                        ? seasonId
-                        : throw new RelatedEntityNotFoundException(
-                            nameof(SpawnOpportunity),
-                            nameof(Season),
-                            opportunity.SeasonAbbreviation);
+                    canInsertOrUpdate &= TryAddSeason(opportunity, seasons);
+                    canInsertOrUpdate &= TryAddTimeOfDay(opportunity, timesOfDay);
+                }
 
-                    opportunity.TimeOfDayId = timesOfDay.TryGetValue(opportunity.TimeOfDayAbbreviation, out var timeOfDayId)
-                        ? timeOfDayId
-                        : throw new RelatedEntityNotFoundException(
-                            nameof(SpawnOpportunity),
-                            nameof(TimeOfDay),
-                            opportunity.TimeOfDayAbbreviation);
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
                 }
             }
 
-            base.Insert(entities);
+            return base.PrepareEntitiesForInsertOrUpdate(verifiedEntities);
+        }
+
+        private bool TryAddSeason(SpawnOpportunity opportunity, Dictionary<string, int> seasons)
+        {
+            var success = seasons.TryGetValue(opportunity.SeasonAbbreviation, out var seasonId);
+
+            if (!success)
+            {
+                var exception = new RelatedEntityNotFoundException(
+                    nameof(SpawnOpportunity),
+                    nameof(Season),
+                    opportunity.SeasonAbbreviation);
+                ReportInsertOrUpdateException(typeof(Spawn), exception);
+            }
+            else
+            {
+                opportunity.SeasonId = seasonId;
+            }
+
+            return success;
+        }
+
+        private bool TryAddTimeOfDay(SpawnOpportunity opportunity, Dictionary<string, int> timesOfDay)
+        {
+            var success = timesOfDay.TryGetValue(opportunity.TimeOfDayAbbreviation, out var timeOfDayId);
+
+            if (!success)
+            {
+                var exception = new RelatedEntityNotFoundException(
+                    nameof(SpawnOpportunity),
+                    nameof(TimeOfDay),
+                    opportunity.TimeOfDayAbbreviation);
+                ReportInsertOrUpdateException(typeof(Spawn), exception);
+            }
+            else
+            {
+                opportunity.TimeOfDayId = timeOfDayId;
+            }
+
+            return success;
         }
     }
 }

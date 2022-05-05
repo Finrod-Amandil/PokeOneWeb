@@ -16,59 +16,137 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         public override void Insert(ICollection<PokemonForm> entities)
         {
+            base.Insert(entities);
+            DeleteUnusedParentEntities();
+            SetDefaultFormsAndVarieties();
+        }
+
+        public override void Update(ICollection<PokemonForm> entities)
+        {
+            base.Update(entities);
+            DeleteUnusedParentEntities();
+            SetDefaultFormsAndVarieties();
+        }
+
+        public override void DeleteByIdHashes(ICollection<string> idHashes)
+        {
+            base.DeleteByIdHashes(idHashes);
+            DeleteUnusedParentEntities();
+        }
+
+        protected override ICollection<PokemonForm> PrepareEntitiesForInsertOrUpdate(ICollection<PokemonForm> entities)
+        {
+            var verifiedEntities = new List<PokemonForm>(entities);
             foreach (var entity in entities)
             {
-                // Save default form and variety names
-                _defaultFormNames.TryAdd(
-                    entity.PokemonVariety.Name,
-                    entity.PokemonVariety.DefaultFormName);
+                var canInsertOrUpdate = true;
 
-                _defaultVarietyNames.TryAdd(
-                    entity.PokemonVariety.PokemonSpecies.Name,
-                    entity.PokemonVariety.PokemonSpecies.DefaultVarietyName);
+                SaveDefaultFormAndVariety(entity);
 
-                entity.AvailabilityId = GetRequiredIdForName<PokemonAvailability>(entity.AvailabilityName);
+                canInsertOrUpdate &= TrySetIdForName<PokemonAvailability>(
+                    entity.AvailabilityName,
+                    id => entity.AvailabilityId = id);
 
-                var variety = entity.PokemonVariety;
-                variety.PrimaryTypeId = GetRequiredIdForName<ElementalType>(variety.PrimaryTypeName);
-                variety.SecondaryTypeId = GetOptionalIdForName<ElementalType>(variety.SecondaryTypeName);
-                variety.PrimaryAbilityId = GetRequiredIdForName<Ability>(variety.PrimaryAbilityName);
-                variety.SecondaryAbilityId = GetOptionalIdForName<Ability>(variety.SecondaryAbilityName);
-                variety.HiddenAbilityId = GetOptionalIdForName<Ability>(variety.HiddenAbilityName);
-                variety.PvpTierId = GetRequiredIdForName<PvpTier>(variety.PvpTierName);
+                canInsertOrUpdate &= TryPrepareVariety(entity.PokemonVariety);
 
-                // Delete old urls
-                DbContext.PokemonVarietyUrls
-                    .Include(x => x.Variety)
-                    .Where(x => x.Variety.Name.Equals(variety.Name))
-                    .DeleteFromQuery();
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
+                }
             }
 
-            // Insert species
+            // Insert & attach species
+            entities = new List<PokemonForm>(verifiedEntities);
             AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.PokemonVariety.PokemonSpecies));
+
             foreach (var entity in entities)
             {
-                entity.PokemonVariety.PokemonSpeciesId =
-                    GetRequiredIdForName<PokemonSpecies>(entity.PokemonVariety.PokemonSpecies.Name);
+                var canInsertOrUpdate = TrySetIdForName<PokemonSpecies>(
+                    entity.PokemonVariety.PokemonSpecies.Name,
+                    id => entity.PokemonVariety.PokemonSpeciesId = id);
                 entity.PokemonVariety.PokemonSpecies = null;
+
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
+                }
             }
 
             // Insert varieties
+            entities = new List<PokemonForm>(verifiedEntities);
             AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.PokemonVariety));
+
             foreach (var entity in entities)
             {
-                entity.PokemonVarietyId =
-                    GetRequiredIdForName<PokemonVariety>(entity.PokemonVariety.Name);
+                var canInsertOrUpdate = TrySetIdForName<PokemonVariety>(
+                    entity.PokemonVariety.Name,
+                    id => entity.PokemonVarietyId = id);
                 entity.PokemonVariety = null;
+
+                if (!canInsertOrUpdate)
+                {
+                    verifiedEntities.Remove(entity);
+                }
             }
 
-            base.Insert(entities);
+            return base.PrepareEntitiesForInsertOrUpdate(verifiedEntities);
+        }
 
-            // Delete unused parents
+        private void SaveDefaultFormAndVariety(PokemonForm pokemonForm)
+        {
+            _defaultFormNames.TryAdd(
+                pokemonForm.PokemonVariety.Name,
+                pokemonForm.PokemonVariety.DefaultFormName);
+
+            _defaultVarietyNames.TryAdd(
+                pokemonForm.PokemonVariety.PokemonSpecies.Name,
+                pokemonForm.PokemonVariety.PokemonSpecies.DefaultVarietyName);
+        }
+
+        private bool TryPrepareVariety(PokemonVariety variety)
+        {
+            if (variety is null)
+            {
+                return false;
+            }
+
+            var canInsertOrUpdate = true;
+
+            // Required related entities
+            canInsertOrUpdate &= TrySetIdForName<ElementalType>(
+                variety.PrimaryTypeName,
+                id => variety.PrimaryTypeId = id);
+
+            canInsertOrUpdate &= TrySetIdForName<Ability>(
+                variety.PrimaryAbilityName,
+                id => variety.PrimaryAbilityId = id);
+
+            canInsertOrUpdate &= TrySetIdForName<PvpTier>(
+                variety.PvpTierName,
+                id => variety.PvpTierId = id);
+
+            // Optional related entities
+            variety.SecondaryTypeId = GetOptionalIdForName<ElementalType>(variety.SecondaryTypeName);
+            variety.SecondaryAbilityId = GetOptionalIdForName<Ability>(variety.SecondaryAbilityName);
+            variety.HiddenAbilityId = GetOptionalIdForName<Ability>(variety.HiddenAbilityName);
+
+            // Delete old urls
+            DbContext.PokemonVarietyUrls
+                .Include(x => x.Variety)
+                .Where(x => x.Variety.Name.Equals(variety.Name))
+                .DeleteFromQuery();
+
+            return canInsertOrUpdate;
+        }
+
+        private void DeleteUnusedParentEntities()
+        {
             DbContext.PokemonSpecies.Where(x => x.Varieties.Count == 0).DeleteFromQuery();
             DbContext.PokemonVarieties.Where(x => x.Forms.Count == 0).DeleteFromQuery();
+        }
 
-            // Attach default Ids
+        private void SetDefaultFormsAndVarieties()
+        {
             var forms = DbContext.PokemonForms
                 .Include(x => x.PokemonVariety)
                 .ThenInclude(x => x.PokemonSpecies)
@@ -79,17 +157,16 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 var defaultFormName = _defaultFormNames[form.PokemonVariety.Name];
                 var defaultVarietyName = _defaultVarietyNames[form.PokemonVariety.PokemonSpecies.Name];
 
-                form.PokemonVariety.DefaultFormId =
-                    GetRequiredIdForName<PokemonForm>(defaultFormName);
-                form.PokemonVariety.PokemonSpecies.DefaultVarietyId =
-                    GetRequiredIdForName<PokemonVariety>(defaultVarietyName);
+                TrySetIdForName<PokemonForm>(
+                    defaultFormName,
+                    id => form.PokemonVariety.DefaultFormId = id);
+
+                TrySetIdForName<PokemonVariety>(
+                    defaultVarietyName,
+                    id => form.PokemonVariety.PokemonSpecies.DefaultVarietyId = id);
             }
 
             DbContext.SaveChanges();
-        }
-
-        protected override void PrepareEntitiesForInsertOrUpdate(PokemonForm entity)
-        {
         }
     }
 }

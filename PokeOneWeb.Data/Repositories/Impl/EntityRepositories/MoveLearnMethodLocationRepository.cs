@@ -12,7 +12,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        public override void Insert(ICollection<MoveLearnMethodLocation> entities)
+        protected override ICollection<MoveLearnMethodLocation> PrepareEntitiesForInsertOrUpdate(ICollection<MoveLearnMethodLocation> entities)
         {
             AddOrUpdateRelatedEntitiesByName(entities.Select(x => x.MoveLearnMethod));
 
@@ -20,36 +20,67 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 .Include(x => x.Item)
                 .ToDictionary(x => x.Item.Name, x => x.Id);
 
+            var verifiedEntities = new List<MoveLearnMethodLocation>(entities);
             foreach (var entity in entities)
             {
-                // Delete old prices
-                DbContext.MoveLearnMethodLocationPrices
-                    .Include(x => x.MoveLearnMethodLocation)
-                    .ThenInclude(x => x.MoveLearnMethod)
-                    .Include(x => x.MoveLearnMethodLocation)
-                    .ThenInclude(x => x.Location)
-                    .Where(x =>
-                        x.MoveLearnMethodLocation.MoveLearnMethod.Name.Equals(entity.MoveLearnMethod.Name) &&
-                        x.MoveLearnMethodLocation.Location.Name.Equals(entity.LocationName))
-                    .DeleteFromQuery();
+                var canInsertOrUpdate = true;
 
-                entity.LocationId = GetRequiredIdForName<Location>(entity.LocationName);
-                entity.MoveLearnMethodId = GetRequiredIdForName<MoveLearnMethod>(entity.MoveLearnMethod.Name);
+                DeleteOldPrices(entity);
+
+                canInsertOrUpdate &= TrySetIdForName<Location>(entity.LocationName, id => entity.LocationId = id);
+                canInsertOrUpdate &= TrySetIdForName<MoveLearnMethod>(entity.MoveLearnMethod.Name, id => entity.MoveLearnMethodId = id);
                 entity.MoveLearnMethod = null;
 
-                // Attach currencies
-                foreach (var ca in entity.Price.Select(p => p.CurrencyAmount))
+                AddCurrencies(entity, currencies);
+
+                if (!canInsertOrUpdate)
                 {
-                    ca.CurrencyId = currencies.TryGetValue(ca.CurrencyName, out var id)
-                        ? id
-                        : throw new RelatedEntityNotFoundException(
-                            nameof(CurrencyAmount),
-                            nameof(Currency),
-                            ca.CurrencyName);
+                    verifiedEntities.Remove(entity);
                 }
             }
 
-            base.Insert(entities);
+            return base.PrepareEntitiesForInsertOrUpdate(verifiedEntities);
+        }
+
+        private void DeleteOldPrices(MoveLearnMethodLocation entity)
+        {
+            DbContext.MoveLearnMethodLocationPrices
+                .Include(x => x.MoveLearnMethodLocation)
+                .ThenInclude(x => x.MoveLearnMethod)
+                .Include(x => x.MoveLearnMethodLocation)
+                .ThenInclude(x => x.Location)
+                .Where(x =>
+                    x.MoveLearnMethodLocation.MoveLearnMethod.Name.Equals(entity.MoveLearnMethod.Name) &&
+                    x.MoveLearnMethodLocation.Location.Name.Equals(entity.LocationName))
+                .DeleteFromQuery();
+        }
+
+        private void AddCurrencies(MoveLearnMethodLocation entity, Dictionary<string, int> currencies)
+        {
+            var verifiedPrices = new List<MoveLearnMethodLocationPrice>(entity.Price);
+            foreach (var price in entity.Price)
+            {
+                var canInsertOrUpdate = true;
+
+                var ca = price.CurrencyAmount;
+                canInsertOrUpdate &= currencies.TryGetValue(ca.CurrencyName, out var id);
+
+                if (!canInsertOrUpdate)
+                {
+                    var exception = new RelatedEntityNotFoundException(
+                        nameof(CurrencyAmount),
+                        nameof(Currency),
+                        ca.CurrencyName);
+                    ReportInsertOrUpdateException(typeof(MoveLearnMethodLocation), exception);
+                    verifiedPrices.Remove(price);
+                }
+                else
+                {
+                    ca.CurrencyId = id;
+                }
+            }
+
+            entity.Price = verifiedPrices;
         }
     }
 }
