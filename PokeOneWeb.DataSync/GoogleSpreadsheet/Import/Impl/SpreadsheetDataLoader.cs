@@ -8,7 +8,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Util.Store;
-using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
@@ -17,23 +16,33 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
     public class SpreadsheetDataLoader : ISpreadsheetDataLoader
     {
-        private const string APPLICATION_NAME = "PokeOneWeb Guide Import Service";
-        private const int MAX_CALLS_PER_MINUTE = 50;
+        private const string ApplicationName = "PokeOneWeb Guide Import Service";
+        private const int MaxCallsPerMinute = 50;
 
-        private static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        private static readonly HashSet<DateTime> ApiCallTimestamps = new();
+        private static readonly string[] SCOPES = { SheetsService.Scope.Spreadsheets };
+        private static readonly HashSet<DateTime> API_CALL_TIMESTAMPS = new();
 
-        private readonly ILogger<SpreadsheetDataLoader> _logger;
         private readonly ISpreadsheetImportReporter _reporter;
 
         private UserCredential _credential;
 
-        public SpreadsheetDataLoader(
-            ILogger<SpreadsheetDataLoader> logger,
-            ISpreadsheetImportReporter reporter)
+        public SpreadsheetDataLoader(ISpreadsheetImportReporter reporter)
         {
-            _logger = logger;
             _reporter = reporter;
+        }
+
+        public async Task<List<Sheet>> LoadSheetList(string sheetListSpreadsheetId, string sheetListSheetName)
+        {
+            var ranges = new List<string> { $"{sheetListSheetName}!B2:C" };
+            var values = await LoadData(sheetListSpreadsheetId, ranges);
+
+            return values
+                .Select(row => new Sheet
+                {
+                    SpreadsheetId = row[0] as string,
+                    SheetName = row[1] as string
+                })
+                .ToList();
         }
 
         public async Task<string> LoadSheetHash(string spreadsheetId, string sheetName)
@@ -57,7 +66,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 i++;
                 if (row.Count < 2)
                 {
-                    _logger.LogWarning($"Missing hashes in row {i} of sheet {sheetName}.");
+                    _reporter.ReportError($"Missing hashes in row {i} of sheet {sheetName}.");
                     continue;
                 }
 
@@ -102,22 +111,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return dataRows;
         }
 
-        public async Task<List<List<object>>> LoadRows(string spreadsheetId, string sheetName, List<int> rows = null)
-        {
-            var ranges = rows != null ? GetRangesForRows(rows, sheetName, "C", false) : new List<string> { $"{sheetName}!C2:ZZ" };
-            var values = await LoadData(spreadsheetId, ranges);
-
-            return values;
-        }
-
-        public async Task<List<List<object>>> LoadRange(string spreadsheetId, string sheetName, string range)
-        {
-            var ranges = new List<string> { range };
-            var values = await LoadData(spreadsheetId, ranges);
-
-            return values;
-        }
-
         private async Task<List<List<object>>> LoadData(string spreadsheetId, List<string> ranges)
         {
             EnsureQuotaLimitNotReached();
@@ -126,7 +119,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             var service = new SheetsService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = _credential,
-                ApplicationName = APPLICATION_NAME
+                ApplicationName = ApplicationName
             });
 
             var request = service.Spreadsheets.Values.BatchGet(spreadsheetId);
@@ -151,7 +144,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             await using var stream = new FileStream("GoogleSpreadsheet/credentials.json", FileMode.Open, FileAccess.Read);
             const string credPath = "GoogleSpreadsheet/token.json";
             var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                (await GoogleClientSecrets.FromStreamAsync(stream)).Secrets, Scopes,
+                (await GoogleClientSecrets.FromStreamAsync(stream)).Secrets, SCOPES,
                 "user",
                 CancellationToken.None,
                 new FileDataStore(credPath, true));
@@ -194,11 +187,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
         {
             while (true)
             {
-                ApiCallTimestamps.RemoveWhere(timeStamp => timeStamp < DateTime.UtcNow - TimeSpan.FromMinutes(1));
+                API_CALL_TIMESTAMPS.RemoveWhere(timeStamp => timeStamp < DateTime.UtcNow - TimeSpan.FromMinutes(1));
 
-                if (ApiCallTimestamps.Count < MAX_CALLS_PER_MINUTE)
+                if (API_CALL_TIMESTAMPS.Count < MaxCallsPerMinute)
                 {
-                    ApiCallTimestamps.Add(DateTime.UtcNow);
+                    API_CALL_TIMESTAMPS.Add(DateTime.UtcNow);
                     return;
                 }
 

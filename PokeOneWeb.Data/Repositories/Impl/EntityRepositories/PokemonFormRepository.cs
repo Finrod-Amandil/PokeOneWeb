@@ -14,24 +14,27 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        public override void Insert(ICollection<PokemonForm> entities)
+        public override int Insert(ICollection<PokemonForm> entities)
         {
-            base.Insert(entities);
+            var insertedCount = base.Insert(entities);
             DeleteUnusedParentEntities();
             SetDefaultFormsAndVarieties();
+            return insertedCount;
         }
 
-        public override void Update(ICollection<PokemonForm> entities)
+        public override int Update(ICollection<PokemonForm> entities)
         {
-            base.Update(entities);
+            var updatedCount = base.Update(entities);
             DeleteUnusedParentEntities();
             SetDefaultFormsAndVarieties();
+            return updatedCount;
         }
 
-        public override void DeleteByIdHashes(ICollection<string> idHashes)
+        public override int DeleteByIdHashes(ICollection<string> idHashes)
         {
-            base.DeleteByIdHashes(idHashes);
+            var deletedCount = base.DeleteByIdHashes(idHashes);
             DeleteUnusedParentEntities();
+            return deletedCount;
         }
 
         protected override ICollection<PokemonForm> PrepareEntitiesForInsertOrUpdate(ICollection<PokemonForm> entities)

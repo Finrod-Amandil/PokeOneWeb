@@ -9,10 +9,12 @@ namespace PokeOneWeb.Data.Repositories
     {
         public event EventHandler<UpdateOrInsertExceptionOccurredEventArgs> UpdateOrInsertExceptionOccurred;
 
-        void Insert(ICollection<TEntity> entities);
+        int Insert(ICollection<TEntity> entities);
 
-        void Update(ICollection<TEntity> entities);
+        bool Insert(TEntity entity);
 
-        void Update(TEntity entity);
+        int Update(ICollection<TEntity> entities);
+
+        bool Update(TEntity entity);
     }
 }

@@ -8,8 +8,8 @@ namespace PokeOneWeb.Data.Repositories
     {
         IEnumerable<RowHash> GetHashesForSheet(ImportSheet sheet);
 
-        void DeleteByIdHashes(ICollection<string> idHashes);
+        int DeleteByIdHashes(ICollection<string> idHashes);
 
-        void UpdateByIdHashes(ICollection<TEntity> entities);
+        int UpdateByIdHashes(ICollection<TEntity> entities);
     }
 }

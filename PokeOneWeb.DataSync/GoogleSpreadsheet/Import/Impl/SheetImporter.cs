@@ -32,6 +32,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             _hashListComparator = hashListComparator;
             _reporter = reporter;
 
+            // Report if an entity fails to be inserted to the database.
             _repository.UpdateOrInsertExceptionOccurred += (_, args) =>
                 _reporter.ReportError(args.EntityType.Name, args.Exception);
         }
@@ -45,6 +46,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             if (!HasSheetChanged(sheet, sheetHash))
             {
+                _reporter.StopImport(sheetName, 0, 0, 0);
                 return;
             }
 
@@ -55,15 +57,15 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
             var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
 
-            Delete(hashListComparisonResult.RowsToDelete);
-            await Insert(hashListComparisonResult.RowsToInsert, sheetIdHashes, sheet);
-            await Update(hashListComparisonResult.RowsToUpdate, sheetIdHashes, sheet);
+            var deletedCount = Delete(hashListComparisonResult.RowsToDelete);
+            var insertedCount = await Insert(hashListComparisonResult.RowsToInsert, sheetIdHashes, sheet);
+            var updatedCount = await Update(hashListComparisonResult.RowsToUpdate, sheetIdHashes, sheet);
 
             // Update sheet hash
             sheet.SheetHash = sheetHash;
             _importSheetRepository.Update(sheet);
 
-            _reporter.StopImport(sheetName);
+            _reporter.StopImport(sheetName, insertedCount, updatedCount, deletedCount);
         }
 
         private static bool HasSheetChanged(ImportSheet sheet, string sheetHash)
@@ -71,32 +73,44 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return !string.Equals(sheet.SheetHash, sheetHash, StringComparison.Ordinal);
         }
 
-        private void Delete(List<string> rowsToDelete)
+        private int Delete(List<string> rowsToDelete)
         {
             if (rowsToDelete.Any())
             {
-                _repository.DeleteByIdHashes(rowsToDelete);
+                var deletedCount = _repository.DeleteByIdHashes(rowsToDelete);
+
+                return deletedCount;
             }
+
+            return 0;
         }
 
-        private async Task Insert(List<string> rowsToInsert, List<string> sheetIdHashes, ImportSheet sheet)
+        private async Task<int> Insert(List<string> rowsToInsert, List<string> sheetIdHashes, ImportSheet sheet)
         {
             if (rowsToInsert.Any())
             {
                 var sheetData = await _dataLoader.LoadDataRows(sheet, rowsToInsert, sheetIdHashes);
                 var entities = _mapper.Map(sheetData).ToList();
-                _repository.Insert(entities);
+                var insertedCount = _repository.Insert(entities);
+
+                return insertedCount;
             }
+
+            return 0;
         }
 
-        private async Task Update(List<string> rowsToUpdate, List<string> sheetIdHashes, ImportSheet sheet)
+        private async Task<int> Update(List<string> rowsToUpdate, List<string> sheetIdHashes, ImportSheet sheet)
         {
             if (rowsToUpdate.Any())
             {
                 var sheetData = await _dataLoader.LoadDataRows(sheet, rowsToUpdate, sheetIdHashes);
                 var entities = _mapper.Map(sheetData).ToList();
-                _repository.UpdateByIdHashes(entities);
+                var updatedCount = _repository.UpdateByIdHashes(entities);
+
+                return updatedCount;
             }
+
+            return 0;
         }
     }
 }

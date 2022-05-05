@@ -37,7 +37,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 var canInsertOrUpdate = true;
                 entity.ItemOptions.ForEach(itemOption =>
                 {
-                    canInsertOrUpdate &= TrySetIdForName<Nature>(itemOption.ItemName, id => itemOption.ItemId = id);
+                    canInsertOrUpdate &= TrySetIdForName<Item>(itemOption.ItemName, id => itemOption.ItemId = id);
                 });
                 return canInsertOrUpdate;
             }

@@ -22,12 +22,16 @@ namespace PokeOneWeb.Data.Repositories.Impl
             return rowHashes;
         }
 
-        public virtual void DeleteByIdHashes(ICollection<string> idHashes)
+        public virtual int DeleteByIdHashes(ICollection<string> idHashes)
         {
-            DbContext.Set<TEntity>().Where(x => idHashes.Contains(x.IdHash)).DeleteFromQuery();
+            var deletedCount = DbContext.Set<TEntity>()
+                .Where(x => idHashes.Contains(x.IdHash))
+                .DeleteFromQuery();
+
+            return deletedCount;
         }
 
-        public virtual void UpdateByIdHashes(ICollection<TEntity> entities)
+        public virtual int UpdateByIdHashes(ICollection<TEntity> entities)
         {
             var idsForHashes = DbContext.Set<TEntity>()
                 .Select(x => new { x.Id, x.IdHash })
@@ -47,7 +51,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
                 entity.Id = idsForHashes[entity.IdHash];
             }
 
-            Update(entities);
+            return Update(entities);
         }
     }
 }

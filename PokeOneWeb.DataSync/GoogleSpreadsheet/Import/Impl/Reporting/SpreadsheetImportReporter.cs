@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using PokeOneWeb.Data;
+using Microsoft.Extensions.Logging;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
     public class SpreadsheetImportReporter : ISpreadsheetImportReporter
     {
+        private readonly ILogger<SpreadsheetImportReporter> _logger;
         private readonly Dictionary<string, DateTime> _entityImportStarts = new();
         private readonly Dictionary<string, DateTime> _entityReadModelUpdateStarts = new();
         private SpreadsheetImportReport _report = new();
         private DateTime _importStart = DateTime.UtcNow;
         private DateTime _lastIdleStart = DateTime.UtcNow;
         private DateTime _readModelUpdateStart = DateTime.UtcNow;
+
+        public SpreadsheetImportReporter(ILogger<SpreadsheetImportReporter> logger)
+        {
+            _logger = logger;
+        }
 
         public void NewSession()
         {
@@ -23,37 +29,19 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
             return _report;
         }
 
-        public void ReportDeleted(string entityName, string hash, int applicationDbId)
+        public void ReportError(string message)
         {
-            _report.Updates.Add(new ImportUpdate
-            {
-                EntityName = entityName,
-                Hash = hash,
-                ApplicationDbId = applicationDbId,
-                DbAction = DbAction.Delete
-            });
+            ReportError(string.Empty, string.Empty, message);
         }
 
-        public void ReportAdded(string entityName, string hash, int applicationDbId)
+        public void ReportError(string entityName, Exception exception)
         {
-            _report.Updates.Add(new ImportUpdate
-            {
-                EntityName = entityName,
-                Hash = hash,
-                ApplicationDbId = applicationDbId,
-                DbAction = DbAction.Create,
-            });
+            ReportError(entityName, string.Empty, exception);
         }
 
-        public void ReportUpdated(string entityName, string hash, int applicationDbId)
+        public void ReportError(string entityName, string hash, Exception exception)
         {
-            _report.Updates.Add(new ImportUpdate
-            {
-                EntityName = entityName,
-                Hash = hash,
-                ApplicationDbId = applicationDbId,
-                DbAction = DbAction.Update
-            });
+            ReportError(entityName, hash, $"{exception.GetType().Name}: {exception.Message}");
         }
 
         public void ReportError(string entityName, string hash, string message)
@@ -64,39 +52,49 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
                 Hash = hash,
                 Message = message
             });
-        }
 
-        public void ReportError(string entityName, string hash, Exception exception)
-        {
-            ReportError(entityName, hash, $"{exception.GetType().Name}: {exception.Message}");
+            _logger.LogWarning(
+                $"An error occurred while running Google Spreadsheet Import. " +
+                $"Entity name: {entityName}, " +
+                $"ID Hash: {hash}, " +
+                $"Message: {message}");
         }
 
         public void StartImport()
         {
             _importStart = DateTime.UtcNow;
+            _logger.LogInformation($"Starting Google Spreadsheet Import. Start Time: {_importStart}");
         }
 
-        public void StartImport(string entity)
+        public void StartImport(string sheetName)
         {
-            _entityImportStarts.Add(entity, DateTime.UtcNow);
+            _entityImportStarts.Add(sheetName, DateTime.UtcNow);
+            _logger.LogInformation($"Starting import of sheet {sheetName}.");
         }
 
         public void StopImport()
         {
             _report.TotalImportTime = DateTime.UtcNow - _importStart;
+            _logger.LogInformation($"Finished Google Spreadsheet Import. Total Duration: {_report.TotalImportTime}");
         }
 
-        public void StopImport(string entity)
+        public void StopImport(string sheetName, int insertedCount, int updatedCount, int deletedCount)
         {
-            if (_entityImportStarts.ContainsKey(entity))
+            if (_entityImportStarts.ContainsKey(sheetName))
             {
-                _report.ImportTimesByEntity.Add(entity, DateTime.UtcNow - _entityImportStarts[entity]);
+                _report.ImportTimesBySheet.Add(sheetName, DateTime.UtcNow - _entityImportStarts[sheetName]);
+                _logger.LogInformation(
+                    $"Finished import of sheet {sheetName}. Duration: {_report.ImportTimesBySheet[sheetName]}\n" +
+                    $"Inserted rows: {insertedCount}\n" +
+                    $"Updated rows: {updatedCount}\n" +
+                    $"Deleted rows: {deletedCount}\n");
             }
         }
 
         public void StartIdle()
         {
             _lastIdleStart = DateTime.UtcNow;
+            _logger.LogInformation($">>> Idling to avoid hitting request quota. Total idle duration so far: {_report.TotalIdleTime}");
         }
 
         public void StopIdle()

@@ -37,19 +37,14 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             _reporter.NewSession();
             _reporter.StartImport();
 
-            // Load list of sheets to import
-            var sheets = await _dataLoader.LoadRange(
+            var sheets = await _dataLoader.LoadSheetList(
                 _settings.Value.Import.SheetsListSpreadsheetId,
-                _settings.Value.Import.SheetsListSheetName,
-                "B2:C");
+                _settings.Value.Import.SheetsListSheetName);
 
             foreach (var sheet in sheets)
             {
-                var spreadsheetId = sheet[0].ToString();
-                var sheetName = sheet[1].ToString();
-
-                var sheetImporter = FindSheetImporterForSheet(sheetName);
-                await sheetImporter.ImportSheet(spreadsheetId, sheetName);
+                var sheetImporter = FindSheetImporterForSheet(sheet.SheetName);
+                await sheetImporter.ImportSheet(sheet.SpreadsheetId, sheet.SheetName);
             }
 
             _reporter.StopImport();

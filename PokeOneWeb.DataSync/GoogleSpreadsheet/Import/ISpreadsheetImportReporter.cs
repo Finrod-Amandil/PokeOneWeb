@@ -9,25 +9,21 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         SpreadsheetImportReport GetReport();
 
-        void ReportDeleted(string entity, string hash, int applicationDbId);
+        void ReportError(string message);
 
-        void ReportAdded(string entity, string hash, int applicationDbId);
+        void ReportError(string entityName, Exception exception);
 
-        void ReportUpdated(string entity, string hash, int applicationDbId);
+        void ReportError(string entityName, string hash, string message);
 
-        void ReportError(string entity, Exception exception);
-
-        void ReportError(string entity, string hash, string message);
-
-        void ReportError(string entity, string hash, Exception exception);
+        void ReportError(string entityName, string hash, Exception exception);
 
         public void StartImport();
 
-        public void StartImport(string entity);
+        public void StartImport(string sheetName);
 
         public void StopImport();
 
-        public void StopImport(string entity);
+        public void StopImport(string sheetName, int insertedCount, int updatedCount, int deletedCount);
 
         public void StartIdle();
 

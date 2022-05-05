@@ -12,22 +12,25 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
         }
 
-        public override void Insert(ICollection<ItemStatBoostPokemon> entities)
+        public override int Insert(ICollection<ItemStatBoostPokemon> entities)
         {
-            base.Insert(entities);
+            var insertedCount = base.Insert(entities);
             DeleteUnusedParentEntities();
+            return insertedCount;
         }
 
-        public override void Update(ICollection<ItemStatBoostPokemon> entities)
+        public override int Update(ICollection<ItemStatBoostPokemon> entities)
         {
-            base.Update(entities);
+            var updatedCount = base.Update(entities);
             DeleteUnusedParentEntities();
+            return updatedCount;
         }
 
-        public override void DeleteByIdHashes(ICollection<string> idHashes)
+        public override int DeleteByIdHashes(ICollection<string> idHashes)
         {
-            base.DeleteByIdHashes(idHashes);
+            var deletedCount = base.DeleteByIdHashes(idHashes);
             DeleteUnusedParentEntities();
+            return deletedCount;
         }
 
         protected override ICollection<ItemStatBoostPokemon> PrepareEntitiesForInsertOrUpdate(

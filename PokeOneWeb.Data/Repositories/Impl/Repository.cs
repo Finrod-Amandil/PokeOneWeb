@@ -10,28 +10,34 @@ namespace PokeOneWeb.Data.Repositories.Impl
     {
         public event EventHandler<UpdateOrInsertExceptionOccurredEventArgs> UpdateOrInsertExceptionOccurred;
 
-        public virtual void Insert(ICollection<TEntity> entities)
+        public virtual int Insert(ICollection<TEntity> entities)
         {
-            PrepareEntitiesForInsertOrUpdate(entities);
+            entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().AddRange(entities);
             DbContext.SaveChanges();
+
+            return entities.Count;
         }
 
-        public void Insert(TEntity entity)
+        public bool Insert(TEntity entity)
         {
-            Insert(new List<TEntity> { entity });
+            var insertedCount = Insert(new List<TEntity> { entity });
+            return insertedCount > 0;
         }
 
-        public virtual void Update(ICollection<TEntity> entities)
+        public virtual int Update(ICollection<TEntity> entities)
         {
-            PrepareEntitiesForInsertOrUpdate(entities);
+            entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().UpdateRange(entities);
             DbContext.SaveChanges();
+
+            return entities.Count;
         }
 
-        public void Update(TEntity entity)
+        public bool Update(TEntity entity)
         {
-            Update(new List<TEntity> { entity });
+            var updatedCount = Update(new List<TEntity> { entity });
+            return updatedCount > 0;
         }
 
         protected readonly ApplicationDbContext DbContext;
