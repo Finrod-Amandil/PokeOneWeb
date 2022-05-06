@@ -100,6 +100,11 @@ export class SpawnListComponent implements OnInit {
 
     private isSpawnAvailable(spawn: ISpawnModel) {
         if (spawn.isEvent) {
+            // If end date is not set, event is still open.
+            if (!spawn.eventEndDate) {
+                return true;
+            }
+
             //Source https://stackoverflow.com/a/16080662
             const todaysDate = this.dateService.getTodaysDate().split('/');
             const eventStartDate = this.dateService.convertDate(spawn.eventStartDate).split('/');
