@@ -37,6 +37,23 @@
   </p>
 </div>
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow the steps in the [Developer Installation Guide](https://docs.google.com/document/d/1oLbs6IRg8wib5WZGg_G80hXRQTvkAxb8WLfT5Gxu71U).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Built With
+
+The application is built with the following libraries and frameworks.
+
+* [Angular](https://angular.io/)
+* [DotNet](https://dotnet.microsoft.com/en-us/)
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
