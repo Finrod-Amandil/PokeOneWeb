@@ -1,5 +1,5 @@
 <div *ngIf="model.visibleSpawns.length > 0">
-    <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable">
+    <div *ngIf="!model.areOnlyEventExclusiveSpawnsAvailable && !model.areNoEventSpawnsAvailable && !model.isLocationPage">
         <button mat-raised-button *ngIf="!model.areEventExclusiveSpawnsHidden" (click)="hideEventExclusiveSpawns()">
             Hide inactive event-exclusive spawns
         </button>
@@ -7,7 +7,7 @@
             Show inactive event-exclusive spawns
         </button>
     </div>
-    <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable">
+    <div *ngIf="model.areOnlyEventExclusiveSpawnsAvailable && !model.isLocationPage">
         <p class="empty" style="color: var(--text-accent)">This Pokémon was only available during events in the past</p>
     </div>
     <br>
