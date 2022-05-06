@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -9,9 +10,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.Data;
-using PokeOneWeb.WebApi.Services.Api;
-using PokeOneWeb.WebApi.Services.Api.Impl;
-using System.IO;
 
 namespace PokeOneWeb.WebApi
 {
@@ -35,14 +33,6 @@ namespace PokeOneWeb.WebApi
             });
 
             services.AddControllers();
-
-            services.AddScoped<IEntityTypeApiService, EntityTypeApiService>();
-            services.AddScoped<IItemApiService, ItemApiService>();
-            services.AddScoped<IMoveApiService, MoveApiService>();
-            services.AddScoped<INatureApiService, NatureApiService>();
-            services.AddScoped<IPokemonApiService, PokemonApiService>();
-            services.AddScoped<IRegionApiService, RegionApiService>();
-            services.AddScoped<ILocationGroupApiService, LocationGroupApiService>();
 
             services.AddCors(options =>
             {
@@ -100,14 +90,6 @@ namespace PokeOneWeb.WebApi
             {
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
-                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
-            });
-
-            services.AddDbContext<ReadModelDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ReadModelConnection"),
                     o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
                 options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
             });
