@@ -3,7 +3,7 @@
 </div>
 
 <div id="content_main_container">
-    <div class="region-container" *ngFor="let region of model.regions">
+    <div *ngFor="let region of model.regions" class="region-container">
         <div class="region-glass-container">
             <div class="region-name-container">
                 {{getRegionType(region)}}

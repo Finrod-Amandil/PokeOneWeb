@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -6,6 +7,7 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("EvolutionAbilityReadModel")]
     public class EvolutionAbilityReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         public int RelativeStageIndex { get; set; }
@@ -15,8 +17,13 @@ namespace PokeOneWeb.Data.ReadModels
         public string SpriteName { get; set; }
         public string AbilityName { get; set; }
 
+        [JsonIgnore]
         public int? PokemonVarietyAsPrimaryAbilityId { get; set; }
+
+        [JsonIgnore]
         public int? PokemonVarietyAsSecondaryAbilityId { get; set; }
+
+        [JsonIgnore]
         public int? PokemonVarietyAsHiddenAbilityId { get; set; }
     }
 }

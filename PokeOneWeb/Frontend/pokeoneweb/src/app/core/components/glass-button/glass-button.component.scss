@@ -44,16 +44,19 @@
     height: 100%;
     width: 100%;
     display: grid;
-    cursor: pointer;
     grid-template-rows: 75px 100px 75px;
     background: radial-gradient(circle, rgba(207, 235, 240, 0.349) 0%, rgba(104, 119, 126, 0.301));
 }
 
-.overlay:hover {
+.overlay.enabled {
+    cursor: pointer;
+}
+
+.overlay.enabled:hover {
     box-shadow: 0 0 20px 5px rgb(123, 180, 224);
 }
 
-.overlay:active {
+.overlay.enabled:active {
     box-shadow: 0 0 40px 5px rgb(60, 74, 85);
     box-shadow: inset 0px 0px 19px -8px #000000;
     background: radial-gradient(circle, rgba(104, 119, 126, 0.301) 0%, rgba(207, 235, 240, 0.349));

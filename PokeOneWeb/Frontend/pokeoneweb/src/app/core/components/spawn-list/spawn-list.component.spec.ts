@@ -1,18 +1,20 @@
-import { PokemonDetailSortService } from 'src/app/pages/pokemon-detail/core/pokemon-detail-sort.service';
+import { IsFocusableConfig } from '@angular/cdk/a11y';
 import { ISpawnModel, SpawnModel } from '../../models/spawn.model';
 import { DateService } from '../../services/date.service';
+import { SpawnListColumn } from './core/spawn-list-column.enum';
+import { SpawnListSortService } from './core/spawn-list-sort.service';
 import { SpawnListComponent } from './spawn-list.component';
 
 describe('SpawnListComponent', () => {
   let component: SpawnListComponent;
-  let sortService: PokemonDetailSortService;
+  let sortService: SpawnListSortService;
   let dateService: DateService;
 
   beforeEach(() => {
       // Arrange
       //mock all the required entities wich are used in the components constructor
       //they need to have non-empty arrays of mocked functions
-      sortService = new PokemonDetailSortService()
+      sortService = new SpawnListSortService()
       dateService = new DateService()
 
       component = new SpawnListComponent(dateService, sortService);
@@ -71,7 +73,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -103,7 +104,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -133,7 +133,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.hideEventExclusiveSpawns();
 
@@ -152,8 +151,6 @@ describe('SpawnListComponent', () => {
         // Assert
         expect(component.model.visibleSpawns.length)
             .toBe(0);
-        //expect(component.model.pokemon?.spawns.length)
-        //    .toBeUndefined
     });
   });
 
@@ -179,7 +176,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.showEventExclusiveSpawns();
 
@@ -211,7 +207,6 @@ describe('SpawnListComponent', () => {
         let spawns:SpawnModel[] = [spawn1, spawn2]
         component.model.spawns = spawns as ISpawnModel[];
 
-        //component.model.pokemon = pokemon
         // Act
         component.showEventExclusiveSpawns();
 
@@ -226,4 +221,148 @@ describe('SpawnListComponent', () => {
             .toBeFalse
     });
   });
+  
+  describe('checkLocations', () => {
+    it('checkLocations() with only one regionName', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.pokemonFormSortIndex = 0
+        spawn1.regionName = "test"
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.pokemonFormSortIndex = 1
+        spawn2.regionName = "test"
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+        component.model.spawns = spawns as ISpawnModel[];
+
+        component.checkLocations();
+
+        expect(component.model.hasOnlyOneLocation)
+            .toBeTrue;
+    });
+    it('checkLocations() with multiple regionNames', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.pokemonFormSortIndex = 0
+        spawn1.regionName = "test"
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.pokemonFormSortIndex = 1
+        spawn2.regionName = "keintest"
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+        component.model.spawns = spawns as ISpawnModel[];
+
+        component.checkLocations();
+
+        expect(component.model.hasOnlyOneLocation)
+            .toBeFalse;
+    });
+  });
+
+  describe('SpawnListSortService', () => {
+    it('sortSpawns(SpawnListColumn.Pokemon) test high to low', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.pokemonFormSortIndex = 0
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.pokemonFormSortIndex = 1
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+
+        let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.Pokemon, 1)
+
+        expect(sortedList[0])
+            .toEqual(spawn1);
+    });
+    describe('SpawnListSortService', () => {
+        it('sortSpawns(SpawnListColumn.Pokemon) test low to high', () => {
+            var spawn1 = new SpawnModel();
+            spawn1.pokemonName = "a"
+            spawn1.pokemonFormSortIndex = 0
+
+            var spawn2 = new SpawnModel();
+            spawn2.pokemonName = "b"
+            spawn2.pokemonFormSortIndex = 1
+            
+            let spawns: SpawnModel[] = [spawn1, spawn2]
+    
+            let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.Pokemon, -1)
+    
+            expect(sortedList[0])
+                .toEqual(spawn2);
+            });
+        });
+    });
+    it('sortSpawns(SpawnListColumn.SpawnType) test high to low', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.pokemonFormSortIndex = 0
+        spawn1.spawnTypeSortIndex = 0
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.pokemonFormSortIndex = 1
+        spawn2.spawnTypeSortIndex = 1
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+
+        let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.SpawnType, -1)
+
+        expect(sortedList[0])
+            .toEqual(spawn2);
+    });
+    it('sortSpawns(SpawnListColumn.SpawnType) test low to high', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.spawnTypeSortIndex = 0
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.spawnTypeSortIndex = 1
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+
+        let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.SpawnType, 1)
+
+        expect(sortedList[0])
+            .toEqual(spawn1);
+    });
+    it('sortSpawns(SpawnListColumn.Rarity) test low to high', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.rarityValue = 1
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.rarityValue = 5
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+
+        let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.Rarity, 1)
+
+        expect(sortedList[0])
+            .toEqual(spawn2);
+    });
+    it('sortSpawns(SpawnListColumn.Rarity) test low to high', () => {
+        var spawn1 = new SpawnModel();
+        spawn1.pokemonName = "a"
+        spawn1.rarityValue = 1
+
+        var spawn2 = new SpawnModel();
+        spawn2.pokemonName = "b"
+        spawn2.rarityValue = 5
+        
+        let spawns:SpawnModel[] = [spawn1, spawn2]
+
+        let sortedList = sortService.sortSpawns(spawns, SpawnListColumn.Rarity, -1)
+
+        expect(sortedList[0])
+            .toEqual(spawn1);
+    });
 });

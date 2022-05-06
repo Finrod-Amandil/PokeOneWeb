@@ -1,8 +1,7 @@
-name: PokeOneWebApp
+name: Release Staging Environment
 on:
-  push:
-    branches:
-      - development
+  workflow_dispatch:
+
 jobs:
   build:
     name: Build-PokeOneWebApp
@@ -19,7 +18,7 @@ jobs:
     - run: |
         npm ci
         npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
-        npm run build -- --configuration dev
+        npm run build -- --configuration stage
       working-directory: PokeOneWeb/Frontend/pokeoneweb
 
     - name: Run Jasmine Unit-Tests
@@ -43,7 +42,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         source: "PokeOneWeb/Frontend/pokeoneweb/dist"
-        target: "/opt/PokeOneWeb.WebApp/dev"
+        target: "/opt/PokeOneWeb.WebApp/stage"
         strip_components: 5
         overwrite: true
 
