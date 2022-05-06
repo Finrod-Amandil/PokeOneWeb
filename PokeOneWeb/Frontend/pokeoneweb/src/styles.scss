@@ -236,6 +236,10 @@ h3 {
     margin: auto;
 }
 
+#header_banner_container {
+    z-index: 99;
+}
+
 // Navigation
 #navbar {
     width: var(--navbar-outer-width);
