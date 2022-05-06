@@ -40,7 +40,6 @@ export class LocationListComponent implements OnInit {
             this.locationService.getAllForRegion(this.model.regionName).subscribe((result_region) => {
                 this.model.locationModels = result_region as ILocationListModel[];
 
-                console.log(this.model.locationModels[0].regionName);
                 this.titleService.setTitle(`${this.model.locationModels[0].regionName} - ${WEBSITE_NAME}`);
 
                 this.model.displayedLocationModels = this.sortService.sort(
