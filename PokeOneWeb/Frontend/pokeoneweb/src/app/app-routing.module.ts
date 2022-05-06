@@ -97,6 +97,10 @@ const routes: Routes = [
     },
     {
         path: '',
+        loadChildren: () => import('./pages/location-list/location-list.module').then((m) => m.LocationListModule)
+    },
+    {
+        path: '',
         loadChildren: () => import('./pages/item-detail/item-detail.module').then((m) => m.ItemDetailModule)
     }
 ];
