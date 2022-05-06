@@ -3,6 +3,7 @@
         <tr>
             <th class="col-item" colspan="2">
                 <div
+                    *ngIf="!model.hasOnlyOneItemName"
                     [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Name, 1)"
                     (click)="sortPlacedItems(PlacedItemListColumn.Name, 1)"
                     class="table-header-sort"
@@ -11,6 +12,7 @@
                 </div>
                 <div class="table-header-label">Item</div>
                 <div
+                    *ngIf="!model.hasOnlyOneItemName"
                     [ngClass]="getPlacedItemSortButtonClass(PlacedItemListColumn.Name, -1)"
                     (click)="sortPlacedItems(PlacedItemListColumn.Name, -1)"
                     class="table-header-sort"

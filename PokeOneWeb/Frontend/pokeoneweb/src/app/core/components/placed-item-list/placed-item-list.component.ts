@@ -19,11 +19,24 @@ export class PlacedItemListComponent implements OnInit {
 
     ngOnInit(): void {
         this.model.placedItems = this.placedItems;
+        this.checkItemNames();
         this.checkLocations();
         this.applyInitialSorting();
     }
 
-    private checkLocations() {
+    public checkItemNames() {
+        if (!this.model.placedItems) return;
+
+        const itemNameList = this.model.placedItems.map((placedItem) => placedItem.itemName)
+
+        if (Array.from(new Set(itemNameList)).length > 1) {
+            this.model.hasOnlyOneItemName = false;
+        } else {
+            this.model.hasOnlyOneItemName = true;
+        }
+    }
+
+    public checkLocations() {
         if (!this.model.placedItems) return;
 
         const regionlist = [];

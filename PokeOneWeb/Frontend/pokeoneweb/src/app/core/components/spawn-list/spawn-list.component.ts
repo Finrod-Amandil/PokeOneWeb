@@ -22,9 +22,22 @@ export class SpawnListComponent implements OnInit {
     ngOnInit(): void {
         this.model.spawns = this.spawns;
         this.model.isLocationPage = <boolean>this.isLocationPage;
+        this.checkPokemonNames();
         this.checkLocations();
         this.hideEventExclusiveSpawns();
         this.applyInitialSorting();
+    }
+
+    public checkPokemonNames() {
+        if (!this.model.spawns) return;
+
+        const pokemonNameList = this.model.spawns.map((spawn) => spawn.pokemonName);
+
+        if (Array.from(new Set(pokemonNameList)).length > 1) {
+            this.model.hasOnlyOnePokemon = false;
+        } else {
+            this.model.hasOnlyOnePokemon = true;
+        }
     }
 
     public checkLocations() {

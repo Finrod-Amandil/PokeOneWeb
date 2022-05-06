@@ -7,4 +7,5 @@ export class PlacedItemListComponentModel {
 
     public placedItems: PlacedItemModel[] = [];
     public hasOnlyOneLocation = false;
+    public hasOnlyOneItemName = false;
 }
