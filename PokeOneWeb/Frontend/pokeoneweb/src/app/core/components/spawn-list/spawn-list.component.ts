@@ -29,10 +29,7 @@ export class SpawnListComponent implements OnInit {
     public checkPokemonNames() {
         if (!this.model.spawns) return;
 
-        const pokemonNameList = [];
-        for (const spawn of this.model.spawns) {
-            pokemonNameList.push(spawn.pokemonName);
-        }
+        const pokemonNameList = this.model.spawns.map((spawn) => spawn.pokemonName);
 
         if (Array.from(new Set(pokemonNameList)).length > 1) {
             this.model.hasOnlyOnePokemon = false;

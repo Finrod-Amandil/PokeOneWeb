@@ -27,10 +27,7 @@ export class PlacedItemListComponent implements OnInit {
     public checkItemNames() {
         if (!this.model.placedItems) return;
 
-        const itemNameList = [];
-        for (const item of this.model.placedItems) {
-            itemNameList.push(item.itemName);
-        }
+        const itemNameList = this.model.placedItems.map((placedItem) => placedItem.itemName)
 
         if (Array.from(new Set(itemNameList)).length > 1) {
             this.model.hasOnlyOneItemName = false;
