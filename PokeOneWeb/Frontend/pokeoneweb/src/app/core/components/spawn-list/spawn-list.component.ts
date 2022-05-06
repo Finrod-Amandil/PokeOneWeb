@@ -12,6 +12,7 @@ import { SpawnListColumn } from './core/spawn-list-column.enum';
 })
 export class SpawnListComponent implements OnInit {
     @Input() spawns: ISpawnModel[] = [];
+    @Input() isLocationPage: Boolean = false;
 
     public model: SpawnListComponentModel = new SpawnListComponentModel();
     public spawnsColumn = SpawnListColumn;
@@ -20,6 +21,7 @@ export class SpawnListComponent implements OnInit {
 
     ngOnInit(): void {
         this.model.spawns = this.spawns;
+        this.model.isLocationPage = <boolean>this.isLocationPage;
         this.checkLocations();
         this.hideEventExclusiveSpawns();
         this.applyInitialSorting();
@@ -56,6 +58,7 @@ export class SpawnListComponent implements OnInit {
 
         //if only event-exclusive spawns are available that are not active show them and disable (un-)hide button
         if (this.model.visibleSpawns.length === 0) {
+            console.log(this.isLocationPage);
             this.model.areOnlyEventExclusiveSpawnsAvailable = true;
             for (const spawn of this.model.spawns) {
                 this.model.visibleSpawns.push(spawn);

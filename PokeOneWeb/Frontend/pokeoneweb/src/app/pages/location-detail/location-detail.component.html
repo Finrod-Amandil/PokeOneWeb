@@ -67,7 +67,7 @@
                         <p class="empty">This location does not have any known pokemon spawns.</p>
                     </div>
                 </div>
-                <app-spawn-list *ngIf="location.spawns.length > 0" [spawns]="location.spawns"></app-spawn-list>
+                <app-spawn-list *ngIf="location.spawns.length > 0" [spawns]="location.spawns" [isLocationPage]=true></app-spawn-list>
                 
                 <h3>{{location.name}} - Placed Items</h3>
                 <div *ngIf="location.placedItems.length === 0" class="no-table-container-outer">
