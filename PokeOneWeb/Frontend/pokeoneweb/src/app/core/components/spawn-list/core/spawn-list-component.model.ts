@@ -14,4 +14,5 @@ export class SpawnListComponentModel {
 
     public hasOnlyOneLocation = false;
     public hasOnlyOnePokemon = false;
+    public isLocationPage = false;
 }

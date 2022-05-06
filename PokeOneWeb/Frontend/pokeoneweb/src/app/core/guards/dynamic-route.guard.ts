@@ -99,6 +99,8 @@ export class DynamicRouteGuard implements CanActivate {
             //Reload routes and navigate.
             this.router.resetConfig(newRoutes);
             this.router.navigate([path]);
+        }, err => {
+            this.router.navigate(['not-found'])
         });
 
         //Guard always returns true and loads LoadingComponent while API request is being executed.
