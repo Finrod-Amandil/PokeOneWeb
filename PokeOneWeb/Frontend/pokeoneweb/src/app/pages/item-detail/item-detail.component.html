@@ -64,7 +64,7 @@
         <h2 name="locations">Locations</h2>
         <div *ngIf="model.item.placedItems.length === 0" class="no-table-container-outer">
             <div class="no-table-container-inner">
-                <p class="empty">This Item does not have any location where it can be picked up.</p>
+                <p class="empty">This item can not be obtained in PokéOne.</p>
             </div>
         </div>
         <app-placed-item-list *ngIf="model.item.placedItems.length > 0" [placedItems]="model.item.placedItems"></app-placed-item-list>
