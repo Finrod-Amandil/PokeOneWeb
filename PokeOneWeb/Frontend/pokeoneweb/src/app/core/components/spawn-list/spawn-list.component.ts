@@ -71,7 +71,6 @@ export class SpawnListComponent implements OnInit {
 
         //if only event-exclusive spawns are available that are not active show them and disable (un-)hide button
         if (this.model.visibleSpawns.length === 0) {
-            console.log(this.isLocationPage);
             this.model.areOnlyEventExclusiveSpawnsAvailable = true;
             for (const spawn of this.model.spawns) {
                 this.model.visibleSpawns.push(spawn);
