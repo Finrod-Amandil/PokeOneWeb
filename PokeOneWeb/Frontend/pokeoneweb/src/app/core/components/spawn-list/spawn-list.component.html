@@ -17,6 +17,7 @@
         <tr>
             <th class="col-pokemon" colspan="2">
                 <div
+                    *ngIf="!model.hasOnlyOnePokemon"
                     [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, 1)"
                     (click)="sortSpawns(spawnsColumn.Pokemon, 1)"
                     class="table-header-sort"
@@ -25,6 +26,7 @@
                 </div>
                 <div class="table-header-label">Pokemon</div>
                 <div
+                    *ngIf="!model.hasOnlyOnePokemon"
                     [ngClass]="getSpawnSortButtonClass(spawnsColumn.Pokemon, -1)"
                     (click)="sortSpawns(spawnsColumn.Pokemon, -1)"
                     class="table-header-sort"

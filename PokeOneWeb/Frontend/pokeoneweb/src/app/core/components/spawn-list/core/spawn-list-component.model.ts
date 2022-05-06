@@ -13,4 +13,5 @@ export class SpawnListComponentModel {
     public visibleSpawns: ISpawnModel[] = [];
 
     public hasOnlyOneLocation = false;
+    public hasOnlyOnePokemon = false;
 }
