@@ -20,6 +20,7 @@ import { GlassButtonComponent } from './glass-button/glass-button.component';
 import { AppVersionComponent } from './app-version/app-version.component';
 import { SpawnListComponent } from './spawn-list/spawn-list.component';
 import { PlacedItemListComponent } from './placed-item-list/placed-item-list.component';
+import { PageHeaderComponent } from './page-header/page-header.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         GlassButtonComponent,
         AppVersionComponent,
         SpawnListComponent,
-        PlacedItemListComponent
+        PlacedItemListComponent,
+        PageHeaderComponent
     ],
     imports: [CommonModule, NgSelectModule, FormsModule, MatSliderModule, RouterModule],
     exports: [
@@ -57,7 +59,8 @@ import { PlacedItemListComponent } from './placed-item-list/placed-item-list.com
         GlassButtonComponent,
         AppVersionComponent,
         SpawnListComponent,
-        PlacedItemListComponent
-    ],
+        PlacedItemListComponent,
+        PageHeaderComponent
+    ]
 })
 export class ComponentsModule {}

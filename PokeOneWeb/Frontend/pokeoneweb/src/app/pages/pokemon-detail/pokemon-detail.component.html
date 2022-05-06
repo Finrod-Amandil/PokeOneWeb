@@ -1,6 +1,4 @@
-<div id="content_title_container">
-    <div id="content_title">{{model.pokemon ? model.pokemon.name : model.pokemonName}}</div>
-</div>
+<pokeone-page-header [title]="model.pokemon ? model.pokemon.name : model.pokemonName"> </pokeone-page-header>
 
 <div id="content_main_container">
     <div *ngIf="!model.pokemon">Loading...</div>
@@ -650,7 +648,11 @@
                 <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
             </div>
         </div>
-        <app-spawn-list *ngIf="model.pokemon.spawns.length > 0" [spawns]="model.pokemon.spawns" [isLocationPage]=false></app-spawn-list>
+        <app-spawn-list
+            *ngIf="model.pokemon.spawns.length > 0"
+            [spawns]="model.pokemon.spawns"
+            [isLocationPage]="false"
+        ></app-spawn-list>
 
         <h2 name="moves">Learnset</h2>
         <div *ngIf="model.learnableMoves.length === 0" class="no-table-container-outer">
@@ -806,9 +808,7 @@
                         [ngClass]="{'stab-power': move.hasStab}"
                     >
                         <p>{{move.attackPower !== 0 ? move.attackPower : '-'}}</p>
-                        <p *ngIf="move.hasStab && move.effectivePower > 0" class="stab">
-                            {{move.effectivePower}}
-                        </p>
+                        <p *ngIf="move.hasStab && move.effectivePower > 0" class="stab">{{move.effectivePower}}</p>
                         <p *ngIf="move.hasStab && move.effectivePower > 0" class="stab stab-label">(STAB)</p>
                     </td>
                     <td

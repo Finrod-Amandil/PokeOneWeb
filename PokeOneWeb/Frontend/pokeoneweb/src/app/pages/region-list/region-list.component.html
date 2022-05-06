@@ -1,24 +1,19 @@
-<div id="content_title_container">
-    <div id="content_title">Regions</div>
-</div>
+<pokeone-page-header title="Regions"> </pokeone-page-header>
 
 <div id="content_main_container">
     <div *ngFor="let region of model.regions" class="region-container">
         <div class="region-glass-container">
-            <div class="region-name-container">
-                {{getRegionType(region)}}
-            </div>
+            <div class="region-name-container">{{getRegionType(region)}}</div>
             <div class="region-glass-container">
                 <app-glass-button
                     [buttonTitle]="region.name"
                     [buttonImage]="'./assets/img/button-images/region-list/' + region.resourceName + '.png'"
                     [linkDestination]="'/' + region.resourceName"
-                    [comingSoon]="!region.isReleased">
+                    [comingSoon]="!region.isReleased"
+                >
                 </app-glass-button>
             </div>
         </div>
-        <div class="region-description">
-            {{region.description}}
-        </div>
+        <div class="region-description">{{region.description}}</div>
     </div>
 </div>

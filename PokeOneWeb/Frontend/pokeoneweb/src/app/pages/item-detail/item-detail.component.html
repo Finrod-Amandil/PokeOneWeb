@@ -1,6 +1,4 @@
-<div id="content_title_container">
-    <div id="content_title">{{model.item ? model.item.name : model.itemName}}</div>
-</div>
+<pokeone-page-header [title]="model.item ? model.item.name : model.itemName"></pokeone-page-header>
 
 <div id="content_main_container">
     <div *ngIf="!model.item">Loading...</div>
@@ -67,6 +65,9 @@
                 <p class="empty">This item can not be obtained in PokéOne.</p>
             </div>
         </div>
-        <app-placed-item-list *ngIf="model.item.placedItems.length > 0" [placedItems]="model.item.placedItems"></app-placed-item-list>
+        <app-placed-item-list
+            *ngIf="model.item.placedItems.length > 0"
+            [placedItems]="model.item.placedItems"
+        ></app-placed-item-list>
     </div>
 </div>
