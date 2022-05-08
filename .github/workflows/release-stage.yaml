@@ -1,0 +1,59 @@
+name: Release Staging Environment
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build-PokeOneWebApp
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: PokeOneWeb/Frontend/pokeoneweb/package-lock.json
+
+    - run: |
+        npm ci
+        npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
+        npm run build -- --configuration stage
+      working-directory: PokeOneWeb/Frontend/pokeoneweb
+
+    - name: Run Jasmine Unit-Tests
+      run: npm test -- --browsers=ChromeHeadless
+      working-directory: PokeOneWeb/Frontend/pokeoneweb
+
+    - name: Run Cypress UI-Tests
+      uses: cypress-io/github-action@v2
+      with:
+        working-directory: PokeOneWeb/Frontend/pokeoneweb
+        wait-on: 'http://localhost:4200'
+        wait-on-timeout: 120
+        start: npm start
+        browser: chrome
+
+    - uses: appleboy/scp-action@master
+      with:
+        host: dev.pokeone.guide
+        username: ubuntu
+        port: 22
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        source: "PokeOneWeb/Frontend/pokeoneweb/dist"
+        target: "/opt/PokeOneWeb.WebApp/stage"
+        strip_components: 5
+        overwrite: true
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      with: 
+        projectBaseDir: PokeOneWeb/Frontend/pokeoneweb
+        args: >
+          -Dsonar.organization=poke-one-web
+          -Dsonar.projectKey=poke-one-web-frontend
+          -Dsonar.javascript.lcov.reportPaths=coverage/**/lcov.info
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_WEBAPP }}

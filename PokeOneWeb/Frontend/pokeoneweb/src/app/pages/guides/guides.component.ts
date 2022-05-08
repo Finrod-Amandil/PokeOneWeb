@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
 
 @Component({
     selector: 'app-guides',
@@ -6,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./guides.component.scss']
 })
 export class GuidesComponent implements OnInit {
-    constructor() {}
+    constructor(private titleService: Title) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.titleService.setTitle(`Guides - ${WEBSITE_NAME}`);
+    }
 }

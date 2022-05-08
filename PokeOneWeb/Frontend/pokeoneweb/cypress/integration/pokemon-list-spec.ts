@@ -27,4 +27,28 @@ describe('UI-tests for page pokemon-list', () => {
         cy.contains('Bulbasaur').should('exist');
         cy.contains('Mega Venusaur').should('not.exist');
     });
+
+    it('Should filter for all Pokemon with only the type Fire', () => {
+        cy.get('#input_type1').click();
+        cy.get('#input_type1').get('.ng-option').contains('FIRE').click();
+        cy.get('#input_type2').click();
+        cy.get('#input_type2').get('.ng-option').contains('NONE').click();
+        cy.get('#pokemon_list tbody').children().should('have.length', 2);
+        cy.contains('Charmander').should('exist');
+        cy.contains('Charmeleon').should('exist');
+        cy.contains('Charizard').should('not.exist');
+    });
+
+    it('Should filter for all Pokemon with only one type', () => {
+        cy.get('#input_type1').click();
+        cy.get('#input_type1').get('.ng-option').contains('ANY').click();
+        cy.get('#input_type2').click();
+        cy.get('#input_type2').get('.ng-option').contains('NONE').click();
+        cy.get('#pokemon_list tbody').children().should('have.length', 4);
+        cy.contains('Charmander').should('exist');
+        cy.contains('Charmeleon').should('exist');
+        cy.contains('Squirtle').should('exist');
+        cy.contains('Wartortle').should('exist');
+        cy.contains('Charizard').should('not.exist');
+    });
 });

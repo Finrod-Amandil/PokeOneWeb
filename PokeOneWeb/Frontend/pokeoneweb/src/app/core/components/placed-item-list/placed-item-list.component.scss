@@ -1,0 +1,100 @@
+.table-compact td {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+#placedItems_table {
+    position: relative;
+}
+
+#placedItems_table th {
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+#placedItems_table .has-tooltip {
+    border-bottom: 1px dotted var(--light-gray);
+}
+
+#placedItems_table .col-isHidden + #placedItems_table .col-isConfirmed {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: -1px;
+    right: 21px;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    font-weight: 300;
+    font-size: 12px;
+    text-align: right;
+    border: 1px solid var(--dark-gray);
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 21px;
+}
+
+.has-tooltip:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    margin-top: 20px;
+}
+
+#placedItems_table img {
+    max-height: 40px;
+}
+
+#placedItems_table a {
+    color: var(--light-gray);
+}
+
+#placedItems_table a:hover {
+    color: var(--text-accent);
+}
+
+#placedItems_table td.col-sprite {
+    padding-left: 0;
+    padding-right: 0;
+    width: 42px;
+}
+#placedItems_table td.col-sprite img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#placedItems_table td.col-item {
+    min-width: 100px;
+}
+
+#placedItems_table td.col-quantity {
+    max-width: 40px;
+    text-align: center;
+}
+
+#placedItems_table td.col-region {
+    max-width: 90px;
+    color: var(--dark-gray);
+    font-weight: 700;
+    text-align: center;
+}
+
+#placedItems_table td.col-location {
+    min-width: 100px;
+}
+
+#placedItems_table td.col-placementdescription {
+    max-width: 400px;
+}
+
+#placedItems_table td.col-isHidden {
+    max-width: 40px;
+    align-content: center;
+}
+
+#placedItems_table td.col-isConfirmed {
+    max-width: 40px;
+    align-content: center;
+}

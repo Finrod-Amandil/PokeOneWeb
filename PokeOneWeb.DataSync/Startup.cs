@@ -38,14 +38,6 @@ namespace PokeOneWeb.DataSync
                 options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
             });
 
-            services.AddDbContext<ReadModelDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    configuration.GetConnectionString("ReadModelConnection"),
-                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-                options.ConfigureWarnings(w => w.Throw(CoreEventId.RowLimitingOperationWithoutOrderByWarning));
-            });
-
             services.Configure<GoogleSpreadsheetsSettings>(options =>
                 configuration.GetSection("GoogleSpreadsheetsSettings").Bind(options));
 
@@ -158,16 +150,6 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IReadModelMapper<ItemReadModel>, ItemReadModelMapper>();
             services.AddScoped<IReadModelMapper<RegionReadModel>, RegionReadModelMapper>();
             services.AddScoped<IReadModelMapper<LocationGroupReadModel>, LocationGroupReadModelMapper>();
-
-            services.AddScoped<IReadModelRepository<EntityTypeReadModel>, EntityTypeReadModelRepository>();
-            services.AddScoped<IReadModelRepository<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelRepository>();
-            services.AddScoped<IReadModelRepository<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelRepository>();
-            services.AddScoped<IReadModelRepository<MoveReadModel>, MoveReadModelRepository>();
-            services.AddScoped<IReadModelRepository<NatureReadModel>, NatureReadModelRepository>();
-            services.AddScoped<IReadModelRepository<PokemonVarietyReadModel>, PokemonVarietyReadModelRepository>();
-            services.AddScoped<IReadModelRepository<ItemReadModel>, ItemReadModelRepository>();
-            services.AddScoped<IReadModelRepository<RegionReadModel>, RegionReadModelRepository>();
-            services.AddScoped<IReadModelRepository<LocationGroupReadModel>, LocationGroupReadModelRepository>();
         }
     }
 }

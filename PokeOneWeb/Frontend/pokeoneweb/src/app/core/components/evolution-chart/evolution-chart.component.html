@@ -70,7 +70,7 @@
 
     <g class="evolution-nodes">
         <g *ngFor="let node of evolutionNodes" class="evolution-node">
-            <a (click)="navigate('/' + node.resourceName)" [attr.href]="'/' + node.resourceName">
+            <a (click)="navigate('/' + node.resourceName)" [routerLink]="'/' + node.resourceName">
                 <circle
                     class="evolution-node-background"
                     [attr.cx]="node.cx"

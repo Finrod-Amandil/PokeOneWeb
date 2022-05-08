@@ -1,7 +1,95 @@
-<div id="content_title_container">
-    <div id="content_title">{{locationName}}</div>
-</div>
+<pokeone-page-header [title]="model.locationGroup ? model.locationGroup.name : model.locationGroupResourceName">
+</pokeone-page-header>
 
 <div id="content_main_container">
-    <p>{{locationName}}</p>
+    <div *ngIf="!model.locationGroup">Loading...</div>
+    <div *ngIf="model.locationGroup">
+        <div class="location-detail-navigation">
+            <a [routerLink]="'/'+ model.locationGroup.previousLocationGroupResourceName">
+                <div class="location-detail-navigation-left">
+                    <div class="location-detail-navigation-link">
+                        ⮜ {{model.locationGroup.previousLocationGroupName}}
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/'+ model.locationGroup.regionResourceName">
+                <div class="location-detail-navigation-center">
+                    <div class="location-detail-navigation-sprite">
+                        <img src="./assets/img/navbar/locations.png" alt="location navbar icon" />
+                    </div>
+                    <div class="location-detail-navigation-link">{{model.locationGroup.regionName}}</div>
+                    <div class="location-detail-navigation-sprite">
+                        <img src="./assets/img/navbar/locations.png" alt="location navbar icon" />
+                    </div>
+                </div>
+            </a>
+            <a [routerLink]="'/'+ model.locationGroup.nextLocationGroupResourceName">
+                <div class="location-detail-navigation-right">
+                    <div class="location-detail-navigation-link">{{model.locationGroup.nextLocationGroupName}} ⮞</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="no-table-container-outer quicklink" *ngIf="model.locationGroup.locations.length > 0">
+            <h4>Locations on {{model.locationGroup.name}}</h4>
+            <div class="no-table-container-inner quicklink-container">
+                <div class="quicklink-panel" *ngFor="let location of model.locationGroup.locations">
+                    <a [href]="'/'+ model.locationGroup.resourceName +'#'+ location.name">
+                        <div class="location-detail-navigation-link">{{location.name}}</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="model.locationGroup.locations.length === 0" class="no-table-container-outer">
+            <div class="no-table-container-inner">
+                <p class="empty">This LocationGroup does not have any known locations in PokéOne.</p>
+            </div>
+        </div>
+        <div *ngIf="model.locationGroup.locations.length > 0">
+            <div *ngFor="let location of model.locationGroup.locations; last as isLast" [id]="location.name">
+                <h2>{{location.name}}</h2>
+                <div class="no-table-container-outer" *ngIf="location.notes">
+                    <div class="no-table-container-inner general-info-container">
+                        <div class="general-panel general-notes">
+                            <div class="general-header">
+                                <h4>Notes</h4>
+                            </div>
+                            <div class="general-content">
+                                <p>{{location.notes}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>{{location.name}} - Spawns</h3>
+                <div *ngIf="location.spawns.length === 0" class="no-table-container-outer">
+                    <div class="no-table-container-inner">
+                        <p class="empty">This location does not have any known pokemon spawns.</p>
+                    </div>
+                </div>
+                <app-spawn-list
+                    *ngIf="location.spawns.length > 0"
+                    [spawns]="location.spawns"
+                    [isLocationPage]="true"
+                ></app-spawn-list>
+
+                <h3>{{location.name}} - Placed Items</h3>
+                <div *ngIf="location.placedItems.length === 0" class="no-table-container-outer">
+                    <div class="no-table-container-inner">
+                        <p class="empty">This location does not have any items that can be picked up.</p>
+                    </div>
+                </div>
+                <app-placed-item-list
+                    *ngIf="location.placedItems.length > 0"
+                    [placedItems]="location.placedItems"
+                ></app-placed-item-list>
+                <div *ngIf="!isLast">
+                    <br />
+                    <hr />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

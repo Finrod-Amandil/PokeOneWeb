@@ -1,27 +1,18 @@
-<head>
-    <title>Pokeoneweb</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-</head>
-
-<div id="content_title_container">
-    <div id="content_title">Home</div>
-</div>
+<pokeone-page-header title="Home"></pokeone-page-header>
 
 <div id="content_main_container">
     <div class="button-container">
         <div class="home-welcomecontainer">
-            <h1>Welcome to dive Unofficial PokéOne Guide!</h1>
-        </div>
-        <div class="home-searchcontainer">
-            <!--Source https://codepen.io/ahmadbassamemran/pen/rNjMXqg-->
-            <div class="search-box">
-                <button class="btn-search">
-                    <em class="fas fa-search"></em>
-                </button>
-                <input type="text" class="input-search" placeholder="Type to Search..." />
-            </div>
+            <h1>Welcome to the Unofficial PokéOne Guide!</h1>
         </div>
         <div class="home-navigationcontainer">
+            <div class="button-container">
+                <app-glass-button
+                    buttonTitle="Region overview"
+                    buttonImage="./assets/img/navbar/locations.png"
+                    linkDestination="/l"
+                ></app-glass-button>
+            </div>
             <div class="button-container">
                 <app-glass-button
                     buttonTitle="Pokédex"
@@ -34,13 +25,6 @@
                     buttonTitle="Itemdex"
                     buttonImage="./assets/img/navbar/items.png"
                     linkDestination="/i"
-                ></app-glass-button>
-            </div>
-            <div class="button-container">
-                <app-glass-button
-                    buttonTitle="Region overview"
-                    buttonImage="./assets/img/navbar/locations.png"
-                    linkDestination="/l"
                 ></app-glass-button>
             </div>
             <div class="button-container">

@@ -107,16 +107,14 @@ export class PokemonListFilterService {
             filter.selectedType2 === SELECT_OPTION_NONE
         ) {
             return (
-                (p.primaryElementalType === filter.selectedType1 && p.secondaryElementalType === '') ||
-                (p.secondaryElementalType === filter.selectedType1 && p.primaryElementalType === '')
+                p.primaryElementalType === filter.selectedType1 && !p.secondaryElementalType // Pokemon with no secondary Elemental Type contains null
             );
         }
 
         //Any single type (ANY + NONE)
         else if (filter.selectedType1 === SELECT_OPTION_ANY && filter.selectedType2 === SELECT_OPTION_NONE) {
             return (
-                (p.primaryElementalType !== '' && p.secondaryElementalType === '') ||
-                (p.primaryElementalType === '' && p.secondaryElementalType !== '')
+                p.primaryElementalType !== '' && !p.secondaryElementalType // Pokemon with no secondary Elemental Type contains falsy
             );
         }
 
@@ -206,7 +204,7 @@ export class PokemonListFilterService {
 
         for (const key of Object.keys(resultCounts)) {
             if (resultCounts[key] === filterCount) {
-                let tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key)
+                let tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key);
                 if (!tmp) continue;
                 results.push(tmp);
             }

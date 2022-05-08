@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -7,8 +8,10 @@ namespace PokeOneWeb.Data.ReadModels
     [Table("SpawnReadModel")]
     public class SpawnReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public int PokemonFormSortIndex { get; set; }

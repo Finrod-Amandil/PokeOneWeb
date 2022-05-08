@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
 
 @Component({
     selector: 'app-faq',
@@ -6,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./faq.component.scss']
 })
 export class FaqComponent implements OnInit {
-    constructor() {}
+    constructor(private titleService: Title) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.titleService.setTitle(`FAQ - ${WEBSITE_NAME}`);
+    }
 }
