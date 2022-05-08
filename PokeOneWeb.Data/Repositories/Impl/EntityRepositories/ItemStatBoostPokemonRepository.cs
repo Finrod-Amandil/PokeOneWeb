@@ -42,7 +42,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 .Include(x => x.Item)
                 .ToDictionary(x => x.ItemName, x => x.Id);
 
-            var verifiedEntities = new List<ItemStatBoostPokemon>();
+            var verifiedEntities = new List<ItemStatBoostPokemon>(entities);
             foreach (var entity in entities)
             {
                 var canInsertOrUpdate = true;
@@ -90,6 +90,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
             var existingItemStatBoosts = DbContext.ItemStatBoosts
                 .Include(x => x.Item)
+                .AsNoTracking()
                 .ToDictionary(x => x.ItemName, x => x.Id);
 
             var verifiedItemStatBoosts = new List<ItemStatBoost>(distinctItemStatBoosts);

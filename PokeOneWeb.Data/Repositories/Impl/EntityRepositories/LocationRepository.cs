@@ -75,7 +75,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 var canInsertOrUpdate = true;
 
                 canInsertOrUpdate &= TrySetIdForName<Region>(
-                    locationGroup.Name,
+                    locationGroup.RegionName,
                     id => locationGroup.RegionId = id);
 
                 if (!canInsertOrUpdate)

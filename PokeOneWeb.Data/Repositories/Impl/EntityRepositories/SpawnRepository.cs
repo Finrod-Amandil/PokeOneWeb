@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Exceptions;
 
@@ -14,9 +15,11 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         protected override ICollection<Spawn> PrepareEntitiesForInsertOrUpdate(ICollection<Spawn> entities)
         {
             var seasons = DbContext.Seasons
+                .AsNoTracking()
                 .ToDictionary(x => x.Abbreviation, x => x.Id);
 
             var timesOfDay = DbContext.TimesOfDay
+                .AsNoTracking()
                 .ToDictionary(x => x.Abbreviation, x => x.Id);
 
             var verifiedEntities = new List<Spawn>(entities);

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
+using PokeOneWeb.DataSync.ReadModelUpdate;
 
 namespace PokeOneWeb.DataSync
 {
@@ -30,11 +31,11 @@ namespace PokeOneWeb.DataSync
 
             var importService = provider.GetRequiredService<IGoogleSpreadsheetImportService>();
 
-            // var readModelUpdateService = provider.GetRequiredService<IReadModelUpdateService>();
+            var readModelUpdateService = provider.GetRequiredService<IReadModelUpdateService>();
 
             var importReport = await importService.ImportSpreadsheetData();
 
-            // readModelUpdateService.UpdateReadModel(importReport);
+            readModelUpdateService.UpdateReadModel(importReport);
         }
     }
 }

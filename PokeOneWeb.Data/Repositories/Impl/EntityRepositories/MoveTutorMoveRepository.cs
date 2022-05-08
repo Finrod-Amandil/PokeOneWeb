@@ -16,6 +16,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
             var currencies = DbContext.Currencies
                 .Include(x => x.Item)
+                .AsNoTracking()
                 .ToDictionary(x => x.Item.Name, x => x.Id);
 
             var verifiedEntities = new List<MoveTutorMove>(entities);

@@ -41,6 +41,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             var learnableMoves = DbContext.LearnableMoves
                 .Include(x => x.PokemonVariety)
                 .Include(x => x.Move)
+                .AsNoTracking()
                 .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
 
             var verifiedEntities = new List<LearnableMoveLearnMethod>(entities);
@@ -77,6 +78,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             var existingLearnableMoves = DbContext.LearnableMoves
                 .Include(x => x.PokemonVariety)
                 .Include(x => x.Move)
+                .AsNoTracking()
                 .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
 
             var verifiedLearnableMoves = new List<LearnableMove>(distinctLearnableMoves);

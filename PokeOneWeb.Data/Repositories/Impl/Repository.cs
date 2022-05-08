@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Exceptions;
 
@@ -15,6 +16,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().AddRange(entities);
             DbContext.SaveChanges();
+            DbContext.ChangeTracker.Clear();
 
             return entities.Count;
         }
@@ -30,6 +32,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().UpdateRange(entities);
             DbContext.SaveChanges();
+            DbContext.ChangeTracker.Clear();
 
             return entities.Count;
         }
@@ -77,11 +80,12 @@ namespace PokeOneWeb.Data.Repositories.Impl
             }
 
             var id = DbContext.Set<TNamedEntity>()
+                .AsNoTracking()
                 .Where(x => x.Name.Equals(entityName))
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
-            return id;
+            return id > 0 ? id : null;
         }
 
         protected bool TrySetIdForName<TNamedEntity>(string entityName, Action<int> setId) where TNamedEntity : class, INamedEntity
