@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -13,7 +14,8 @@ namespace PokeOneWeb.Data.Entities
     /// floor of a tower) and so on.
     /// </summary>
     [Table("Location")]
-    public class Location : IHashedEntity
+    [Sheet("locations")]
+    public class Location : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -63,9 +65,12 @@ namespace PokeOneWeb.Data.Entities
         public string Notes { get; set; }
 
         [ForeignKey("LocationGroupId")]
-        public LocationGroup LocationGroup { get; set; }
+        public LocationGroup LocationGroup { get; set; } = new();
 
         public int LocationGroupId { get; set; }
+
+        [NotMapped]
+        public string LocationGroupName { internal get; set; }
 
         public List<Spawn> PokemonSpawns { get; set; } = new();
 

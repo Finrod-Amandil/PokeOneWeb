@@ -15,7 +15,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 
         public TimeSpan TotalIdleTime { get; set; } = TimeSpan.Zero;
 
-        public Dictionary<string, TimeSpan> ImportTimesByEntity { get; set; } = new();
+        public Dictionary<string, TimeSpan> ImportTimesBySheet { get; set; } = new();
 
         public TimeSpan TotalReadModelUpdateTime { get; set; } = TimeSpan.Zero;
 

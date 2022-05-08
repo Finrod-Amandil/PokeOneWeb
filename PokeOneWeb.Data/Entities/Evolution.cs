@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -14,6 +15,7 @@ namespace PokeOneWeb.Data.Entities
     /// are impossible to meet, the evolution is considered unavailable.
     /// </summary>
     [Table("Evolution")]
+    [Sheet("evolutions")]
     public class Evolution : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -103,6 +105,9 @@ namespace PokeOneWeb.Data.Entities
 
         public int BasePokemonSpeciesId { get; set; }
 
+        [NotMapped]
+        public string BasePokemonSpeciesName { internal get; set; }
+
         /// <summary>
         /// Gets or sets the Pokemon Variety before the evolution took place.
         /// </summary>
@@ -110,6 +115,9 @@ namespace PokeOneWeb.Data.Entities
         public PokemonVariety BasePokemonVariety { get; set; }
 
         public int BasePokemonVarietyId { get; set; }
+
+        [NotMapped]
+        public string BasePokemonVarietyName { internal get; set; }
 
         /// <summary>
         /// Gets or sets the Pokemon Variety after the evolution took place.
@@ -119,9 +127,13 @@ namespace PokeOneWeb.Data.Entities
 
         public int EvolvedPokemonVarietyId { get; set; }
 
+        [NotMapped]
+        public string EvolvedPokemonVarietyName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{BasePokemonVariety} --> {EvolvedPokemonVariety}";
+            return $"{BasePokemonVariety?.ToString() ?? BasePokemonVarietyName} -> " +
+                   $"{EvolvedPokemonVariety?.ToString() ?? EvolvedPokemonVarietyName}";
         }
     }
 }

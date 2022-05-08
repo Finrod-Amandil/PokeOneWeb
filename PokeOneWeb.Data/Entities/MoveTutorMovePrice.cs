@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Entities
     /// The price in one currency that a Move Tutor charges for teaching a certain move.
     /// </summary>
     [Table("MoveTutorMovePrice")]
-    public class MoveTutorMovePrice
+    public class MoveTutorMovePrice : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

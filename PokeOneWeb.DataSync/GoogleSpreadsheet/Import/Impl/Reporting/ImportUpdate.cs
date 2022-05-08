@@ -4,7 +4,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
     public class ImportUpdate
     {
-        public Entity Entity { get; set; }
+        public string EntityName { get; set; }
 
         public DbAction DbAction { get; set; }
 
