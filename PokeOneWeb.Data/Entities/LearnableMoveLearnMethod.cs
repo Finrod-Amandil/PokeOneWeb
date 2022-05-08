@@ -7,6 +7,9 @@ using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A method (i.e. Level-up, tutor) through which a specific Pokemon can learn a specific move.
+    /// </summary>
     [Table("LearnableMoveLearnMethod")]
     [Sheet("learnablemoves")]
     public class LearnableMoveLearnMethod : IHashedEntity

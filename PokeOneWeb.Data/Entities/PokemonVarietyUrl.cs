@@ -6,7 +6,7 @@ using PokeOneWeb.Data.Entities.Interfaces;
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// A URL to the page about this variety on another website.
+    /// An URL to the page about this variety on another website.
     /// </summary>
     [Table("PokemonVarietyUrl")]
     public class PokemonVarietyUrl : IEntity

@@ -16,7 +16,12 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
             var rowHashes = DbContext.Set<TEntity>()
                 .Where(x => x.ImportSheetId == sheet.Id)
-                .Select(x => new RowHash { Hash = x.Hash, IdHash = x.IdHash, ImportSheetId = x.ImportSheetId })
+                .Select(x => new RowHash
+                {
+                    Hash = x.Hash,
+                    IdHash = x.IdHash,
+                    ImportSheetId = x.ImportSheetId
+                })
                 .ToList();
 
             return rowHashes;

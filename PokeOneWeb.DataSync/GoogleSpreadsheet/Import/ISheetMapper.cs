@@ -6,6 +6,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 {
     public interface ISheetMapper<out TEntity> where TEntity : class, IHashedEntity
     {
+        /// <summary>
+        /// Maps the raw data rows from a google sheet to the data store entities.
+        /// </summary>
         IEnumerable<TEntity> Map(IEnumerable<SheetDataRow> sheetDataRows);
     }
 }

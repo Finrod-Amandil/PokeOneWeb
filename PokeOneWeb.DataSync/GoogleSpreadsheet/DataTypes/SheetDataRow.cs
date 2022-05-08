@@ -4,6 +4,10 @@ using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 {
+    /// <summary>
+    /// Auxiliary class representing a single row of data from a google sheet, allowing
+    /// lookups by column name.
+    /// </summary>
     public class SheetDataRow
     {
         private readonly RowHash _hash;
@@ -15,6 +19,10 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 
         public int ImportSheetId => _hash.ImportSheetId;
 
+        /// <summary>
+        /// Finds the value of this row and the given column. Returns
+        /// null if no value was found for this column name.
+        /// </summary>
         public object this[string columnName] =>
             _values.TryGetValue(columnName, out var value)
                 ? value

@@ -32,7 +32,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             _hashListComparator = hashListComparator;
             _reporter = reporter;
 
-            // Report if an entity fails to be inserted to the database.
+            // Get notified if an entity fails to be inserted to the database.
             _repository.UpdateOrInsertExceptionOccurred += (_, args) =>
                 _reporter.ReportError(args.EntityType.Name, args.Exception);
         }

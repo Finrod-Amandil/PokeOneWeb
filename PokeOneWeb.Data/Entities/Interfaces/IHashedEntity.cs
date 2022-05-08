@@ -17,7 +17,7 @@
         public string IdHash { get; set; }
 
         /// <summary>
-        /// Gets or sets the Spreadsheet, from which this entity was imported.
+        /// Gets or sets the sheet, from which this entity was imported.
         /// </summary>
         public ImportSheet ImportSheet { get; set; }
 
