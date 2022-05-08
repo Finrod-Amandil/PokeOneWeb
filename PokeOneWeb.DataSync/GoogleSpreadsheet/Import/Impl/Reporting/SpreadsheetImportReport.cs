@@ -7,8 +7,6 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
     {
         public DateTime ReportCreatedTime { get; } = DateTime.UtcNow;
 
-        public List<ImportUpdate> Updates { get; set; } = new();
-
         public List<ImportError> Errors { get; set; } = new();
 
         public TimeSpan TotalImportTime { get; set; } = TimeSpan.Zero;

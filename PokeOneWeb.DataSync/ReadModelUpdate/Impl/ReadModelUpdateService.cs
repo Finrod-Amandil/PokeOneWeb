@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -95,7 +96,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
 
             // moves
             Console.WriteLine("generating json files for moves");
-            ICollection<MoveReadModel> moves = _moveMapper.MapFromDatabase(importReport).Keys;
+            var moves = _moveMapper.MapFromDatabase(importReport).Keys;
             var listMoves = moves
                 .Select(v => new
                 {
