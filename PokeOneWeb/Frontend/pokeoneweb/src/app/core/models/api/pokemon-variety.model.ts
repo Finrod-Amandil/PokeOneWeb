@@ -1,19 +1,19 @@
 import { IAttackEffectivityModel } from './attack-effectivity.model';
-import { IBuildModel } from './build.model';
 import { IEvolutionAbilityModel } from './evolution-ability.model';
 import { IEvolutionModel } from './evolution.model';
-import { IHuntingConfigurationModel } from './hunting-configuration.model';
 import { ILearnableMoveModel } from './learnable-move.model';
-import { IPokemonVarietyFormModel } from './pokemon-variety-form.model';
+import { IPokemonFormModel } from './pokemon-form.model';
 import { IPokemonVarietyUrlModel } from './pokemon-variety-url.model';
-import { IPokemonVarietyVarietyModel } from './pokemon-variety-variety.model';
 import { ISpawnModel } from './spawn.model';
 
-export interface IPokemonVarietyModel {
+export interface IPokemonVarietyNameModel {
+    name: string;
     resourceName: string;
+}
+
+export interface IPokemonVarietyListModel extends IPokemonVarietyNameModel {
     sortIndex: number;
     pokedexNumber: number;
-    name: string;
     spriteName: string;
 
     primaryElementalType: string;
@@ -25,6 +25,8 @@ export interface IPokemonVarietyModel {
     specialDefense: number;
     speed: number;
     hitPoints: number;
+    statTotal: number;
+    bulk: number;
 
     primaryAbility: string;
     primaryAbilityEffect: string;
@@ -35,11 +37,25 @@ export interface IPokemonVarietyModel {
 
     availability: string;
     availabilityDescription: string;
+
     pvpTier: string;
     pvpTierSortIndex: number;
+
     generation: number;
     isFullyEvolved: boolean;
     isMega: boolean;
+
+    urls: IPokemonVarietyUrlModel[];
+}
+
+export interface IPokemonVarietyModel extends IPokemonVarietyListModel {
+    previousPokemonResourceName: string;
+    previousPokemonSpriteName: string;
+    previousPokemonName: string;
+    nextPokemonResourceName: string;
+    nextPokemonSpriteName: string;
+    nextPokemonName: string;
+
     catchRate: number;
     hasGender: boolean;
     maleRatio: number;
@@ -56,21 +72,11 @@ export interface IPokemonVarietyModel {
     speedEv: number;
     hitPointsEv: number;
 
-    notes: string;
-
-    previousPokemonResourceName: string;
-    previousPokemonSpriteName: string;
-    previousPokemonName: string;
-    nextPokemonResourceName: string;
-    nextPokemonSpriteName: string;
-    nextPokemonName: string;
-
     primaryAbilityAttackBoost: number;
     primaryAbilitySpecialAttackBoost: number;
     primaryAbilityDefenseBoost: number;
     primaryAbilitySpecialDefenseBoost: number;
     primaryAbilitySpeedBoost: number;
-    primaryAbilityHitPointsBoost: number;
     primaryAbilityBoostConditions: string;
 
     secondaryAbilityAttackBoost: number;
@@ -78,7 +84,6 @@ export interface IPokemonVarietyModel {
     secondaryAbilityDefenseBoost: number;
     secondaryAbilitySpecialDefenseBoost: number;
     secondaryAbilitySpeedBoost: number;
-    secondaryAbilityHitPointsBoost: number;
     secondaryAbilityBoostConditions: string;
 
     hiddenAbilityAttackBoost: number;
@@ -86,30 +91,28 @@ export interface IPokemonVarietyModel {
     hiddenAbilityDefenseBoost: number;
     hiddenAbilitySpecialDefenseBoost: number;
     hiddenAbilitySpeedBoost: number;
-    hiddenAbilityHitPointsBoost: number;
     hiddenAbilityBoostConditions: string;
 
-    varieties: IPokemonVarietyVarietyModel[];
-    forms: IPokemonVarietyFormModel[];
-    urls: IPokemonVarietyUrlModel[];
+    notes: string;
 
+    forms: IPokemonFormModel[];
+    evolutions: IEvolutionModel[];
     primaryEvolutionAbilities: IEvolutionAbilityModel[];
     secondaryEvolutionAbilities: IEvolutionAbilityModel[];
     hiddenEvolutionAbilities: IEvolutionAbilityModel[];
-
     defenseAttackEffectivities: IAttackEffectivityModel[];
     spawns: ISpawnModel[];
-    evolutions: IEvolutionModel[];
     learnableMoves: ILearnableMoveModel[];
-    huntingConfigrations: IHuntingConfigurationModel[];
-    builds: IBuildModel[];
 }
 
-export class PokemonVarietyModel implements IPokemonVarietyModel {
+export class PokemonVarietyNameModel implements IPokemonVarietyNameModel {
+    name = '';
     resourceName = '';
+}
+
+export class PokemonVarietyListModel extends PokemonVarietyNameModel implements IPokemonVarietyListModel {
     sortIndex = 0;
     pokedexNumber = 0;
-    name = '';
     spriteName = '';
 
     primaryElementalType = '';
@@ -121,6 +124,8 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     specialDefense = 0;
     speed = 0;
     hitPoints = 0;
+    statTotal = 0;
+    bulk = 0;
 
     primaryAbility = '';
     primaryAbilityEffect = '';
@@ -131,11 +136,25 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
 
     availability = '';
     availabilityDescription = '';
+
     pvpTier = '';
     pvpTierSortIndex = 0;
+
     generation = 0;
     isFullyEvolved = false;
     isMega = false;
+
+    urls = [];
+}
+
+export class PokemonVarietyModel extends PokemonVarietyListModel implements IPokemonVarietyModel {
+    previousPokemonResourceName = '';
+    previousPokemonSpriteName = '';
+    previousPokemonName = '';
+    nextPokemonResourceName = '';
+    nextPokemonSpriteName = '';
+    nextPokemonName = '';
+
     catchRate = 0;
     hasGender = true;
     maleRatio = 50;
@@ -152,21 +171,11 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     speedEv = 0;
     hitPointsEv = 0;
 
-    notes = '';
-
-    previousPokemonResourceName = '';
-    previousPokemonSpriteName = '';
-    previousPokemonName = '';
-    nextPokemonResourceName = '';
-    nextPokemonSpriteName = '';
-    nextPokemonName = '';
-
     primaryAbilityAttackBoost = 1;
     primaryAbilitySpecialAttackBoost = 1;
     primaryAbilityDefenseBoost = 1;
     primaryAbilitySpecialDefenseBoost = 1;
     primaryAbilitySpeedBoost = 1;
-    primaryAbilityHitPointsBoost = 1;
     primaryAbilityBoostConditions = '';
 
     secondaryAbilityAttackBoost = 1;
@@ -174,7 +183,6 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     secondaryAbilityDefenseBoost = 1;
     secondaryAbilitySpecialDefenseBoost = 1;
     secondaryAbilitySpeedBoost = 1;
-    secondaryAbilityHitPointsBoost = 1;
     secondaryAbilityBoostConditions = '';
 
     hiddenAbilityAttackBoost = 1;
@@ -182,21 +190,16 @@ export class PokemonVarietyModel implements IPokemonVarietyModel {
     hiddenAbilityDefenseBoost = 1;
     hiddenAbilitySpecialDefenseBoost = 1;
     hiddenAbilitySpeedBoost = 1;
-    hiddenAbilityHitPointsBoost = 1;
     hiddenAbilityBoostConditions = '';
 
-    varieties = [];
-    forms = [];
-    urls = [];
+    notes = '';
 
+    forms = [];
+    evolutions = [];
     primaryEvolutionAbilities = [];
     secondaryEvolutionAbilities = [];
     hiddenEvolutionAbilities = [];
-
     defenseAttackEffectivities = [];
     spawns = [];
-    evolutions = [];
     learnableMoves = [];
-    huntingConfigrations = [];
-    builds = [];
 }

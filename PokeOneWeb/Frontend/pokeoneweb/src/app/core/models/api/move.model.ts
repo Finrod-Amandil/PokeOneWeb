@@ -1,7 +1,9 @@
-import { IPokemonVarietyListModel } from './pokemon-variety-list.model';
-export interface IMoveModel {
+export interface IMoveNameModel {
     name: string;
     resourceName: string;
+}
+
+export interface IMoveModel extends IMoveNameModel {
     elementalType: string;
     damageClass: string;
     attackPower: number;
@@ -11,9 +13,12 @@ export interface IMoveModel {
     effectDescription: string;
 }
 
-export class MoveModel implements IMoveModel {
+export class MoveNameModel implements IMoveNameModel {
     name = '';
     resourceName = '';
+}
+
+export class MoveModel extends MoveNameModel implements IMoveModel {
     elementalType = '';
     damageClass = '';
     attackPower = 0;

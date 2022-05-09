@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IRegionListModel } from 'src/app/core/models/region-list.model';
+import { IRegionListModel } from 'src/app/core/models/region.model';
 
 @Injectable({
     providedIn: 'root'

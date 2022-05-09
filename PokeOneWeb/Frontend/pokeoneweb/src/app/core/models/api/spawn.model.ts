@@ -1,5 +1,5 @@
 import { ISeasonModel } from './season.model';
-import { ITimeOfDayModel } from './time.model';
+import { ITimeOfDayModel } from './time-of-day.model';
 
 export interface ISpawnModel {
     pokemonFormSortIndex: number;
@@ -29,6 +29,7 @@ export interface ISpawnModel {
 
     rarityString: string;
     rarityValue: number;
+
     notes: string;
 }
 
@@ -60,5 +61,6 @@ export class SpawnModel implements ISpawnModel {
 
     rarityString = '';
     rarityValue = 0;
+
     notes = '';
 }

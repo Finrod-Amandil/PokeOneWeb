@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
-import { IRegionListModel } from 'src/app/core/models/region-list.model';
+import { IRegionListModel } from 'src/app/core/models/region.model';
 import { RegionService } from 'src/app/core/services/api/region.service';
 import { RegionListPageModel } from './core/region-list-page.model';
 import { RegionListSortService } from './core/region-list-sort.service';

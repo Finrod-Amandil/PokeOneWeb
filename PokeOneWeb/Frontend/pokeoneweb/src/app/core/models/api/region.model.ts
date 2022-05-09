@@ -1,4 +1,4 @@
-export interface IRegionListModel {
+export interface IRegionModel {
     name: string;
     resourceName: string;
     isEventRegion: boolean;
@@ -12,7 +12,7 @@ export interface IRegionListModel {
     isSideRegion: boolean;
 }
 
-export class RegionListModel implements IRegionListModel {
+export class RegionModel implements IRegionModel {
     name = '';
     resourceName = '';
     isEventRegion = false;

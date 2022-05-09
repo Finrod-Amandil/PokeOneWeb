@@ -1,5 +1,5 @@
-import { IItemStatBoostModel } from './item-stat-boost.model';
-import { INatureModel } from './nature.model';
+import { IItemStatBoostModel } from '../models/item-stat-boost-pokemon.model';
+import { INatureModel } from '../models/nature.model';
 import { IBasicPokemonVarietyModel, BasicPokemonVarietyModel } from './basic-pokemon-variety.model';
 import { IStatsModel, StatsModel } from './stats.model';
 import { IAbilityModel } from './ability.model';

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { WEBSITE_NAME, SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
 import { IMoveNameModel } from 'src/app/core/models/move-name.model';
 import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
-import { IPokemonVarietyUrlModel } from 'src/app/core/models/pokemon-variety-url.model';
+import { IPokemonVarietyUrlModel } from 'src/app/core/models-2/pokemon-variety-url.model';
 import { MoveService } from 'src/app/core/services/api/move.service';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { GenerationService } from 'src/app/core/services/generation.service';

@@ -1,6 +1,7 @@
-export interface IItemStatBoostModel {
+export interface IItemStatBoostPokemonModel {
     itemName: string;
     itemResourceName: string;
+
     itemEffect: string;
 
     attackBoost: number;
@@ -9,14 +10,15 @@ export interface IItemStatBoostModel {
     specialDefenseBoost: number;
     speedBoost: number;
     hitPointsBoost: number;
-    
+
     hasRequiredPokemon: boolean;
     requiredPokemonResourceName: string;
 }
 
-export class ItemStatBoostModel implements IItemStatBoostModel {
+export class ItemStatBoostPokemonModel implements IItemStatBoostPokemonModel {
     itemName = '';
     itemResourceName = '';
+
     itemEffect = '';
 
     attackBoost = 1;

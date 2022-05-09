@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Stat } from '../../enums/stat.enum';
 import { IAbilityModel } from '../../models/ability.model';
 import { IBasicPokemonVarietyModel } from '../../models/basic-pokemon-variety.model';
-import { IItemStatBoostModel } from '../../models/item-stat-boost.model';
+import { IItemStatBoostModel } from '../../models/item-stat-boost-pokemon.model';
 import { INatureModel } from '../../models/nature.model';
 import { IPokemonVarietyModel } from '../../models/pokemon-variety.model';
 import { IStatsConfigurationModel, StatsConfigurationModel } from '../../models/stats-configuration.model';
@@ -201,18 +201,20 @@ export class StatInputComponent implements OnInit {
             console.log('Could not load item boosts, no Pokémon is selected.');
             return;
         }
-        this.itemBoostService
-            .getItemStatBoosts()
-            .subscribe(response => {
-                this.itemBoosts = response as IItemStatBoostModel[];
-                this.itemBoosts = this.itemBoosts.
-                    filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName).
-                    sort((n1, n2) => {
-                        if (n1.itemName > n2.itemName) return 1;
-                        if (n1.itemName < n2.itemName) return -1
-                        return 0;
-                    });
-            });
+        this.itemBoostService.getItemStatBoosts().subscribe((response) => {
+            this.itemBoosts = response as IItemStatBoostModel[];
+            this.itemBoosts = this.itemBoosts
+                .filter(
+                    (itemStat) =>
+                        !itemStat.hasRequiredPokemon ||
+                        itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName
+                )
+                .sort((n1, n2) => {
+                    if (n1.itemName > n2.itemName) return 1;
+                    if (n1.itemName < n2.itemName) return -1;
+                    return 0;
+                });
+        });
     }
 
     private LoadAbilities(pokemon: IPokemonVarietyModel) {

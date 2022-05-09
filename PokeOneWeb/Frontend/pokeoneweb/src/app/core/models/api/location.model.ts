@@ -1,11 +1,11 @@
-import { PlacedItemModel } from "./placed-item.model";
-import { SpawnModel } from "./spawn.model";
+import { PlacedItemModel } from './placed-item.model';
+import { SpawnModel } from './spawn.model';
 
 export interface ILocationModel {
     name: string;
     sortIndex: number;
-    
     isDiscoverable: boolean;
+
     notes: string;
 
     spawns: SpawnModel[];
@@ -13,11 +13,11 @@ export interface ILocationModel {
 }
 
 export class LocationModel implements ILocationModel {
-    name = "";
+    name = '';
     sortIndex = 0;
-    
     isDiscoverable = false;
-    notes = "";
+
+    notes = '';
 
     spawns = [];
     placedItems = [];

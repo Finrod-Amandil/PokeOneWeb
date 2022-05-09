@@ -1,27 +1,35 @@
 import { IPlacedItemModel } from './placed-item.model';
 
-export interface IItemModel {
-    resourceName: string;
-    sortIndex: number;
+export interface IItemListModel {
     name: string;
+    resourceName: string;
+    spriteName: string;
+
+    sortIndex: number;
     description: string;
     effect: string;
     isAvailable: boolean;
-    spriteName: string;
     bagCategoryName: string;
     bagCategorySortIndex: number;
+}
+
+export interface IItemModel extends IItemListModel {
     placedItems: IPlacedItemModel[];
 }
 
-export class ItemModel implements IItemModel {
-    resourceName = '';
-    sortIndex = 0;
+export class ItemListModel implements IItemListModel {
     name = '';
+    resourceName = '';
+    spriteName = '';
+
+    sortIndex = 0;
     description = '';
     effect = '';
     isAvailable = false;
-    spriteName = '';
     bagCategoryName = '';
     bagCategorySortIndex = 0;
+}
+
+export class ItemModel extends ItemListModel implements IItemModel {
     placedItems = [];
 }

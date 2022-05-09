@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IItemListModel } from '../../models/item-list.model';
-import { IItemModel } from '../../models/item.model';
+import { IItemListModel, IItemModel } from '../../models/api/item.model';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -18,7 +17,7 @@ export class ItemService extends BaseService {
         return 'item';
     }
 
-    public getAll(): Observable<IItemListModel[]> {
+    public getList(): Observable<IItemListModel[]> {
         return this.http.get<IItemListModel[]>(`${environment.baseUrl}/items.json`, this.httpOptions);
     }
 

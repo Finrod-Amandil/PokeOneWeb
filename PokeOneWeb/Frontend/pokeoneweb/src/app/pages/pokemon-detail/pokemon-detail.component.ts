@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
-import { IAttackEffectivityModel } from 'src/app/core/models/attack-effectivity.model';
+import { IAttackEffectivityModel } from 'src/app/core/models/api/attack-effectivity.model';
 import { IEvolutionAbilityModel } from 'src/app/core/models/evolution-ability.model';
 import { ILearnableMoveModel } from 'src/app/core/models/learnable-move.model';
-import { IPokemonVarietyUrlModel } from 'src/app/core/models/pokemon-variety-url.model';
+import { IPokemonVarietyUrlModel } from 'src/app/core/models-2/pokemon-variety-url.model';
 import { IPokemonVarietyModel } from 'src/app/core/models/pokemon-variety.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonUrlService } from 'src/app/core/services/pokemon-url.service';
@@ -32,7 +32,7 @@ export class PokemonDetailComponent implements OnInit {
         private pokemonService: PokemonService,
         private sortService: PokemonDetailSortService,
         private titleService: Title,
-        private urlService: PokemonUrlService,
+        private urlService: PokemonUrlService
     ) {}
 
     ngOnInit(): void {

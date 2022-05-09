@@ -16,7 +16,6 @@ export interface IEvolutionModel {
     evolvedStage: number;
 
     evolutionTrigger: string;
-
     isReversible: boolean;
     isAvailable: boolean;
 }
@@ -39,7 +38,6 @@ export class EvolutionModel implements IEvolutionModel {
     evolvedStage = 0;
 
     evolutionTrigger = '';
-
     isReversible = false;
     isAvailable = false;
 }
