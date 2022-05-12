@@ -39,6 +39,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}"
 
+    #substitute production appsettings entries to appsettings json file
+    - name: App Settings Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'PokeOneWeb.DataSync/bin/Release/net6.0/appsettings.json'
+      env:
+        ConnectionStrings.DefaultConnection: ${{ secrets.POKEONEWEB_DATASYNC_CONNECTIONSTRING_DEV }}
+
     - uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
