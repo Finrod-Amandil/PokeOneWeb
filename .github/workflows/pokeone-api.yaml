@@ -39,15 +39,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}"
 
-    #substitute production appsettings entries to appsettings json file
-    - name: App Settings Variable Substitution
+
+    - name: PokeOneWeb.Api Appsettings.json Variable Substitution
       uses: microsoft/variable-substitution@v1
       with:
-        files: 'PokeOneWeb.DataSync/bin/Release/net6.0/appsettings.json'
+        files: 'PokeOneWeb/bin/Release/net6.0/appsettings.json'
       env:
-        ConnectionStrings.DefaultConnection: "${{ secrets.POKEONEWEB_DATASYNC_CONNECTIONSTRING_DEV }}"
+        ConnectionStrings.DefaultConnection: "${{ secrets.POKEONEWEB_API_CONNECTIONSTRING_DEV }}"
 
-    - uses: appleboy/ssh-action@master
+    - name: Stop p1backend.service on dev server
+      uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
         port: 22
@@ -55,7 +56,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: sudo systemctl stop p1backend
-    - uses: appleboy/scp-action@master
+    - name: Copy PokeOneWeb.Api onto dev server
+      uses: appleboy/scp-action@master
       with:
         host: dev.pokeone.guide
         port: 22
@@ -66,7 +68,33 @@ jobs:
         target: "/opt/PokeOneWeb.Api"
         strip_components: 4
         overwrite: true
-    - uses: appleboy/scp-action@master
+    - name: Start p1backend.service on dev server
+      uses: appleboy/ssh-action@master
+      with:
+        host: dev.pokeone.guide
+        port: 22
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        script: sudo systemctl start p1backend
+    
+    - name: Stop p1datasync.service on dev server
+      uses: appleboy/ssh-action@master
+      with:
+        host: dev.pokeone.guide
+        port: 22
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        script: sudo systemctl stop p1datasync
+    - name: PokeOneWeb.DataSync Appsettings.json Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'PokeOneWeb.DataSync/bin/Release/net6.0/appsettings.json'
+      env:
+        ConnectionStrings.DefaultConnection: "${{ secrets.POKEONEWEB_DATASYNC_CONNECTIONSTRING_DEV }}"
+    - name: Copy PokeOneWeb.DataSync onto dev server
+      uses: appleboy/scp-action@master
       with:
         host: dev.pokeone.guide
         port: 22
@@ -77,12 +105,12 @@ jobs:
         target: "/opt/PokeOneWeb.DataSync"
         strip_components: 4
         overwrite: true
-    - uses: appleboy/ssh-action@master
+    - name: Start p1datasync.service on dev server
+      uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
         port: 22
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: sudo systemctl start p1backend
-
+        script: sudo systemctl start p1datasync
