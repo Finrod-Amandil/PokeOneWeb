@@ -45,7 +45,7 @@ jobs:
       with:
         files: 'PokeOneWeb.DataSync/bin/Release/net6.0/appsettings.json'
       env:
-        ConnectionStrings.DefaultConnection: ${{ secrets.POKEONEWEB_DATASYNC_CONNECTIONSTRING_DEV }}
+        ConnectionStrings.DefaultConnection: "${{ secrets.POKEONEWEB_DATASYNC_CONNECTIONSTRING_DEV }}"
 
     - uses: appleboy/ssh-action@master
       with:
