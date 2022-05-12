@@ -17,24 +17,24 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         void ReportError(string entityName, string hash, Exception exception);
 
-        public void StartImport();
+        void StartImport();
 
-        public void StartImport(string sheetName);
+        void StartImport(string sheetName);
 
-        public void StopImport();
+        void StopImport();
 
-        public void StopImport(string sheetName, int insertedCount, int updatedCount, int deletedCount);
+        void StopImport(string sheetName, int insertedCount, int updatedCount, int deletedCount);
 
-        public void StartIdle();
+        void StartIdle();
 
-        public void StopIdle();
+        void StopIdle();
 
-        public void StartReadModelUpdate();
+        void StartReadModelUpdate();
 
-        public void StartReadModelUpdate(string entity);
+        void StartReadModelUpdate(string entity);
 
-        public void StopReadModelUpdate();
+        void StopReadModelUpdate();
 
-        public void StopReadModelUpdate(string entity);
+        void StopReadModelUpdate(string entity);
     }
 }

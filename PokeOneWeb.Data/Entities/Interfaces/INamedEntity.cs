@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets or sets a unique display name.
         /// </summary>
-        public string Name { get; set; }
+        string Name { get; set; }
     }
 }
