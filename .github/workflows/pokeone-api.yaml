@@ -113,4 +113,4 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        script: sudo systemctl start p1datasync
+        script: sudo service p1datasync restart &
