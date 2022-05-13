@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -18,9 +19,10 @@ namespace PokeOneWeb.Data.Entities
     /// modeled with multiple spawn instances with one spawn opportunity each.
     /// </summary>
     [Table("Spawn")]
+    [Sheet("spawns")]
     public class Spawn : IHashedEntity
     {
-        public static readonly string UNKNOWN_COMMONALITY = "?";
+        public static readonly string UnknownCommonality = "?";
 
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -98,21 +100,32 @@ namespace PokeOneWeb.Data.Entities
 
         public int SpawnTypeId { get; set; }
 
+        [NotMapped]
+        public string SpawnTypeName { internal get; set; }
+
         [ForeignKey("PokemonFormId")]
         public PokemonForm PokemonForm { get; set; }
 
         public int PokemonFormId { get; set; }
+
+        [NotMapped]
+        public string PokemonFormName { internal get; set; }
 
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
 
         public int LocationId { get; set; }
 
+        [NotMapped]
+        public string LocationName { internal get; set; }
+
         public List<SpawnOpportunity> SpawnOpportunities { get; set; } = new();
 
         public override string ToString()
         {
-            return $"{PokemonForm} in {Location}, type {SpawnType}";
+            return $"{PokemonForm?.ToString() ?? PokemonFormName} in " +
+                   $"{Location?.ToString() ?? LocationName}, type " +
+                   $"{SpawnType?.ToString() ?? SpawnTypeName}";
         }
     }
 }

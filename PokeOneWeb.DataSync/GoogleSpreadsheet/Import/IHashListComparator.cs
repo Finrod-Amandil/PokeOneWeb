@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.Data;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.DataTypes;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 {

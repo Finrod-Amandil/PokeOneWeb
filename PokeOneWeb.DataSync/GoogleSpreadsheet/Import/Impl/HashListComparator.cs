@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using PokeOneWeb.Shared.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
+using PokeOneWeb.Data;
+using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.DataTypes;
+using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 {
@@ -32,9 +34,9 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             while (sheetHashIndex < sheetHashCount || dbHashIndex < dbHashCount)
             {
                 var sheetIdHash = sheetHashIndex < sheetHashCount ? sheetHashesOrdered[sheetHashIndex].IdHash : null;
-                var sheetContentHash = sheetHashIndex < sheetHashCount ? sheetHashesOrdered[sheetHashIndex].ContentHash : null;
+                var sheetContentHash = sheetHashIndex < sheetHashCount ? sheetHashesOrdered[sheetHashIndex].Hash : null;
                 var dbIdHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].IdHash : null;
-                var dbContentHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].ContentHash : null;
+                var dbContentHash = dbHashIndex < dbHashCount ? dbHashesOrdered[dbHashIndex].Hash : null;
 
                 var contentCmp = CompareIdHashes(sheetIdHash, dbIdHash);
 
@@ -42,7 +44,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 {
                     if (!string.Equals(sheetContentHash, dbContentHash, StringComparison.Ordinal))
                     {
-                        result.RowsToUpdate.Add(sheetHashesOrdered[sheetHashIndex]);
+                        result.RowsToUpdate.Add(sheetHashesOrdered[sheetHashIndex].IdHash);
                     }
 
                     sheetHashIndex += 1;
@@ -50,19 +52,21 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 }
                 else if (contentCmp > 0) // Sheet Hash > DB Hash
                 {
-                    result.RowsToInsert.Add(sheetHashesOrdered[sheetHashIndex]);
+                    result.RowsToInsert.Add(sheetHashesOrdered[sheetHashIndex].IdHash);
                     sheetHashIndex += 1;
                 }
                 else // Sheet Hash < DB Hash
                 {
-                    result.RowsToDelete.Add(dbHashesOrdered[dbHashIndex]);
+                    result.RowsToDelete.Add(dbHashesOrdered[dbHashIndex].IdHash);
                     dbHashIndex += 1;
                 }
             }
 
-            result.RowsToDelete = SortHashesByOriginalOrder(result.RowsToDelete, sheetHashes);
-            result.RowsToInsert = SortHashesByOriginalOrder(result.RowsToInsert, sheetHashes);
-            result.RowsToUpdate = SortHashesByOriginalOrder(result.RowsToUpdate, sheetHashes);
+            var sheetIdHashes = sheetHashes.Select(x => x.IdHash).ToList();
+
+            result.RowsToDelete = SortHashesByOriginalOrder(result.RowsToDelete, sheetIdHashes);
+            result.RowsToInsert = SortHashesByOriginalOrder(result.RowsToInsert, sheetIdHashes);
+            result.RowsToUpdate = SortHashesByOriginalOrder(result.RowsToUpdate, sheetIdHashes);
 
             return result;
         }
@@ -82,7 +86,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             return string.Compare(sheetIdHash, dbIdHash, StringComparison.Ordinal);
         }
 
-        private static List<RowHash> SortHashesByOriginalOrder(List<RowHash> hashesToSort, List<RowHash> sortedHashes)
+        private static List<string> SortHashesByOriginalOrder(List<string> hashesToSort, List<string> sortedHashes)
         {
             return hashesToSort.OrderBy(sortedHashes.IndexOf).ToList();
         }

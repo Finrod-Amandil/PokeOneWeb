@@ -2054,7 +2054,7 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasIndex("TimeOfDayId");
 
-                    b.ToTable("SeasonTimesOfDay");
+                    b.ToTable("SeasonTimeOfDay");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Spawn", b =>

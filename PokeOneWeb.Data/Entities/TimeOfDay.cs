@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,9 +13,10 @@ namespace PokeOneWeb.Data.Entities
     /// on these phases, different Pokemon may spawn.
     /// </summary>
     [Table("TimeOfDay")]
-    public class TimeOfDay : IHashedEntity
+    [Sheet("times_of_day")]
+    public class TimeOfDay : IHashedEntity, INamedEntity
     {
-        public static readonly string ANY = "Any";
+        public static readonly string Any = "Any";
 
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

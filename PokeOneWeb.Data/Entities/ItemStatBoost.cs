@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -11,7 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// only if held by a specific Pokemon.
     /// </summary>
     [Table("ItemStatBoost")]
-    public class ItemStatBoost
+    public class ItemStatBoost : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -48,6 +49,9 @@ namespace PokeOneWeb.Data.Entities
 
         public int ItemId { get; set; }
 
+        [NotMapped]
+        public string ItemName { internal get; set; }
+
         /// <summary>
         /// Gets or sets for which Pokemon this stat boost is available. If no Pokemon are listed,
         /// a single entry is available where the required Pokemon is null.
@@ -56,7 +60,7 @@ namespace PokeOneWeb.Data.Entities
 
         public override string ToString()
         {
-            return $"{Item} (ItemStatBoost)";
+            return $"{Item?.ToString() ?? ItemName} (ItemStatBoost)";
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,7 +13,8 @@ namespace PokeOneWeb.Data.Entities
     /// when used against a Pokemon with a specific type.
     /// </summary>
     [Table("ElementalType")]
-    public class ElementalType : IHashedEntity
+    [Sheet("elemental_types")]
+    public class ElementalType : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

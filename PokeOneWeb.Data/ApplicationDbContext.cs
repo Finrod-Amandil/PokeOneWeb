@@ -31,19 +31,23 @@ namespace PokeOneWeb.Data
         public DbSet<MoveDamageClass> MoveDamageClasses { get; set; }
         public DbSet<MoveLearnMethod> MoveLearnMethods { get; set; }
         public DbSet<MoveLearnMethodLocation> MoveLearnMethodLocations { get; set; }
+        public DbSet<MoveLearnMethodLocationPrice> MoveLearnMethodLocationPrices { get; set; }
         public DbSet<MoveTutor> MoveTutors { get; set; }
         public DbSet<MoveTutorMove> MoveTutorMoves { get; set; }
+        public DbSet<MoveTutorMovePrice> MoveTutorMovePrices { get; set; }
         public DbSet<Nature> Natures { get; set; }
         public DbSet<PlacedItem> PlacedItems { get; set; }
         public DbSet<PokemonAvailability> PokemonAvailabilities { get; set; }
         public DbSet<PokemonForm> PokemonForms { get; set; }
         public DbSet<PokemonSpecies> PokemonSpecies { get; set; }
         public DbSet<PokemonVariety> PokemonVarieties { get; set; }
+        public DbSet<PokemonVarietyUrl> PokemonVarietyUrls { get; set; }
         public DbSet<PvpTier> PvpTiers { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonTimeOfDay> SeasonTimesOfDay { get; set; }
         public DbSet<Spawn> Spawns { get; set; }
+        public DbSet<SpawnOpportunity> SpawnOpportunities { get; set; }
         public DbSet<SpawnType> SpawnTypes { get; set; }
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
 

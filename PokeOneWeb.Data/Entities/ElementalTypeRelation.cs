@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,6 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// x2 (super effective), x0.5 (not very effective) or x0 (immune).
     /// </summary>
     [Table("ElementalTypeRelation")]
+    [Sheet("elemental_type_relations")]
     public class ElementalTypeRelation : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -60,14 +62,21 @@ namespace PokeOneWeb.Data.Entities
 
         public int AttackingTypeId { get; set; }
 
+        [NotMapped]
+        public string AttackingTypeName { internal get; set; }
+
         [ForeignKey("DefendingTypeId")]
         public ElementalType DefendingType { get; set; }
 
         public int DefendingTypeId { get; set; }
 
+        [NotMapped]
+        public string DefendingTypeName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{AttackingType} -> {DefendingType}: x{AttackEffectivity}";
+            return $"{AttackingType?.ToString() ?? AttackingTypeName} -> " +
+                   $"{DefendingType?.ToString() ?? DefendingTypeName}: x{AttackEffectivity}";
         }
     }
 }

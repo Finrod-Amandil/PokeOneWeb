@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,7 +12,8 @@ namespace PokeOneWeb.Data.Entities
     /// PokeOne specific categorization of items.
     /// </summary>
     [Table("BagCategory")]
-    public class BagCategory : IHashedEntity
+    [Sheet("bag_categories")]
+    public class BagCategory : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

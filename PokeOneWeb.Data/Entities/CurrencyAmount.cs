@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +9,7 @@ namespace PokeOneWeb.Data.Entities
     /// Specifies the cost of something in a specific currency.
     /// </summary>
     [Table("CurrencyAmount")]
-    public class CurrencyAmount
+    public class CurrencyAmount : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -30,9 +31,12 @@ namespace PokeOneWeb.Data.Entities
 
         public int CurrencyId { get; set; }
 
+        [NotMapped]
+        public string CurrencyName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{Amount} {Currency}";
+            return $"{Amount} {Currency?.ToString() ?? CurrencyName}";
         }
     }
 }

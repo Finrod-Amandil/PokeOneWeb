@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -10,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// This can be the different floors of a tower or parts of a cave.
     /// </summary>
     [Table("LocationGroup")]
-    public class LocationGroup
+    public class LocationGroup : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -39,6 +40,12 @@ namespace PokeOneWeb.Data.Entities
         public Region Region { get; set; }
 
         public int RegionId { get; set; }
+
+        /// <summary>
+        /// Sets the string-based identifier for the related region. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string RegionName { internal get; set; }
 
         public List<Location> Locations { get; set; } = new();
 

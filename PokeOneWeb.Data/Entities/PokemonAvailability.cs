@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -10,7 +11,8 @@ namespace PokeOneWeb.Data.Entities
     /// Whether / under what conditions a Pokemon can generally be obtained.
     /// </summary>
     [Table("PokemonAvailability")]
-    public class PokemonAvailability : IHashedEntity
+    [Sheet("availabilities")]
+    public class PokemonAvailability : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

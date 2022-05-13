@@ -1,6 +1,5 @@
-﻿using PokeOneWeb.Data;
+﻿using System;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using System;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 {
@@ -10,34 +9,32 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import
 
         SpreadsheetImportReport GetReport();
 
-        void ReportDeleted(Entity entity, string hash, int applicationDbId);
+        void ReportError(string message);
 
-        void ReportAdded(Entity entity, string hash, int applicationDbId);
+        void ReportError(string entityName, Exception exception);
 
-        void ReportUpdated(Entity entity, string hash, int applicationDbId);
+        void ReportError(string entityName, string hash, string message);
 
-        void ReportError(Entity entity, string hash, string message);
+        void ReportError(string entityName, string hash, Exception exception);
 
-        void ReportError(Entity entity, string hash, Exception exception);
+        void StartImport();
 
-        public void StartImport();
+        void StartImport(string sheetName);
 
-        public void StartImport(string entity);
+        void StopImport();
 
-        public void StopImport();
+        void StopImport(string sheetName, int insertedCount, int updatedCount, int deletedCount);
 
-        public void StopImport(string entity);
+        void StartIdle();
 
-        public void StartIdle();
+        void StopIdle();
 
-        public void StopIdle();
+        void StartReadModelUpdate();
 
-        public void StartReadModelUpdate();
+        void StartReadModelUpdate(string entity);
 
-        public void StartReadModelUpdate(string entity);
+        void StopReadModelUpdate();
 
-        public void StopReadModelUpdate();
-
-        public void StopReadModelUpdate(string entity);
+        void StopReadModelUpdate(string entity);
     }
 }

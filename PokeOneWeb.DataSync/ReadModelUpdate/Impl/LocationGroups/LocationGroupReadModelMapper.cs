@@ -219,7 +219,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.LocationGroups
 
         private string GetTimesAsString(TimeOfDay timeOfDay)
         {
-            if (timeOfDay.Name.Equals(TimeOfDay.ANY))
+            if (timeOfDay.Name.Equals(TimeOfDay.Any))
             {
                 return string.Empty;
             }

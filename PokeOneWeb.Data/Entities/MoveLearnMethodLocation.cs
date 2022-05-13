@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,6 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// to teach moves to Pokemon.
     /// </summary>
     [Table("MoveLearnMethodLocation")]
+    [Sheet("move_learn_method_locations")]
     public class MoveLearnMethodLocation : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -62,7 +64,7 @@ namespace PokeOneWeb.Data.Entities
         public string PlacementDescription { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
-        public MoveLearnMethod MoveLearnMethod { get; set; }
+        public MoveLearnMethod MoveLearnMethod { get; set; } = new();
 
         public int MoveLearnMethodId { get; set; }
 
@@ -71,11 +73,14 @@ namespace PokeOneWeb.Data.Entities
 
         public int LocationId { get; set; }
 
+        [NotMapped]
+        public string LocationName { internal get; set; }
+
         public List<MoveLearnMethodLocationPrice> Price { get; set; } = new();
 
         public override string ToString()
         {
-            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location}";
+            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location?.ToString() ?? LocationName}";
         }
     }
 }

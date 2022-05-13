@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -12,7 +13,8 @@ namespace PokeOneWeb.Data.Entities
     /// or given to a Pokemon as a held item to gain certain battle effects.
     /// </summary>
     [Table("Item")]
-    public class Item : IHashedEntity
+    [Sheet("items")]
+    public class Item : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -77,6 +79,9 @@ namespace PokeOneWeb.Data.Entities
         public BagCategory BagCategory { get; set; }
 
         public int BagCategoryId { get; set; }
+
+        [NotMapped]
+        public string BagCategoryName { internal get; set; }
 
         public List<PlacedItem> PlacedItems { get; set; } = new();
 
