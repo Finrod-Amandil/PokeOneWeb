@@ -1,5 +1,4 @@
-﻿// DSL can be rendered using https://structurizr.com/dsl
-workspace {
+﻿workspace {
     model {
         user = person "Website Visitor" {
             description "A player of PokéOne"
@@ -32,15 +31,6 @@ workspace {
                 apiServices -> router "Provides data for dynamic routing"
                 apiServices -> pages "Provides data"
             }
-            backend = container "Web Application API (Backend)" {
-                technology "C#/.NET"
-                description "Provides access to the application data for the Frontend."
-                
-                controllers = component "API Controllers" {
-                    technology ".NET"
-                    description "Serves the pre-generated JSON files on matching API routes."
-                }
-            }
             updateService = container "Update Service" {
                 technology "C#/.NET"
                 description "Automatically imports the changes made in the Google Spreadsheets and updates the application database, JSON files and spreadsheet guide."
@@ -62,6 +52,7 @@ workspace {
             }
             sheets = container "Import sheets" {
                 tags "Browser Application"
+                tags "External System"
                 technology "Google Spreadsheets"
                 description "Tool for editing the raw PokéOne Guide data"
             }
@@ -77,13 +68,13 @@ workspace {
             }
             spreadsheetGuide = container "PokéOne Guide (Spreadsheet version)" {
                 tags "Browser Application"
+                tags "External System"
                 technology "Google Spreadsheets"
                 description "The 'old' PokéOne Guide, presented as a Google Spreadsheet"
             }
             
             user -> frontend "Looks up specific information about PokéOne"
-            apiServices -> controllers "Gets data from" "HTTPS/JSON"
-            controllers -> json "Loads static files" "File System"
+            apiServices -> json "Gets data from" "HTTPS/JSON"
             editor -> sheets "Maintains existing data and adds new data"
             sheets -> spreadsheetImport "Gets imported by" "Google Sheets API"
             spreadsheetImport -> applicationDb "Cleans and updates changed data" "Entity Framework"
@@ -111,11 +102,6 @@ workspace {
             autolayout lr
         }
         
-        component backend {
-            include *
-            autolayout lr
-        }
-        
         component updateService {
             include *
             autolayout lr
@@ -132,6 +118,10 @@ workspace {
             }
             element "Files" {
                 shape Folder
+            }
+            element "External System" {
+                background #AAAAAA
+                stroke #666666
             }
         }
     }

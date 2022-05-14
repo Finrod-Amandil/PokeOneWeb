@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,7 +12,8 @@ namespace PokeOneWeb.Data.Entities
     /// location are encountered simultaneously.
     /// </summary>
     [Table("SpawnType")]
-    public class SpawnType : IHashedEntity
+    [Sheet("spawn_types")]
+    public class SpawnType : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

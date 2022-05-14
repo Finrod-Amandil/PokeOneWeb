@@ -37,6 +37,27 @@
   </p>
 </div>
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow the steps in the [Developer Installation Guide](https://docs.google.com/document/d/1oLbs6IRg8wib5WZGg_G80hXRQTvkAxb8WLfT5Gxu71U).
+
+## Deployment of the application
+Continuous integration and deployment of the application is done using GitHub Actions.
+
+On every push, the project will be built and test will be run inside the build pipeline. The outcome can be shown in the Github Actions tab on [github.com](https://github.com/Finrod-Amandil/PokeOneWeb/actions).
+
+On pushes to the `development` branch (eg. via Pull-Request), the application will be compiled and packaged.
+
+After that, the package is uploaded to the hosting machine and deployed to the development environment.
+
+## Built With
+
+The application is built with the following libraries and frameworks.
+
+* [Angular](https://angular.io/)
+* [DotNet](https://dotnet.microsoft.com/en-us/)
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

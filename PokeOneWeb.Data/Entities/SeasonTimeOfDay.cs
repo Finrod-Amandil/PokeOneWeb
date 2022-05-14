@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -9,6 +10,8 @@ namespace PokeOneWeb.Data.Entities
     /// <summary>
     /// Depending on the in-game season, the in-game times of day start and end at different times.
     /// </summary>
+    [Table("SeasonTimeOfDay")]
+    [Sheet("season_times_of_day")]
     public class SeasonTimeOfDay : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -58,14 +61,22 @@ namespace PokeOneWeb.Data.Entities
 
         public int? SeasonId { get; set; }
 
+        [NotMapped]
+        public string SeasonName { internal get; set; }
+
         [ForeignKey("TimeOfDayId")]
         public TimeOfDay TimeOfDay { get; set; }
 
         public int? TimeOfDayId { get; set; }
 
+        [NotMapped]
+        public string TimeOfDayName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{TimeOfDay} in {Season}: {StartHour}:00 - {EndHour}:00";
+            return $"{TimeOfDay?.ToString() ?? TimeOfDayName} in " +
+                   $"{Season?.ToString() ?? SeasonName}: " +
+                   $"{StartHour}:00 - {EndHour}:00";
         }
     }
 }

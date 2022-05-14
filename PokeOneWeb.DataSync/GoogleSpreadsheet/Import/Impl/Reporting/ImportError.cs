@@ -1,10 +1,8 @@
-﻿using PokeOneWeb.Data;
-
-namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
+﻿namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting
 {
     public class ImportError
     {
-        public Entity Entity { get; set; }
+        public string EntityName { get; set; }
 
         public string Hash { get; set; }
 

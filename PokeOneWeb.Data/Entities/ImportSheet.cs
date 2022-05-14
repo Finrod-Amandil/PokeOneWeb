@@ -1,15 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// Represents an imported Google Spreadsheet. The Sheet Hash is used to quickly check
+    /// Represents an imported Google Sheet. The Sheet Hash is used to quickly check
     /// whether a sheet contains any changes.
     /// </summary>
     [Table("ImportSheet")]
-    public class ImportSheet
+    public class ImportSheet : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

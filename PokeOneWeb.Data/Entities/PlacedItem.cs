@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,6 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// items that are "laying around".
     /// </summary>
     [Table("PlacedItem")]
+    [Sheet("placeditems")]
     public class PlacedItem : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -98,14 +100,27 @@ namespace PokeOneWeb.Data.Entities
 
         public int ItemId { get; set; }
 
+        /// <summary>
+        /// Sets the string-based identifier for the related item. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string ItemName { internal get; set; }
+
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
 
         public int LocationId { get; set; }
 
+        /// <summary>
+        /// Sets the string-based identifier for the related location. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string LocationName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{Item} #{Index} @ {Location}";
+            return $"{Item?.ToString() ?? ItemName} #{Index} @ " +
+                   $"{Location?.ToString() ?? LocationName}";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,6 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// looked for when hunting (trying to find and catch) a certain kind of Pokemon.
     /// </summary>
     [Table("HuntingConfiguration")]
+    [Sheet("hunting_configurations")]
     public class HuntingConfiguration : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
@@ -62,19 +64,30 @@ namespace PokeOneWeb.Data.Entities
 
         public int PokemonVarietyId { get; set; }
 
+        [NotMapped]
+        public string PokemonVarietyName { internal get; set; }
+
         [ForeignKey("NatureId")]
         public Nature Nature { get; set; }
 
         public int NatureId { get; set; }
+
+        [NotMapped]
+        public string NatureName { internal get; set; }
 
         [ForeignKey("AbilityId")]
         public Ability Ability { get; set; }
 
         public int AbilityId { get; set; }
 
+        [NotMapped]
+        public string AbilityName { internal get; set; }
+
         public override string ToString()
         {
-            return $"{Nature} {Ability} {PokemonVariety}";
+            return $"{Nature?.ToString() ?? NatureName} " +
+                   $"{Ability?.ToString() ?? AbilityName} " +
+                   $"{PokemonVariety?.ToString() ?? PokemonVarietyName}";
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -10,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// Pokedex. Pokemon Species may appear in one or more varieties, modeled with PokemonVarieties.
     /// </summary>
     [Table("PokemonSpecies")]
-    public class PokemonSpecies
+    public class PokemonSpecies : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -40,12 +41,16 @@ namespace PokeOneWeb.Data.Entities
 
         public int? DefaultVarietyId { get; set; }
 
+        [NotMapped]
+        public string DefaultVarietyName { internal get; set; }
+
         public List<PokemonVariety> Varieties { get; set; }
+
         public List<Evolution> Evolutions { get; set; }
 
         public override string ToString()
         {
-            return $"{PokedexNumber} {Name}";
+            return $"#{PokedexNumber} {Name}";
         }
     }
 }

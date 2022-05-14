@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -15,7 +16,8 @@ namespace PokeOneWeb.Data.Entities
     /// The HP stat is unaffected by natures.
     /// </summary>
     [Table("Nature")]
-    public class Nature : IHashedEntity
+    [Sheet("natures")]
+    public class Nature : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {

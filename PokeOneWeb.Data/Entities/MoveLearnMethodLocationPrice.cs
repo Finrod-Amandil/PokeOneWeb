@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -9,7 +10,7 @@ namespace PokeOneWeb.Data.Entities
     /// i.e. 1000 Pokedollars and 50 Gold. This entity describes the price per currency (n-n relation).
     /// </summary>
     [Table("MoveLearnMethodLocationPrice")]
-    public class MoveLearnMethodLocationPrice
+    public class MoveLearnMethodLocationPrice : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
