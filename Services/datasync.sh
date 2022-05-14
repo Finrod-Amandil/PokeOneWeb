@@ -12,5 +12,5 @@ if [ $retVal -eq 0 ]; then
         find /opt/PokeOneWeb.Resources/ -type f | sudo xargs chmod 444
         echo "files copied to the Resources Folder." | systemd-cat -p info -t p1datasync
 else
-        echo "Sync failed with returnvalue $retVal, no new files where copied to the Resources Folder" | systemd-cat -p emerg -t p1datasync
+        echo "Sync failed with returnvalue $retVal, no new files where copied to the Resources Folder" | systemd-cat -p warning -t p1datasync
 fi
