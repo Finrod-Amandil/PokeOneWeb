@@ -1,7 +1,7 @@
 name: PokeOneApi.DataSync Deployment to DEV
 on:
   workflow_dispatch:
-  
+
 jobs:
   build:
     name: Build-PokeOneApi
@@ -38,7 +38,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_API }}"
 
-- name: Stop p1datasync.service on dev server
+    - name: Stop p1datasync.service on dev server
       uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
@@ -47,7 +47,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: sudo systemctl stop p1datasync
-- name: PokeOneWeb.DataSync Appsettings.json Variable Substitution
+    - name: PokeOneWeb.DataSync Appsettings.json Variable Substitution
       uses: microsoft/variable-substitution@v1
       with:
         files: 'PokeOneWeb.DataSync/bin/Release/net6.0/appsettings.json'
@@ -65,7 +65,7 @@ jobs:
         target: "/opt/PokeOneWeb.DataSync"
         strip_components: 4
         overwrite: true
-- name: Start p1datasync.service on dev server
+    - name: Start p1datasync.service on dev server
       uses: appleboy/ssh-action@master
       with:
         host: dev.pokeone.guide
