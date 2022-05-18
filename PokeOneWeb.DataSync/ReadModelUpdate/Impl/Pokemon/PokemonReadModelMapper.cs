@@ -385,14 +385,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
 
             bool hasFoundNewEvolutions;
 
-            int? alternativeInitialVarietyId = allEvolutions.Where(e => e.BasePokemonVarietyId == initialVarietyId)
+            int alternativeInitialVarietyId = allEvolutions.Where(e => e.BasePokemonVarietyId == initialVarietyId)
                                                            .Where(e => e.BaseStage == 0)
                                                            .Where(e => e.EvolvedPokemonVarietyId < initialVarietyId)
                                                            .Select(e => e.EvolvedPokemonVarietyId).FirstOrDefault();
-            if (alternativeInitialVarietyId != null)
+            if (alternativeInitialVarietyId > 0)
             {
-                varietyIds.Add((int)alternativeInitialVarietyId);
-                initialVarietyId = (int)alternativeInitialVarietyId;
+                varietyIds.Add(alternativeInitialVarietyId);
+                initialVarietyId = alternativeInitialVarietyId;
             }
 
             do
