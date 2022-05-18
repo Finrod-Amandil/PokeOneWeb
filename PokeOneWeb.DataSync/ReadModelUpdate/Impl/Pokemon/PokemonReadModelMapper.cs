@@ -403,14 +403,16 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                         allEvolutions
                             .Where(e => varietyIds.Contains(e.BasePokemonVarietyId))
                             .Where(e => e.IsReversible)
+                            .Where(e => e.IsAvailable)
                             .Select(e => e.EvolvedPokemonVarietyId))
                     .ToList();
 
                 newIds = newIds.Union(
                         allEvolutions
                             .Where(e => varietyIds.Contains(e.BasePokemonVarietyId))
-                            .Where(e => e.BasePokemonVarietyId <= initialVarietyId)
+                            .Where(e => e.BasePokemonVarietyId >= initialVarietyId)
                             .Where(e => e.EvolvedPokemonVarietyId > initialVarietyId)
+                            .Where(e => e.IsAvailable)
                             .Select(e => e.EvolvedPokemonVarietyId))
                     .ToList();
 
