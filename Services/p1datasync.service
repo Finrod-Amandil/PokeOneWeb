@@ -11,9 +11,5 @@ User=ubuntu
 Group=ubuntu
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 
-[Timer]
-OnCalendar=daily
-Persistent=true
-
 [Install]
 WantedBy=multi-user.target
