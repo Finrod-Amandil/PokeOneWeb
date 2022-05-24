@@ -72,7 +72,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-        source: "Services/PokeOneWeb.DataSync"
+        source: "Services/PokeOneWeb.DataSync/datasync.sh"
         target: "/etc/PokeOneWeb.DataSync/"
         strip_components: 4
         overwrite: true
