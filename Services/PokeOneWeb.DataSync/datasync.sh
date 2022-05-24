@@ -1,9 +1,10 @@
 #!/bin/bash
 #logs can be read using "journalctl -t p1datasync"
 echo "Starting datasync" | systemd-cat -p info -t p1datasync
-/bin/bash -c "cd /opt/PokeOneWeb.DataSync/ && /opt/PokeOneWeb.DataSync/PokeOneWeb.DataSync" > /dev/null 2>&1
+cd /opt/PokeOneWeb.DataSync/
+/bin/bash -c "/opt/PokeOneWeb.DataSync/PokeOneWeb.DataSync" | systemd-cat -p info -t p1datasync > /dev/null 2>&1
 
-retVal=$?
+retVal=${PIPESTATUS[0]}
 if [ $retVal -eq 0 ]; then
         sudo chmod 660 -R /opt/PokeOneWeb.Resources/
         sudo rm -rf /opt/PokeOneWeb.Resources/*
