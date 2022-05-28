@@ -1,4 +1,4 @@
-name: PokeOneWebApp
+name: PokeOneWeb Dev WebApp
 on:
   push:
     branches:
