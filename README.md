@@ -40,6 +40,7 @@
 
 <img src="Documentation/product-demo.gif" alt="Product Demo">
 <p><strong>Try it out yourself at <a href="https://stage.pokeone.guide/">https://stage.pokeone.guide/</a>!</strong></p>
+<p>Download the game PokéOne (not part of this project) from the official Discord Channel: <a href="https://discord.gg/bNYRTFn">https://discord.gg/bNYRTFn</a></p>
 
 ## Features
 - All Pokémon spawns and Items found in every location of PokéOne - including events!
@@ -49,7 +50,6 @@
 and many more to come...
 
 ## Getting Started
-
 To get a local copy up and running follow these steps:
 1. Install Visual Studio 2022 with the ASP.NET and Web Development workload ([Download](https://visualstudio.microsoft.com/)).
 2. Install Visual Studio Code ([Download](https://visualstudio.microsoft.com/)) and the latest version of Node.js ([Download](https://nodejs.org/)).
@@ -81,6 +81,12 @@ After that, the package is uploaded to the hosting machine and deployed to the d
 | Dev      | [https://dev.pokeone.guide](https://dev.pokeone.guide) | ![release dev environment workflow](https://github.com/Finrod-Amandil/PokeOneWeb/actions/workflows/release-stage.yaml/badge.svg) |
 | Stage      | [https://stage.pokeone.guide](https://stage.pokeone.guide) | ![release stage environment workflow](https://github.com/Finrod-Amandil/PokeOneWeb/actions/workflows/pokeone-webapp.yaml/badge.svg) |
 | Prod | [https://pokeone.guide](https://pokeone.guide)    | Coming soon |
+
+## Issues, Backlog and Sprints
+Can be found here: [PokeOneWeb Jira Project](https://pokeoneweb.atlassian.net/jira/software/projects/POK/issues/)
+
+## Code Quality
+[PokeOneWeb SonarCloud Project](https://sonarcloud.io/organizations/poke-one-web/projects)
 
 ## Built With
 The application is built with the following libraries and frameworks.
