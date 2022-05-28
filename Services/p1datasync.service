@@ -1,0 +1,15 @@
+[Unit]
+Description=PokeOneWeb.DataSync
+
+[Service]
+WorkingDirectory=/opt/PokeOneWeb.DataSync
+ExecStart=/bin/bash /etc/PokeOneWeb.DataSync/datasync.sh
+RemainAfterExit=false
+Type=oneshot
+SyslogIdentifier=p1datasync
+User=ubuntu
+Group=ubuntu
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
