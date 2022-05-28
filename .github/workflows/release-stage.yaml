@@ -1,4 +1,4 @@
-name: Release Staging Environment
+name: PokeOneWeb Stage WebApp
 on:
   workflow_dispatch:
 
