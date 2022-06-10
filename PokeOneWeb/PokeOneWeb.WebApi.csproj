@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PokeOneWeb.DataSync\PokeOneWeb.DataSync.csproj" />
     <ProjectReference Include="..\PokeOneWeb.Data\PokeOneWeb.Data.csproj" />
     <ProjectReference Include="..\PokeOneWeb.Shared\PokeOneWeb.Shared.csproj" />
   </ItemGroup>

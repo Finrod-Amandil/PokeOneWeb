@@ -379,9 +379,21 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
             var allEvolutions = _dbContext.Evolutions.AsNoTracking();
             var varietyIds = new List<int>();
 
-            varietyIds.Add(variety.Id);
+            var initialVarietyId = variety.Id;
+
+            varietyIds.Add(initialVarietyId);
 
             bool hasFoundNewEvolutions;
+
+            int alternativeInitialVarietyId = allEvolutions.Where(e => e.BasePokemonVarietyId == initialVarietyId)
+                                                           .Where(e => e.BaseStage == 0)
+                                                           .Where(e => e.EvolvedPokemonVarietyId < initialVarietyId)
+                                                           .Select(e => e.EvolvedPokemonVarietyId).FirstOrDefault();
+            if (alternativeInitialVarietyId > 0)
+            {
+                varietyIds.Add(alternativeInitialVarietyId);
+                initialVarietyId = alternativeInitialVarietyId;
+            }
 
             do
             {
@@ -390,12 +402,24 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon
                 newIds = newIds.Union(
                         allEvolutions
                             .Where(e => varietyIds.Contains(e.BasePokemonVarietyId))
+                            .Where(e => e.IsReversible)
+                            .Where(e => e.IsAvailable)
+                            .Select(e => e.EvolvedPokemonVarietyId))
+                    .ToList();
+
+                newIds = newIds.Union(
+                        allEvolutions
+                            .Where(e => varietyIds.Contains(e.BasePokemonVarietyId))
+                            .Where(e => e.BasePokemonVarietyId >= initialVarietyId)
+                            .Where(e => e.EvolvedPokemonVarietyId > initialVarietyId)
+                            .Where(e => e.IsAvailable)
                             .Select(e => e.EvolvedPokemonVarietyId))
                     .ToList();
 
                 newIds = newIds.Union(
                         allEvolutions
                             .Where(e => varietyIds.Contains(e.EvolvedPokemonVarietyId))
+                            .Where(e => e.IsAvailable)
                             .Select(e => e.BasePokemonVarietyId))
                     .ToList();
 
