@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets or sets the auto-incremented database ID.
         /// </summary>
-        public int Id { get; set; }
+        int Id { get; set; }
     }
 }
