@@ -1,6 +1,8 @@
-﻿namespace PokeOneWeb.Data.ReadModels
+﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+
+namespace PokeOneWeb.Data.ReadModels
 {
-    public class ItemStatBoostPokemonReadModel
+    public class ItemStatBoostPokemonReadModel : IReadModel
     {
         public string ItemName { get; set; }
         public string ItemResourceName { get; set; }
@@ -16,5 +18,6 @@
 
         public bool HasRequiredPokemon { get; set; }
         public string RequiredPokemonResourceName { get; set; }
+        public string RequiredPokemonName { get; set; }
     }
 }

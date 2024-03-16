@@ -3,9 +3,8 @@ using Moq;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using PokeOneWeb.DataSync.ReadModelUpdate;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl;
+using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
 using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
@@ -27,7 +26,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
 
         #endregion Mocks
 
-        private readonly ReadModelUpdateService _readModelUpdateService;
+        private readonly JsonReadModelUpdateService _readModelUpdateService;
 
         public ReadModelUpdateServiceTests()
         {
@@ -60,7 +59,7 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
 
             _reporterMock = new Mock<ISpreadsheetImportReporter>();
 
-            _readModelUpdateService = new ReadModelUpdateService(_entityTypeMapperMock.Object,
+            _readModelUpdateService = new JsonReadModelUpdateService(_entityTypeMapperMock.Object,
                 _itemStatBoostPokemonMapperMock.Object,
                 _simpleLearnableMoveMapperMock.Object,
                 _moveMapperMock.Object,
@@ -76,21 +75,20 @@ namespace PokeOneWeb.DataSync.Tests.ReadModelUpdate.Impl
         public void UpdateReadModel_StandardInput_SucessfullUpdate()
         {
             // Given
-            SpreadsheetImportReport spreadsheetImportReport = new SpreadsheetImportReport();
 
             // When
-            _readModelUpdateService.UpdateReadModel(spreadsheetImportReport);
+            _readModelUpdateService.UpdateReadModel();
 
             // Then
-            _entityTypeMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _itemStatBoostPokemonMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _simpleLearnableMoveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _moveMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _natureMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _itemMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _regionMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
-            _locationGroupMapperMock.Verify(m => m.MapFromDatabase(spreadsheetImportReport), Times.Exactly(1));
+            _entityTypeMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _itemStatBoostPokemonMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _simpleLearnableMoveMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _moveMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _natureMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _pokemonVarietyMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _itemMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _regionMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
+            _locationGroupMapperMock.Verify(m => m.MapFromDatabase(), Times.Exactly(1));
 
             _reporterMock.Verify(m => m.StartReadModelUpdate(It.IsAny<string>()), Times.Exactly(1));
             _reporterMock.Verify(m => m.StartReadModelUpdate(), Times.Once());
