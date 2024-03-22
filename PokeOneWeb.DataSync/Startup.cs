@@ -100,7 +100,6 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISheetMapper<SpawnType>, SpawnTypeSheetMapper>();
             services.AddScoped<ISheetMapper<TimeOfDay>, TimeOfDaySheetMapper>();
 
-            services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
             services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
             services.AddScoped<IHashedEntityRepository<PokemonAvailability>, AvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<BagCategory>, BagCategoryRepository>();

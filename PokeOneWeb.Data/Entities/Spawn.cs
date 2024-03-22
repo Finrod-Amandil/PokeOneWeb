@@ -45,11 +45,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(l => l.PokemonSpawns)
                 .HasForeignKey(s => s.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Spawn>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -62,11 +57,6 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
-
-        [ForeignKey("ImportSheetId")]
-        public ImportSheet ImportSheet { get; set; }
-
-        public int ImportSheetId { get; set; }
 
         /// <summary>
         /// Gets or sets definition of rarity using predicates to describe

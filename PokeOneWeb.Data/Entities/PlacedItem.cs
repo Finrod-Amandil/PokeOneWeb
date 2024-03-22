@@ -30,11 +30,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(l => l.PlacedItems)
                 .HasForeignKey(pi => pi.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<PlacedItem>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -47,11 +42,6 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
-
-        [ForeignKey("ImportSheetId")]
-        public ImportSheet ImportSheet { get; set; }
-
-        public int ImportSheetId { get; set; }
 
         /// <summary>
         /// Gets or sets auxiliary field to distinguish placed items if the same type of item

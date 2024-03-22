@@ -43,8 +43,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
             entity = new TEntity
             {
                 IdHash = row.IdHash,
-                Hash = row.Hash,
-                ImportSheetId = row.ImportSheetId
+                Hash = row.Hash
             };
 
             var canMap = true;

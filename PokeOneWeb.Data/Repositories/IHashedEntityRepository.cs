@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Repositories
@@ -10,7 +9,7 @@ namespace PokeOneWeb.Data.Repositories
         /// Loads the ID Hashes and Content Hashes for the entities that were imported from
         /// the given sheet.
         /// </summary>
-        IEnumerable<RowHash> GetHashesForSheet(ImportSheet sheet);
+        List<RowHash> GetHashes();
 
         /// <summary>
         /// Deletes hashed entities by looking up the corresponding ID Hashes.

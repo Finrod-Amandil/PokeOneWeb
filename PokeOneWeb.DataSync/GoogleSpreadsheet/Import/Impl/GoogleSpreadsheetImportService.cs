@@ -37,7 +37,10 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
                 _settings.Value.Import.SheetsListSpreadsheetId,
                 _settings.Value.Import.SheetsListSheetName);
 
-            foreach (var sheet in sheets)
+            // Find sheets that changed
+            // TODO
+
+            foreach (var sheet in /* changed sheets */ sheets)
             {
                 var sheetImporter = FindSheetImporterForSheet(sheet.SheetName);
                 await sheetImporter.ImportSheet(sheet.SpreadsheetId, sheet.SheetName);
@@ -49,8 +52,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl
 
         private ISheetImporter FindSheetImporterForSheet(string sheetName)
         {
-            // Sheet name can either be an exact match, or have a suffix, i.e. placed_items_kanto (matches placed_items)
-            var keys = _sheetImporters.Keys.Where(sheetName.StartsWith).ToList();
+            var keys = _sheetImporters.Keys.Where(x => x.Equals(sheetName, StringComparison.OrdinalIgnoreCase)).ToList();
 
             return keys.Count == 1 ? _sheetImporters[keys[0]] :
                 throw new Exception($"No suitable single importer could be found for sheet with sheet name {sheetName}.");

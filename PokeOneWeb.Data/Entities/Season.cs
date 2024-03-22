@@ -22,11 +22,6 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Season>().HasIndexedHashes();
             builder.Entity<Season>().HasIndex(s => s.Abbreviation).IsUnique();
             builder.Entity<Season>().HasIndex(s => s.Name).IsUnique();
-
-            builder.Entity<Season>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -39,11 +34,6 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
-
-        [ForeignKey("ImportSheetId")]
-        public ImportSheet ImportSheet { get; set; }
-
-        public int ImportSheetId { get; set; }
 
         // INDEXED, UNIQUE
         [Required]

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PokeOneWeb.Data.Entities;
 using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Repositories.Impl
@@ -12,15 +11,13 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
         }
 
-        public IEnumerable<RowHash> GetHashesForSheet(ImportSheet sheet)
+        public List<RowHash> GetHashes()
         {
             var rowHashes = DbContext.Set<TEntity>()
-                .Where(x => x.ImportSheetId == sheet.Id)
                 .Select(x => new RowHash
                 {
                     Hash = x.Hash,
-                    IdHash = x.IdHash,
-                    ImportSheetId = x.ImportSheetId
+                    IdHash = x.IdHash
                 })
                 .ToList();
 

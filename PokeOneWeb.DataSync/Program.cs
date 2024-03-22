@@ -31,11 +31,9 @@ namespace PokeOneWeb.DataSync
             var provider = serviceScope.ServiceProvider;
 
             var importService = provider.GetRequiredService<IGoogleSpreadsheetImportService>();
-
             var readModelUpdateService = provider.GetRequiredService<IReadModelUpdateService>();
 
             var importReport = await importService.ImportSpreadsheetData();
-
             readModelUpdateService.UpdateReadModel();
         }
     }

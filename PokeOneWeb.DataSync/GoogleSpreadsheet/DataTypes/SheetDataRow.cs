@@ -17,7 +17,7 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 
         public string Hash => _hash.Hash;
 
-        public int ImportSheetId => _hash.ImportSheetId;
+        public RowHash RowHash => _hash;
 
         /// <summary>
         /// Finds the value of this row and the given column. Returns

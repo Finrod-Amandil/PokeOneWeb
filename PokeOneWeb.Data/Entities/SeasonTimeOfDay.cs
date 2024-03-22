@@ -29,11 +29,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(t => t.SeasonTimes)
                 .HasForeignKey(st => st.TimeOfDayId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<SeasonTimeOfDay>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -46,11 +41,6 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
-
-        [ForeignKey("ImportSheetId")]
-        public ImportSheet ImportSheet { get; set; }
-
-        public int ImportSheetId { get; set; }
 
         public int StartHour { get; set; }
 

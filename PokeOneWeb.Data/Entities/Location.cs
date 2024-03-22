@@ -27,11 +27,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(lg => lg.Locations)
                 .HasForeignKey(l => l.LocationGroupId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Location>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -44,11 +39,6 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
-
-        [ForeignKey("ImportSheetId")]
-        public ImportSheet ImportSheet { get; set; }
-
-        public int ImportSheetId { get; set; }
 
         // INDEXED, UNIQUE
         [Required]
