@@ -362,3 +362,4 @@ PokeOneWeb/resources
 
 # Ignore frontend development json files
 resources/
+/PokeOneWeb.DataSync/gcloud_credentials.json
