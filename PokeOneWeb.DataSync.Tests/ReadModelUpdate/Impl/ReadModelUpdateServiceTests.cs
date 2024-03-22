@@ -2,7 +2,7 @@
 using Moq;
 using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
+using PokeOneWeb.DataSync.Import.Interfaces;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl;
 using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
 using Xunit;

@@ -7,8 +7,8 @@ using PokeOneWeb.Data;
 using PokeOneWeb.Data.Entities;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Exceptions;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers;
+using PokeOneWeb.DataSync.Import.Interfaces;
+using PokeOneWeb.DataSync.Import.SheetMappers;
 using PokeOneWeb.Shared.Exceptions;
 using Xunit;
 

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using PokeOneWeb.Data.ReadModels;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
+using PokeOneWeb.DataSync.Import.Interfaces;
 using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
 
 namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl

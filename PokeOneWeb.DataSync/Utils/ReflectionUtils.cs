@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using PokeOneWeb.Data.Attributes;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
+using PokeOneWeb.DataSync.Import;
+using PokeOneWeb.DataSync.Import.Interfaces;
 
 namespace PokeOneWeb.DataSync.Utils
 {
