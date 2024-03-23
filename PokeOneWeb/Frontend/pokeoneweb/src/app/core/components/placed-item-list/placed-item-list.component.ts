@@ -5,7 +5,7 @@ import { PlacedItemListSortService } from './core/placed-item-list-sort.service'
 import { PlacedItemListComponentModel } from './core/placed-item-list-component.model';
 
 @Component({
-    selector: 'app-placed-item-list',
+    selector: 'pokeone-placed-item-list',
     templateUrl: './placed-item-list.component.html',
     styleUrls: ['./placed-item-list.component.scss']
 })

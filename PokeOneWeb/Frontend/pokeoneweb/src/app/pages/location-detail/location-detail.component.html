@@ -68,11 +68,11 @@
                         <p class="empty">This location does not have any known pokemon spawns.</p>
                     </div>
                 </div>
-                <app-spawn-list
+                <pokeone-spawn-list
                     *ngIf="location.spawns.length > 0"
                     [spawns]="location.spawns"
                     [isLocationPage]="true"
-                ></app-spawn-list>
+                ></pokeone-spawn-list>
 
                 <h3>{{location.name}} - Placed Items</h3>
                 <div *ngIf="location.placedItems.length === 0" class="no-table-container-outer">
@@ -80,10 +80,10 @@
                         <p class="empty">This location does not have any items that can be picked up.</p>
                     </div>
                 </div>
-                <app-placed-item-list
+                <pokeone-placed-item-list
                     *ngIf="location.placedItems.length > 0"
                     [placedItems]="location.placedItems"
-                ></app-placed-item-list>
+                ></pokeone-placed-item-list>
                 <div *ngIf="!isLast">
                     <br />
                     <hr />

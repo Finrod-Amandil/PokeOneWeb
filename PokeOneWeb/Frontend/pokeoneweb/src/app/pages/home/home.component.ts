@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
 
 @Component({
-    selector: 'app-home',
+    selector: 'pokeone-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

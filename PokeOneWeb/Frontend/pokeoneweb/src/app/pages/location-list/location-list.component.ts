@@ -51,15 +51,16 @@ export class LocationListComponent implements OnInit {
         });
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();
         }, this.timeOutDuration);
     }
 
-    public async onFilterChanged() {
-        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.locationModels);
+    public onFilterChanged() {
+        const filtered = this.filterService.applyFilter(this.model.filter, this.model.locationModels);
 
         this.model.displayedLocationModels = this.sortService.sort(
             filtered,

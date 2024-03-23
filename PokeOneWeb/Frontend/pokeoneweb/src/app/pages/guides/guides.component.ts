@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
 
 @Component({
-    selector: 'app-guides',
+    selector: 'pokeone-guides',
     templateUrl: './guides.component.html',
     styleUrls: ['./guides.component.scss']
 })

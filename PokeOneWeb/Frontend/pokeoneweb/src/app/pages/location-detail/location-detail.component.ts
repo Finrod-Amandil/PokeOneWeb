@@ -6,7 +6,7 @@ import { LocationGroupService } from 'src/app/core/services/api/location-group.s
 import { LocationDetailModel } from './core/location-detail.model';
 
 @Component({
-    selector: 'app-location-detail',
+    selector: 'pokeone-location-detail',
     templateUrl: './location-detail.component.html',
     styleUrls: ['./location-detail.component.scss']
 })

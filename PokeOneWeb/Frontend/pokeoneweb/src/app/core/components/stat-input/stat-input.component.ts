@@ -142,10 +142,8 @@ export class StatInputComponent implements OnInit {
         if (newEvStats.total() <= this.maxTotalEv) {
             this.model.ev = newEvStats;
             this.onSelectionChanged();
-        }
-
-        //Else set the max possible value that does not exceed the max.
-        else {
+        } else {
+            //Else set the max possible value that does not exceed the max.
             const maxIncrement = this.maxTotalEv - this.model.ev.total();
 
             switch (stat) {

@@ -64,9 +64,10 @@ export class PokemonListComponent implements OnInit {
         this.model.generations = this.generationService.getGenerations();
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
         this.forceValidStatInputs();
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();

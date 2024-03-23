@@ -43,15 +43,16 @@ export class ItemListComponent implements OnInit {
         });
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();
         }, this.timeOutDuration);
     }
 
-    public async onFilterChanged() {
-        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.itemModels);
+    public onFilterChanged() {
+        const filtered = this.filterService.applyFilter(this.model.filter, this.model.itemModels);
 
         this.model.displayedItemModels = this.sortService.sort(
             filtered,

@@ -648,11 +648,11 @@
                 <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
             </div>
         </div>
-        <app-spawn-list
+        <pokeone-spawn-list
             *ngIf="model.pokemon.spawns.length > 0"
             [spawns]="model.pokemon.spawns"
             [isLocationPage]="false"
-        ></app-spawn-list>
+        ></pokeone-spawn-list>
 
         <h2 name="moves">Learnset</h2>
         <div *ngIf="model.learnableMoves.length === 0" class="no-table-container-outer">

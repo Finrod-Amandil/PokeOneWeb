@@ -6,7 +6,7 @@ import { SpawnListSortService } from './core/spawn-list-sort.service';
 import { SpawnListColumn } from './core/spawn-list-column.enum';
 
 @Component({
-    selector: 'app-spawn-list',
+    selector: 'pokeone-spawn-list',
     templateUrl: './spawn-list.component.html',
     styleUrls: ['./spawn-list.component.scss']
 })

@@ -248,7 +248,7 @@ export class PokemonDetailComponent implements OnInit {
     }
 
     private sortForms() {
-        if (this.model.pokemon != null) {
+        if (this.model.pokemon !== null) {
             this.model.pokemon.forms = this.model.pokemon?.forms.sort((f1, f2) => f1.sortIndex - f2.sortIndex);
         }
     }
