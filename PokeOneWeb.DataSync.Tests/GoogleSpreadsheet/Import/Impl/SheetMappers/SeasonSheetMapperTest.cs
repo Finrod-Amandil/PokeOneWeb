@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly SeasonSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
 
         private List<string> _columnNames = new()
         {
@@ -57,7 +57,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 SortIndex = sortIndex,
                 Name = name,
                 Abbreviation = abbreviation,
@@ -93,7 +92,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 SortIndex = sortIndex,
                 Name = name,
                 Abbreviation = abbreviation,
@@ -146,7 +144,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
-                    ImportSheetId = _rowHash.ImportSheetId,
                     SortIndex = sortIndex1,
                     Name = name1,
                     Abbreviation = abbreviation1,
@@ -156,7 +153,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
-                    ImportSheetId = _rowHash.ImportSheetId,
                     SortIndex = sortIndex2,
                     Name = name2,
                     Abbreviation = abbreviation2,
@@ -263,7 +259,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 SortIndex = sortIndex,
                 Name = name,
                 Abbreviation = abbreviation,

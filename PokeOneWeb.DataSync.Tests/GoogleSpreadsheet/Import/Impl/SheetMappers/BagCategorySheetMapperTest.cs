@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly BagCategorySheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
         private List<string> _columnNames = new() { "Name", "SortIndex" };
         private List<object> _values;
 
@@ -47,7 +47,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 SortIndex = sortIndex
             };
@@ -92,7 +91,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name1,
                 SortIndex = sortIndex1
             };
@@ -101,7 +99,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name2,
                 SortIndex = sortIndex2
             };
@@ -204,7 +201,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 SortIndex = sortIndex
             };

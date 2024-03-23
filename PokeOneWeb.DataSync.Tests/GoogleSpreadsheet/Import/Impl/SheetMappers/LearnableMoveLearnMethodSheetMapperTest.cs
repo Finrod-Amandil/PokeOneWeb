@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly LearnableMoveLearnMethodSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
 
         private List<string> _columnNames = new()
         {
@@ -63,7 +63,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 LearnableMove = new LearnableMove
                 {
                     PokemonVarietyName = pokemonVariety,
@@ -117,7 +116,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 LearnableMove = new LearnableMove
                 {
                     PokemonVarietyName = pokemonVariety,
@@ -184,7 +182,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
-                    ImportSheetId = _rowHash.ImportSheetId,
                     LearnableMove = new LearnableMove
                     {
                         PokemonVarietyName = pokemonVariety1,
@@ -204,7 +201,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
-                    ImportSheetId = _rowHash.ImportSheetId,
                     LearnableMove = new LearnableMove
                     {
                         PokemonVarietyName = pokemonVariety2,
@@ -337,7 +333,6 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
-                ImportSheetId = _rowHash.ImportSheetId,
                 LearnableMove = new LearnableMove
                 {
                     PokemonVarietyName = pokemonVariety,
