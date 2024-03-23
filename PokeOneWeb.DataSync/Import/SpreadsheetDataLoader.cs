@@ -9,6 +9,7 @@ using Google.Apis.Sheets.v4;
 using PokeOneWeb.Data;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
 using PokeOneWeb.DataSync.Import.Interfaces;
+using PokeOneWeb.DataSync.Utils;
 
 namespace PokeOneWeb.DataSync.Import
 {
@@ -47,21 +48,23 @@ namespace PokeOneWeb.DataSync.Import
         {
             var valuesRanges = await LoadData(spreadsheetId, new List<string> { sheetName }); // Specifiying sheet name as range loads entire sheet.
 
-            var columnNames = valuesRanges[0].Skip(2).Select(x => x.ToString() ?? string.Empty).ToList();
+            var columnNames = valuesRanges[0].Select(x => x.ToString() ?? string.Empty).ToList();
+            valuesRanges.RemoveAt(0);
+
+            var idColumnMarkers = valuesRanges[0];
             valuesRanges.RemoveAt(0);
 
             var dataRows = new List<SheetDataRow>();
 
-            foreach (var row in valuesRanges)
+            foreach (var values in valuesRanges)
             {
-                // TODO calculate hash
+                var idValues = values.Where((_, index) => idColumnMarkers.Count > index && !string.IsNullOrWhiteSpace(idColumnMarkers[index].ToString())).ToList();
+
                 var rowHash = new RowHash
                 {
-                    IdHash = row[0].ToString(),
-                    Hash = row[1].ToString()
+                    IdHash = HashUtils.GetHashForDataRow(idValues),
+                    Hash = HashUtils.GetHashForDataRow(values)
                 };
-
-                var values = row.Skip(2).ToList();
 
                 var dataRow = new SheetDataRow(columnNames, rowHash, values);
                 dataRows.Add(dataRow);

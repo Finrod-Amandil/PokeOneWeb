@@ -53,7 +53,7 @@ namespace PokeOneWeb.DataSync.Import
 
         private ISheetImporter FindSheetImporterForSheet(string sheetName)
         {
-            var keys = _sheetImporters.Keys.Where(x => x.Equals(sheetName, StringComparison.OrdinalIgnoreCase)).ToList();
+            var keys = _sheetImporters.Keys.Where(x => sheetName.StartsWith(x, StringComparison.OrdinalIgnoreCase)).ToList();
 
             return keys.Count == 1 ? _sheetImporters[keys[0]] :
                 throw new Exception($"No suitable single importer could be found for sheet with sheet name {sheetName}.");

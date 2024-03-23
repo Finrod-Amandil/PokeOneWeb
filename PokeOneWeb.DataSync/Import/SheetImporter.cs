@@ -39,8 +39,6 @@ namespace PokeOneWeb.DataSync.Import
             _reporter.StartImport(sheetName);
 
             // Compare hash list of sheet and DB to find rows that need to be deleted, inserted, updated
-
-            // TODO Load all data and calculate hashes
             var sheetData = await _dataLoader.LoadSheetRows(spreadsheetId, sheetName);
             var sheetHashes = sheetData.Select(row => row.RowHash).ToList();
 
