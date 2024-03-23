@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IGenerationModel } from '../models/generation.model';
+import { IGenerationModel } from '../models/service/generation.model';
 
 @Injectable({
     providedIn: 'root'

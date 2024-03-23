@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IRegionListModel } from '../../models/region.model';
+import { IRegionModel } from '../../models/api/region.model';
 import { RegionService } from '../../services/api/region.service';
 import { SubmenuItemModel } from '../navbar-item/core/submenu-item.model';
 
@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.regionService.getAll().subscribe((response) => {
-            const regions = response as IRegionListModel[];
+            const regions = response as IRegionModel[];
 
             regions.forEach((r) => {
                 if (r.isReleased) {

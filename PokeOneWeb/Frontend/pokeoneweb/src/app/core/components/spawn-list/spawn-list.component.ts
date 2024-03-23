@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ISpawnModel } from '../../models/spawn.model';
+import { ISpawnModel } from '../../models/api/spawn.model';
 import { SpawnListComponentModel } from './core/spawn-list-component.model';
 import { DateService } from 'src/app/core/services/date.service';
 import { SpawnListSortService } from './core/spawn-list-sort.service';

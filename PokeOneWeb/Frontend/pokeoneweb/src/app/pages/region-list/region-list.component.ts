@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
-import { IRegionListModel } from 'src/app/core/models/region.model';
+import { IRegionModel } from 'src/app/core/models/api/region.model';
 import { RegionService } from 'src/app/core/services/api/region.service';
 import { RegionListPageModel } from './core/region-list-page.model';
 import { RegionListSortService } from './core/region-list-sort.service';
@@ -24,11 +24,11 @@ export class RegionListComponent implements OnInit {
         this.titleService.setTitle(`Regions - ${WEBSITE_NAME}`);
 
         this.regionService.getAll().subscribe((response) => {
-            this.model.regions = this.sortService.sort(response as IRegionListModel[]);
+            this.model.regions = this.sortService.sort(response as IRegionModel[]);
         });
     }
 
-    public getRegionType(region: IRegionListModel): string {
+    public getRegionType(region: IRegionModel): string {
         if (region.isMainRegion) {
             return 'Main Region';
         }

@@ -1,17 +1,17 @@
-import { IItemStatBoostModel } from '../models/item-stat-boost-pokemon.model';
-import { INatureModel } from '../models/nature.model';
-import { IBasicPokemonVarietyModel, BasicPokemonVarietyModel } from './basic-pokemon-variety.model';
+import { IItemStatBoostPokemonModel } from '../api/item-stat-boost-pokemon.model';
+import { INatureModel } from '../api/nature.model';
+import { IPokemonVarietyListModel, PokemonVarietyListModel } from '../api/pokemon-variety.model';
 import { IStatsModel, StatsModel } from './stats.model';
 import { IAbilityModel } from './ability.model';
 import { IFieldBoostModel } from './field-boost.model';
 
 export interface IStatsConfigurationModel {
-    pokemon: IBasicPokemonVarietyModel;
+    pokemon: IPokemonVarietyListModel;
     baseStats: IStatsModel;
     level: number;
     nature: INatureModel | null;
     ability: IAbilityModel | null;
-    item: IItemStatBoostModel | null;
+    item: IItemStatBoostPokemonModel | null;
     ev: IStatsModel;
     iv: IStatsModel;
     statModifiers: IStatsModel;
@@ -19,7 +19,7 @@ export interface IStatsConfigurationModel {
 }
 
 export class StatsConfigurationModel implements IStatsConfigurationModel {
-    pokemon = new BasicPokemonVarietyModel();
+    pokemon = new PokemonVarietyListModel();
     baseStats = new StatsModel();
     level = 100;
     nature = null;

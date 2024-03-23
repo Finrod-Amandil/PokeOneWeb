@@ -17,7 +17,7 @@ export class MoveService extends BaseService {
         return 'move';
     }
 
-    public GetList(): Observable<IMoveModel[]> {
+    public getList(): Observable<IMoveModel[]> {
         return this.http.get<IMoveModel[]>(`${environment.baseUrl}/moves.json`, this.httpOptions);
     }
 

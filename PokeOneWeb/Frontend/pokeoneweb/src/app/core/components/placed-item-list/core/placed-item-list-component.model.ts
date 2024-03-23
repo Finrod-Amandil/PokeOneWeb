@@ -1,4 +1,4 @@
-import { PlacedItemModel } from 'src/app/core/models/placed-item.model';
+import { PlacedItemModel } from 'src/app/core/models/api/placed-item.model';
 import { PlacedItemListColumn } from './placed-item-list-column.enum';
 
 export class PlacedItemListComponentModel {

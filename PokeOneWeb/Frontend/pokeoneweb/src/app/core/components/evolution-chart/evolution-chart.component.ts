@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IEvolutionModel } from '../../models/evolution.model';
+import { IEvolutionModel } from '../../models/api/evolution.model';
 import { EvolutionLink } from './core/evolution-link';
 import { EvolutionNode } from './core/evolution-node';
 

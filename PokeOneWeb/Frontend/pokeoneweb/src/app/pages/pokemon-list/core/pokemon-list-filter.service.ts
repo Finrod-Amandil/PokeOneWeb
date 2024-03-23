@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
-import { IPokemonVarietyNameModel } from 'src/app/core/models/pokemon-variety-name.model';
+import { IPokemonVarietyListModel, IPokemonVarietyNameModel } from 'src/app/core/models/api/pokemon-variety.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonListFilterModel } from './pokemon-list-filter.model';
 
@@ -182,7 +181,7 @@ export class PokemonListFilterService {
         }
 
         const pokemonWithLearnset = await this.pokemonService
-            .getAllPokemonForMoveSet(
+            .getAllByMoveSet(
                 filter.selectedMoveOption1?.resourceName,
                 filter.selectedMoveOption2?.resourceName,
                 filter.selectedMoveOption3?.resourceName,
@@ -196,15 +195,15 @@ export class PokemonListFilterService {
         if (filter.selectedMoveOption3) filterCount++;
         if (filter.selectedMoveOption4) filterCount++;
 
-        let results: IPokemonVarietyNameModel[] = [];
-        let resultCounts: any = {};
+        const results: IPokemonVarietyNameModel[] = [];
+        const resultCounts: any = {};
         for (const learnset of pokemonWithLearnset) {
             resultCounts[learnset.resourceName] = 1 + (resultCounts[learnset.resourceName] || 0);
         }
 
         for (const key of Object.keys(resultCounts)) {
             if (resultCounts[key] === filterCount) {
-                let tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key);
+                const tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key);
                 if (!tmp) continue;
                 results.push(tmp);
             }

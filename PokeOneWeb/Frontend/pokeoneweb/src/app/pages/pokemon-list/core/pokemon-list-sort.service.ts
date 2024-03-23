@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
+import { IPokemonVarietyListModel } from 'src/app/core/models/api/pokemon-variety.model';
 import { PokemonListColumn } from './pokemon-list-column.enum';
 
 @Injectable({

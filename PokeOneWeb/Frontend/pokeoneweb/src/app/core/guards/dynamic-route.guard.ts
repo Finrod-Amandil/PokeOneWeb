@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EntityType } from '../enums/entity-type.enum';
-import { IEntityTypeModel } from '../models/entity-type.model';
+import { IEntityTypeModel } from '../models/api/entity-type.model';
 import { EntityTypeService } from '../services/api/entity-type.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class DynamicRouteGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         //At this point, only routes with a single path element are considered valid routes.
-        if (route.url.length != 1) {
+        if (route.url.length !== 1) {
             this.router.navigate(['not-found']);
             return false;
         }

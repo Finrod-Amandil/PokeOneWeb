@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITimeOfDayModel } from '../../models/time-of-day.model';
+import { ITimeOfDayModel } from '../../models/api/time-of-day.model';
 
 @Component({
     selector: 'pokeone-time-badge',

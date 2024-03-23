@@ -1,4 +1,4 @@
-import { ISpawnModel } from 'src/app/core/models/spawn.model';
+import { ISpawnModel } from 'src/app/core/models/api/spawn.model';
 import { SpawnListColumn } from './spawn-list-column.enum';
 
 export class SpawnListComponentModel {

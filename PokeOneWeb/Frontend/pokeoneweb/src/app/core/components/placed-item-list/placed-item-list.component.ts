@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPlacedItemModel } from '../../models/placed-item.model';
+import { IPlacedItemModel } from '../../models/api/placed-item.model';
 import { PlacedItemListColumn } from './core/placed-item-list-column.enum';
 import { PlacedItemListSortService } from './core/placed-item-list-sort.service';
 import { PlacedItemListComponentModel } from './core/placed-item-list-component.model';
@@ -27,7 +27,7 @@ export class PlacedItemListComponent implements OnInit {
     public checkItemNames() {
         if (!this.model.placedItems) return;
 
-        const itemNameList = this.model.placedItems.map((placedItem) => placedItem.itemName)
+        const itemNameList = this.model.placedItems.map((placedItem) => placedItem.itemName);
 
         if (Array.from(new Set(itemNameList)).length > 1) {
             this.model.hasOnlyOneItemName = false;

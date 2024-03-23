@@ -1,7 +1,7 @@
 import { SELECT_OPTION_ANY } from 'src/app/core/constants/string.constants';
-import { GenerationModel } from 'src/app/core/models/generation.model';
-import { IMoveNameModel } from 'src/app/core/models/move-name.model';
-import { PvpTierModel } from 'src/app/core/models/pvp-tier.model';
+import { GenerationModel } from 'src/app/core/models/service/generation.model';
+import { IMoveNameModel } from 'src/app/core/models/api/move.model';
+import { PvpTierModel } from 'src/app/core/models/service/pvp-tier.model';
 
 export class PokemonListFilterModel {
     public searchTerm = '';

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ISeasonModel } from '../../models/season.model';
+import { ISeasonModel } from '../../models/api/season.model';
 
 @Component({
     selector: 'pokeone-season-badge',

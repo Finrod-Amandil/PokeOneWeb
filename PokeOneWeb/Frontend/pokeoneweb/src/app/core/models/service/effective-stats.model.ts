@@ -28,7 +28,7 @@ export interface IEffectiveStatsModel {
     total: IStatsModel;
 }
 
-export class EffecticeStatsModel implements IEffectiveStatsModel {
+export class EffectiveStatsModel implements IEffectiveStatsModel {
     baseStatsExtent = new StatsModel();
     baseStatsSubtotal = new StatsModel();
 
