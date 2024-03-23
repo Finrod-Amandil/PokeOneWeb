@@ -18,6 +18,11 @@ namespace PokeOneWeb.Data.Entities
         {
             builder.Entity<PvpTier>().HasIndexedHashes();
             builder.Entity<PvpTier>().HasIndex(p => p.Name).IsUnique();
+
+            builder.Entity<PvpTier>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
@@ -30,6 +35,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         // INDEXED, UNIQUE
         [Required]

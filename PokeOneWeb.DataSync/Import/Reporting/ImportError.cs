@@ -2,6 +2,8 @@
 {
     public class ImportError
     {
+        public string EntityTypeName { get; set; }
+
         public string EntityName { get; set; }
 
         public string Hash { get; set; }

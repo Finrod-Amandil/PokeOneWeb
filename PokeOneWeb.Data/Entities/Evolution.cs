@@ -23,6 +23,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Evolution>().HasIndexedHashes();
 
             builder.Entity<Evolution>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Evolution>()
                 .HasOne(e => e.BasePokemonSpecies)
                 .WithMany(s => s.Evolutions)
                 .HasForeignKey(e => e.BasePokemonSpeciesId)
@@ -51,6 +56,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         /// <summary>
         /// Gets or sets under which conditions the evolution is possible.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PokeOneWeb.Data;
 
 namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
@@ -16,6 +17,8 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
         public string IdHash => _hash.IdHash;
 
         public string Hash => _hash.Hash;
+
+        public int ImportSheetId => _hash.ImportSheetId;
 
         public RowHash RowHash => _hash;
 
@@ -62,6 +65,11 @@ namespace PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes
 
                 _values.Add(columnNames[index], values[index]);
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Join(',', _values.Select((key, val) => $"{key}: {val}"));
         }
     }
 }

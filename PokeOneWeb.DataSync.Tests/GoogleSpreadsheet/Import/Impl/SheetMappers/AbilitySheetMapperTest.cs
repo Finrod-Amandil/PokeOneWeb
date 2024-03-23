@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly AbilitySheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
         private List<string> _columnNames = new() { "Name", "ShortEffect", "Effect", "Atk", "Spa", "Def", "Spd", "Spe", "Hp", "Condition" };
         private List<object> _values;
 
@@ -49,6 +49,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 EffectShortDescription = shortEffect,
                 EffectDescription = effect,
@@ -102,6 +103,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 EffectShortDescription = shortEffect,
                 EffectDescription = effect,
@@ -158,6 +160,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name1,
                 EffectShortDescription = shortEffect1,
                 EffectDescription = effect1,
@@ -174,6 +177,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name2,
                 EffectShortDescription = shortEffect2,
                 EffectDescription = effect2,
@@ -310,6 +314,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 EffectShortDescription = shortEffect,
                 EffectDescription = effect,

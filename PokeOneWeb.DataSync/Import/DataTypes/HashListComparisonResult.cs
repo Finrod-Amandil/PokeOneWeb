@@ -9,5 +9,7 @@ namespace PokeOneWeb.DataSync.Import.DataTypes
         public List<string> RowsToDelete { get; set; } = new();
 
         public List<string> RowsToUpdate { get; set; } = new();
+
+        public List<string> DuplicateIdHashes { get; set; } = new();
     }
 }

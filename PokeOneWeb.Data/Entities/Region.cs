@@ -22,6 +22,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Region>().HasIndex(r => r.ResourceName).IsUnique();
 
             builder.Entity<Region>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Region>()
                 .HasOne(r => r.Event)
                 .WithMany()
                 .HasForeignKey(r => r.EventId)
@@ -38,6 +43,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         // INDEXED, UNIQUE
         [Required]

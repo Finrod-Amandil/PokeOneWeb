@@ -30,4 +30,8 @@
     <ProjectReference Include="..\PokeOneWeb.DataSync\PokeOneWeb.DataSync.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReadModelUpdate\Impl\" />
+  </ItemGroup>
+
 </Project>

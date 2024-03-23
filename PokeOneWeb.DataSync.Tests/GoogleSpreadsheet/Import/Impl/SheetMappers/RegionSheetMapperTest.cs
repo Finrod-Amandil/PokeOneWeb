@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly RegionSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
 
         private List<string> _columnNames = new()
         {
@@ -72,6 +72,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 ResourceName = resourceName,
                 Color = color,
@@ -122,6 +123,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 ResourceName = resourceName,
                 Color = color,
@@ -199,6 +201,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name1,
                     ResourceName = resourceName1,
                     Color = color1,
@@ -213,6 +216,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name2,
                     ResourceName = resourceName2,
                     Color = color2,
@@ -342,6 +346,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 ResourceName = resourceName,
                 Color = color,

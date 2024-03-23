@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly NatureSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
 
         private List<string> _columnNames = new()
         {
@@ -65,6 +65,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 Attack = atk,
                 SpecialAttack = spa,
@@ -131,6 +132,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name1,
                     Attack = atk1,
                     SpecialAttack = spa1,
@@ -142,6 +144,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name2,
                     Attack = atk2,
                     SpecialAttack = spa2,
@@ -264,6 +267,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 Attack = atk,
                 SpecialAttack = spa,

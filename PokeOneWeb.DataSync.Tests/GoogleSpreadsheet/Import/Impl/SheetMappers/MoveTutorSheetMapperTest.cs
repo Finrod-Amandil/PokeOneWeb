@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly MoveTutorSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
 
         private List<string> _columnNames = new()
         {
@@ -54,6 +54,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 LocationName = location,
                 PlacementDescription = string.Empty
@@ -86,6 +87,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 LocationName = location,
                 PlacementDescription = placementDescription
@@ -133,6 +135,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name1,
                     LocationName = location1,
                     PlacementDescription = string.Empty
@@ -141,6 +144,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     Name = name2,
                     LocationName = location2,
                     PlacementDescription = string.Empty
@@ -242,6 +246,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
                 LocationName = location,
                 PlacementDescription = placementDescription

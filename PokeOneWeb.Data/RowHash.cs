@@ -5,5 +5,7 @@
         public string IdHash { get; set; }
 
         public string Hash { get; set; }
+
+        public int ImportSheetId { get; set; }
     }
 }

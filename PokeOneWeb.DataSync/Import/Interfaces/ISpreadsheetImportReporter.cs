@@ -11,11 +11,13 @@ namespace PokeOneWeb.DataSync.Import.Interfaces
 
         void ReportError(string message);
 
-        void ReportError(string entityName, Exception exception);
+        void ReportError(string entityTypeName, Exception exception);
 
-        void ReportError(string entityName, string hash, string message);
+        void ReportError(string entityTypeName, string hash, string message);
 
-        void ReportError(string entityName, string hash, Exception exception);
+        void ReportError(string entityTypeName, string hash, Exception exception);
+
+        void ReportError(string entityTypeName, string hash, Exception exception, string entityName);
 
         void StartImport();
 

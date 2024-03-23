@@ -18,7 +18,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
         private readonly ElementalTypeRelationSheetMapper _mapper;
 
-        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash" };
+        private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
         private List<string> _columnNames = new() { "AttackingType", "DefendingType", "Effectivity" };
         private List<object> _values;
 
@@ -49,6 +49,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 AttackingTypeName = attackingTypeName,
                 DefendingTypeName = defendingTypeName,
                 AttackEffectivity = effectivity
@@ -100,6 +101,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     AttackingTypeName = attackingTypeName1,
                     DefendingTypeName = defendingTypeName1,
                     AttackEffectivity = effectivity1
@@ -108,6 +110,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     AttackingTypeName = attackingTypeName2,
                     DefendingTypeName = defendingTypeName2,
                     AttackEffectivity = effectivity2
@@ -215,6 +218,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 AttackingTypeName = attackingTypeName,
                 DefendingTypeName = defendingTypeName,
                 AttackEffectivity = effectivity

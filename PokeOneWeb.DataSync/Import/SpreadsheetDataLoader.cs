@@ -7,6 +7,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using PokeOneWeb.Data;
+using PokeOneWeb.Data.Entities;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
 using PokeOneWeb.DataSync.Import.Interfaces;
 using PokeOneWeb.DataSync.Utils;
@@ -44,9 +45,9 @@ namespace PokeOneWeb.DataSync.Import
                 .ToList();
         }
 
-        public async Task<List<SheetDataRow>> LoadSheetRows(string spreadsheetId, string sheetName)
+        public async Task<List<SheetDataRow>> LoadSheetRows(ImportSheet sheet)
         {
-            var valuesRanges = await LoadData(spreadsheetId, new List<string> { sheetName }); // Specifiying sheet name as range loads entire sheet.
+            var valuesRanges = await LoadData(sheet.SpreadsheetId, new List<string> { sheet.SheetName }); // Specifiying sheet name as range loads entire sheet.
 
             var columnNames = valuesRanges[0].Select(x => x.ToString() ?? string.Empty).ToList();
             valuesRanges.RemoveAt(0);
@@ -63,7 +64,8 @@ namespace PokeOneWeb.DataSync.Import
                 var rowHash = new RowHash
                 {
                     IdHash = HashUtils.GetHashForDataRow(idValues),
-                    Hash = HashUtils.GetHashForDataRow(values)
+                    Hash = HashUtils.GetHashForDataRow(values),
+                    ImportSheetId = sheet.Id
                 };
 
                 var dataRow = new SheetDataRow(columnNames, rowHash, values);

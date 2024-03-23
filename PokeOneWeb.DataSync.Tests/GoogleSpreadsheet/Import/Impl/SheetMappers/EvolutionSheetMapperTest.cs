@@ -116,6 +116,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 BasePokemonSpeciesName = basePokemonSpecies,
                 BasePokemonVarietyName = basePokemonVariety,
                 BaseStage = baseStage,
@@ -181,6 +182,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     BasePokemonSpeciesName = basePokemonSpecies1,
                     BasePokemonVarietyName = basePokemonVariety1,
                     BaseStage = baseStage1,
@@ -195,6 +197,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     IdHash = _rowHash.IdHash,
                     Hash = _rowHash.Hash,
+                    ImportSheetId = _rowHash.ImportSheetId,
                     BasePokemonSpeciesName = basePokemonSpecies2,
                     BasePokemonVarietyName = basePokemonVariety2,
                     BaseStage = baseStage2,
@@ -326,6 +329,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 IdHash = _rowHash.IdHash,
                 Hash = _rowHash.Hash,
+                ImportSheetId = _rowHash.ImportSheetId,
                 BasePokemonSpeciesName = basePokemonSpecies,
                 BasePokemonVarietyName = basePokemonVariety,
                 BaseStage = baseStage,

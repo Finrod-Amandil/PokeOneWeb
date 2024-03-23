@@ -694,7 +694,7 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.ToTable("HuntingConfiguration");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportSheet", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -702,8 +702,26 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("SheetHash")
+                    b.Property<DateTime>("ImportTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedSheets")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImportTime");
+
+                    b.ToTable("ImportLog");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportSheet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("SheetName")
                         .IsRequired()

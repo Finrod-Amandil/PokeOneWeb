@@ -19,6 +19,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<LearnableMoveLearnMethod>().HasIndexedHashes();
 
             builder.Entity<LearnableMoveLearnMethod>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<LearnableMoveLearnMethod>()
                 .HasOne(lmlm => lmlm.LearnableMove)
                 .WithMany(lm => lm.LearnMethods)
                 .HasForeignKey(lmlm => lmlm.LearnableMoveId)
@@ -53,6 +58,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         public bool IsAvailable { get; set; }
 

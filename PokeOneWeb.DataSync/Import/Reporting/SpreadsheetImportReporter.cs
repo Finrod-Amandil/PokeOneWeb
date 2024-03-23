@@ -35,20 +35,31 @@ namespace PokeOneWeb.DataSync.Import.Reporting
             ReportError(string.Empty, string.Empty, message);
         }
 
-        public void ReportError(string entityName, Exception exception)
+        public void ReportError(string entityTypeName, string hash, string message)
         {
-            ReportError(entityName, string.Empty, exception);
+            ReportError(entityTypeName, hash, message, "N/A");
         }
 
-        public void ReportError(string entityName, string hash, Exception exception)
+        public void ReportError(string entityTypeName, Exception exception)
         {
-            ReportError(entityName, hash, $"{exception.GetType().Name}: {exception.Message}");
+            ReportError(entityTypeName, string.Empty, exception);
         }
 
-        public void ReportError(string entityName, string hash, string message)
+        public void ReportError(string entityTypeName, string hash, Exception exception)
+        {
+            ReportError(entityTypeName, hash, exception, "N/A");
+        }
+
+        public void ReportError(string entityTypeName, string hash, Exception exception, string entityName)
+        {
+            ReportError(entityTypeName, hash, $"{exception.GetType().Name}: {exception.Message}", entityName);
+        }
+
+        public void ReportError(string entityTypeName, string hash, string message, string entityName)
         {
             _report.Errors.Add(new ImportError
             {
+                EntityTypeName = entityTypeName,
                 EntityName = entityName,
                 Hash = hash,
                 Message = message
@@ -56,6 +67,7 @@ namespace PokeOneWeb.DataSync.Import.Reporting
 
             _logger.LogWarning(
                 $"An error occurred while running Google Spreadsheet Import. " +
+                $"Entity type: {entityTypeName}, " +
                 $"Entity name: {entityName}, " +
                 $"ID Hash: {hash}, " +
                 $"Message: {message}");

@@ -44,7 +44,8 @@ namespace PokeOneWeb.DataSync.Import
             entity = new TEntity
             {
                 IdHash = row.IdHash,
-                Hash = row.Hash
+                Hash = row.Hash,
+                ImportSheetId = row.ImportSheetId
             };
 
             var canMap = true;
@@ -56,7 +57,15 @@ namespace PokeOneWeb.DataSync.Import
                 }
                 catch (Exception e) when (e is InvalidRowDataException or ParseException)
                 {
-                    Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
+                    if (entity is INamedEntity)
+                    {
+                        Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e, row["Name"].ToString());
+                    }
+                    else
+                    {
+                        Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e);
+                    }
+
                     canMap = false;
                 }
             }

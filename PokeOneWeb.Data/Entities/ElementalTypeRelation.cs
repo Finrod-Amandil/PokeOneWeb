@@ -21,6 +21,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<ElementalTypeRelation>().HasIndexedHashes();
 
             builder.Entity<ElementalTypeRelation>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<ElementalTypeRelation>()
                 .HasOne(etr => etr.AttackingType)
                 .WithMany(et => et.AttackingDamageRelations)
                 .HasForeignKey(etr => etr.AttackingTypeId)
@@ -43,6 +48,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         [Column(TypeName = "decimal(4,1)")]
         public decimal AttackEffectivity { get; set; }

@@ -49,11 +49,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         public void UpdateReadModel()
         {
             _reporter.StartReadModelUpdate();
-
-            _reporter.StartReadModelUpdate("generate-json-files");
             GenerateJsonFiles();
-            _reporter.StopReadModelUpdate("generate-json-files");
-
             _reporter.StopReadModelUpdate();
         }
 

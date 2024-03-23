@@ -19,6 +19,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<ItemStatBoostPokemon>().HasIndexedHashes();
 
             builder.Entity<ItemStatBoostPokemon>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<ItemStatBoostPokemon>()
                 .HasOne(isbp => isbp.ItemStatBoost)
                 .WithMany(isb => isb.RequiredPokemon)
                 .HasForeignKey(isbp => isbp.ItemStatBoostId)
@@ -41,6 +46,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         [ForeignKey("ItemStatBoostId")]
         public ItemStatBoost ItemStatBoost { get; set; } = new();

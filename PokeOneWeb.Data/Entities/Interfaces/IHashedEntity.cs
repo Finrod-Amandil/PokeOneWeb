@@ -15,5 +15,15 @@
         /// Can be used to identify new and deleted entities.
         /// </summary>
         string IdHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sheet, from which this entity was imported.
+        /// </summary>
+        ImportSheet ImportSheet { get; set; }
+
+        /// <summary>
+        /// Gets or sets database foreign key of the spreadsheet, from which this entity was imported.
+        /// </summary>
+        int ImportSheetId { get; set; }
     }
 }

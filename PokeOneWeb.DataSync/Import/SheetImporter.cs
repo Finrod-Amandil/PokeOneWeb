@@ -11,6 +11,7 @@ namespace PokeOneWeb.DataSync.Import
     public class SheetImporter<TEntity> : ISheetImporter where TEntity : class, IHashedEntity
     {
         private readonly ISpreadsheetDataLoader _dataLoader;
+        private readonly IImportSheetRepository _importSheetRepository;
         private readonly IHashedEntityRepository<TEntity> _repository;
         private readonly ISheetMapper<TEntity> _mapper;
         private readonly IHashListComparator _hashListComparator;
@@ -18,12 +19,14 @@ namespace PokeOneWeb.DataSync.Import
 
         public SheetImporter(
             ISpreadsheetDataLoader dataLoader,
+            IImportSheetRepository importSheetRepository,
             IHashedEntityRepository<TEntity> repository,
             ISheetMapper<TEntity> mapper,
             IHashListComparator hashListComparator,
             ISpreadsheetImportReporter reporter)
         {
             _dataLoader = dataLoader;
+            _importSheetRepository = importSheetRepository;
             _repository = repository;
             _mapper = mapper;
             _hashListComparator = hashListComparator;
@@ -39,19 +42,47 @@ namespace PokeOneWeb.DataSync.Import
             _reporter.StartImport(sheetName);
 
             // Compare hash list of sheet and DB to find rows that need to be deleted, inserted, updated
-            var sheetData = await _dataLoader.LoadSheetRows(spreadsheetId, sheetName);
+            var sheet = _importSheetRepository.FindBySpreadsheetIdAndSheetName(spreadsheetId, sheetName);
+            var sheetData = await _dataLoader.LoadSheetRows(sheet);
             var sheetHashes = sheetData.Select(row => row.RowHash).ToList();
 
-            var dbHashes = _repository.GetHashes();
+            var dbHashes = _repository.GetHashesForSheet(sheet);
             var hashListComparisonResult = _hashListComparator.CompareHashLists(sheetHashes, dbHashes);
 
-            var sheetIdHashes = sheetHashes.Select(rh => rh.IdHash).ToList();
+            sheetData = FilterDuplicates(sheetData, hashListComparisonResult.DuplicateIdHashes);
 
             var deletedCount = Delete(hashListComparisonResult.RowsToDelete);
             var insertedCount = Insert(hashListComparisonResult.RowsToInsert, sheetData);
             var updatedCount = Update(hashListComparisonResult.RowsToUpdate, sheetData);
 
             _reporter.StopImport(sheetName, insertedCount, updatedCount, deletedCount);
+        }
+
+        private List<SheetDataRow> FilterDuplicates(List<SheetDataRow> rows, List<string> duplicateIdHashes)
+        {
+            if (!duplicateIdHashes.Any())
+            {
+                return rows;
+            }
+
+            var seenDuplicates = new HashSet<string>();
+
+            var filteredList = new List<SheetDataRow>();
+            foreach (var row in rows)
+            {
+                if (!seenDuplicates.Contains(row.IdHash))
+                {
+                    filteredList.Add(row);
+                }
+
+                if (duplicateIdHashes.Contains(row.IdHash))
+                {
+                    _reporter.ReportError($"Found entry with duplicate hash: {row}");
+                    seenDuplicates.Add(row.IdHash);
+                }
+            }
+
+            return filteredList;
         }
 
         private int Delete(List<string> rowsToDelete)
@@ -68,28 +99,32 @@ namespace PokeOneWeb.DataSync.Import
 
         private int Insert(List<string> rowsToInsert, List<SheetDataRow> sheetData)
         {
-            if (rowsToInsert.Any())
-            {
-                var entities = _mapper.Map(sheetData).ToList();
-                var insertedCount = _repository.Insert(entities);
+            var ids = new HashSet<string>(rowsToInsert);
+            var dataToInsert = sheetData.Where(x => ids.Contains(x.IdHash));
 
-                return insertedCount;
+            var insertedCount = 0;
+            if (dataToInsert.Any())
+            {
+                var entities = _mapper.Map(dataToInsert).ToList();
+                insertedCount = _repository.Insert(entities);
             }
 
-            return 0;
+            return insertedCount;
         }
 
         private int Update(List<string> rowsToUpdate, List<SheetDataRow> sheetData)
         {
-            if (rowsToUpdate.Any())
-            {
-                var entities = _mapper.Map(sheetData).ToList();
-                var updatedCount = _repository.UpdateByIdHashes(entities);
+            var ids = new HashSet<string>(rowsToUpdate);
+            var dataToInsert = sheetData.Where(x => ids.Contains(x.IdHash));
 
-                return updatedCount;
+            var updatedCount = 0;
+            if (dataToInsert.Any())
+            {
+                var entities = _mapper.Map(dataToInsert).ToList();
+                updatedCount = _repository.UpdateByIdHashes(entities);
             }
 
-            return 0;
+            return updatedCount;
         }
     }
 }

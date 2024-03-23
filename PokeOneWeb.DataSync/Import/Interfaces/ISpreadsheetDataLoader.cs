@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PokeOneWeb.Data.Entities;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.DataTypes;
 
 namespace PokeOneWeb.DataSync.Import.Interfaces
@@ -16,6 +17,6 @@ namespace PokeOneWeb.DataSync.Import.Interfaces
         /// ordered list of all id hashes is required in order to associate the hashes with the row
         /// indexes.
         /// </summary>
-        Task<List<SheetDataRow>> LoadSheetRows(string spreadsheetId, string sheetName);
+        Task<List<SheetDataRow>> LoadSheetRows(ImportSheet sheet);
     }
 }

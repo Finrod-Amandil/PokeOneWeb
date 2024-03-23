@@ -25,7 +25,7 @@ namespace PokeOneWeb.DataSync.Import
             var sheetHashesOrdered = sheetHashes.OrderBy(h => h.IdHash).ToList();
             var dbHashesOrdered = dbHashes.OrderBy(h => h.IdHash).ToList();
 
-            CheckForHashCollisions(sheetHashesOrdered);
+            var duplicateHashes = FindDuplicateHashes(sheetHashesOrdered);
 
             var sheetHashIndex = 0;
             var sheetHashCount = sheetHashesOrdered.Count;
@@ -68,6 +68,7 @@ namespace PokeOneWeb.DataSync.Import
             result.RowsToDelete = SortHashesByOriginalOrder(result.RowsToDelete, sheetIdHashes);
             result.RowsToInsert = SortHashesByOriginalOrder(result.RowsToInsert, sheetIdHashes);
             result.RowsToUpdate = SortHashesByOriginalOrder(result.RowsToUpdate, sheetIdHashes);
+            result.DuplicateIdHashes = duplicateHashes;
 
             return result;
         }
@@ -92,21 +93,23 @@ namespace PokeOneWeb.DataSync.Import
             return hashesToSort.OrderBy(sortedHashes.IndexOf).ToList();
         }
 
-        private void CheckForHashCollisions(IList<RowHash> hashes)
+        private List<string> FindDuplicateHashes(IList<RowHash> hashes)
         {
+            var duplicateHashes = new List<string>();
+
             var previous = string.Empty;
             for (var i = 0; i < hashes.Count; i++)
             {
                 var current = hashes[i].IdHash;
                 if (current.EqualsExact(previous))
                 {
-                    _logger.LogWarning("Found duplicate ID Hash: " + current);
-                    hashes.RemoveAt(i);
-                    i -= 1;
+                    duplicateHashes.Add(current);
                 }
 
                 previous = current;
             }
+
+            return duplicateHashes.Distinct().ToList();
         }
     }
 }

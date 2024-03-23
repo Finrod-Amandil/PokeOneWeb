@@ -15,7 +15,15 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().AddRange(entities);
-            DbContext.SaveChanges();
+
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbUpdateException exception)
+            {
+                ReportInsertOrUpdateException(typeof(TEntity), exception);
+            }
 
             // Clear change tracker to avoid tracking the same entity twice.
             DbContext.ChangeTracker.Clear();
@@ -33,7 +41,15 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().UpdateRange(entities);
-            DbContext.SaveChanges();
+
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbUpdateException exception)
+            {
+                ReportInsertOrUpdateException(typeof(TEntity), exception);
+            }
 
             // Clear change tracker to avoid tracking the same entity twice.
             DbContext.ChangeTracker.Clear();

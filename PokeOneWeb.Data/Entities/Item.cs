@@ -23,6 +23,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Item>().HasIndex(i => i.ResourceName).IsUnique();
 
             builder.Entity<Item>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Item>()
                 .HasOne(i => i.BagCategory)
                 .WithMany(bc => bc.Items)
                 .HasForeignKey(i => i.BagCategoryId)
@@ -39,6 +44,11 @@ namespace PokeOneWeb.Data.Entities
         // INDEXED
         [Required]
         public string IdHash { get; set; }
+
+        [ForeignKey("ImportSheetId")]
+        public ImportSheet ImportSheet { get; set; }
+
+        public int ImportSheetId { get; set; }
 
         // INDEXED, UNIQUE
         [Required]
