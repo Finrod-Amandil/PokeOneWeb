@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { EffecticeStatsModel as EffectiveStatsModel, IEffectiveStatsModel } from '../models/effective-stats.model';
-import { IStatsConfigurationModel } from '../models/stats-configuration.model';
-import { IStatsModel, StatsModel } from '../models/stats.model';
+import { EffectiveStatsModel, IEffectiveStatsModel } from '../models/service/effective-stats.model';
+import { IStatsConfigurationModel } from '../models/service/stats-configuration.model';
+import { IStatsModel, StatsModel } from '../models/service/stats.model';
 
 const NATURE_BOOST = 0.1;
 
@@ -102,7 +102,7 @@ export class StatsService {
             def: this.getAbilityPartialValue(model.ability.defenseBoost, subTotal.def),
             spd: this.getAbilityPartialValue(model.ability.specialDefenseBoost, subTotal.spd),
             spe: this.getAbilityPartialValue(model.ability.speedBoost, subTotal.spe),
-            hp: this.getAbilityPartialValue(model.ability.hitPointsBoost, subTotal.spe)
+            hp: 0
         };
     }
 
@@ -117,7 +117,7 @@ export class StatsService {
             def: this.getItemPartialValue(model.item.defenseBoost, subTotal.def),
             spd: this.getItemPartialValue(model.item.specialDefenseBoost, subTotal.spd),
             spe: this.getItemPartialValue(model.item.speedBoost, subTotal.spe),
-            hp: this.getItemPartialValue(model.item.hitPointsBoost, subTotal.spe)
+            hp: 0
         };
     }
 

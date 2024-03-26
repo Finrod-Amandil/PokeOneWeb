@@ -19,6 +19,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<ItemStatBoostPokemon>().HasIndexedHashes();
 
             builder.Entity<ItemStatBoostPokemon>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<ItemStatBoostPokemon>()
                 .HasOne(isbp => isbp.ItemStatBoost)
                 .WithMany(isb => isb.RequiredPokemon)
                 .HasForeignKey(isbp => isbp.ItemStatBoostId)
@@ -29,11 +34,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .HasForeignKey(isbp => isbp.PokemonVarietyId)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            builder.Entity<ItemStatBoostPokemon>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

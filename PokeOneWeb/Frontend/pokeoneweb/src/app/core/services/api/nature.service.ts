@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { INatureModel } from '../../models/nature.model';
+import { INatureModel } from '../../models/api/nature.model';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class NatureService extends BaseService {
         return 'nature';
     }
 
-    public getNatures(): Observable<INatureModel[]> {
+    public getList(): Observable<INatureModel[]> {
         return this.http.get<INatureModel[]>(`${environment.baseUrl}/natures.json`, this.httpOptions);
     }
 }

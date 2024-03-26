@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IRegionListModel } from 'src/app/core/models/region-list.model';
+import { IRegionModel } from 'src/app/core/models/api/region.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RegionListSortService {
-    public sort(models: IRegionListModel[]) {
+    public sort(models: IRegionModel[]) {
         return models.slice().sort((n1, n2) => {
             if (n1.isMainRegion && (n2.isSideRegion || n2.isEventRegion)) {
                 return -1;

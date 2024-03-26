@@ -20,6 +20,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<PlacedItem>().HasIndexedHashes();
 
             builder.Entity<PlacedItem>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<PlacedItem>()
                 .HasOne(pi => pi.Item)
                 .WithMany(i => i.PlacedItems)
                 .HasForeignKey(pi => pi.ItemId)
@@ -30,11 +35,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(l => l.PlacedItems)
                 .HasForeignKey(pi => pi.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<PlacedItem>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

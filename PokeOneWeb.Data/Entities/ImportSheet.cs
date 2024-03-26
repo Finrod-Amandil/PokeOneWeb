@@ -35,11 +35,5 @@ namespace PokeOneWeb.Data.Entities
         /// </summary>
         [Required]
         public string SheetName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a hash value calculated over all the contents of the sheet. Can be
-        /// used to determine whether there are changes anywhere in the sheet.
-        /// </summary>
-        public string SheetHash { get; set; }
     }
 }

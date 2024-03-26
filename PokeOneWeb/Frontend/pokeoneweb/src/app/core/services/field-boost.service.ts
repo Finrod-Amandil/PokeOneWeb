@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IFieldBoostModel } from '../models/field-boost.model';
+import { IFieldBoostModel } from '../models/service/field-boost.model';
 
 @Injectable({
     providedIn: 'root'

@@ -1,8 +1,8 @@
 import { SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
-import { IGenerationModel } from 'src/app/core/models/generation.model';
-import { IMoveNameModel } from 'src/app/core/models/move-name.model';
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
-import { IPvpTierModel } from 'src/app/core/models/pvp-tier.model';
+import { IGenerationModel } from 'src/app/core/models/service/generation.model';
+import { IMoveNameModel } from 'src/app/core/models/api/move.model';
+import { IPokemonVarietyListModel } from 'src/app/core/models/api/pokemon-variety.model';
+import { IPvpTierModel } from 'src/app/core/models/service/pvp-tier.model';
 import { PokemonListColumn } from './pokemon-list-column.enum';
 import { PokemonListFilterModel } from './pokemon-list-filter.model';
 

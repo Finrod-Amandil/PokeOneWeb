@@ -1,30 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ILocationListModel } from 'src/app/core/models/location-list.model';
+import { ILocationGroupListModel } from 'src/app/core/models/api/location-group.model';
 import { LocationListFilterModel } from './location-list-filter.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LocationListFilterService {
-    public async applyFilter(filter: LocationListFilterModel, allModels: ILocationListModel[]): Promise<ILocationListModel[]> {
+    public applyFilter(
+        filter: LocationListFilterModel,
+        allModels: ILocationGroupListModel[]
+    ): ILocationGroupListModel[] {
         return allModels.filter((i) => this.isIncluded(i, filter));
     }
 
-    private isIncluded(i: ILocationListModel, filter: LocationListFilterModel): boolean {
-        return (
-            this.filterSearchTerm(i, filter)
-        );
+    private isIncluded(i: ILocationGroupListModel, filter: LocationListFilterModel): boolean {
+        return this.filterSearchTerm(i, filter);
     }
 
-    private filterSearchTerm(i: ILocationListModel, filter: LocationListFilterModel): boolean {
+    private filterSearchTerm(i: ILocationGroupListModel, filter: LocationListFilterModel): boolean {
         if (!filter.searchTerm) {
             return true;
         }
 
         const searchTerm = filter.searchTerm.toLowerCase();
 
-        return (
-            i.name.toLowerCase().includes(searchTerm)
-        );
+        return i.name.toLowerCase().includes(searchTerm);
     }
 }

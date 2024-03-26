@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IItemStatBoostModel } from '../../models/item-stat-boost.model';
+import { IItemStatBoostPokemonModel } from '../../models/api/item-stat-boost-pokemon.model';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -14,10 +14,10 @@ export class ItemStatBoostService extends BaseService {
     }
 
     public getPathSegment(): string {
-        return 'item';
+        return 'item-stat-boost-pokemon';
     }
 
-    public getItemStatBoosts(): Observable<IItemStatBoostModel[]> {
-        return this.http.get<IItemStatBoostModel[]>(`${environment.baseUrl}/itemstats.json`, this.httpOptions);
+    public getList(): Observable<IItemStatBoostPokemonModel[]> {
+        return this.http.get<IItemStatBoostPokemonModel[]>(`${environment.baseUrl}/itemstats.json`, this.httpOptions);
     }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
-import { IPokemonVarietyNameModel } from 'src/app/core/models/pokemon-variety-name.model';
+import { IPokemonVarietyListModel, IPokemonVarietyNameModel } from 'src/app/core/models/api/pokemon-variety.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { PokemonListFilterModel } from './pokemon-list-filter.model';
 
@@ -79,29 +78,23 @@ export class PokemonListFilterService {
                     p.secondaryElementalType === filter.selectedType2) ||
                 (p.primaryElementalType === filter.selectedType2 && p.secondaryElementalType === filter.selectedType1)
             );
-        }
-
-        //Only first type required
-        else if (
+        } else if (
+            //Only first type required
             filter.selectedType1 &&
             filter.selectedType1 !== SELECT_OPTION_ANY &&
             filter.selectedType2 === SELECT_OPTION_ANY
         ) {
             return p.primaryElementalType === filter.selectedType1 || p.secondaryElementalType === filter.selectedType1;
-        }
-
-        //Only second type required
-        else if (
+        } else if (
+            //Only second type required
             filter.selectedType2 &&
             filter.selectedType2 !== SELECT_OPTION_ANY &&
             filter.selectedType2 !== SELECT_OPTION_NONE &&
             filter.selectedType1 === SELECT_OPTION_ANY
         ) {
             return p.primaryElementalType === filter.selectedType2 || p.secondaryElementalType === filter.selectedType2;
-        }
-
-        //Specific single types (second type is none)
-        else if (
+        } else if (
+            //Specific single types (second type is none)
             filter.selectedType1 &&
             filter.selectedType1 !== SELECT_OPTION_ANY &&
             filter.selectedType2 === SELECT_OPTION_NONE
@@ -109,10 +102,11 @@ export class PokemonListFilterService {
             return (
                 p.primaryElementalType === filter.selectedType1 && !p.secondaryElementalType // Pokemon with no secondary Elemental Type contains null
             );
-        }
-
-        //Any single type (ANY + NONE)
-        else if (filter.selectedType1 === SELECT_OPTION_ANY && filter.selectedType2 === SELECT_OPTION_NONE) {
+        } else if (
+            //Any single type (ANY + NONE)
+            filter.selectedType1 === SELECT_OPTION_ANY &&
+            filter.selectedType2 === SELECT_OPTION_NONE
+        ) {
             return (
                 p.primaryElementalType !== '' && !p.secondaryElementalType // Pokemon with no secondary Elemental Type contains falsy
             );
@@ -182,7 +176,7 @@ export class PokemonListFilterService {
         }
 
         const pokemonWithLearnset = await this.pokemonService
-            .getAllPokemonForMoveSet(
+            .getAllByMoveSet(
                 filter.selectedMoveOption1?.resourceName,
                 filter.selectedMoveOption2?.resourceName,
                 filter.selectedMoveOption3?.resourceName,
@@ -196,15 +190,15 @@ export class PokemonListFilterService {
         if (filter.selectedMoveOption3) filterCount++;
         if (filter.selectedMoveOption4) filterCount++;
 
-        let results: IPokemonVarietyNameModel[] = [];
-        let resultCounts: any = {};
+        const results: IPokemonVarietyNameModel[] = [];
+        const resultCounts: { [id: string]: number } = {};
         for (const learnset of pokemonWithLearnset) {
             resultCounts[learnset.resourceName] = 1 + (resultCounts[learnset.resourceName] || 0);
         }
 
         for (const key of Object.keys(resultCounts)) {
             if (resultCounts[key] === filterCount) {
-                let tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key);
+                const tmp = pokemonWithLearnset.find((learnset) => learnset.resourceName === key);
                 if (!tmp) continue;
                 results.push(tmp);
             }

@@ -86,7 +86,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             var distinctItemStatBoosts = entities
                 .Select(x => x.ItemStatBoost)
                 .DistinctBy(x => x.ItemName)
-                .ToList();
+                .ToList() ?? new List<ItemStatBoost>();
 
             var existingItemStatBoosts = DbContext.ItemStatBoosts
                 .Include(x => x.Item)

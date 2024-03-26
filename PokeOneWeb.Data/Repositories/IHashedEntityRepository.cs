@@ -10,7 +10,7 @@ namespace PokeOneWeb.Data.Repositories
         /// Loads the ID Hashes and Content Hashes for the entities that were imported from
         /// the given sheet.
         /// </summary>
-        IEnumerable<RowHash> GetHashesForSheet(ImportSheet sheet);
+        List<RowHash> GetHashesForSheet(ImportSheet sheet);
 
         /// <summary>
         /// Deletes hashed entities by looking up the corresponding ID Hashes.

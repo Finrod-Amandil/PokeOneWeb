@@ -21,6 +21,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<ElementalTypeRelation>().HasIndexedHashes();
 
             builder.Entity<ElementalTypeRelation>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<ElementalTypeRelation>()
                 .HasOne(etr => etr.AttackingType)
                 .WithMany(et => et.AttackingDamageRelations)
                 .HasForeignKey(etr => etr.AttackingTypeId)
@@ -30,11 +35,6 @@ namespace PokeOneWeb.Data.Entities
                 .HasOne(etr => etr.DefendingType)
                 .WithMany(et => et.DefendingDamageRelations)
                 .HasForeignKey(etr => etr.DefendingTypeId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
-            builder.Entity<ElementalTypeRelation>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
                 .OnDelete(DeleteBehavior.ClientCascade);
         }
 

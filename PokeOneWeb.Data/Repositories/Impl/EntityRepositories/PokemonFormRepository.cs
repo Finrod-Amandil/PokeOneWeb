@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PokeOneWeb.Data.Entities;
@@ -18,7 +19,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
             var insertedCount = base.Insert(entities);
             DeleteUnusedParentEntities();
-            SetDefaultFormsAndVarieties();
+            SetDefaultFormsAndVarieties(entities);
             return insertedCount;
         }
 
@@ -26,7 +27,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
         {
             var updatedCount = base.Update(entities);
             DeleteUnusedParentEntities();
-            SetDefaultFormsAndVarieties();
+            SetDefaultFormsAndVarieties(entities);
             return updatedCount;
         }
 
@@ -148,15 +149,30 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             DbContext.PokemonVarieties.Where(x => x.Forms.Count == 0).DeleteFromQuery();
         }
 
-        private void SetDefaultFormsAndVarieties()
+        private void SetDefaultFormsAndVarieties(ICollection<PokemonForm> entities)
         {
+            var idHashes = new HashSet<string>(entities.Select(x => x.IdHash));
+
             var forms = DbContext.PokemonForms
                 .Include(x => x.PokemonVariety)
                 .ThenInclude(x => x.PokemonSpecies)
+                .Where(x => idHashes.Contains(x.IdHash))
                 .ToList();
 
             foreach (var form in forms)
             {
+                if (!_defaultFormNames.ContainsKey(form.PokemonVariety.Name))
+                {
+                    ReportInsertOrUpdateException(typeof(PokemonForm), new Exception($"Failed to assign default form to Pokémon Variety \"{form.PokemonVariety.Name}\"."));
+                    continue;
+                }
+
+                if (!_defaultVarietyNames.ContainsKey(form.PokemonVariety.PokemonSpecies.Name))
+                {
+                    ReportInsertOrUpdateException(typeof(PokemonForm), new Exception($"Failed to assign default variety to Pokémon Species \"{form.PokemonVariety.PokemonSpecies.Name}\"."));
+                    continue;
+                }
+
                 var defaultFormName = _defaultFormNames[form.PokemonVariety.Name];
                 var defaultVarietyName = _defaultVarietyNames[form.PokemonVariety.PokemonSpecies.Name];
 

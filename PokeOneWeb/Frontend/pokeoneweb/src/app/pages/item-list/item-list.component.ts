@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
-import { IItemListModel } from 'src/app/core/models/item-list.model';
+import { IItemListModel } from 'src/app/core/models/api/item.model';
 import { ItemService } from 'src/app/core/services/api/item.service';
 import { ItemListColumn } from './core/item-list-column.enum';
 import { ItemListFilterService } from './core/item-list-filter.service';
@@ -33,7 +33,7 @@ export class ItemListComponent implements OnInit {
     ngOnInit(): void {
         this.titleService.setTitle(`Items - ${WEBSITE_NAME}`);
 
-        this.itemService.getAll().subscribe((response) => {
+        this.itemService.getList().subscribe((response) => {
             this.model.itemModels = response as IItemListModel[];
 
             this.model.displayedItemModels = this.sortService.sort(this.model.itemModels, ItemListColumn.Name, 1);
@@ -43,15 +43,16 @@ export class ItemListComponent implements OnInit {
         });
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();
         }, this.timeOutDuration);
     }
 
-    public async onFilterChanged() {
-        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.itemModels);
+    public onFilterChanged() {
+        const filtered = this.filterService.applyFilter(this.model.filter, this.model.itemModels);
 
         this.model.displayedItemModels = this.sortService.sort(
             filtered,

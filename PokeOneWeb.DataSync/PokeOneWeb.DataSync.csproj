@@ -8,19 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="GoogleSpreadsheet\credentials.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="GoogleSpreadsheet\credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.56.0.2371" />
+    <PackageReference Include="Google.Apis.DriveActivity.v2" Version="1.66.0.3106" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.66.0.3148" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,7 +26,7 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="GoogleSpreadsheet\token.json\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
+    <None Update="gcloud_credentials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

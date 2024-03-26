@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using PokeOneWeb.Data.ReadModels.Enums;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
@@ -13,6 +13,6 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string ResourceName { get; set; }
 
-        public EntityType EntityType { get; set; }
+        public Enums.EntityType EntityType { get; set; }
     }
 }

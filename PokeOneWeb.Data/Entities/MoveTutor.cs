@@ -23,15 +23,15 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<MoveTutor>().HasIndex(mt => mt.Name).IsUnique();
 
             builder.Entity<MoveTutor>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<MoveTutor>()
                 .HasOne(mt => mt.Location)
                 .WithMany()
                 .HasForeignKey(mt => mt.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<MoveTutor>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

@@ -1,4 +1,4 @@
-import { RegionListModel } from 'src/app/core/models/region-list.model';
+import { RegionListModel } from 'src/app/core/models/region.model';
 import { RegionListSortService } from './region-list-sort.service';
 
 describe('Region List Component', () => {

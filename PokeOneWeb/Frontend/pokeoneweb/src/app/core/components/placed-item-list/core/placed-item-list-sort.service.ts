@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPlacedItemModel } from 'src/app/core/models/placed-item.model';
+import { IPlacedItemModel } from 'src/app/core/models/api/placed-item.model';
 import { PlacedItemListColumn } from './placed-item-list-column.enum';
 
 @Injectable({

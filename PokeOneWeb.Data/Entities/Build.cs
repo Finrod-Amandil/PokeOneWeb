@@ -21,6 +21,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Build>().HasIndexedHashes();
 
             builder.Entity<Build>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Build>()
                 .HasOne(b => b.PokemonVariety)
                 .WithMany(pv => pv.Builds)
                 .HasForeignKey(b => b.PokemonVarietyId)
@@ -31,11 +36,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .HasForeignKey(b => b.AbilityId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Build>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

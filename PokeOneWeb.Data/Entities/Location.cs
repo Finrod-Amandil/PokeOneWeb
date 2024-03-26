@@ -23,15 +23,15 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Location>().HasIndex(l => l.Name).IsUnique();
 
             builder.Entity<Location>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Location>()
                 .HasOne(l => l.LocationGroup)
                 .WithMany(lg => lg.Locations)
                 .HasForeignKey(l => l.LocationGroupId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Location>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

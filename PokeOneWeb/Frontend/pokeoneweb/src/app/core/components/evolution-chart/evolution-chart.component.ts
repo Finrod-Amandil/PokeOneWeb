@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IEvolutionModel } from '../../models/evolution.model';
+import { IEvolutionModel } from '../../models/api/evolution.model';
 import { EvolutionLink } from './core/evolution-link';
 import { EvolutionNode } from './core/evolution-node';
 
@@ -133,7 +133,7 @@ export class EvolutionChartComponent implements OnInit {
         });
 
         this.evolutionNodes = distinctPokemon.sort((p1, p2) => {
-            if (p1.stage != p2.stage) {
+            if (p1.stage !== p2.stage) {
                 return p1.stage - p2.stage;
             } else {
                 return p1.sortIndex - p2.sortIndex;
@@ -287,9 +287,8 @@ export class EvolutionChartComponent implements OnInit {
             x2 = x1;
             x3 = evolvedNode.cx - evolvedNode.r;
             textX = x1 - 1.5 * this.baseSize;
-        }
-        //right-oriented link
-        else {
+        } else {
+            //right-oriented link
             x0 = baseNode.cx + baseNode.r;
             x1 = x0 + baseNode.r;
             x2 = x1;

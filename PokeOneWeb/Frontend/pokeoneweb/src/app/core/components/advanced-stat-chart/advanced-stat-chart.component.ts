@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPokemonVarietyModel, PokemonVarietyModel } from '../../models/pokemon-variety.model';
-import { IStatsConfigurationModel } from '../../models/stats-configuration.model';
-import { IStatsModel } from '../../models/stats.model';
+import { IPokemonVarietyModel, PokemonVarietyModel } from '../../models/api/pokemon-variety.model';
+import { IStatsConfigurationModel } from '../../models/service/stats-configuration.model';
+import { IStatsModel } from '../../models/service/stats.model';
 import { StatsService } from '../../services/stats.service';
 import { AdvancedStatChartModel } from './core/advanced-stat-chart.model';
 import { BarChartGroupModel } from './core/bar-chart-group.model';

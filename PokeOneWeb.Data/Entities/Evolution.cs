@@ -23,6 +23,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Evolution>().HasIndexedHashes();
 
             builder.Entity<Evolution>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Evolution>()
                 .HasOne(e => e.BasePokemonSpecies)
                 .WithMany(s => s.Evolutions)
                 .HasForeignKey(e => e.BasePokemonSpeciesId)
@@ -38,11 +43,6 @@ namespace PokeOneWeb.Data.Entities
                 .HasOne(e => e.EvolvedPokemonVariety)
                 .WithMany()
                 .HasForeignKey(e => e.EvolvedPokemonVarietyId)
-                .OnDelete(DeleteBehavior.ClientCascade);
-
-            builder.Entity<Evolution>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
                 .OnDelete(DeleteBehavior.ClientCascade);
         }
 

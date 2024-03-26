@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IItemListModel } from 'src/app/core/models/item-list.model';
+import { IItemListModel } from 'src/app/core/models/api/item.model';
 import { ItemListColumn } from './item-list-column.enum';
 
 @Injectable({

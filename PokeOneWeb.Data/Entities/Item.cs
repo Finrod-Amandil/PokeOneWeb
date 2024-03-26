@@ -23,15 +23,15 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Item>().HasIndex(i => i.ResourceName).IsUnique();
 
             builder.Entity<Item>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Item>()
                 .HasOne(i => i.BagCategory)
                 .WithMany(bc => bc.Items)
                 .HasForeignKey(i => i.BagCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Item>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

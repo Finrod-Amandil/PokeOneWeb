@@ -22,6 +22,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Move>().HasIndex(m => m.Name).IsUnique();
 
             builder.Entity<Move>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Move>()
                 .HasOne(m => m.DamageClass)
                 .WithMany()
                 .HasForeignKey(m => m.DamageClassId)
@@ -32,11 +37,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(et => et.Moves)
                 .HasForeignKey(m => m.ElementalTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Move>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

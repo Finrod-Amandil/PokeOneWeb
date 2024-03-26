@@ -52,10 +52,14 @@ namespace PokeOneWeb.Data
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
 
         public DbSet<ImportSheet> ImportSheets { get; set; }
+        public DbSet<ImportLog> ImportLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            ImportSheet.ConfigureForDatabase(builder);
+            ImportLog.ConfigureForDatabase(builder);
 
             Event.ConfigureForDatabase(builder);
             Region.ConfigureForDatabase(builder);
@@ -107,8 +111,6 @@ namespace PokeOneWeb.Data
 
             ItemStatBoost.ConfigureForDatabase(builder);
             Entities.ItemStatBoostPokemon.ConfigureForDatabase(builder);
-
-            ImportSheet.ConfigureForDatabase(builder);
         }
     }
 }

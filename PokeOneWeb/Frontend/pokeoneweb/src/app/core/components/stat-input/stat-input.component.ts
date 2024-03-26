@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Stat } from '../../enums/stat.enum';
-import { IAbilityModel } from '../../models/ability.model';
-import { IBasicPokemonVarietyModel } from '../../models/basic-pokemon-variety.model';
-import { IItemStatBoostModel } from '../../models/item-stat-boost.model';
-import { INatureModel } from '../../models/nature.model';
-import { IPokemonVarietyModel } from '../../models/pokemon-variety.model';
-import { IStatsConfigurationModel, StatsConfigurationModel } from '../../models/stats-configuration.model';
-import { StatsModel, IStatsModel } from '../../models/stats.model';
+import { IAbilityModel } from '../../models/service/ability.model';
+import { IPokemonVarietyModel, IPokemonVarietyListModel } from '../../models/api/pokemon-variety.model';
+import { IItemStatBoostPokemonModel } from '../../models/api/item-stat-boost-pokemon.model';
+import { INatureModel } from '../../models/api/nature.model';
+import { IStatsConfigurationModel, StatsConfigurationModel } from '../../models/service/stats-configuration.model';
+import { StatsModel, IStatsModel } from '../../models/service/stats.model';
 import { ItemStatBoostService } from '../../services/api/item-stat-boost.service';
 import { NatureService } from '../../services/api/nature.service';
 import { PokemonService } from '../../services/api/pokemon.service';
@@ -35,10 +34,10 @@ export class StatInputComponent implements OnInit {
 
     public model: IStatsConfigurationModel = new StatsConfigurationModel();
 
-    public pokemonNames: IBasicPokemonVarietyModel[] = [];
+    public pokemonNames: IPokemonVarietyListModel[] = [];
     public natures: INatureModel[] = [];
     public abilities: IAbilityModel[] = [];
-    public itemBoosts: IItemStatBoostModel[] = [];
+    public itemBoosts: IItemStatBoostPokemonModel[] = [];
     public statModifiers: number[] = [];
 
     constructor(
@@ -50,8 +49,8 @@ export class StatInputComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.pokemonChoosable) {
-            this.pokemonService.getAllBasic().subscribe((response) => {
-                this.pokemonNames = response as IBasicPokemonVarietyModel[];
+            this.pokemonService.getList().subscribe((response) => {
+                this.pokemonNames = response as IPokemonVarietyListModel[];
                 this.pokemonNames = this.pokemonNames.sort((n1, n2) => n1.sortIndex - n2.sortIndex);
             });
         } else if (this.pokemon) {
@@ -61,7 +60,7 @@ export class StatInputComponent implements OnInit {
             console.log('Pokémon is not choosable, but no Pokémon was specified.');
         }
 
-        this.natureService.getNatures().subscribe((response) => {
+        this.natureService.getList().subscribe((response) => {
             this.natures = response as INatureModel[];
             this.natures = this.natures.sort((n1, n2) => (n1.name > n2.name ? 1 : n1.name < n2.name ? -1 : 0));
         });
@@ -143,10 +142,8 @@ export class StatInputComponent implements OnInit {
         if (newEvStats.total() <= this.maxTotalEv) {
             this.model.ev = newEvStats;
             this.onSelectionChanged();
-        }
-
-        //Else set the max possible value that does not exceed the max.
-        else {
+        } else {
+            //Else set the max possible value that does not exceed the max.
             const maxIncrement = this.maxTotalEv - this.model.ev.total();
 
             switch (stat) {
@@ -177,7 +174,7 @@ export class StatInputComponent implements OnInit {
     }
 
     private LoadPokemon() {
-        this.pokemonService.getByNameFull(this.model.pokemon.resourceName).subscribe((response) => {
+        this.pokemonService.getByName(this.model.pokemon.resourceName).subscribe((response) => {
             const pokemon = response as IPokemonVarietyModel;
             this.model.baseStats = <IStatsModel>{
                 atk: pokemon.attack,
@@ -201,18 +198,20 @@ export class StatInputComponent implements OnInit {
             console.log('Could not load item boosts, no Pokémon is selected.');
             return;
         }
-        this.itemBoostService
-            .getItemStatBoosts()
-            .subscribe(response => {
-                this.itemBoosts = response as IItemStatBoostModel[];
-                this.itemBoosts = this.itemBoosts.
-                    filter((itemStat) => !itemStat.hasRequiredPokemon || itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName).
-                    sort((n1, n2) => {
-                        if (n1.itemName > n2.itemName) return 1;
-                        if (n1.itemName < n2.itemName) return -1
-                        return 0;
-                    });
-            });
+        this.itemBoostService.getList().subscribe((response) => {
+            this.itemBoosts = response as IItemStatBoostPokemonModel[];
+            this.itemBoosts = this.itemBoosts
+                .filter(
+                    (itemStat) =>
+                        !itemStat.hasRequiredPokemon ||
+                        itemStat.requiredPokemonResourceName === this.model.pokemon.resourceName
+                )
+                .sort((n1, n2) => {
+                    if (n1.itemName > n2.itemName) return 1;
+                    if (n1.itemName < n2.itemName) return -1;
+                    return 0;
+                });
+        });
     }
 
     private LoadAbilities(pokemon: IPokemonVarietyModel) {
@@ -226,7 +225,6 @@ export class StatInputComponent implements OnInit {
                 defenseBoost: pokemon.primaryAbilityDefenseBoost,
                 specialDefenseBoost: pokemon.primaryAbilitySpecialDefenseBoost,
                 speedBoost: pokemon.primaryAbilitySpeedBoost,
-                hitPointsBoost: pokemon.primaryAbilityHitPointsBoost,
                 boostConditions: pokemon.primaryAbilityBoostConditions
             };
             this.abilities.push(primaryAbility);
@@ -241,7 +239,6 @@ export class StatInputComponent implements OnInit {
                 defenseBoost: pokemon.secondaryAbilityDefenseBoost,
                 specialDefenseBoost: pokemon.secondaryAbilitySpecialDefenseBoost,
                 speedBoost: pokemon.secondaryAbilitySpeedBoost,
-                hitPointsBoost: pokemon.secondaryAbilityHitPointsBoost,
                 boostConditions: pokemon.secondaryAbilityBoostConditions
             };
             this.abilities.push(secondaryAbility);
@@ -256,7 +253,6 @@ export class StatInputComponent implements OnInit {
                 defenseBoost: pokemon.hiddenAbilityDefenseBoost,
                 specialDefenseBoost: pokemon.hiddenAbilitySpecialDefenseBoost,
                 speedBoost: pokemon.hiddenAbilitySpeedBoost,
-                hitPointsBoost: pokemon.hiddenAbilityHitPointsBoost,
                 boostConditions: pokemon.hiddenAbilityBoostConditions
             };
             this.abilities.push(hiddenAbility);

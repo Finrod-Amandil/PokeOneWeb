@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IItemListModel } from 'src/app/core/models/item-list.model';
+import { IItemListModel } from 'src/app/core/models/api/item.model';
 import { ItemListFilterModel } from './item-list-filter.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ItemListFilterService {
-    public async applyFilter(filter: ItemListFilterModel, allModels: IItemListModel[]): Promise<IItemListModel[]> {
+    public applyFilter(filter: ItemListFilterModel, allModels: IItemListModel[]): IItemListModel[] {
         return allModels.filter((i) => this.isIncluded(i, filter));
     }
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -163,7 +163,5 @@ namespace PokeOneWeb.Data.ReadModels
         public List<SpawnReadModel> Spawns { get; set; } = new();
         public List<EvolutionReadModel> Evolutions { get; set; } = new();
         public List<LearnableMoveReadModel> LearnableMoves { get; set; } = new();
-        public List<HuntingConfigurationReadModel> HuntingConfigurations { get; set; } = new();
-        public List<BuildReadModel> Builds { get; set; } = new();
     }
 }

@@ -8,21 +8,13 @@ using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.Data.Repositories;
 using PokeOneWeb.Data.Repositories.Impl.EntityRepositories;
 using PokeOneWeb.DataSync.GoogleSpreadsheet.Configuration;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.Reporting;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import.Impl.SheetMappers;
-using PokeOneWeb.DataSync.ReadModelUpdate;
+using PokeOneWeb.DataSync.Import;
+using PokeOneWeb.DataSync.Import.Interfaces;
+using PokeOneWeb.DataSync.Import.Reporting;
+using PokeOneWeb.DataSync.Import.SheetMappers;
 using PokeOneWeb.DataSync.ReadModelUpdate.Impl;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.EntityTypes;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Item;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.ItemStatBoostPokemon;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.LearnableMoves;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.LocationGroups;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Moves;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Natures;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Pokemon;
-using PokeOneWeb.DataSync.ReadModelUpdate.Impl.Region;
+using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
+using PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers;
 
 namespace PokeOneWeb.DataSync
 {
@@ -109,6 +101,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISheetMapper<TimeOfDay>, TimeOfDaySheetMapper>();
 
             services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
+
             services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
             services.AddScoped<IHashedEntityRepository<PokemonAvailability>, AvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<BagCategory>, BagCategoryRepository>();
@@ -139,7 +132,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IHashedEntityRepository<SpawnType>, SpawnTypeRepository>();
             services.AddScoped<IHashedEntityRepository<TimeOfDay>, TimeOfDayRepository>();
 
-            services.AddScoped<IReadModelUpdateService, ReadModelUpdateService>();
+            services.AddScoped<IReadModelUpdateService, JsonReadModelUpdateService>();
 
             services.AddScoped<IReadModelMapper<EntityTypeReadModel>, EntityTypeReadModelMapper>();
             services.AddScoped<IReadModelMapper<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelMapper>();

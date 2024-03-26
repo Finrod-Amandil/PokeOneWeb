@@ -1,24 +1,13 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using System;
 using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
-    [Table("RegionReadModel")]
     public class RegionReadModel : IReadModel
     {
-        [JsonIgnore]
-        public int Id { get; set; }
-
-        [Required]
-        [JsonIgnore]
-        public int ApplicationDbId { get; set; }
+        public string Name { get; set; }
 
         public string ResourceName { get; set; }
-
-        public string Name { get; set; }
 
         public bool IsEventRegion { get; set; }
 

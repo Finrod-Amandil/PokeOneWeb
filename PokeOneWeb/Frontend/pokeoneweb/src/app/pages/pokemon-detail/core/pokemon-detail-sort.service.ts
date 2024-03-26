@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILearnableMoveModel } from 'src/app/core/models/learnable-move.model';
+import { ILearnableMoveModel } from 'src/app/core/models/api/learnable-move.model';
 import { MoveListColumn } from './move-list-column.enum';
 
 @Injectable({

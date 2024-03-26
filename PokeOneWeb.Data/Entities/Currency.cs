@@ -20,15 +20,15 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Currency>().HasIndexedHashes();
 
             builder.Entity<Currency>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Currency>()
                 .HasOne(c => c.Item)
                 .WithMany()
                 .HasForeignKey(c => c.ItemId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Currency>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

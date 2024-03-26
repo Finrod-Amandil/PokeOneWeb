@@ -12,7 +12,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
         }
 
-        public IEnumerable<RowHash> GetHashesForSheet(ImportSheet sheet)
+        public List<RowHash> GetHashesForSheet(ImportSheet sheet)
         {
             var rowHashes = DbContext.Set<TEntity>()
                 .Where(x => x.ImportSheetId == sheet.Id)

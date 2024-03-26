@@ -15,7 +15,15 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().AddRange(entities);
-            DbContext.SaveChanges();
+
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbUpdateException exception)
+            {
+                ReportInsertOrUpdateException(typeof(TEntity), exception);
+            }
 
             // Clear change tracker to avoid tracking the same entity twice.
             DbContext.ChangeTracker.Clear();
@@ -33,7 +41,15 @@ namespace PokeOneWeb.Data.Repositories.Impl
         {
             entities = PrepareEntitiesForInsertOrUpdate(entities);
             DbContext.Set<TEntity>().UpdateRange(entities);
-            DbContext.SaveChanges();
+
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (DbUpdateException exception)
+            {
+                ReportInsertOrUpdateException(typeof(TEntity), exception);
+            }
 
             // Clear change tracker to avoid tracking the same entity twice.
             DbContext.ChangeTracker.Clear();
@@ -50,7 +66,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
         protected readonly ApplicationDbContext DbContext;
 
         /// <summary>
-        /// Actions to perform on every entity before it is inserted or updated. Return
+        /// Gets the actions to perform on every entity before it is inserted or updated. Return
         /// false if the action is unsuccessful and the entity should not be inserted or
         /// updated, return true if the preparation step could be performed successfully.
         /// </summary>
@@ -65,7 +81,7 @@ namespace PokeOneWeb.Data.Repositories.Impl
         /// Prepares the entity before inserting or updating, such as resolving
         /// relations to related entities.
         /// </summary>
-        /// <param name="entities">The entities to insert or update</param>
+        /// <param name="entities">The entities to insert or update.</param>
         /// <returns>The set of entities for which preparation was successful
         /// and which should still be inserted or updated.</returns>
         protected virtual ICollection<TEntity> PrepareEntitiesForInsertOrUpdate(ICollection<TEntity> entities)

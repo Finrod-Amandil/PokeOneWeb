@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { WEBSITE_NAME, SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
-import { IMoveNameModel } from 'src/app/core/models/move-name.model';
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
-import { IPokemonVarietyUrlModel } from 'src/app/core/models/pokemon-variety-url.model';
+import { IMoveNameModel } from 'src/app/core/models/api/move.model';
+import { IPokemonVarietyListModel } from 'src/app/core/models/api/pokemon-variety.model';
+import { IPokemonVarietyUrlModel } from 'src/app/core/models/api/pokemon-variety-url.model';
 import { MoveService } from 'src/app/core/services/api/move.service';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
 import { GenerationService } from 'src/app/core/services/generation.service';
@@ -41,7 +41,7 @@ export class PokemonListComponent implements OnInit {
     ngOnInit(): void {
         this.titleService.setTitle(`Pokédex - ${WEBSITE_NAME}`);
 
-        this.pokemonService.getAll().subscribe((response) => {
+        this.pokemonService.getList().subscribe((response) => {
             this.model.pokemonModels = response as IPokemonVarietyListModel[];
 
             this.sortUrls();
@@ -55,7 +55,7 @@ export class PokemonListComponent implements OnInit {
             this.calculateGlobals();
         });
 
-        this.moveService.getAllMoveNames().subscribe((response) => {
+        this.moveService.getList().subscribe((response) => {
             this.model.moves = (response as IMoveNameModel[]).sort((m1, m2) => {
                 return m1.resourceName > m2.resourceName ? 1 : m1.resourceName < m2.resourceName ? -1 : 0;
             });
@@ -64,9 +64,10 @@ export class PokemonListComponent implements OnInit {
         this.model.generations = this.generationService.getGenerations();
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
         this.forceValidStatInputs();
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();

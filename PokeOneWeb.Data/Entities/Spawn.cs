@@ -29,6 +29,11 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Spawn>().HasIndexedHashes();
 
             builder.Entity<Spawn>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Spawn>()
                 .HasOne(s => s.SpawnType)
                 .WithMany()
                 .HasForeignKey(s => s.SpawnTypeId)
@@ -45,11 +50,6 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany(l => l.PokemonSpawns)
                 .HasForeignKey(s => s.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Spawn>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]

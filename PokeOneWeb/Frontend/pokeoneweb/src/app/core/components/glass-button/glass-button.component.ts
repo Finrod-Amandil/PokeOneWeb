@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-glass-button',
+    selector: 'pokeone-glass-button',
     templateUrl: './glass-button.component.html',
     styleUrls: ['./glass-button.component.scss']
 })

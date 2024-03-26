@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WEBSITE_NAME } from 'src/app/core/constants/string.constants';
-import { ILocationListModel } from 'src/app/core/models/location-list.model';
-import { LocationService } from 'src/app/core/services/api/location.service';
+import { ILocationGroupListModel } from 'src/app/core/models/api/location-group.model';
+import { LocationGroupService } from 'src/app/core/services/api/location-group.service';
 import { LocationListColumn } from './core/location-list-column.enum';
 import { LocationListFilterService } from './core/location-list-filter.service';
 import { LocationListSortService } from './core/location-list-sort.service';
@@ -24,7 +24,7 @@ export class LocationListComponent implements OnInit {
 
     constructor(
         private titleService: Title,
-        private locationService: LocationService,
+        private locationService: LocationGroupService,
         private filterService: LocationListFilterService,
         private sortService: LocationListSortService,
         private router: Router,
@@ -37,8 +37,8 @@ export class LocationListComponent implements OnInit {
 
             this.titleService.setTitle(`${this.model.regionName} - ${WEBSITE_NAME}`);
 
-            this.locationService.getAllForRegion(this.model.regionName).subscribe((result_region) => {
-                this.model.locationModels = result_region as ILocationListModel[];
+            this.locationService.getListByRegionName(this.model.regionName).subscribe((result_region) => {
+                this.model.locationModels = result_region as ILocationGroupListModel[];
 
                 this.titleService.setTitle(`${this.model.locationModels[0].regionName} - ${WEBSITE_NAME}`);
 
@@ -51,15 +51,16 @@ export class LocationListComponent implements OnInit {
         });
     }
 
-    public async onFilterChangedDelayed() {
+    public onFilterChangedDelayed() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         clearTimeout(this.timeOut);
         this.timeOut = setTimeout(() => {
             this.onFilterChanged();
         }, this.timeOutDuration);
     }
 
-    public async onFilterChanged() {
-        const filtered = await this.filterService.applyFilter(this.model.filter, this.model.locationModels);
+    public onFilterChanged() {
+        const filtered = this.filterService.applyFilter(this.model.filter, this.model.locationModels);
 
         this.model.displayedLocationModels = this.sortService.sort(
             filtered,
@@ -68,7 +69,7 @@ export class LocationListComponent implements OnInit {
         );
     }
 
-    public trackById(index: number, location: ILocationListModel): number {
+    public trackById(index: number, location: ILocationGroupListModel): number {
         return location.sortIndex;
     }
 
