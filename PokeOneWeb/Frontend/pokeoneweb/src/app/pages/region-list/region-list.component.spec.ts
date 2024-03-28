@@ -1,4 +1,4 @@
-import { RegionListModel } from 'src/app/core/models/region.model';
+import { RegionModel } from 'src/app/core/models/api/region.model';
 
 import { RegionListComponent } from './region-list.component';
 
@@ -22,7 +22,7 @@ describe('Region List Component', () => {
     describe('getRegionType', () => {
         it('When only isMainRegion flag is set should return "Main Region"', () => {
             // Arrange
-            const model = new RegionListModel();
+            const model = new RegionModel();
             model.isMainRegion = true;
             model.isSideRegion = false;
             model.isEventRegion = false;
@@ -36,7 +36,7 @@ describe('Region List Component', () => {
 
         it('When only isSideRegion flag is set should return "Side Region"', () => {
             // Arrange
-            const model = new RegionListModel();
+            const model = new RegionModel();
             model.isMainRegion = false;
             model.isSideRegion = true;
             model.isEventRegion = false;
@@ -50,7 +50,7 @@ describe('Region List Component', () => {
 
         it('When only isEventRegion flag is set should return "Event Region"', () => {
             // Arrange
-            const model = new RegionListModel();
+            const model = new RegionModel();
             model.isMainRegion = false;
             model.isSideRegion = false;
             model.isEventRegion = true;
@@ -64,7 +64,7 @@ describe('Region List Component', () => {
 
         it('When all flags are set should return "Main Region"', () => {
             // Arrange
-            const model = new RegionListModel();
+            const model = new RegionModel();
             model.isMainRegion = true;
             model.isSideRegion = true;
             model.isEventRegion = true;

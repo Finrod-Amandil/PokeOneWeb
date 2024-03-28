@@ -1,4 +1,4 @@
-import { IPokemonVarietyListModel } from 'src/app/core/models/pokemon-variety-list.model';
+import { IPokemonVarietyListModel } from 'src/app/core/models/api/pokemon-variety.model';
 import { PokemonListFilterModel } from './core/pokemon-list-filter.model';
 import { PokemonListFilterService } from './core/pokemon-list-filter.service';
 import { PokemonListSortService } from './core/pokemon-list-sort.service';
@@ -6,7 +6,7 @@ import { PokemonListComponent } from './pokemon-list.component';
 import { SELECT_OPTION_ANY, SELECT_OPTION_NONE } from 'src/app/core/constants/string.constants';
 import { PokemonListModel } from './core/pokemon-list.model';
 import { PokemonService } from 'src/app/core/services/api/pokemon.service';
-import { IPokemonVarietyNameModel } from 'src/app/core/models/pokemon-variety-name.model';
+import { IPokemonVarietyNameModel } from 'src/app/core/models/api/pokemon-variety.model';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -50,15 +50,14 @@ describe('Pokemon Detail Component', () => {
             'This Pok\u00E9mon\u0027s Speed is doubled during strong sunlight. This bonus does not count as a stat modifier.',
 
         availability: 'Obtainable',
+        availabilityDescription: 'Obtainable',
         pvpTier: 'Untiered',
         pvpTierSortIndex: 2000,
         generation: 1,
         isFullyEvolved: false,
         isMega: false,
 
-        urls: [],
-
-        notes: ''
+        urls: []
     };
 
     let pokemonVariety2: IPokemonVarietyListModel = {
@@ -90,15 +89,14 @@ describe('Pokemon Detail Component', () => {
             'During strong sunlight, this Pok\u00E9mon has 1.5\u00D7 its Special Attack but takes 1/8 of its maximum HP in damage after each turn.',
 
         availability: 'Obtainable',
+        availabilityDescription: 'Obtainable',
         pvpTier: 'Untiered',
         pvpTierSortIndex: 2000,
         generation: 1,
         isFullyEvolved: false,
         isMega: false,
 
-        urls: [],
-
-        notes: ''
+        urls: []
     };
 
     beforeEach(() => {
@@ -114,7 +112,7 @@ describe('Pokemon Detail Component', () => {
         router = jasmine.createSpy('Router');
 
         let results: Observable<IPokemonVarietyNameModel[]>[] = [];
-        spyOn(pokemonService, 'getAllPokemonForMoveSet').and.returnValue(
+        spyOn(pokemonService, 'getList').and.returnValue(
             forkJoin(results).pipe(map((resp) => resp.reduce((all, models) => all.concat(models), [])))
         );
 

@@ -1,4 +1,4 @@
-import { ILocationListModel } from 'src/app/core/models/location-list.model';
+import { ILocationGroupListModel } from 'src/app/core/models/api/location-group.model';
 import { LocationListColumn } from './core/location-list-column.enum';
 import { LocationListFilterService } from './core/location-list-filter.service';
 import { LocationListSortService } from './core/location-list-sort.service';
@@ -7,28 +7,28 @@ import { LocationListComponent } from './location-list.component';
 
 describe('Location List Component', () => {
     let component: LocationListComponent;
-    let location1: ILocationListModel = {
+    let location1: ILocationGroupListModel = {
         resourceName: 'route-1',
         name: 'Route 1',
         sortIndex: 1000,
         regionResourceName: 'kanto',
         regionName: 'Kanto'
     };
-    let location2: ILocationListModel = {
+    let location2: ILocationGroupListModel = {
         resourceName: 'pallet-town',
         name: 'Pallet Town',
         sortIndex: 1001,
         regionResourceName: 'kanto',
         regionName: 'Kanto'
     };
-    let location3: ILocationListModel = {
+    let location3: ILocationGroupListModel = {
         resourceName: 'viridian-city',
         name: 'Viridian City',
         sortIndex: 1002,
         regionResourceName: 'kanto',
         regionName: 'Kanto'
     };
-    let location4: ILocationListModel = {
+    let location4: ILocationGroupListModel = {
         resourceName: 'route-22',
         name: 'Route 22',
         sortIndex: 1003,
