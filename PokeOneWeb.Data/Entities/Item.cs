@@ -69,7 +69,13 @@ namespace PokeOneWeb.Data.Entities
 
         public string Effect { get; set; }
 
-        public bool IsAvailable { get; set; }
+        [ForeignKey("AvailabilityId")]
+        public ItemAvailability Availability { get; set; }
+
+        public int AvailabilityId { get; set; }
+
+        [NotMapped]
+        public string AvailabilityName { internal get; set; }
 
         public bool DoInclude { get; set; }
 

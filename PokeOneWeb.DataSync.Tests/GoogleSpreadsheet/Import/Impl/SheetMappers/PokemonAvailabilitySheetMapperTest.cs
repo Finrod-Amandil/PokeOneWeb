@@ -13,10 +13,10 @@ using Xunit;
 
 namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
 {
-    public class AvailabilitySheetMapperTest
+    public class PokemonAvailabilitySheetMapperTest
     {
         private readonly Mock<ISpreadsheetImportReporter> _reporterMock;
-        private readonly AvailabilitySheetMapper _mapper;
+        private readonly PokemonAvailabilitySheetMapper _mapper;
 
         private readonly RowHash _rowHash = new() { IdHash = "Id Hash", Hash = "Hash", ImportSheetId = 1 };
         private List<string> _columnNames = new() { "Name", "Description" };
@@ -24,10 +24,10 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
 
         private List<SheetDataRow> Data => new() { new SheetDataRow(_columnNames, _rowHash, _values) };
 
-        public AvailabilitySheetMapperTest()
+        public PokemonAvailabilitySheetMapperTest()
         {
             _reporterMock = new Mock<ISpreadsheetImportReporter>();
-            _mapper = new AvailabilitySheetMapper(_reporterMock.Object);
+            _mapper = new PokemonAvailabilitySheetMapper(_reporterMock.Object);
         }
 
         [Fact]

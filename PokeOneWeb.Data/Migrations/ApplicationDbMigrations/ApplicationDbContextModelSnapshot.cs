@@ -746,6 +746,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BagCategoryId")
                         .HasColumnType("int");
 
@@ -769,9 +772,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<int>("ImportSheetId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -791,6 +791,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilityId");
+
                     b.HasIndex("BagCategoryId");
 
                     b.HasIndex("Hash")
@@ -808,6 +810,48 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .IsUnique();
 
                     b.ToTable("Item");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Hash")
+                        .IsUnique();
+
+                    b.HasIndex("IdHash")
+                        .IsUnique();
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ItemAvailability");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemOption", b =>
@@ -2530,6 +2574,12 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Item", b =>
                 {
+                    b.HasOne("PokeOneWeb.Data.Entities.ItemAvailability", "Availability")
+                        .WithMany()
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PokeOneWeb.Data.Entities.BagCategory", "BagCategory")
                         .WithMany("Items")
                         .HasForeignKey("BagCategoryId")
@@ -2542,7 +2592,20 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
+                    b.Navigation("Availability");
+
                     b.Navigation("BagCategory");
+
+                    b.Navigation("ImportSheet");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemAvailability", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
 
                     b.Navigation("ImportSheet");
                 });

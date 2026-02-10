@@ -23,7 +23,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         private List<string> _columnNames = new()
         {
             "Name",
-            "IsAvailable",
+            "Availability",
             "DoInclude",
             "ResourceName",
             "SortIndex",
@@ -49,7 +49,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             // Arrange
             const string name = "Item Name";
-            const bool isAvailable = false;
+            const string availability = "Obtainable";
             const bool doInclude = true;
             const string resourceName = "Resource Name";
             const int sortIndex = 123;
@@ -58,7 +58,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             _values = new List<object>
             {
                 name,
-                isAvailable,
+                availability,
                 doInclude,
                 resourceName,
                 sortIndex,
@@ -71,7 +71,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 Hash = _rowHash.Hash,
                 ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 DoInclude = doInclude,
                 ResourceName = resourceName,
                 SortIndex = sortIndex,
@@ -95,7 +95,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             // Arrange
             const string name = "Item Name";
-            const bool isAvailable = false;
+            const string availability = "Obtainable";
             const bool doInclude = true;
             const string resourceName = "Resource Name";
             const int sortIndex = 123;
@@ -108,7 +108,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             _values = new List<object>
             {
                 name,
-                isAvailable,
+                availability,
                 doInclude,
                 resourceName,
                 sortIndex,
@@ -125,7 +125,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 Hash = _rowHash.Hash,
                 ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 DoInclude = doInclude,
                 ResourceName = resourceName,
                 SortIndex = sortIndex,
@@ -149,14 +149,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         {
             // Arrange
             const string name1 = "Item Name 1";
-            const bool isAvailable1 = false;
+            const string availabilty1 = "Obtainable";
             const bool doInclude1 = true;
             const string resourceName1 = "Resource Name 1";
             const int sortIndex1 = 123;
             const string bagCategory1 = "Bag Category 1";
 
             const string name2 = "Item Name 2";
-            const bool isAvailable2 = true;
+            const string availability2 = "Unobtainable";
             const bool doInclude2 = false;
             const string resourceName2 = "Resource Name 2";
             const int sortIndex2 = 234;
@@ -165,7 +165,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             var values1 = new List<object>
             {
                 name1,
-                isAvailable1,
+                availabilty1,
                 doInclude1,
                 resourceName1,
                 sortIndex1,
@@ -175,7 +175,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             var values2 = new List<object>
             {
                 name2,
-                isAvailable2,
+                availability2,
                 doInclude2,
                 resourceName2,
                 sortIndex2,
@@ -196,7 +196,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     Hash = _rowHash.Hash,
                     ImportSheetId = _rowHash.ImportSheetId,
                     Name = name1,
-                    IsAvailable = isAvailable1,
+                    AvailabilityName = availabilty1,
                     DoInclude = doInclude1,
                     ResourceName = resourceName1,
                     SortIndex = sortIndex1,
@@ -212,7 +212,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     Hash = _rowHash.Hash,
                     ImportSheetId = _rowHash.ImportSheetId,
                     Name = name2,
-                    IsAvailable = isAvailable2,
+                    AvailabilityName = availability2,
                     DoInclude = doInclude2,
                     ResourceName = resourceName2,
                     SortIndex = sortIndex2,
@@ -275,16 +275,16 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         }
 
         [Theory]
-        [InlineData("", false, false, "b", 1, "c", 1, "", "", "")]
-        [InlineData("a", "notBool", false, "b", 1, "c", 1, "", "", "")]
-        [InlineData("a", false, "notBool", "b", 1, "c", 1, "", "", "")]
-        [InlineData("a", false, false, "", 1, "c", 1, "", "", "")]
-        [InlineData("a", false, false, "b", "notInt", "c", 1, "", "", "")]
-        [InlineData("a", false, false, "b", 1, "", 1, "", "", "")]
-        [InlineData("a", false, false, "b", 1, "c", "notInt", "", "", "")]
-        [InlineData("a", false, false, "b", 1, "c", 1, 1000, "", "")]
-        [InlineData("a", false, false, "b", 1, "c", 1, "", 1000, "")]
-        [InlineData("a", false, false, "b", 1, "c", 1, "", "", 1000)]
+        [InlineData("", "Obtainable", false, "b", 1, "c", 1, "", "", "")]
+        [InlineData("a", 1000, false, "b", 1, "c", 1, "", "", "")]
+        [InlineData("a", "Obtainable", "notBool", "b", 1, "c", 1, "", "", "")]
+        [InlineData("a", "Obtainable", false, "", 1, "c", 1, "", "", "")]
+        [InlineData("a", "Obtainable", false, "b", "notInt", "c", 1, "", "", "")]
+        [InlineData("a", "Obtainable", false, "b", 1, "", 1, "", "", "")]
+        [InlineData("a", "Obtainable", false, "b", 1, "c", "notInt", "", "", "")]
+        [InlineData("a", "Obtainable", false, "b", 1, "c", 1, 1000, "", "")]
+        [InlineData("a", "Obtainable", false, "b", 1, "c", 1, "", 1000, "")]
+        [InlineData("a", "Obtainable", false, "b", 1, "c", 1, "", "", 1000)]
         public void Map_WithUnparsableValue_ShouldReportError(params object[] valuesAsArray)
         {
             // Arrange
@@ -308,7 +308,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 "PokeoneItemId",
                 "BagCategory",
-                "IsAvailable",
+                "Availability",
                 "Name",
                 "SpriteName",
                 "DoInclude",
@@ -319,7 +319,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             };
 
             const string name = "Item Name";
-            const bool isAvailable = false;
+            const string availability = "Obtainable";
             const bool doInclude = true;
             const string resourceName = "Resource Name";
             const int sortIndex = 123;
@@ -333,7 +333,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             {
                 pokeoneItemId,
                 bagCategory,
-                isAvailable,
+                availability,
                 name,
                 spriteName,
                 doInclude,
@@ -349,7 +349,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 Hash = _rowHash.Hash,
                 ImportSheetId = _rowHash.ImportSheetId,
                 Name = name,
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 DoInclude = doInclude,
                 ResourceName = resourceName,
                 SortIndex = sortIndex,

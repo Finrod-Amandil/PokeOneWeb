@@ -15,7 +15,7 @@ namespace PokeOneWeb.DataSync.Import.SheetMappers
         protected override Dictionary<string, Action<Item, object>> ValueToEntityMappings => new()
         {
             { "Name", (e, v) => e.Name = v.ParseAsNonEmptyString() },
-            { "IsAvailable", (e, v) => e.IsAvailable = v.ParseAsBoolean() },
+            { "Availability", (e, v) => e.AvailabilityName = v.ParseAsNonEmptyString() },
             { "DoInclude", (e, v) => e.DoInclude = v.ParseAsBoolean(defaultValue: true) },
             { "ResourceName", (e, v) => e.ResourceName = v.ParseAsNonEmptyString() },
             { "SortIndex", (e, v) => e.SortIndex = v.ParseAsInt() },

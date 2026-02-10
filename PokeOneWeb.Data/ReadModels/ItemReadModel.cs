@@ -26,7 +26,9 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string Effect { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public string Availability { get; set; }
+
+        public string AvailabilityDescription { get; set; }
 
         public string SpriteName { get; set; }
 

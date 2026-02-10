@@ -42,6 +42,7 @@ namespace PokeOneWeb.DataSync
 
             services.AddScoped(typeof(SheetImporter<Ability>));
             services.AddScoped(typeof(SheetImporter<PokemonAvailability>));
+            services.AddScoped(typeof(SheetImporter<ItemAvailability>));
             services.AddScoped(typeof(SheetImporter<BagCategory>));
             services.AddScoped(typeof(SheetImporter<Build>));
             services.AddScoped(typeof(SheetImporter<Currency>));
@@ -71,7 +72,8 @@ namespace PokeOneWeb.DataSync
             services.AddScoped(typeof(SheetImporter<TimeOfDay>));
 
             services.AddScoped<ISheetMapper<Ability>, AbilitySheetMapper>();
-            services.AddScoped<ISheetMapper<PokemonAvailability>, AvailabilitySheetMapper>();
+            services.AddScoped<ISheetMapper<PokemonAvailability>, PokemonAvailabilitySheetMapper>();
+            services.AddScoped<ISheetMapper<ItemAvailability>, ItemAvailabilitySheetMapper>();
             services.AddScoped<ISheetMapper<BagCategory>, BagCategorySheetMapper>();
             services.AddScoped<ISheetMapper<Build>, BuildSheetMapper>();
             services.AddScoped<ISheetMapper<Currency>, CurrencySheetMapper>();
@@ -103,7 +105,8 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
 
             services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
-            services.AddScoped<IHashedEntityRepository<PokemonAvailability>, AvailabilityRepository>();
+            services.AddScoped<IHashedEntityRepository<PokemonAvailability>, PokemonAvailabilityRepository>();
+            services.AddScoped<IHashedEntityRepository<ItemAvailability>, ItemAvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<BagCategory>, BagCategoryRepository>();
             services.AddScoped<IHashedEntityRepository<Build>, BuildRepository>();
             services.AddScoped<IHashedEntityRepository<Currency>, CurrencyRepository>();

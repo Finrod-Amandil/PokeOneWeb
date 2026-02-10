@@ -6,9 +6,9 @@ using PokeOneWeb.Shared.Extensions;
 
 namespace PokeOneWeb.DataSync.Import.SheetMappers
 {
-    public class AvailabilitySheetMapper : SheetMapper<PokemonAvailability>
+    public class PokemonAvailabilitySheetMapper : SheetMapper<PokemonAvailability>
     {
-        public AvailabilitySheetMapper(ISpreadsheetImportReporter reporter) : base(reporter)
+        public PokemonAvailabilitySheetMapper(ISpreadsheetImportReporter reporter) : base(reporter)
         {
         }
 

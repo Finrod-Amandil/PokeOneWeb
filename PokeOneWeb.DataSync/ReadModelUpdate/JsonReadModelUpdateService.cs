@@ -165,7 +165,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
                     v.Name,
                     v.Description,
                     v.Effect,
-                    v.IsAvailable,
+                    v.Availability,
+                    v.AvailabilityDescription,
                     v.SpriteName,
                     v.BagCategoryName,
                     v.BagCategorySortIndex

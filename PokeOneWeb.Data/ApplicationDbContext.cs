@@ -21,6 +21,7 @@ namespace PokeOneWeb.Data
         public DbSet<Evolution> Evolutions { get; set; }
         public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemAvailability> ItemAvailabilities { get; set; }
         public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
         public DbSet<ItemStatBoostPokemon> ItemStatBoostPokemon { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
@@ -67,6 +68,7 @@ namespace PokeOneWeb.Data
             Location.ConfigureForDatabase(builder);
 
             BagCategory.ConfigureForDatabase(builder);
+            ItemAvailability.ConfigureForDatabase(builder);
             Item.ConfigureForDatabase(builder);
             PlacedItem.ConfigureForDatabase(builder);
             Currency.ConfigureForDatabase(builder);

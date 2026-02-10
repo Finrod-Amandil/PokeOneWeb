@@ -10,16 +10,16 @@ namespace PokeOneWeb.Data.Entities
     /// <summary>
     /// Whether / under what conditions a Pokemon can generally be obtained.
     /// </summary>
-    [Table("PokemonAvailability")]
-    [Sheet("pokemon_availabilities")]
-    public class PokemonAvailability : IHashedEntity, INamedEntity
+    [Table("ItemAvailability")]
+    [Sheet("item_availabilities")]
+    public class ItemAvailability : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
-            builder.Entity<PokemonAvailability>().HasIndexedHashes();
-            builder.Entity<PokemonAvailability>().HasIndex(a => a.Name).IsUnique();
+            builder.Entity<ItemAvailability>().HasIndexedHashes();
+            builder.Entity<ItemAvailability>().HasIndex(a => a.Name).IsUnique();
 
-            builder.Entity<PokemonAvailability>()
+            builder.Entity<ItemAvailability>()
                 .HasOne(x => x.ImportSheet)
                 .WithMany()
                 .OnDelete(DeleteBehavior.ClientCascade);
