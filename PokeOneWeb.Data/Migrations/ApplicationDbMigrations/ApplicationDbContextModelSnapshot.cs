@@ -1530,6 +1530,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<bool>("IsHidden")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
@@ -2101,6 +2104,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
                     b.Property<int>("LocationId")

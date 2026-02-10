@@ -75,6 +75,8 @@ namespace PokeOneWeb.Data.Entities
 
         public bool IsConfirmed { get; set; }
 
+        public bool IsRemoved { get; set; }
+
         /// <summary>
         /// Gets or sets if multiple of this item are obtained at once. Is 1 for
         /// most items.

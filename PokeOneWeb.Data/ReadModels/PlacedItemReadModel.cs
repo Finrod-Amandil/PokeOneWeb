@@ -19,6 +19,7 @@
         public string PlacementDescription { get; set; }
         public bool IsHidden { get; set; }
         public bool IsConfirmed { get; set; }
+        public bool IsRemoved { get; set; }
         public int Quantity { get; set; }
 
         public string Notes { get; set; }

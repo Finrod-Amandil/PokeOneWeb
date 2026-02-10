@@ -171,7 +171,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             // Assert
             actual.Count.Should().Be(0);
             _reporterMock.Verify(
-                x => x.ReportError(nameof(MoveTutor), _rowHash.IdHash, It.IsAny<Exception>()),
+                x => x.ReportError(nameof(MoveTutor), _rowHash.IdHash, It.IsAny<Exception>(), It.IsAny<string>()),
                 Times.AtLeastOnce);
         }
 
@@ -216,7 +216,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             // Assert
             actual.Count.Should().Be(0);
             _reporterMock.Verify(
-                x => x.ReportError(nameof(MoveTutor), _rowHash.IdHash, It.IsAny<ParseException>()),
+                x => x.ReportError(nameof(MoveTutor), _rowHash.IdHash, It.IsAny<ParseException>(), It.IsAny<string>()),
                 Times.AtLeastOnce);
         }
 

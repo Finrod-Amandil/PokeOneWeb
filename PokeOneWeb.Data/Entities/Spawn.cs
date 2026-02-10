@@ -89,6 +89,8 @@ namespace PokeOneWeb.Data.Entities
 
         public bool IsConfirmed { get; set; }
 
+        public bool IsRemoved { get; set; }
+
         public int LowestLevel { get; set; }
 
         public int HighestLevel { get; set; }

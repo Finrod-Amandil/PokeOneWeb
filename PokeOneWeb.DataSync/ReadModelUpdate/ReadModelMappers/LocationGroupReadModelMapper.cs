@@ -105,6 +105,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 PlacementDescription = pi.PlacementDescription,
                 IsHidden = pi.IsHidden,
                 IsConfirmed = pi.IsConfirmed,
+                IsRemoved = pi.IsRemoved,
                 Quantity = pi.Quantity,
                 Notes = pi.Notes,
                 Screenshot = pi.ScreenshotName

@@ -59,7 +59,7 @@ namespace PokeOneWeb.DataSync.Import
                 {
                     if (entity is INamedEntity)
                     {
-                        Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e, row["Name"].ToString());
+                        Reporter.ReportError(typeof(TEntity).Name, row.IdHash, e, row["Name"]?.ToString() ?? "NAMED_ENTITY_WITHOUT_NAME");
                     }
                     else
                     {
