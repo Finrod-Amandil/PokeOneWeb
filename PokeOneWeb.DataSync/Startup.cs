@@ -53,6 +53,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped(typeof(SheetImporter<HuntingConfiguration>));
             services.AddScoped(typeof(SheetImporter<Item>));
             services.AddScoped(typeof(SheetImporter<ItemStatBoostPokemon>));
+            services.AddScoped(typeof(SheetImporter<LearnableMoveLearnMethodAvailability>));
             services.AddScoped(typeof(SheetImporter<LearnableMoveLearnMethod>));
             services.AddScoped(typeof(SheetImporter<Location>));
             services.AddScoped(typeof(SheetImporter<MoveDamageClass>));
@@ -84,6 +85,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISheetMapper<HuntingConfiguration>, HuntingConfigurationSheetMapper>();
             services.AddScoped<ISheetMapper<Item>, ItemSheetMapper>();
             services.AddScoped<ISheetMapper<ItemStatBoostPokemon>, ItemStatBoostPokemonSheetMapper>();
+            services.AddScoped<ISheetMapper<LearnableMoveLearnMethodAvailability>, LearnableMoveLearnMethodAvailabilitySheetMapper>();
             services.AddScoped<ISheetMapper<LearnableMoveLearnMethod>, LearnableMoveLearnMethodSheetMapper>();
             services.AddScoped<ISheetMapper<Location>, LocationSheetMapper>();
             services.AddScoped<ISheetMapper<MoveDamageClass>, MoveDamageClassSheetMapper>();
@@ -117,6 +119,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IHashedEntityRepository<HuntingConfiguration>, HuntingConfigurationRepository>();
             services.AddScoped<IHashedEntityRepository<Item>, ItemRepository>();
             services.AddScoped<IHashedEntityRepository<ItemStatBoostPokemon>, ItemStatBoostPokemonRepository>();
+            services.AddScoped<IHashedEntityRepository<LearnableMoveLearnMethodAvailability>, LearnableMoveLearnMethodAvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<LearnableMoveLearnMethod>, LearnableMoveLearnMethodRepository>();
             services.AddScoped<IHashedEntityRepository<Location>, LocationRepository>();
             services.AddScoped<IHashedEntityRepository<MoveDamageClass>, MoveDamageClassRepository>();

@@ -986,6 +986,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -999,9 +1002,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.Property<int>("ImportSheetId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<int>("LearnableMoveId")
                         .HasColumnType("int");
@@ -1020,6 +1020,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilityId");
+
                     b.HasIndex("Hash")
                         .IsUnique();
 
@@ -1037,6 +1039,51 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.HasIndex("RequiredItemId");
 
                     b.ToTable("LearnableMoveLearnMethod");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Hash")
+                        .IsUnique();
+
+                    b.HasIndex("IdHash")
+                        .IsUnique();
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("LearnableMoveLearnMethodAvailability");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>
@@ -2687,6 +2734,12 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethod", b =>
                 {
+                    b.HasOne("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", "Availability")
+                        .WithMany()
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
                         .WithMany()
                         .HasForeignKey("ImportSheetId")
@@ -2714,6 +2767,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasForeignKey("RequiredItemId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.Navigation("Availability");
+
                     b.Navigation("ImportSheet");
 
                     b.Navigation("LearnableMove");
@@ -2723,6 +2778,17 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Navigation("MoveTutorMove");
 
                     b.Navigation("RequiredItem");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportSheet");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>

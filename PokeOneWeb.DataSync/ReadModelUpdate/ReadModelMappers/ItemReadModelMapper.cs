@@ -21,6 +21,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
             return _dbContext.Items
                 .Where(i => i.DoInclude)
                 .Include(i => i.BagCategory)
+                .Include(i => i.Availability)
                 .Include(i => i.PlacedItems)
                 .ThenInclude(pi => pi.Location)
                 .ThenInclude(l => l.LocationGroup)

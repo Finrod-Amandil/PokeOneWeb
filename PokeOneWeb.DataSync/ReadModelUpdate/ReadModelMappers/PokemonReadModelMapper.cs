@@ -113,6 +113,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 .Include(v => v.PrimaryType)
                 .Include(v => v.SecondaryType)
                 .Include(v => v.LearnableMoves)
+                .ThenInclude(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.Availability)
+                .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.Move.DamageClass)
                 .Include(v => v.LearnableMoves)
                 .ThenInclude(lm => lm.Move.ElementalType)
@@ -627,7 +630,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 return new LearnableMoveReadModel
                 {
                     MoveName = learnableMove.Move.Name,
-                    IsAvailable = learnableMove.LearnMethods.Any(lm => lm.IsAvailable),
+                    IsAvailable = learnableMove.LearnMethods.Any(lm => lm.Availability.IsAvailable),
                     ElementalType = learnableMove.Move.ElementalType.Name,
                     DamageClass = learnableMove.Move.DamageClass.Name,
                     AttackPower = learnableMove.Move.AttackPower,
@@ -647,7 +650,9 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
         {
             var readModel = new LearnMethodReadModel
             {
-                IsAvailable = learnMethod.IsAvailable,
+                IsAvailable = learnMethod.Availability.IsAvailable,
+                Availability = learnMethod.Availability.Name,
+                AvailabilityDescription = learnMethod.Availability.Description
             };
 
             switch (learnMethod.MoveLearnMethod.Name)

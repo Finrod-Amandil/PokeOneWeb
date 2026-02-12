@@ -24,6 +24,7 @@ namespace PokeOneWeb.Data
         public DbSet<ItemAvailability> ItemAvailabilities { get; set; }
         public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
         public DbSet<ItemStatBoostPokemon> ItemStatBoostPokemon { get; set; }
+        public DbSet<LearnableMoveLearnMethodAvailability> LearnableMoveLearnMethodAvailabilities { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
         public DbSet<LearnableMoveLearnMethod> LearnableMoveLearnMethods { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -94,6 +95,7 @@ namespace PokeOneWeb.Data
             MoveLearnMethod.ConfigureForDatabase(builder);
             MoveLearnMethodLocation.ConfigureForDatabase(builder);
             MoveLearnMethodLocationPrice.ConfigureForDatabase(builder);
+            LearnableMoveLearnMethodAvailability.ConfigureForDatabase(builder);
             LearnableMove.ConfigureForDatabase(builder);
             LearnableMoveLearnMethod.ConfigureForDatabase(builder);
 

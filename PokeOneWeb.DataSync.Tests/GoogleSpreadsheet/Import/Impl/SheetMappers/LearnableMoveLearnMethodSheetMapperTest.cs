@@ -25,7 +25,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             "PokemonVariety",
             "Move",
             "LearnMethod",
-            "IsAvailable",
+            "Availability",
             "LevelLearnedAt",
             "RequiredItem",
             "TutorName",
@@ -49,14 +49,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             const string pokemonVariety = "Pokemon Variety";
             const string move = "Move Name";
             const string learnMethod = "Learn Method";
-            const bool isAvailable = true;
+            const string availability = "Obtainable";
 
             _values = new List<object>
             {
                 pokemonVariety,
                 move,
                 learnMethod,
-                isAvailable
+                availability
             };
 
             var expected = new LearnableMoveLearnMethod
@@ -73,7 +73,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     Name = learnMethod
                 },
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 LevelLearnedAt = null,
                 RequiredItemName = string.Empty,
                 MoveTutorName = string.Empty,
@@ -95,7 +95,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             const string pokemonVariety = "Pokemon Variety";
             const string move = "Move Name";
             const string learnMethod = "Learn Method";
-            const bool isAvailable = true;
+            const string availability = "Availability";
             const int levelLearnedAt = 10;
             const string requiredItemName = "TM01 - Item Name";
             const string tutorName = "Tutor Name";
@@ -106,7 +106,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 pokemonVariety,
                 move,
                 learnMethod,
-                isAvailable,
+                availability,
                 levelLearnedAt,
                 requiredItemName,
                 tutorName,
@@ -127,7 +127,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     Name = learnMethod
                 },
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 LevelLearnedAt = levelLearnedAt,
                 RequiredItemName = requiredItemName,
                 MoveTutorName = tutorName,
@@ -149,19 +149,19 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             const string pokemonVariety1 = "Pokemon Variety 1";
             const string move1 = "Move Name 1";
             const string learnMethod1 = "Learn Method 1";
-            const bool isAvailable1 = true;
+            const string availability1 = "Obtainable";
 
             const string pokemonVariety2 = "Pokemon Variety 2";
             const string move2 = "Move Name 2";
             const string learnMethod2 = "Learn Method 2";
-            const bool isAvailable2 = false;
+            const string availability2 = "Unobtainable";
 
             var values1 = new List<object>
             {
                 pokemonVariety1,
                 move1,
                 learnMethod1,
-                isAvailable1
+                availability1
             };
 
             var values2 = new List<object>
@@ -169,7 +169,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 pokemonVariety2,
                 move2,
                 learnMethod2,
-                isAvailable2
+                availability2
             };
 
             var data = new List<SheetDataRow>
@@ -194,7 +194,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     {
                         Name = learnMethod1
                     },
-                    IsAvailable = isAvailable1,
+                    AvailabilityName = availability1,
                     LevelLearnedAt = null,
                     RequiredItemName = string.Empty,
                     MoveTutorName = string.Empty,
@@ -214,7 +214,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     {
                         Name = learnMethod2
                     },
-                    IsAvailable = isAvailable2,
+                    AvailabilityName = availability2,
                     LevelLearnedAt = null,
                     RequiredItemName = string.Empty,
                     MoveTutorName = string.Empty,
@@ -273,14 +273,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         }
 
         [Theory]
-        [InlineData("", "b", "c", false, 1, "", "", "")]
-        [InlineData("a", "", "c", false, 1, "", "", "")]
-        [InlineData("a", "b", "", false, 1, "", "", "")]
-        [InlineData("a", "b", "c", "notBool", 1, "", "", "")]
-        [InlineData("a", "b", "c", false, "notInt", "", "", "")]
-        [InlineData("a", "b", "c", false, 1, 1000, "", "")]
-        [InlineData("a", "b", "c", false, 1, "", 1000, "")]
-        [InlineData("a", "b", "c", false, 1, "", "", 1000)]
+        [InlineData("", "b", "c", "Obtainable", 1, "", "", "")]
+        [InlineData("a", "", "c", "Obtainable", 1, "", "", "")]
+        [InlineData("a", "b", "", "Obtainable", 1, "", "", "")]
+        [InlineData("a", "b", "c", 1000, 1, "", "", "")]
+        [InlineData("a", "b", "c", "Obtainable", "notInt", "", "", "")]
+        [InlineData("a", "b", "c", "Obtainable", 1, 1000, "", "")]
+        [InlineData("a", "b", "c", "Obtainable", 1, "", 1000, "")]
+        [InlineData("a", "b", "c", "Obtainable", 1, "", "", 1000)]
         public void Map_WithUnparsableValue_ShouldReportError(params object[] valuesAsArray)
         {
             // Arrange
@@ -308,14 +308,14 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 "PokemonVariety",
                 "TutorName",
                 "LearnMethod",
-                "IsAvailable",
+                "Availability",
                 "RequiredItem",
             };
 
             const string pokemonVariety = "Pokemon Variety";
             const string move = "Move Name";
             const string learnMethod = "Learn Method";
-            const bool isAvailable = true;
+            const string availability = "Obtainable";
             const int levelLearnedAt = 10;
             const string requiredItemName = "TM01 - Item Name";
             const string tutorName = "Tutor Name";
@@ -329,7 +329,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 pokemonVariety,
                 tutorName,
                 learnMethod,
-                isAvailable,
+                availability,
                 requiredItemName
             };
 
@@ -347,7 +347,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 {
                     Name = learnMethod
                 },
-                IsAvailable = isAvailable,
+                AvailabilityName = availability,
                 LevelLearnedAt = levelLearnedAt,
                 RequiredItemName = requiredItemName,
                 MoveTutorName = tutorName,

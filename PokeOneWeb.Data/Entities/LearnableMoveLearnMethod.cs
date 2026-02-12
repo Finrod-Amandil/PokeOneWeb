@@ -64,7 +64,13 @@ namespace PokeOneWeb.Data.Entities
 
         public int ImportSheetId { get; set; }
 
-        public bool IsAvailable { get; set; }
+        [ForeignKey("AvailabilityId")]
+        public LearnableMoveLearnMethodAvailability Availability { get; set; }
+
+        public int AvailabilityId { get; set; }
+
+        [NotMapped]
+        public string AvailabilityName { internal get; set; }
 
         public int? LevelLearnedAt { get; set; } // Only used for learn method Level Up
 

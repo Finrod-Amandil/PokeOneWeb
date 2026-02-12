@@ -55,6 +55,7 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             {
                 var canInsertOrUpdate = true;
 
+                canInsertOrUpdate &= TrySetIdForName<LearnableMoveLearnMethodAvailability>(entity.AvailabilityName, id => entity.AvailabilityId = id);
                 canInsertOrUpdate &= TryAddRequiredItem(entity);
                 canInsertOrUpdate &= TryAddMoveTutorMove(entity, moveTutorMoves);
                 canInsertOrUpdate &= TryAddMoveLearnMethod(entity);
