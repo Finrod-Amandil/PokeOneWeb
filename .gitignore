@@ -348,5 +348,18 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/PokeOneWeb/Services/GoogleSpreadsheet/credentials.json
-PokeOneWeb/Services/GoogleSpreadsheet/token.json/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
+
+# Code coverage files
+coverage.opencover.xml
+
+#Mac Shit
+.DS_Store
+
+# Ignore static json file generation
+PokeOneWeb/resources
+
+# Ignore frontend development json files
+resources/
+
+# Do not check in google cloud credentials
+/PokeOneWeb.DataSync/gcloud_credentials.json

@@ -7,8 +7,11 @@ namespace PokeOneWeb.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
+        public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
         public DbSet<Build> Builds { get; set; }
@@ -19,8 +22,10 @@ namespace PokeOneWeb.Data
         public DbSet<Evolution> Evolutions { get; set; }
         public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemAvailability> ItemAvailabilities { get; set; }
         public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
         public DbSet<ItemStatBoostPokemon> ItemStatBoostPokemon { get; set; }
+        public DbSet<LearnableMoveLearnMethodAvailability> LearnableMoveLearnMethodAvailabilities { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
         public DbSet<LearnableMoveLearnMethod> LearnableMoveLearnMethods { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -29,29 +34,35 @@ namespace PokeOneWeb.Data
         public DbSet<MoveDamageClass> MoveDamageClasses { get; set; }
         public DbSet<MoveLearnMethod> MoveLearnMethods { get; set; }
         public DbSet<MoveLearnMethodLocation> MoveLearnMethodLocations { get; set; }
+        public DbSet<MoveLearnMethodLocationPrice> MoveLearnMethodLocationPrices { get; set; }
         public DbSet<MoveTutor> MoveTutors { get; set; }
         public DbSet<MoveTutorMove> MoveTutorMoves { get; set; }
+        public DbSet<MoveTutorMovePrice> MoveTutorMovePrices { get; set; }
         public DbSet<Nature> Natures { get; set; }
         public DbSet<PlacedItem> PlacedItems { get; set; }
         public DbSet<PokemonAvailability> PokemonAvailabilities { get; set; }
         public DbSet<PokemonForm> PokemonForms { get; set; }
         public DbSet<PokemonSpecies> PokemonSpecies { get; set; }
         public DbSet<PokemonVariety> PokemonVarieties { get; set; }
+        public DbSet<PokemonVarietyUrl> PokemonVarietyUrls { get; set; }
         public DbSet<PvpTier> PvpTiers { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonTimeOfDay> SeasonTimesOfDay { get; set; }
         public DbSet<Spawn> Spawns { get; set; }
+        public DbSet<SpawnOpportunity> SpawnOpportunities { get; set; }
         public DbSet<SpawnType> SpawnTypes { get; set; }
         public DbSet<TimeOfDay> TimesOfDay { get; set; }
 
-
         public DbSet<ImportSheet> ImportSheets { get; set; }
-
+        public DbSet<ImportLog> ImportLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            ImportSheet.ConfigureForDatabase(builder);
+            ImportLog.ConfigureForDatabase(builder);
 
             Event.ConfigureForDatabase(builder);
             Region.ConfigureForDatabase(builder);
@@ -59,6 +70,7 @@ namespace PokeOneWeb.Data
             Location.ConfigureForDatabase(builder);
 
             BagCategory.ConfigureForDatabase(builder);
+            ItemAvailability.ConfigureForDatabase(builder);
             Item.ConfigureForDatabase(builder);
             PlacedItem.ConfigureForDatabase(builder);
             Currency.ConfigureForDatabase(builder);
@@ -84,6 +96,7 @@ namespace PokeOneWeb.Data
             MoveLearnMethod.ConfigureForDatabase(builder);
             MoveLearnMethodLocation.ConfigureForDatabase(builder);
             MoveLearnMethodLocationPrice.ConfigureForDatabase(builder);
+            LearnableMoveLearnMethodAvailability.ConfigureForDatabase(builder);
             LearnableMove.ConfigureForDatabase(builder);
             LearnableMoveLearnMethod.ConfigureForDatabase(builder);
 
@@ -103,8 +116,6 @@ namespace PokeOneWeb.Data
 
             ItemStatBoost.ConfigureForDatabase(builder);
             Entities.ItemStatBoostPokemon.ConfigureForDatabase(builder);
-
-            ImportSheet.ConfigureForDatabase(builder);
         }
     }
 }

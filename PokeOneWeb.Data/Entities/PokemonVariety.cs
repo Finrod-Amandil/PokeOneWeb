@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -11,7 +13,7 @@ namespace PokeOneWeb.Data.Entities
     /// differ in visuals, these will be Forms of the same Variety.
     /// </summary>
     [Table("PokemonVariety")]
-    public class PokemonVariety
+    public class PokemonVariety : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -76,23 +78,26 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
         public bool DoInclude { get; set; }
         public bool IsMega { get; set; }
         public bool IsFullyEvolved { get; set; }
         public int Generation { get; set; }
         public int CatchRate { get; set; }
         public bool HasGender { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal MaleRatio { get; set; }
+
         public int EggCycles { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Height { get; set; }
+
         [Column(TypeName = "decimal(6,2)")]
         public decimal Weight { get; set; }
+
         public int ExpYield { get; set; }
 
-        //BASE STATS
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int SpecialAttack { get; set; }
@@ -100,7 +105,6 @@ namespace PokeOneWeb.Data.Entities
         public int Speed { get; set; }
         public int HitPoints { get; set; }
 
-        //EV Yields
         public int AttackEv { get; set; }
         public int DefenseEv { get; set; }
         public int SpecialAttackEv { get; set; }
@@ -111,44 +115,71 @@ namespace PokeOneWeb.Data.Entities
         public string Notes { get; set; }
 
         [ForeignKey("PokemonSpeciesId")]
-        public PokemonSpecies PokemonSpecies { get; set; }
+        public PokemonSpecies PokemonSpecies { get; set; } = new();
+
         public int PokemonSpeciesId { get; set; }
 
         [ForeignKey("DefaultFormId")]
         public PokemonForm DefaultForm { get; set; }
+
         public int? DefaultFormId { get; set; }
+
+        [NotMapped]
+        public string DefaultFormName { internal get; set; }
 
         [ForeignKey("PrimaryTypeId")]
         public ElementalType PrimaryType { get; set; }
+
         public int PrimaryTypeId { get; set; }
+
+        [NotMapped]
+        public string PrimaryTypeName { internal get; set; }
 
         [ForeignKey("SecondaryTypeId")]
         public ElementalType SecondaryType { get; set; }
+
         public int? SecondaryTypeId { get; set; }
+
+        [NotMapped]
+        public string SecondaryTypeName { internal get; set; }
 
         [ForeignKey("PrimaryAbilityId")]
         public Ability PrimaryAbility { get; set; }
+
         public int PrimaryAbilityId { get; set; }
+
+        [NotMapped]
+        public string PrimaryAbilityName { internal get; set; }
 
         [ForeignKey("SecondaryAbilityId")]
         public Ability SecondaryAbility { get; set; }
+
         public int? SecondaryAbilityId { get; set; }
+
+        [NotMapped]
+        public string SecondaryAbilityName { internal get; set; }
 
         [ForeignKey("HiddenAbilityId")]
         public Ability HiddenAbility { get; set; }
+
         public int? HiddenAbilityId { get; set; }
+
+        [NotMapped]
+        public string HiddenAbilityName { internal get; set; }
 
         [ForeignKey("PvpTierId")]
         public PvpTier PvpTier { get; set; }
+
         public int PvpTierId { get; set; }
 
+        [NotMapped]
+        public string PvpTierName { internal get; set; }
 
         public List<PokemonForm> Forms { get; set; }
         public List<LearnableMove> LearnableMoves { get; set; } = new();
         public List<Build> Builds { get; set; }
         public List<HuntingConfiguration> HuntingConfigurations { get; set; }
         public List<PokemonVarietyUrl> Urls { get; set; } = new();
-
 
         public override string ToString()
         {

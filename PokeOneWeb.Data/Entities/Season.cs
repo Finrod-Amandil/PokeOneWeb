@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -11,9 +12,10 @@ namespace PokeOneWeb.Data.Entities
     /// seasons, or with a different rarity. In-game seasons last a few real-time weeks.
     /// </summary>
     [Table("Season")]
-    public class Season : IHashedEntity
+    [Sheet("seasons")]
+    public class Season : IHashedEntity, INamedEntity
     {
-        public static readonly string ANY = "Any";
+        public static readonly string Any = "Any";
 
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -30,30 +32,30 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Abbreviation { get; set; }
 
         public int SortIndex { get; set; }
 
         public string Color { get; set; }
-
 
         public override string ToString()
         {

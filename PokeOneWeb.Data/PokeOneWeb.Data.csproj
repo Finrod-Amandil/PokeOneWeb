@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>warnings</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\ApplicationDbMigrations\" />
-    <Folder Include="Migrations\ReadModelDbMigrations\" />
   </ItemGroup>
 
 </Project>

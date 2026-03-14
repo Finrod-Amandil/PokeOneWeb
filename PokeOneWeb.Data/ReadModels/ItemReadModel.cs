@@ -1,15 +1,19 @@
-﻿using PokeOneWeb.Data.ReadModels.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using PokeOneWeb.Data.ReadModels.Interfaces;
 
 namespace PokeOneWeb.Data.ReadModels
 {
     [Table("ItemReadModel")]
     public class ItemReadModel : IReadModel
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         [Required]
+        [JsonIgnore]
         public int ApplicationDbId { get; set; }
 
         public string ResourceName { get; set; }
@@ -22,7 +26,9 @@ namespace PokeOneWeb.Data.ReadModels
 
         public string Effect { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public string Availability { get; set; }
+
+        public string AvailabilityDescription { get; set; }
 
         public string SpriteName { get; set; }
 

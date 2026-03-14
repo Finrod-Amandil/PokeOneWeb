@@ -1,19 +1,22 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using PokeOneWeb.DataSync.GoogleSpreadsheet.Import;
-using PokeOneWeb.DataSync.ReadModelUpdate;
+using PokeOneWeb.DataSync.Import.Interfaces;
+using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
 
 namespace PokeOneWeb.DataSync
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
                 .Build();
 
             using var host = Host.CreateDefaultBuilder(args)
@@ -31,7 +34,7 @@ namespace PokeOneWeb.DataSync
             var readModelUpdateService = provider.GetRequiredService<IReadModelUpdateService>();
 
             var importReport = await importService.ImportSpreadsheetData();
-            readModelUpdateService.UpdateReadModel(importReport);
+            readModelUpdateService.UpdateReadModel();
         }
     }
 }

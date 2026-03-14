@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -13,7 +14,8 @@ namespace PokeOneWeb.Data.Entities
     /// Status moves do not deal direct damage.
     /// </summary>
     [Table("MoveDamageClass")]
-    public class MoveDamageClass : IHashedEntity
+    [Sheet("move_damage_classes")]
+    public class MoveDamageClass : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -29,22 +31,22 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
-
 
         public override string ToString()
         {

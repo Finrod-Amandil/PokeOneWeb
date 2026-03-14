@@ -1,0 +1,44 @@
+<p>
+    @for (textElement of textElements(); track textElement.text) {
+        @switch (textElement.resourceType) {
+            @case (ResourceType.Text) {
+                {{ textElement.text }}
+            }
+            @case (ResourceType.Item) {
+                <a
+                    (click)="navigate('/' + textElement.resourceName)"
+                    [href]="'/' + textElement.resourceName"
+                    class="nobr"
+                >
+                    @if (textElement.spriteName) {
+                        <img [src]="'./assets/img/sprites/items/small/' + textElement.spriteName" />
+                    }
+                    <!-- prevent space
+                -->{{ textElement.text }}</a
+                >
+            }
+            @case (ResourceType.Pokemon) {
+                <a
+                    (click)="navigate('/' + textElement.resourceName)"
+                    [href]="'/' + textElement.resourceName"
+                    class="nobr"
+                >
+                    @if (textElement.spriteName) {
+                        <img
+                            [src]="'./assets/img/sprites/pokemon/small/' + textElement.spriteName"
+                        />
+                    }
+                    <!-- prevent space
+                    -->{{ textElement.text }}</a
+                >
+            }
+            @case (ResourceType.Location) {
+                <a
+                    (click)="navigate('/' + textElement.resourceName)"
+                    [href]="'/' + textElement.resourceName"
+                    >{{ textElement.text }}</a
+                >
+            }
+        }
+    }
+</p>

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -10,7 +11,8 @@ namespace PokeOneWeb.Data.Entities
     /// Categorization of Pokemon Varieties in terms of PVP (player vs player) viability.
     /// </summary>
     [Table("PvpTier")]
-    public class PvpTier : IHashedEntity
+    [Sheet("pvp_tiers")]
+    public class PvpTier : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -26,24 +28,24 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         public int SortIndex { get; set; }
-
 
         public override string ToString()
         {

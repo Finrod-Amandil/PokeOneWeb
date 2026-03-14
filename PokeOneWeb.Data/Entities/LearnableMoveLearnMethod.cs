@@ -1,17 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
 {
+    /// <summary>
+    /// A method (i.e. Level-up, tutor) through which a specific Pokemon can learn a specific move.
+    /// </summary>
     [Table("LearnableMoveLearnMethod")]
+    [Sheet("learnablemoves")]
     public class LearnableMoveLearnMethod : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
             builder.Entity<LearnableMoveLearnMethod>().HasIndexedHashes();
+
+            builder.Entity<LearnableMoveLearnMethod>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.Entity<LearnableMoveLearnMethod>()
                 .HasOne(lmlm => lmlm.LearnableMove)
@@ -36,50 +46,61 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .HasForeignKey(lmlm => lmlm.MoveTutorMoveId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-
-            builder.Entity<LearnableMoveLearnMethod>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        public bool IsAvailable { get; set; }
+        [ForeignKey("AvailabilityId")]
+        public LearnableMoveLearnMethodAvailability Availability { get; set; }
+
+        public int AvailabilityId { get; set; }
+
+        [NotMapped]
+        public string AvailabilityName { internal get; set; }
 
         public int? LevelLearnedAt { get; set; } // Only used for learn method Level Up
 
         public string Comments { get; set; }
 
         [ForeignKey("LearnableMoveId")]
-        public LearnableMove LearnableMove { get; set; }
+        public LearnableMove LearnableMove { get; set; } = new();
+
         public int LearnableMoveId { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
-        public MoveLearnMethod MoveLearnMethod { get; set; }
+        public MoveLearnMethod MoveLearnMethod { get; set; } = new();
+
         public int MoveLearnMethodId { get; set; }
 
         [ForeignKey("RequiredItemId")]
         public Item RequiredItem { get; set; }
+
         public int? RequiredItemId { get; set; } // Only used for learn method Machine / TM/HM
+
+        [NotMapped]
+        public string RequiredItemName { internal get; set; }
 
         [ForeignKey("MoveTutorMoveId")]
         public MoveTutorMove MoveTutorMove { get; set; }
+
         public int? MoveTutorMoveId { get; set; } // Only used for learn method Tutor
 
+        [NotMapped]
+        public string MoveTutorName { internal get; set; }
 
         public override string ToString()
         {

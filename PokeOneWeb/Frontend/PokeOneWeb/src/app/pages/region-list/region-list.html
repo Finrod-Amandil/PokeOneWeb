@@ -1,0 +1,40 @@
+<pokeoneweb-page-header title="Regions" />
+
+<div id="content_main_container">
+    <div>
+        <table
+            class="main-table sortable rows-clickable"
+            id="region_list"
+            aria-describedby="Region list"
+        >
+            <thead>
+                <tr>
+                    <th class="col-name">
+                        <div class="table-header-label">Name</div>
+                    </th>
+                    <th class="col-type">
+                        <div class="table-header-label">Region type</div>
+                    </th>
+                    <th class="col-description">
+                        <div class="table-header-label">Description</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody #container>
+                @for (region of regions(); track region.resourceName) {
+                    <tr (click)="navigateToLocationPage(region)">
+                        <td class="col-name" [style]="'background-color: ' + region.color">
+                            {{ region.name }}
+                        </td>
+                        <td class="col-type">
+                            {{ getRegionType(region) }}
+                        </td>
+                        <td class="col-description">
+                            {{ region.description }}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

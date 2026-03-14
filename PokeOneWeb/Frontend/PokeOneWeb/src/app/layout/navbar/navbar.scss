@@ -1,0 +1,14 @@
+#navbar {
+    width: var(--navbar-outer-width);
+    height: var(--navbar-outer-height);
+    margin: auto;
+}
+
+#navbar-item-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: var(--navbar-inner-width);
+    margin: auto;
+}

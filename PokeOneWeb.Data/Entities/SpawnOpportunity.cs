@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// A time and season when a spawn can occur. 
+    /// A time and season when a spawn can occur.
     /// </summary>
     [Table("SpawnOpportunity")]
-    public class SpawnOpportunity
+    public class SpawnOpportunity : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -36,20 +37,30 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("PokemonSpawnId")]
         public Spawn PokemonSpawn { get; set; }
+
         public int PokemonSpawnId { get; set; }
 
         [ForeignKey("SeasonId")]
         public Season Season { get; set; }
+
         public int SeasonId { get; set; }
+
+        [NotMapped]
+        public string SeasonAbbreviation { get; set; }
 
         [ForeignKey("TimeOfDayId")]
         public TimeOfDay TimeOfDay { get; set; }
+
         public int TimeOfDayId { get; set; }
 
+        [NotMapped]
+        public string TimeOfDayAbbreviation { get; set; }
 
         public override string ToString()
         {
-            return $"{PokemonSpawn} @ {Season} {TimeOfDay}";
+            return $"{PokemonSpawn} @ " +
+                   $"{Season?.ToString() ?? SeasonAbbreviation} " +
+                   $"{TimeOfDay?.ToString() ?? TimeOfDayAbbreviation}";
         }
     }
 }

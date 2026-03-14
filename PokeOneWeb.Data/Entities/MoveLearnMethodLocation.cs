@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -11,11 +13,17 @@ namespace PokeOneWeb.Data.Entities
     /// to teach moves to Pokemon.
     /// </summary>
     [Table("MoveLearnMethodLocation")]
+    [Sheet("move_learn_method_locations")]
     public class MoveLearnMethodLocation : IHashedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
             builder.Entity<MoveLearnMethodLocation>().HasIndexedHashes();
+
+            builder.Entity<MoveLearnMethodLocation>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.Entity<MoveLearnMethodLocation>()
                 .HasOne(mlml => mlml.MoveLearnMethod)
@@ -28,26 +36,22 @@ namespace PokeOneWeb.Data.Entities
                 .WithMany()
                 .HasForeignKey(mlml => mlml.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<MoveLearnMethodLocation>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
         public string TutorType { get; set; }
@@ -55,24 +59,28 @@ namespace PokeOneWeb.Data.Entities
         public string NpcName { get; set; }
 
         /// <summary>
-        /// Where in the area the NPC is located and how to find him.
+        /// Gets or sets where in the area the NPC is located and how to find him.
         /// </summary>
         public string PlacementDescription { get; set; }
 
         [ForeignKey("MoveLearnMethodId")]
-        public MoveLearnMethod MoveLearnMethod { get; set; }
+        public MoveLearnMethod MoveLearnMethod { get; set; } = new();
+
         public int MoveLearnMethodId { get; set; }
 
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
+
         public int LocationId { get; set; }
+
+        [NotMapped]
+        public string LocationName { internal get; set; }
 
         public List<MoveLearnMethodLocationPrice> Price { get; set; } = new();
 
-
         public override string ToString()
         {
-            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location}";
+            return $"[{MoveLearnMethod}] {TutorType} \"{NpcName}\" @ {Location?.ToString() ?? LocationName}";
         }
     }
 }

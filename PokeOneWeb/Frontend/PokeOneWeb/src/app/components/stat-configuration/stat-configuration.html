@@ -1,0 +1,105 @@
+<div>
+    <pokeoneweb-stat-input
+        [pokemon]="pokemon()"
+        (selectedConfigurationChanged)="onStatChanged($event)"
+    />
+    <table class="chart-table">
+        <thead>
+            <tr>
+                <th class="stat-chart-col-label">Stat</th>
+                <th class="stat-chart-col-basestat">Base</th>
+                <th class="stat-chart-col-bars">
+                    <div class="stat-chart-header-base">Base</div>
+                    @if (getStatTotal(statsConfiguration().iv) > 0) {
+                        <div class="stat-chart-header-iv">IVs</div>
+                    }
+                    @if (getStatTotal(statsConfiguration().ev) !== 0) {
+                        <div class="stat-chart-header-ev">EVs</div>
+                    }
+                    @if (
+                        statsConfiguration().nature &&
+                        statsConfiguration().nature.name !== selectOptionNone
+                    ) {
+                        <div class="stat-chart-header-nature">
+                            Nature: {{ statsConfiguration().nature.name }}
+                            {{ statsConfiguration().nature.effect }}
+                        </div>
+                    }
+                    @if (
+                        statsConfiguration().ability &&
+                        statsConfiguration().ability.name !== selectOptionNone
+                    ) {
+                        <div class="stat-chart-header-ability">
+                            <div>Ability: {{ statsConfiguration().ability.name }}</div>
+                            @if (statsConfiguration().ability.boostConditions) {
+                                <div class="ability-boost-conditions">
+                                    ({{ statsConfiguration().ability.boostConditions }})
+                                </div>
+                            }
+                        </div>
+                    }
+                    @if (
+                        statsConfiguration().item &&
+                        statsConfiguration().item.itemName !== selectOptionNone
+                    ) {
+                        <div class="stat-chart-header-item">
+                            Item: {{ statsConfiguration().item.itemName }}
+                        </div>
+                    }
+                    @if (getStatTotal(effectiveStats().statModifierExtent) !== 0) {
+                        <div class="stat-chart-header-modifier">Stat modifiers</div>
+                    }
+                    @if (getStatTotal(effectiveStats().fieldBoostsExtent) !== 0) {
+                        <div class="stat-chart-header-field">Field boosts</div>
+                    }
+                </th>
+                <th class="stat-chart-col-total">Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (barChartGroup of barChartGroups(); track barChartGroup.className) {
+                <tr [class]="'stat-row-' + barChartGroup.className">
+                    <td class="stat-chart-col-label">{{ barChartGroup.label }}</td>
+                    <td class="stat-chart-col-basestat">{{ barChartGroup.baseStatValue }}</td>
+                    <td class="stat-chart-col-bars">
+                        <svg
+                            class="stat-bar-chart"
+                            [attr.viewBox]="'0 0 ' + viewPortExtent + ' 30'"
+                        >
+                            @for (bar of barChartGroup.bars; track bar.className) {
+                                <rect
+                                    [class]="
+                                        'bar bar-' +
+                                        bar.className +
+                                        (bar.isNegativeDirection ? ' bar-negative' : '')
+                                    "
+                                    [attr.x]="bar.x"
+                                    [attr.y]="bar.y"
+                                    [attr.width]="bar.width"
+                                    [attr.height]="bar.height"
+                                ></rect>
+                            }
+
+                            <line
+                                class="total-indicator"
+                                [attr.x1]="barChartGroup.xTotal - 2"
+                                [attr.x2]="barChartGroup.xTotal - 2"
+                                y1="4"
+                                y2="34"
+                            ></line>
+                        </svg>
+                    </td>
+                    <td class="stat-chart-col-total">{{ barChartGroup.totalValue }}</td>
+                </tr>
+            }
+            <tr class="stat-row-total">
+                <td class="stat-chart-col-label">Total</td>
+                <td class="stat-chart-col-basestat">
+                    {{ getStatTotal(statsConfiguration().baseStats) }}
+                </td>
+                <td class="stat-chart-col-bars"></td>
+                <td class="stat-chart-col-total">{{ getStatTotal(effectiveStats().total) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

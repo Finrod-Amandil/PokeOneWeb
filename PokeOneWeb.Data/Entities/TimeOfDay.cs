@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -11,9 +13,10 @@ namespace PokeOneWeb.Data.Entities
     /// on these phases, different Pokemon may spawn.
     /// </summary>
     [Table("TimeOfDay")]
-    public class TimeOfDay : IHashedEntity
+    [Sheet("times_of_day")]
+    public class TimeOfDay : IHashedEntity, INamedEntity
     {
-        public static readonly string ANY = "Any";
+        public static readonly string Any = "Any";
 
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -30,23 +33,24 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Abbreviation { get; set; }
 
@@ -55,7 +59,6 @@ namespace PokeOneWeb.Data.Entities
         public string Color { get; set; }
 
         public List<SeasonTimeOfDay> SeasonTimes { get; set; } = new();
-
 
         public override string ToString()
         {

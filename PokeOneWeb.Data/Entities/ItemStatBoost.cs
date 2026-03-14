@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -10,7 +12,7 @@ namespace PokeOneWeb.Data.Entities
     /// only if held by a specific Pokemon.
     /// </summary>
     [Table("ItemStatBoost")]
-    public class ItemStatBoost
+    public class ItemStatBoost : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -44,18 +46,21 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("ItemId")]
         public Item Item { get; set; }
+
         public int ItemId { get; set; }
 
+        [NotMapped]
+        public string ItemName { internal get; set; }
+
         /// <summary>
-        /// For which Pokemon this stat boost is available. If no Pokemon are listed,
+        /// Gets or sets for which Pokemon this stat boost is available. If no Pokemon are listed,
         /// a single entry is available where the required Pokemon is null.
         /// </summary>
         public List<ItemStatBoostPokemon> RequiredPokemon { get; set; } = new();
 
-
         public override string ToString()
         {
-            return $"{Item} (ItemStatBoost)";
+            return $"{Item?.ToString() ?? ItemName} (ItemStatBoost)";
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -9,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// This can be the different floors of a tower or parts of a cave.
     /// </summary>
     [Table("LocationGroup")]
-    public class LocationGroup
+    public class LocationGroup : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -26,20 +28,26 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string ResourceName { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
         [ForeignKey("RegionId")]
         public Region Region { get; set; }
+
         public int RegionId { get; set; }
 
-        public List<Location> Locations { get; set; } = new();
+        /// <summary>
+        /// Sets the string-based identifier for the related region. Only used when inserting / updating records.
+        /// </summary>
+        [NotMapped]
+        public string RegionName { internal get; set; }
 
+        public List<Location> Locations { get; set; } = new();
 
         public override string ToString()
         {

@@ -1,0 +1,84 @@
+#search_table th {
+    text-align: left;
+}
+
+#search_table #input_search,
+#search_table ng-select:has(#input_bagcategory),
+#search_table ng-select:has(#input_availability) {
+    min-width: 300px;
+}
+
+#search_table .search-input-row {
+    display: flex;
+    align-items: center;
+}
+
+#availability_explanation_table,
+#availability_explanation_table td {
+    background-color: var(--dark-gray);
+    border: 1px solid black;
+}
+
+#availability_explanation_table tr td:first-child {
+    padding-top: 7px;
+}
+
+#availability_explanation_table tr td:last-child {
+    font-weight: 300;
+    color: var(--medium-light-gray);
+}
+
+#availability_explanation_table {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+#availability_explanation_table td {
+    padding: 2px 5px;
+}
+
+p.item-list-title,
+p.item-list-empty {
+    color: var(--light-gray);
+    font-size: 24px;
+    text-shadow: 2px 2px black;
+}
+
+#item_list tr {
+    margin-top: 2px;
+}
+
+#item_list .col-availability {
+    width: 30px;
+    padding: 0;
+    padding-top: 4px;
+    padding-left: 1px;
+}
+
+#item_list td.col-availability {
+    border: 1px solid black;
+}
+
+#item_list td.col-sprite img {
+    display: flex;
+    width: 30px;
+    height: 30px;
+}
+
+#item_list td.col-name {
+    width: 160px;
+    font-weight: 300;
+    font-size: 20px;
+
+    a:not(:hover) {
+        color: var(--light-gray);
+    }
+}
+
+#item_list td.col-bagcategory {
+    width: 120px;
+}
+
+#item_list td.col-description {
+    width: 400px;
+}

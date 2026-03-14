@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
 using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
@@ -15,7 +16,8 @@ namespace PokeOneWeb.Data.Entities
     /// The HP stat is unaffected by natures.
     /// </summary>
     [Table("Nature")]
-    public class Nature : IHashedEntity
+    [Sheet("natures")]
+    public class Nature : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -31,19 +33,20 @@ namespace PokeOneWeb.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
@@ -52,7 +55,6 @@ namespace PokeOneWeb.Data.Entities
         public int SpecialAttack { get; set; }
         public int SpecialDefense { get; set; }
         public int Speed { get; set; }
-
 
         public override string ToString()
         {

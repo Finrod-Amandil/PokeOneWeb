@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
     /// A LearnableMove indicates, that a PokemonVariety is able to learn a certain move. A move can
-    /// be learned through one or multiple methods (--> LearnableMoveLearnMethod)
+    /// be learned through one or multiple methods (--> LearnableMoveLearnMethod).
     /// </summary>
     [Table("LearnableMove")]
-    public class LearnableMove
+    public class LearnableMove : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -31,18 +33,26 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("MoveId")]
         public Move Move { get; set; }
+
         public int MoveId { get; set; }
+
+        [NotMapped]
+        public string MoveName { internal get; set; }
 
         [ForeignKey("PokemonVarietyId")]
         public PokemonVariety PokemonVariety { get; set; }
+
         public int PokemonVarietyId { get; set; }
+
+        [NotMapped]
+        public string PokemonVarietyName { internal get; set; }
 
         public List<LearnableMoveLearnMethod> LearnMethods { get; set; } = new();
 
-
         public override string ToString()
         {
-            return $"{PokemonVariety} learns {Move} ({LearnMethods.Count} methods)";
+            return $"{PokemonVariety?.ToString() ?? PokemonVarietyName} learns " +
+                   $"{Move?.ToString() ?? MoveName} ({LearnMethods.Count} methods)";
         }
     }
 }

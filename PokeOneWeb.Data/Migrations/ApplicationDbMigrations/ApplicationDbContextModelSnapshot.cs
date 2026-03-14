@@ -261,9 +261,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("SpecialAttackBoost")
                         .HasColumnType("decimal(4,1)");
 
@@ -397,6 +394,44 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.ToTable("Build");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ChangeLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ChangeLogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.ToTable("ChangeLog");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Currency", b =>
                 {
                     b.Property<int>("Id")
@@ -477,9 +512,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -700,7 +732,7 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.ToTable("HuntingConfiguration");
                 });
 
-            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportSheet", b =>
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -708,8 +740,26 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("SheetHash")
+                    b.Property<DateTime>("ImportTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedSheets")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImportTime");
+
+                    b.ToTable("ImportLog");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ImportSheet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("SheetName")
                         .IsRequired()
@@ -734,6 +784,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BagCategoryId")
                         .HasColumnType("int");
 
@@ -757,15 +810,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<int>("ImportSheetId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PokeoneItemId")
                         .HasColumnType("int");
@@ -781,6 +828,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AvailabilityId");
 
                     b.HasIndex("BagCategoryId");
 
@@ -799,6 +848,48 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .IsUnique();
 
                     b.ToTable("Item");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Hash")
+                        .IsUnique();
+
+                    b.HasIndex("IdHash")
+                        .IsUnique();
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ItemAvailability");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemOption", b =>
@@ -933,6 +1024,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -946,9 +1040,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.Property<int>("ImportSheetId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
 
                     b.Property<int>("LearnableMoveId")
                         .HasColumnType("int");
@@ -967,6 +1058,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilityId");
+
                     b.HasIndex("Hash")
                         .IsUnique();
 
@@ -984,6 +1077,51 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.HasIndex("RequiredItemId");
 
                     b.ToTable("LearnableMoveLearnMethod");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Hash")
+                        .IsUnique();
+
+                    b.HasIndex("IdHash")
+                        .IsUnique();
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("LearnableMoveLearnMethodAvailability");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>
@@ -1111,9 +1249,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PowerPoints")
                         .HasColumnType("int");
@@ -1524,6 +1659,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<bool>("IsHidden")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
@@ -1633,9 +1771,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PokemonVarietyId")
                         .HasColumnType("int");
 
@@ -1679,9 +1814,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PokeApiName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PokedexNumber")
                         .HasColumnType("int");
@@ -1766,9 +1898,6 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PokeApiName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PokemonSpeciesId")
@@ -1920,6 +2049,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
@@ -1937,8 +2069,20 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Property<bool>("IsEventRegion")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsMainRegion")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReleased")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSideRegion")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ResourceName")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -1955,6 +2099,10 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("ResourceName")
+                        .IsUnique()
+                        .HasFilter("[ResourceName] IS NOT NULL");
 
                     b.ToTable("Region");
                 });
@@ -2056,7 +2204,7 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
                     b.HasIndex("TimeOfDayId");
 
-                    b.ToTable("SeasonTimesOfDay");
+                    b.ToTable("SeasonTimeOfDay");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Spawn", b =>
@@ -2085,6 +2233,9 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
                     b.Property<int>("LocationId")
@@ -2358,6 +2509,17 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Navigation("PokemonVariety");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ChangeLog", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportSheet");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Currency", b =>
                 {
                     b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
@@ -2508,6 +2670,12 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Item", b =>
                 {
+                    b.HasOne("PokeOneWeb.Data.Entities.ItemAvailability", "Availability")
+                        .WithMany()
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PokeOneWeb.Data.Entities.BagCategory", "BagCategory")
                         .WithMany("Items")
                         .HasForeignKey("BagCategoryId")
@@ -2520,7 +2688,20 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
+                    b.Navigation("Availability");
+
                     b.Navigation("BagCategory");
+
+                    b.Navigation("ImportSheet");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ItemAvailability", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
 
                     b.Navigation("ImportSheet");
                 });
@@ -2602,6 +2783,12 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethod", b =>
                 {
+                    b.HasOne("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", "Availability")
+                        .WithMany()
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
                         .WithMany()
                         .HasForeignKey("ImportSheetId")
@@ -2629,6 +2816,8 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                         .HasForeignKey("RequiredItemId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.Navigation("Availability");
+
                     b.Navigation("ImportSheet");
 
                     b.Navigation("LearnableMove");
@@ -2638,6 +2827,17 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Navigation("MoveTutorMove");
 
                     b.Navigation("RequiredItem");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.LearnableMoveLearnMethodAvailability", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportSheet");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Location", b =>

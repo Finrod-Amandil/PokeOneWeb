@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
@@ -8,7 +10,7 @@ namespace PokeOneWeb.Data.Entities
     /// Describes, by what means a Pokemon can learn a specific move, i.e. by Level-Up, TM, Tutor NPC...
     /// </summary>
     [Table("MoveLearnMethod")]
-    public class MoveLearnMethod
+    public class MoveLearnMethod : INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -22,11 +24,10 @@ namespace PokeOneWeb.Data.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// For NPC-based methods, a list of all locations where this kind of NPC
+        /// Gets or sets for NPC-based methods, a list of all locations where this kind of NPC
         /// can be found.
         /// </summary>
         public List<MoveLearnMethodLocation> Locations { get; set; } = new();
-
 
         public override string ToString()
         {

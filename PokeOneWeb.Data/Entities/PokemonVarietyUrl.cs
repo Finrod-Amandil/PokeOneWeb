@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Entities.Interfaces;
 
 namespace PokeOneWeb.Data.Entities
 {
     /// <summary>
-    /// A URL to the page about this variety on another website.
+    /// An URL to the page about this variety on another website.
     /// </summary>
     [Table("PokemonVarietyUrl")]
-    public class PokemonVarietyUrl
+    public class PokemonVarietyUrl : IEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -25,17 +26,17 @@ namespace PokeOneWeb.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        [Required] 
+        [Required]
         public string Url { get; set; }
 
         [ForeignKey("VarietyId")]
         public PokemonVariety Variety { get; set; }
-        public int VarietyId { get; set; }
 
+        public int VarietyId { get; set; }
 
         public override string ToString()
         {
-            return Url;
+            return $"{Name} / {Url}";
         }
     }
 }

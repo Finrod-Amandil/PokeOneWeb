@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PokeOneWeb.Data.Entities.Interfaces;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data.Attributes;
+using PokeOneWeb.Data.Entities.Interfaces;
 using PokeOneWeb.Data.Extensions;
 
 namespace PokeOneWeb.Data.Entities
@@ -11,7 +13,8 @@ namespace PokeOneWeb.Data.Entities
     /// or given to a Pokemon as a held item to gain certain battle effects.
     /// </summary>
     [Table("Item")]
-    public class Item : IHashedEntity
+    [Sheet("items")]
+    public class Item : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)
         {
@@ -20,44 +23,43 @@ namespace PokeOneWeb.Data.Entities
             builder.Entity<Item>().HasIndex(i => i.ResourceName).IsUnique();
 
             builder.Entity<Item>()
+                .HasOne(x => x.ImportSheet)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.Entity<Item>()
                 .HasOne(i => i.BagCategory)
                 .WithMany(bc => bc.Items)
                 .HasForeignKey(i => i.BagCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Item>()
-                .HasOne(x => x.ImportSheet)
-                .WithMany()
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
 
         [Key]
         public int Id { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string Hash { get; set; }
 
-        //INDEXED
+        // INDEXED
         [Required]
         public string IdHash { get; set; }
 
         [ForeignKey("ImportSheetId")]
         public ImportSheet ImportSheet { get; set; }
+
         public int ImportSheetId { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string ResourceName { get; set; }
 
-        //INDEXED, UNIQUE
+        // INDEXED, UNIQUE
         [Required]
         public string Name { get; set; }
 
-        public string PokeApiName { get; set; }
-
         /// <summary>
-        /// An item ID used within Pokeone.
+        /// Gets or sets an item ID used within Pokeone.
         /// </summary>
         public int? PokeoneItemId { get; set; }
 
@@ -67,7 +69,13 @@ namespace PokeOneWeb.Data.Entities
 
         public string Effect { get; set; }
 
-        public bool IsAvailable { get; set; }
+        [ForeignKey("AvailabilityId")]
+        public ItemAvailability Availability { get; set; }
+
+        public int AvailabilityId { get; set; }
+
+        [NotMapped]
+        public string AvailabilityName { internal get; set; }
 
         public bool DoInclude { get; set; }
 
@@ -75,10 +83,13 @@ namespace PokeOneWeb.Data.Entities
 
         [ForeignKey("BagCategoryId")]
         public BagCategory BagCategory { get; set; }
+
         public int BagCategoryId { get; set; }
 
-        public List<PlacedItem> PlacedItems { get; set; } = new();
+        [NotMapped]
+        public string BagCategoryName { internal get; set; }
 
+        public List<PlacedItem> PlacedItems { get; set; } = new();
 
         public override string ToString()
         {
