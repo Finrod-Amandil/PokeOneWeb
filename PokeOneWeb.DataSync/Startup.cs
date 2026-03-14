@@ -40,8 +40,10 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISpreadsheetDataLoader, SpreadsheetDataLoader>();
             services.AddSingleton<ISpreadsheetImportReporter, SpreadsheetImportReporter>();
 
+            services.AddScoped(typeof(SheetImporter<ChangeLog>));
             services.AddScoped(typeof(SheetImporter<Ability>));
             services.AddScoped(typeof(SheetImporter<PokemonAvailability>));
+            services.AddScoped(typeof(SheetImporter<ItemAvailability>));
             services.AddScoped(typeof(SheetImporter<BagCategory>));
             services.AddScoped(typeof(SheetImporter<Build>));
             services.AddScoped(typeof(SheetImporter<Currency>));
@@ -52,6 +54,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped(typeof(SheetImporter<HuntingConfiguration>));
             services.AddScoped(typeof(SheetImporter<Item>));
             services.AddScoped(typeof(SheetImporter<ItemStatBoostPokemon>));
+            services.AddScoped(typeof(SheetImporter<LearnableMoveLearnMethodAvailability>));
             services.AddScoped(typeof(SheetImporter<LearnableMoveLearnMethod>));
             services.AddScoped(typeof(SheetImporter<Location>));
             services.AddScoped(typeof(SheetImporter<MoveDamageClass>));
@@ -70,8 +73,10 @@ namespace PokeOneWeb.DataSync
             services.AddScoped(typeof(SheetImporter<SpawnType>));
             services.AddScoped(typeof(SheetImporter<TimeOfDay>));
 
+            services.AddScoped<ISheetMapper<ChangeLog>, ChangeLogSheetMapper>();
             services.AddScoped<ISheetMapper<Ability>, AbilitySheetMapper>();
-            services.AddScoped<ISheetMapper<PokemonAvailability>, AvailabilitySheetMapper>();
+            services.AddScoped<ISheetMapper<PokemonAvailability>, PokemonAvailabilitySheetMapper>();
+            services.AddScoped<ISheetMapper<ItemAvailability>, ItemAvailabilitySheetMapper>();
             services.AddScoped<ISheetMapper<BagCategory>, BagCategorySheetMapper>();
             services.AddScoped<ISheetMapper<Build>, BuildSheetMapper>();
             services.AddScoped<ISheetMapper<Currency>, CurrencySheetMapper>();
@@ -82,6 +87,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISheetMapper<HuntingConfiguration>, HuntingConfigurationSheetMapper>();
             services.AddScoped<ISheetMapper<Item>, ItemSheetMapper>();
             services.AddScoped<ISheetMapper<ItemStatBoostPokemon>, ItemStatBoostPokemonSheetMapper>();
+            services.AddScoped<ISheetMapper<LearnableMoveLearnMethodAvailability>, LearnableMoveLearnMethodAvailabilitySheetMapper>();
             services.AddScoped<ISheetMapper<LearnableMoveLearnMethod>, LearnableMoveLearnMethodSheetMapper>();
             services.AddScoped<ISheetMapper<Location>, LocationSheetMapper>();
             services.AddScoped<ISheetMapper<MoveDamageClass>, MoveDamageClassSheetMapper>();
@@ -102,8 +108,10 @@ namespace PokeOneWeb.DataSync
 
             services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
 
+            services.AddScoped<IHashedEntityRepository<ChangeLog>, ChangeLogRepository>();
             services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
-            services.AddScoped<IHashedEntityRepository<PokemonAvailability>, AvailabilityRepository>();
+            services.AddScoped<IHashedEntityRepository<PokemonAvailability>, PokemonAvailabilityRepository>();
+            services.AddScoped<IHashedEntityRepository<ItemAvailability>, ItemAvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<BagCategory>, BagCategoryRepository>();
             services.AddScoped<IHashedEntityRepository<Build>, BuildRepository>();
             services.AddScoped<IHashedEntityRepository<Currency>, CurrencyRepository>();
@@ -114,6 +122,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<IHashedEntityRepository<HuntingConfiguration>, HuntingConfigurationRepository>();
             services.AddScoped<IHashedEntityRepository<Item>, ItemRepository>();
             services.AddScoped<IHashedEntityRepository<ItemStatBoostPokemon>, ItemStatBoostPokemonRepository>();
+            services.AddScoped<IHashedEntityRepository<LearnableMoveLearnMethodAvailability>, LearnableMoveLearnMethodAvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<LearnableMoveLearnMethod>, LearnableMoveLearnMethodRepository>();
             services.AddScoped<IHashedEntityRepository<Location>, LocationRepository>();
             services.AddScoped<IHashedEntityRepository<MoveDamageClass>, MoveDamageClassRepository>();
@@ -134,6 +143,7 @@ namespace PokeOneWeb.DataSync
 
             services.AddScoped<IReadModelUpdateService, JsonReadModelUpdateService>();
 
+            services.AddScoped<IReadModelMapper<ChangeLogReadModel>, ChangeLogReadModelMapper>();
             services.AddScoped<IReadModelMapper<EntityTypeReadModel>, EntityTypeReadModelMapper>();
             services.AddScoped<IReadModelMapper<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelMapper>();
             services.AddScoped<IReadModelMapper<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelMapper>();

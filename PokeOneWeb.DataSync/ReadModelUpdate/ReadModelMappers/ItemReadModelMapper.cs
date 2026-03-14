@@ -21,6 +21,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
             return _dbContext.Items
                 .Where(i => i.DoInclude)
                 .Include(i => i.BagCategory)
+                .Include(i => i.Availability)
                 .Include(i => i.PlacedItems)
                 .ThenInclude(pi => pi.Location)
                 .ThenInclude(l => l.LocationGroup)
@@ -33,7 +34,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                     Name = i.Name,
                     Description = i.Description,
                     Effect = i.Effect,
-                    IsAvailable = i.IsAvailable,
+                    Availability = i.Availability.Name,
+                    AvailabilityDescription = i.Availability.Description,
                     SpriteName = i.SpriteName,
                     BagCategoryName = i.BagCategory.Name,
                     BagCategorySortIndex = i.BagCategory.SortIndex,
@@ -52,6 +54,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                         PlacementDescription = pi.PlacementDescription,
                         IsHidden = pi.IsHidden,
                         IsConfirmed = pi.IsConfirmed,
+                        IsRemoved = pi.IsRemoved,
                         Quantity = pi.Quantity,
                         Notes = pi.Notes,
                         Screenshot = pi.ScreenshotName

@@ -17,7 +17,7 @@ namespace PokeOneWeb.DataSync.Import.SheetMappers
             { "PokemonVariety", (e, v) => e.LearnableMove.PokemonVarietyName = v.ParseAsNonEmptyString() },
             { "Move", (e, v) => e.LearnableMove.MoveName = v.ParseAsNonEmptyString() },
             { "LearnMethod", (e, v) => e.MoveLearnMethod.Name = v.ParseAsNonEmptyString() },
-            { "IsAvailable", (e, v) => e.IsAvailable = v.ParseAsBoolean() },
+            { "Availability", (e, v) => e.AvailabilityName = v.ParseAsNonEmptyString() },
             { "LevelLearnedAt", (e, v) => e.LevelLearnedAt = v.ParseAsOptionalInt() },
             { "RequiredItem", (e, v) => e.RequiredItemName = v.ParseAsString() },
             { "TutorName", (e, v) => e.MoveTutorName = v.ParseAsString() },

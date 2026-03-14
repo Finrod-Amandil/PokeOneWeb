@@ -25,6 +25,7 @@ namespace PokeOneWeb.DataSync.Import.SheetMappers
             { "SpawnProbability", (e, v) => e.SpawnProbability = ParseSpawnProbability(v.ParseAsString()) },
             { "EncounterCount", (e, v) => e.EncounterCount = v.ParseAsOptionalInt() },
             { "IsConfirmed", (e, v) => e.IsConfirmed = v.ParseAsBoolean(defaultValue: true) },
+            { "IsRemoved", (e, v) => e.IsRemoved = v.ParseAsBoolean(defaultValue: false) },
             { "LowestLevel", (e, v) => e.LowestLevel = v.ParseAsInt(defaultValue: 0) },
             { "HighestLevel", (e, v) => e.HighestLevel = v.ParseAsInt(defaultValue: 0) },
             { "Notes", (e, v) => e.Notes = v.ParseAsString() },

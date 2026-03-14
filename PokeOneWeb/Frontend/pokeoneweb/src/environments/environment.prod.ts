@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
     baseUrl: 'https://pokeone.guide/resources',
-    stage:"prod"
+    name: 'prod',
 };

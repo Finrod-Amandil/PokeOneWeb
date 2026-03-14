@@ -30,6 +30,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             "PlacementDescription",
             "IsHidden",
             "IsConfirmed",
+            "IsRemoved",
             "Requirements",
             "ScreenshotName",
             "Notes"
@@ -77,6 +78,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 PlacementDescription = string.Empty,
                 IsHidden = false,
                 IsConfirmed = true,
+                IsRemoved = false,
                 Requirements = string.Empty,
                 ScreenshotName = string.Empty,
                 Notes = string.Empty
@@ -102,6 +104,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             const string placementDescription = "Placement Description";
             const bool isHidden = true;
             const bool isConfirmed = false;
+            const bool IsRemoved = true;
             const string requirements = "Requirements";
             const string screenshotName = "screenshot.png";
             const string notes = "Notes";
@@ -116,6 +119,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 placementDescription,
                 isHidden,
                 isConfirmed,
+                IsRemoved,
                 requirements,
                 screenshotName,
                 notes
@@ -134,6 +138,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 PlacementDescription = placementDescription,
                 IsHidden = isHidden,
                 IsConfirmed = isConfirmed,
+                IsRemoved = IsRemoved,
                 Requirements = requirements,
                 ScreenshotName = screenshotName,
                 Notes = notes
@@ -202,6 +207,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     PlacementDescription = string.Empty,
                     IsHidden = false,
                     IsConfirmed = true,
+                    IsRemoved = false,
                     Requirements = string.Empty,
                     ScreenshotName = string.Empty,
                     Notes = string.Empty
@@ -219,6 +225,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     PlacementDescription = string.Empty,
                     IsHidden = false,
                     IsConfirmed = true,
+                    IsRemoved = false,
                     Requirements = string.Empty,
                     ScreenshotName = string.Empty,
                     Notes = string.Empty
@@ -276,17 +283,18 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         }
 
         [Theory]
-        [InlineData("", 1, "b", 1, 1, "", false, false, "", "", "")]
-        [InlineData("a", "notInt", "b", 1, 1, "", false, false, "", "", "")]
-        [InlineData("a", 1, "", 1, 1, "", false, false, "", "", "")]
-        [InlineData("a", 1, "b", "notInt", 1, "", false, false, "", "", "")]
-        [InlineData("a", 1, "b", 1, "notInt", "", false, false, "", "", "")]
-        [InlineData("a", 1, "b", 1, 1, 1000, false, false, "", "", "")]
-        [InlineData("a", 1, "b", 1, 1, "", "notBool", false, "", "", "")]
-        [InlineData("a", 1, "b", 1, 1, "", false, "notBool", "", "", "")]
-        [InlineData("a", 1, "b", 1, 1, "", false, false, 1000, "", "")]
-        [InlineData("a", 1, "b", 1, 1, "", false, false, "", 1000, "")]
-        [InlineData("a", 1, "b", 1, 1, "", false, false, "", "", 1000)]
+        [InlineData("", 1, "b", 1, 1, "", false, false, true, "", "", "")]
+        [InlineData("a", "notInt", "b", 1, 1, "", false, false, true, "", "", "")]
+        [InlineData("a", 1, "", 1, 1, "", false, false, true, "", "", "")]
+        [InlineData("a", 1, "b", "notInt", 1, "", false, false, true, "", "", "")]
+        [InlineData("a", 1, "b", 1, "notInt", "", false, false, true, "", "", "")]
+        [InlineData("a", 1, "b", 1, 1, 1000, false, false, true, "", "", "")]
+        [InlineData("a", 1, "b", 1, 1, "", "notBool", false, true, "", "", "")]
+        [InlineData("a", 1, "b", 1, 1, "", false, "notBool", true, "", "", "")]
+        [InlineData("a", 1, "b", 1, 1, "", false, false, "notBool", 1000, "", "")]
+        [InlineData("a", 1, "b", 1, 1, "", false, false, true, 1000, "", "")]
+        [InlineData("a", 1, "b", 1, 1, "", false, false, true, "", 1000, "")]
+        [InlineData("a", 1, "b", 1, 1, "", false, false, true, "", "", 1000)]
         public void Map_WithUnparsableValue_ShouldReportError(params object[] valuesAsArray)
         {
             // Arrange
@@ -319,6 +327,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 "Quantity",
                 "Item",
                 "Index",
+                "IsRemoved",
             };
 
             const string location = "Location Name";
@@ -329,6 +338,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             const string placementDescription = "Placement Description";
             const bool isHidden = true;
             const bool isConfirmed = false;
+            const bool isRemoved = true;
             const string requirements = "Requirements";
             const string screenshotName = "screenshot.png";
             const string notes = "Notes";
@@ -345,7 +355,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 isHidden,
                 quantity,
                 item,
-                index
+                index,
+                isRemoved
             };
 
             var expected = new PlacedItem
@@ -361,6 +372,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 PlacementDescription = placementDescription,
                 IsHidden = isHidden,
                 IsConfirmed = isConfirmed,
+                IsRemoved = isRemoved,
                 Requirements = requirements,
                 ScreenshotName = screenshotName,
                 Notes = notes

@@ -1,0 +1,131 @@
+<pokeoneweb-page-header
+    [title]="locationGroupResource.isLoading() ? resourceName() : locationGroup().name"
+/>
+
+<div id="content_main_container">
+    @if (locationGroupResource.isLoading()) {
+        <div>Loading...</div>
+    } @else if (locationGroupResource.error()) {
+        <div>An error occurred: {{ locationGroupResource.error()?.message }}</div>
+    } @else {
+        <div>
+            <div class="location-detail-navigation">
+                <a [routerLink]="'/' + locationGroup().previousLocationGroupResourceName">
+                    <div class="location-detail-navigation-left">
+                        <div class="location-detail-navigation-link">
+                            ⮜ {{ locationGroup().previousLocationGroupName }}
+                        </div>
+                    </div>
+                </a>
+                <a [routerLink]="'/' + locationGroup().regionResourceName">
+                    <div class="location-detail-navigation-center">
+                        <div class="location-detail-navigation-sprite">
+                            <img
+                                src="./assets/img/navbar/locations.png"
+                                alt="location navbar icon"
+                            />
+                        </div>
+                        <div class="location-detail-navigation-link">
+                            {{ locationGroup().regionName }}
+                        </div>
+                        <div class="location-detail-navigation-sprite">
+                            <img
+                                src="./assets/img/navbar/locations.png"
+                                alt="location navbar icon"
+                            />
+                        </div>
+                    </div>
+                </a>
+                <a [routerLink]="'/' + locationGroup().nextLocationGroupResourceName">
+                    <div class="location-detail-navigation-right">
+                        <div class="location-detail-navigation-link">
+                            {{ locationGroup().nextLocationGroupName }} ⮞
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            @if (locationGroup().locations.length > 1) {
+                <div class="no-table-container-outer quicklink">
+                    <h4>Locations in {{ locationGroup().name }}</h4>
+                    <div class="no-table-container-inner quicklink-container">
+                        @for (location of locationGroup().locations; track location.sortIndex) {
+                            <div class="quicklink-panel">
+                                <a
+                                    [href]="
+                                        '/' + locationGroup().resourceName + '#' + location.name
+                                    "
+                                >
+                                    <div class="location-detail-navigation-link">
+                                        {{ location.name }}
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @for (location of locationGroup().locations; track location.sortIndex) {
+                <div [id]="location.name">
+                    <h2>{{ location.name }}</h2>
+                    @if (location.notes) {
+                        <div class="no-table-container-outer">
+                            <div class="no-table-container-inner general-info-container">
+                                <div class="general-panel general-notes">
+                                    <div class="general-header">
+                                        <h4>Notes</h4>
+                                    </div>
+                                    <div class="general-content">
+                                        <p>{{ location.notes }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <h3>{{ location.name }} - Spawns</h3>
+                    <div class="spawns-container">
+                        @if (location.spawns.length === 0) {
+                            <div class="no-table-container-outer">
+                                <div class="no-table-container-inner">
+                                    <p class="empty">
+                                        This location does not have any known pokemon spawns.
+                                    </p>
+                                </div>
+                            </div>
+                        } @else {
+                            <pokeoneweb-spawn-list
+                                [spawns]="location.spawns"
+                                [isLocationPage]="true"
+                            />
+                        }
+                    </div>
+
+                    <h3>{{ location.name }} - Placed Items</h3>
+                    <div class="placeditems-container">
+                        @if (location.placedItems.length === 0) {
+                            <div class="no-table-container-outer">
+                                <div class="no-table-container-inner">
+                                    <p class="empty">
+                                        This location does not have any items that can be picked up.
+                                    </p>
+                                </div>
+                            </div>
+                        } @else {
+                            <pokeoneweb-placed-item-list [placedItems]="location.placedItems" />
+                        }
+                    </div>
+
+                    @if (!$last) {
+                        <div>
+                            <br />
+                            <hr />
+                            <br />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,35 @@
+<div class="navbar-item">
+    <a [routerLink]="[menuItemLink()]">
+        <div class="navbar-item-image-container">
+            <img [src]="menuItemImage()" />
+        </div>
+        <div class="navbar-item-caption" [class]="{ 'two-lines': hasTwoLineCaption() }">
+            {{ menuItemCaption() }}
+            @if (subMenuItems().length > 0) {
+                <div class="navbar-submenu-caption">></div>
+            }
+        </div>
+        <div class="hover-overlay"></div>
+    </a>
+    @if (subMenuItems().length > 0) {
+        <div class="navbar-submenu">
+            @for (subMenuItem of subMenuItems(); track subMenuItem.link) {
+                <div
+                    class="navbar-submenu-item"
+                    [class]="
+                        subMenuItem.isEventRegion
+                            ? 'navbar-submenu-item-event'
+                            : 'navbar-submenu-item-regular'
+                    "
+                >
+                    <a [routerLink]="[subMenuItem.link]">
+                        <div class="navbar-submenu-item-caption">
+                            {{ subMenuItem.caption }}
+                        </div>
+                        <div class="submenu-item-hover-overlay"></div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>

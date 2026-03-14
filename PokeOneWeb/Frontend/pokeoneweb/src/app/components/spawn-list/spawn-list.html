@@ -1,0 +1,230 @@
+@if (spawns().length > 0) {
+    <div>
+        @if (!hasOnlyUnavailableSpawns() && hasAnyUnavailableSpawns() && !isLocationPage()) {
+            <div class="toggle-unavailable-spawns">
+                @if (showUnavailableSpawns()) {
+                    <button mat-raised-button (click)="toggleUnavailableSpawns()">
+                        Hide removed and past event spawns
+                    </button>
+                } @else {
+                    <button mat-raised-button (click)="toggleUnavailableSpawns()">
+                        Show removed and past event spawns
+                    </button>
+                }
+            </div>
+        }
+
+        @if (hasOnlyUnavailableSpawns() && !isLocationPage()) {
+            <div>
+                <p class="empty" style="color: var(--text-accent)">
+                    This Pokémon was only available during events in the past
+                </p>
+            </div>
+        }
+    </div>
+}
+
+<table
+    class="main-table table-compact"
+    id="spawn_table"
+    aria-label="table containing a list of all spawns of a pokemon"
+>
+    <thead>
+        <tr>
+            <th class="col-pokemon" colspan="2">
+                @if (!hasOnlyOnePokemon()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Pokemon, SortDirection.Ascending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Pokemon, SortDirection.Ascending)"
+                        class="table-header-sort"
+                    >
+                        ⮝
+                    </div>
+                }
+
+                <div class="table-header-label">Pokemon</div>
+
+                @if (!hasOnlyOnePokemon()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Pokemon, SortDirection.Descending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Pokemon, SortDirection.Descending)"
+                        class="table-header-sort"
+                    >
+                        ⮟
+                    </div>
+                }
+            </th>
+            <th class="col-location" colspan="2">
+                @if (!hasOnlyOneLocation()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Location, SortDirection.Ascending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Location, SortDirection.Ascending)"
+                        class="table-header-sort"
+                    >
+                        ⮝
+                    </div>
+                }
+
+                <div class="table-header-label">Location</div>
+
+                @if (!hasOnlyOneLocation()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Location, SortDirection.Descending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Location, SortDirection.Descending)"
+                        class="table-header-sort"
+                    >
+                        ⮟
+                    </div>
+                }
+            </th>
+            <th class="col-method">
+                <div
+                    [class]="
+                        isSortedBy(Column.SpawnType, SortDirection.Ascending)
+                            ? 'sorted'
+                            : 'unsorted'
+                    "
+                    (click)="sort(Column.SpawnType, SortDirection.Ascending)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Method</div>
+                <div
+                    [class]="
+                        isSortedBy(Column.SpawnType, SortDirection.Descending)
+                            ? 'sorted'
+                            : 'unsorted'
+                    "
+                    (click)="sort(Column.SpawnType, SortDirection.Descending)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-season">Season</th>
+            <th class="col-time">Time</th>
+            <th class="col-rarity">
+                <div
+                    [class]="
+                        isSortedBy(Column.Rarity, SortDirection.Ascending) ? 'sorted' : 'unsorted'
+                    "
+                    (click)="sort(Column.Rarity, SortDirection.Ascending)"
+                    class="table-header-sort"
+                >
+                    ⮝
+                </div>
+                <div class="table-header-label">Rarity</div>
+                <div
+                    [class]="
+                        isSortedBy(Column.Rarity, SortDirection.Descending) ? 'sorted' : 'unsorted'
+                    "
+                    (click)="sort(Column.Rarity, SortDirection.Descending)"
+                    class="table-header-sort"
+                >
+                    ⮟
+                </div>
+            </th>
+            <th class="col-syncable">
+                <div class="has-tooltip">
+                    <img
+                        src="./assets/img/sprites/pokemon/small/63.png"
+                        alt="Thumbnail for synchronizable"
+                    />
+                    <span class="tooltip tooltip-left">Synchronize possible?</span>
+                </div>
+            </th>
+            @if (hasEventExclusiveSpawns()) {
+                <th class="col-event">
+                    <div class="has-tooltip">
+                        <i class="material-icons md-24">date_range</i>
+                        <span class="tooltip tooltip-left">Event-exclusive spawn</span>
+                    </div>
+                </th>
+            }
+
+            @if (hasNotes()) {
+                <th class="col-notes">Notes</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (spawn of displayedSpawns(); track trackBy(spawn)) {
+            <tr [class]="{ 'spawn-removed': spawn.isRemoved }">
+                <td class="col-sprite">
+                    <a [routerLink]="'/' + spawn.pokemonResourceName">
+                        @if (spawn.spriteName) {
+                            <img
+                                [src]="'./assets/img/sprites/pokemon/small/' + spawn.spriteName"
+                                [alt]="'Picture of Pokémon ' + spawn.pokemonName"
+                            />
+                        }
+                    </a>
+                </td>
+                <td class="col-pokemon">
+                    <a [routerLink]="'/' + spawn.pokemonResourceName">{{ spawn.pokemonName }}</a>
+                    @if (spawn.isRemoved) {
+                        <br />
+                        <span class="spawn-removed-label">Removed</span>
+                    }
+                </td>
+                <td class="col-region" [style]="'background-color: ' + spawn.regionColor">
+                    {{ spawn.regionName }}
+                </td>
+                <td class="col-location">
+                    <a [routerLink]="'/' + spawn.locationResourceName">{{ spawn.locationName }}</a>
+                </td>
+                <td class="col-method" [style]="'background-color: ' + spawn.spawnTypeColor">
+                    {{ spawn.spawnType }}
+                </td>
+                <td class="col-season">
+                    <pokeoneweb-season-badge [seasons]="spawn.seasons" />
+                </td>
+                <td class="col-time">
+                    <pokeoneweb-time-badge [times]="spawn.timesOfDay" />
+                </td>
+                <td class="col-rarity">{{ spawn.rarityString }}</td>
+                <td class="col-syncable" [class]="spawn.isSyncable ? 'sync-true' : 'sync-false'">
+                    @if (spawn.isSyncable) {
+                        <i class="material-icons md-24">check</i>
+                    } @else {
+                        <i class="material-icons md-24">clear</i>
+                    }
+                </td>
+                @if (hasEventExclusiveSpawns()) {
+                    <td class="col-event" [class]="{ 'availability-event': spawn.isEvent }">
+                        @if (spawn.isEvent) {
+                            <div class="has-tooltip">
+                                <i class="material-icons md-24">grade</i>
+                                <span class="tooltip tooltip-left"
+                                    >{{ spawn.eventName }}<br />({{ spawn.eventStartDate }} -
+                                    {{ spawn.eventEndDate }})</span
+                                >
+                            </div>
+                        }
+                    </td>
+                }
+
+                @if (this.hasNotes()) {
+                    <td class="col-notes">{{ spawn.notes }}</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

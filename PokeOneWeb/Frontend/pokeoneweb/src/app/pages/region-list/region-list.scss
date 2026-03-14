@@ -1,0 +1,21 @@
+#region_list th {
+    text-align: left;
+}
+
+#region_list .col-name {
+    min-width: 200px;
+}
+
+#region_list td.col-name {
+    color: var(--dark-gray);
+    font-weight: 700;
+}
+
+#region_list .col-type {
+    min-width: 150px;
+}
+
+#region_list td.col-type,
+#region_list td.col-description {
+    font-weight: 300;
+}

@@ -44,11 +44,20 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
                 .AsNoTracking()
                 .ToDictionary(x => (x.PokemonVariety.Name, x.Move.Name), x => x.Id);
 
+            var moveTutorMoves = DbContext.MoveTutorMoves
+                .Include(x => x.Move)
+                .Include(x => x.MoveTutor)
+                .AsNoTracking()
+                .ToDictionary(x => (x.MoveTutor.Name, x.Move.Name), x => x.Id);
+
             var verifiedEntities = new List<LearnableMoveLearnMethod>(entities);
             foreach (var entity in entities)
             {
                 var canInsertOrUpdate = true;
 
+                canInsertOrUpdate &= TrySetIdForName<LearnableMoveLearnMethodAvailability>(entity.AvailabilityName, id => entity.AvailabilityId = id);
+                canInsertOrUpdate &= TryAddRequiredItem(entity);
+                canInsertOrUpdate &= TryAddMoveTutorMove(entity, moveTutorMoves);
                 canInsertOrUpdate &= TryAddMoveLearnMethod(entity);
                 canInsertOrUpdate &= TryAddLearnableMove(entity, learnableMoves);
 
@@ -140,6 +149,51 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
             {
                 entity.LearnableMoveId = learnableMoveId;
                 entity.LearnableMove = null;
+            }
+
+            return success;
+        }
+
+        private bool TryAddRequiredItem(LearnableMoveLearnMethod entity)
+        {
+            if (string.IsNullOrWhiteSpace(entity.RequiredItemName))
+            {
+                return true;
+            }
+
+            var success = TrySetIdForName<Item>(
+                entity.RequiredItemName,
+                id => entity.RequiredItemId = id);
+
+            entity.RequiredItem = null;
+
+            return success;
+        }
+
+        private bool TryAddMoveTutorMove(LearnableMoveLearnMethod entity, Dictionary<(string, string), int> moveTutorMoves)
+        {
+            if (string.IsNullOrWhiteSpace(entity.MoveTutorName))
+            {
+                return true;
+            }
+
+            var success = moveTutorMoves.TryGetValue(
+                (entity.MoveTutorName, entity.LearnableMove.MoveName),
+                out var moveTutorMoveId);
+
+            if (!success)
+            {
+                var exception = new RelatedEntityNotFoundException(
+                    nameof(LearnableMoveLearnMethod),
+                    nameof(MoveTutorMove),
+                    entity.MoveTutorName + entity.LearnableMove.MoveName);
+
+                ReportInsertOrUpdateException(typeof(LearnableMoveLearnMethod), exception);
+            }
+            else
+            {
+                entity.MoveTutorMoveId = moveTutorMoveId;
+                entity.MoveTutorMove = null;
             }
 
             return success;

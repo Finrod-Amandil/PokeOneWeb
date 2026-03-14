@@ -31,6 +31,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             "SpawnProbability",
             "EncounterCount",
             "IsConfirmed",
+            "IsRemoved",
             "LowestLevel",
             "HighestLevel",
             "Notes"
@@ -77,6 +78,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 SpawnProbability = null,
                 EncounterCount = null,
                 IsConfirmed = true,
+                IsRemoved = false,
                 LowestLevel = 0,
                 HighestLevel = 0,
                 Notes = string.Empty,
@@ -112,6 +114,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             var spawnProbability = 0.345M;
             const int encounterCount = 318;
             const bool isConfirmed = false;
+            const bool isRemoved = true;
             const int lowestLevel = 40;
             const int highestLevel = 50;
             const string notes = "Notes";
@@ -127,6 +130,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 spawnProbabilityString,
                 encounterCount,
                 isConfirmed,
+                isRemoved,
                 lowestLevel,
                 highestLevel,
                 notes
@@ -144,6 +148,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 SpawnProbability = spawnProbability,
                 EncounterCount = encounterCount,
                 IsConfirmed = isConfirmed,
+                IsRemoved = isRemoved,
                 LowestLevel = lowestLevel,
                 HighestLevel = highestLevel,
                 Notes = notes,
@@ -219,6 +224,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     SpawnProbability = null,
                     EncounterCount = null,
                     IsConfirmed = true,
+                    IsRemoved = false,
                     LowestLevel = 0,
                     HighestLevel = 0,
                     Notes = string.Empty,
@@ -243,6 +249,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                     SpawnProbability = null,
                     EncounterCount = null,
                     IsConfirmed = true,
+                    IsRemoved = false,
                     LowestLevel = 0,
                     HighestLevel = 0,
                     Notes = string.Empty,
@@ -308,18 +315,19 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
         }
 
         [Theory]
-        [InlineData("", "b", "Any", "Any", "c", "", "", 1, false, 1, 1, "")]
-        [InlineData("a", "", "Any", "Any", "c", "", "", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "", "Any", "c", "", "", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "", "c", "", "", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "", "", "", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", 1000, "", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "notDecimal%", 1, false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "", "notInt", false, 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, "notBool", 1, 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, "notInt", 1, "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, 1, "notInt", "")]
-        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, 1, 1, 1000)]
+        [InlineData("", "b", "Any", "Any", "c", "", "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "", "Any", "Any", "c", "", "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "", "Any", "c", "", "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "", "c", "", "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "", "", "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", 1000, "", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "notDecimal%", 1, false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", "notInt", false, true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, "notBool", true, 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, "notBool", 1, 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, true, "notInt", 1, "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, true, 1, "notInt", "")]
+        [InlineData("a", "b", "Any", "Any", "c", "", "", 1, false, true, 1, 1, 1000)]
         public void Map_WithUnparsableValue_ShouldReportError(params object[] valuesAsArray)
         {
             // Arrange
@@ -352,7 +360,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 "SpawnCommonality",
                 "SpawnProbability",
                 "IsConfirmed",
-                "LowestLevel"
+                "LowestLevel",
+                "IsRemoved",
             };
 
             const string location = "Location Name";
@@ -365,6 +374,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
             var spawnProbability = 0.345M;
             const int encounterCount = 318;
             const bool isConfirmed = false;
+            const bool isRemoved = true;
             const int lowestLevel = 40;
             const int highestLevel = 50;
             const string notes = "Notes";
@@ -382,7 +392,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 spawnCommonality,
                 spawnProbabilityString,
                 isConfirmed,
-                lowestLevel
+                lowestLevel,
+                isRemoved
             };
 
             var expected = new Spawn
@@ -397,6 +408,7 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 SpawnProbability = spawnProbability,
                 EncounterCount = encounterCount,
                 IsConfirmed = isConfirmed,
+                IsRemoved = isRemoved,
                 LowestLevel = lowestLevel,
                 HighestLevel = highestLevel,
                 Notes = notes,

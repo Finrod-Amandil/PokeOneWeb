@@ -105,6 +105,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 PlacementDescription = pi.PlacementDescription,
                 IsHidden = pi.IsHidden,
                 IsConfirmed = pi.IsConfirmed,
+                IsRemoved = pi.IsRemoved,
                 Quantity = pi.Quantity,
                 Notes = pi.Notes,
                 Screenshot = pi.ScreenshotName
@@ -134,6 +135,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 SpawnTypeColor = spawn.SpawnType.Color,
                 IsSyncable = spawn.SpawnType.IsSyncable,
                 IsInfinite = spawn.SpawnType.IsInfinite,
+                IsRemoved = spawn.IsRemoved,
                 LowestLevel = spawn.LowestLevel,
                 HighestLevel = spawn.HighestLevel,
                 TimesOfDay = new List<TimeOfDayReadModel>(),

@@ -22,6 +22,7 @@ namespace PokeOneWeb.DataSync.Import.SheetMappers
             { "PlacementDescription", (e, v) => e.PlacementDescription = v.ParseAsString() },
             { "IsHidden", (e, v) => e.IsHidden = v.ParseAsBoolean(defaultValue: false) },
             { "IsConfirmed", (e, v) => e.IsConfirmed = v.ParseAsBoolean(defaultValue: true) },
+            { "IsRemoved", (e, v) => e.IsRemoved = v.ParseAsBoolean(defaultValue: false) },
             { "Requirements", (e, v) => e.Requirements = v.ParseAsString() },
             { "ScreenshotName", (e, v) => e.ScreenshotName = v.ParseAsString() },
             { "Notes", (e, v) => e.Notes = v.ParseAsString() },

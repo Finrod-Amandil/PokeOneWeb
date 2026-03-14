@@ -1,0 +1,15 @@
+@for (time of sortedTimes(); track time.abbreviation) {
+    <div
+        class="time-badge"
+        [class]="{ 'time-badge-any': time.abbreviation === 'Any' }"
+        [style]="'background-color: ' + time.color + '; color: ' + getTextColor(time.color)"
+    >
+        {{ time.abbreviation }}
+        @if (time.abbreviation !== 'Any') {
+            <span class="tooltip">
+                <span class="time-name">{{ time.name }}</span
+                ><br />{{ time.times }}
+            </span>
+        }
+    </div>
+}

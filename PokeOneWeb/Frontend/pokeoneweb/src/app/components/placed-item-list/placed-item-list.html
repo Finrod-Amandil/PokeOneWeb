@@ -1,0 +1,153 @@
+<table
+    class="main-table table-compact"
+    id="placedItems_table"
+    aria-label="table containing a list of all items obtainable"
+>
+    <thead>
+        <tr>
+            <th class="col-item" colspan="2">
+                @if (!hasOnlyOneItem()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Name, SortDirection.Ascending) ? 'sorted' : 'unsorted'
+                        "
+                        (click)="sort(Column.Name, SortDirection.Ascending)"
+                        class="table-header-sort"
+                    >
+                        ⮝
+                    </div>
+                }
+
+                <div class="table-header-label">Item</div>
+                @if (!hasOnlyOneItem()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Name, SortDirection.Descending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Name, SortDirection.Descending)"
+                        class="table-header-sort"
+                    >
+                        ⮟
+                    </div>
+                }
+            </th>
+            <th class="col-quantity">Qty.</th>
+
+            <th class="col-location" colspan="2">
+                @if (!hasOnlyOneLocation()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Location, SortDirection.Ascending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Location, SortDirection.Ascending)"
+                        class="table-header-sort"
+                    >
+                        ⮝
+                    </div>
+                }
+
+                <div class="table-header-label">Location</div>
+                @if (!hasOnlyOneLocation()) {
+                    <div
+                        [class]="
+                            isSortedBy(Column.Location, SortDirection.Descending)
+                                ? 'sorted'
+                                : 'unsorted'
+                        "
+                        (click)="sort(Column.Location, SortDirection.Descending)"
+                        class="table-header-sort"
+                    >
+                        ⮟
+                    </div>
+                }
+            </th>
+            <th class="col-placementdescription">Placement description</th>
+            @if (hasHiddenItems()) {
+                <th class="col-isHidden">
+                    <div class="has-tooltip">
+                        <i class="material-icons md-24">visibility_off</i>
+                        <span class="tooltip tooltip-left">Hidden item?</span>
+                    </div>
+                </th>
+            }
+
+            <!--<th class="col-isConfirmed">
+                <div class="has-tooltip">
+                    <i class="material-icons md-24">verified</i>
+                    <span class="tooltip tooltip-left">Location confirmed?</span>
+                </div>
+            </th>-->
+            @if (hasNotes()) {
+                <th class="col-notes">Notes</th>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (placedItem of sortedPlacedItems(); track trackBy(placedItem)) {
+            <tr [class]="{ 'item-removed': placedItem.isRemoved }">
+                <td class="col-sprite">
+                    @if (placedItem.itemSpriteName) {
+                        <img
+                            [src]="'./assets/img/sprites/items/small/' + placedItem.itemSpriteName"
+                            [alt]="'picture of ' + placedItem.itemName"
+                        />
+                    }
+                </td>
+                <td class="col-item">
+                    <a [routerLink]="'/' + placedItem.itemResourceName">{{
+                        placedItem.itemName
+                    }}</a>
+                    @if (placedItem.isRemoved) {
+                        <br />
+                        <span class="item-removed-label">Removed</span>
+                    }
+                </td>
+                <td class="col-quantity">{{ placedItem.quantity }}</td>
+                <td class="col-region" [style]="'background-color: ' + placedItem.regionColor">
+                    {{ placedItem.regionName }}
+                </td>
+                <td class="col-location">
+                    <a [routerLink]="'/' + placedItem.locationResourceName">{{
+                        placedItem.locationName
+                    }}</a>
+                </td>
+                <td class="col-placementdescription">{{ placedItem.placementDescription }}</td>
+                @if (hasHiddenItems()) {
+                    <td
+                        class="col-isHidden"
+                        [class]="{
+                            'placeditem-hidden': placedItem.isHidden,
+                            'placeditem-not-hidden': !placedItem.isHidden,
+                        }"
+                    >
+                        @if (placedItem.isHidden) {
+                            <i class="material-icons md-24">visibility_off</i>
+                        }
+                    </td>
+                }
+
+                <!--<td
+                    class="col-isConfirmed"
+                    [class]="{
+                        'placeditem-confirmed': placedItem.isConfirmed,
+                        'placeditem-not-confirmed': !placedItem.isConfirmed,
+                    }"
+                >
+                    @if (placedItem.isConfirmed) {
+                        <i class="material-icons md-24">verified</i>
+                    } @else {
+                        <i class="material-icons md-24">help_outline</i>
+                    }
+                </td>-->
+                @if (hasNotes()) {
+                    <td class="col-notes">{{ placedItem.notes }}</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -131,6 +131,29 @@ namespace PokeOneWeb.Shared.Extensions
             return parsed;
         }
 
+        public static DateTime ParseAsDate(this object value)
+        {
+            if (string.IsNullOrWhiteSpace(value as string))
+            {
+                throw new ParseException(value, "DateTime");
+            }
+
+            var format = "dd.MM.yyyy";
+            var canParse = DateTime.TryParseExact(
+                value.ToString(),
+                format,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                out var parsed);
+
+            if (!canParse)
+            {
+                throw new ParseException(value, "DateTime");
+            }
+
+            return parsed;
+        }
+
         public static bool ParseAsBoolean(this object value, bool? defaultValue = null)
         {
             if (value is bool boolValue)

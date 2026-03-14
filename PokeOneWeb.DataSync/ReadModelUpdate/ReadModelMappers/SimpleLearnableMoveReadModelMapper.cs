@@ -22,9 +22,10 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 .Include(lm => lm.PokemonVariety)
                 .Include(lm => lm.Move)
                 .Include(lm => lm.LearnMethods)
+                .ThenInclude(lmlm => lmlm.Availability)
                 .AsNoTracking()
                 .AsEnumerable()
-                .Where(learnableMove => learnableMove.LearnMethods.Any(learnMethod => learnMethod.IsAvailable))
+                .Where(learnableMove => learnableMove.LearnMethods.Any(learnMethod => learnMethod.Availability.IsAvailable))
                 .Select(learnableMove => new SimpleLearnableMoveReadModel
                 {
                     ApplicationDbId = learnableMove.Id,

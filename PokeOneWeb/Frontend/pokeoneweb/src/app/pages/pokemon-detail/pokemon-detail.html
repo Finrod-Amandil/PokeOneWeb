@@ -1,0 +1,1321 @@
+<pokeoneweb-page-header [title]="pokemonResource.isLoading() ? resourceName() : pokemon().name" />
+
+<div id="content_main_container">
+    @if (pokemonResource.isLoading()) {
+        <div>Loading...</div>
+    }
+
+    @if (pokemon()) {
+        <div>
+            <div class="pokemon-detail-navigation">
+                <a [routerLink]="'/' + pokemon().previousPokemonResourceName">
+                    <div class="pokemon-detail-navigation-left">
+                        <div class="pokemon-detail-navigation-link">
+                            ⮜ {{ pokemon().previousPokemonName }}
+                        </div>
+                        <div class="pokemon-detail-navigation-sprite">
+                            @if (pokemon().previousPokemonSpriteName) {
+                                <img
+                                    [src]="
+                                        './assets/img/sprites/pokemon/small/' +
+                                        pokemon().previousPokemonSpriteName
+                                    "
+                                />
+                            }
+                        </div>
+                    </div>
+                </a>
+                <a [routerLink]="'/p'">
+                    <div class="pokemon-detail-navigation-center">
+                        <div class="pokemon-detail-navigation-sprite">
+                            <img src="./assets/img/navbar/pokedex.png" />
+                        </div>
+                        <div class="pokemon-detail-navigation-link">Pokémon List</div>
+                        <div class="pokemon-detail-navigation-sprite">
+                            <img src="./assets/img/navbar/pokedex.png" />
+                        </div>
+                    </div>
+                </a>
+                <a [routerLink]="'/' + pokemon().nextPokemonResourceName">
+                    <div class="pokemon-detail-navigation-right">
+                        <div class="pokemon-detail-navigation-sprite">
+                            @if (pokemon().nextPokemonSpriteName) {
+                                <img
+                                    [src]="
+                                        './assets/img/sprites/pokemon/small/' +
+                                        pokemon().nextPokemonSpriteName
+                                    "
+                                />
+                            }
+                        </div>
+                        <div class="pokemon-detail-navigation-link">
+                            {{ pokemon().nextPokemonName }} ⮞
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <h2 name="general">General Info</h2>
+            <div class="no-table-container-outer">
+                <div class="no-table-container-inner general-info-container">
+                    <div class="general-panel general-pokedexnumber">
+                        <div class="general-header">
+                            <h4>No.</h4>
+                        </div>
+                        <div class="general-content">
+                            <div class="general-pokedexnumber">
+                                #{{ ('' + pokemon().pokedexNumber).padStart(3, '0') }}
+                            </div>
+                            <div class="general-generation">
+                                Generation {{ pokemon().generation }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-sprite">
+                        <div class="general-header">
+                            <h4>Sprites</h4>
+                        </div>
+                        <div class="general-content">
+                            <div class="sprites-container">
+                                <div>
+                                    @if (pokemon().spriteName) {
+                                        <div class="sprite-container">
+                                            <img
+                                                [src]="
+                                                    './assets/img/sprites/pokemon/medium/' +
+                                                    pokemon().spriteName
+                                                "
+                                            />
+                                        </div>
+                                    }
+
+                                    <div class="sprite-label">Regular</div>
+                                </div>
+                                <div>
+                                    @if (pokemon().spriteName) {
+                                        <div class="sprite-container">
+                                            <img
+                                                [src]="
+                                                    './assets/img/sprites/pokemon/medium-shiny/' +
+                                                    pokemon().spriteName
+                                                "
+                                            />
+                                        </div>
+                                    }
+
+                                    <div class="sprite-label">Shiny</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="general-panel general-type">
+                        <div class="general-header">
+                            <h4>Type</h4>
+                        </div>
+                        <div class="general-content">
+                            <pokeoneweb-type-badge [typeName]="pokemon().primaryElementalType" />
+                            @if (pokemon().secondaryElementalType) {
+                                <pokeoneweb-type-badge
+                                    [typeName]="pokemon().secondaryElementalType"
+                                />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-availability">
+                        <div class="general-header">
+                            <h4>Availability</h4>
+                        </div>
+                        <div class="general-content">
+                            <div class="availability-name">
+                                <div
+                                    class="availability-icon-container"
+                                    [class]="getAvailabilityClass(pokemon().availability)"
+                                >
+                                    @switch (pokemon().availability) {
+                                        @case ('Obtainable') {
+                                            <i class="material-icons md-24">check</i>
+                                        }
+                                        @case ('Unobtainable') {
+                                            <i class="material-icons md-24">clear</i>
+                                        }
+                                        @case ('Event-exclusive') {
+                                            <i class="material-icons md-24">grade</i>
+                                        }
+                                        @case ('Removed') {
+                                            <i class="material-icons md-24">delete_forever</i>
+                                        }
+                                    }
+                                </div>
+                                <div class="availability-name-container">
+                                    {{ pokemon().availability }}
+                                </div>
+                            </div>
+                            <div class="availability-description">
+                                {{ pokemon().availabilityDescription }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-pvp-tier">
+                        <div class="general-header">
+                            <h4>PVP Tier</h4>
+                        </div>
+                        <div class="general-content">
+                            <div class="pvp-tier-name">{{ pokemon().pvpTier }}</div>
+                            <div class="pvp-tier-credit">
+                                Rankings created by Kitt & KingTummy on PokeOneCommunity (<a
+                                    href="https://pokeonecommunity.com/ou-viability-rankings/"
+                                    target="_blank"
+                                    >Link</a
+                                >)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-evyields">
+                        <div class="general-header">
+                            <h4>EV Yield</h4>
+                        </div>
+                        <div class="general-content">
+                            <table class="evyields-table">
+                                <tbody>
+                                    @if (pokemon().hitPointsEv > 0) {
+                                        <tr class="stat-hp">
+                                            <td>Hit Points</td>
+                                            <td>{{ pokemon().hitPointsEv }}</td>
+                                        </tr>
+                                    }
+                                    @if (pokemon().attackEv > 0) {
+                                        <tr class="stat-attack">
+                                            <td>Attack</td>
+                                            <td>{{ pokemon().attackEv }}</td>
+                                        </tr>
+                                    }
+                                    @if (pokemon().defenseEv > 0) {
+                                        <tr class="stat-defense">
+                                            <td>Defense</td>
+                                            <td>{{ pokemon().defenseEv }}</td>
+                                        </tr>
+                                    }
+                                    @if (pokemon().specialAttackEv > 0) {
+                                        <tr class="stat-special-attack">
+                                            <td>Special Attack</td>
+                                            <td>{{ pokemon().specialAttackEv }}</td>
+                                        </tr>
+                                    }
+                                    @if (pokemon().specialDefenseEv > 0) {
+                                        <tr class="stat-special-defense">
+                                            <td>Special Defense</td>
+                                            <td>{{ pokemon().specialDefenseEv }}</td>
+                                        </tr>
+                                    }
+                                    @if (pokemon().speedEv > 0) {
+                                        <tr class="stat-speed">
+                                            <td>Speed</td>
+                                            <td>{{ pokemon().speedEv }}</td>
+                                        </tr>
+                                    }
+
+                                    <tr class="stat-total">
+                                        <td>Total</td>
+                                        <td>
+                                            {{
+                                                pokemon().hitPointsEv +
+                                                    pokemon().attackEv +
+                                                    pokemon().defenseEv +
+                                                    pokemon().specialAttackEv +
+                                                    pokemon().specialDefenseEv +
+                                                    pokemon().speedEv
+                                            }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-catching">
+                        <div class="general-header">
+                            <h4>Catch probabilities</h4>
+                        </div>
+                        <div class="general-content">
+                            <div class="catch-rate">
+                                <div class="catch-rate-label">Catch Rate:</div>
+                                <div class="catch-rate-value">{{ pokemon().catchRate }}</div>
+                            </div>
+                            <div class="catch-config">
+                                <div>
+                                    <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                                    <div class="hp-bar">
+                                        <div class="hp-bar-label">HP</div>
+                                        <svg width="100" height="20" viewBox="0 0 100 20">
+                                            <rect
+                                                class="hp-bar-100"
+                                                x="-5"
+                                                y="0"
+                                                width="110"
+                                                height="20"
+                                            ></rect>
+                                        </svg>
+                                    </div>
+                                    <div class="status-badge"></div>
+                                </div>
+                                <div class="catch-probability">
+                                    {{
+                                        getCatchRate(pokemon().catchRate, 1, 100, '')
+                                            | number: '1.2-2'
+                                    }}%
+                                </div>
+                            </div>
+
+                            <div class="catch-config">
+                                <div>
+                                    <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                                    <div class="hp-bar">
+                                        <div class="hp-bar-label">HP</div>
+                                        <svg width="100" height="20" viewBox="0 0 100 20">
+                                            <rect
+                                                class="hp-bar-1"
+                                                x="-5"
+                                                y="0"
+                                                width="5"
+                                                height="20"
+                                            ></rect>
+                                        </svg>
+                                    </div>
+                                    <div class="status-badge"></div>
+                                </div>
+                                <div class="catch-probability">
+                                    {{
+                                        getCatchRate(pokemon().catchRate, 1, 1, '')
+                                            | number: '1.2-2'
+                                    }}%
+                                </div>
+                            </div>
+
+                            <div class="catch-config">
+                                <div>
+                                    <img src="./assets/img/sprites/items/small/poke-ball.png" />
+                                    <div class="hp-bar">
+                                        <div class="hp-bar-label">HP</div>
+                                        <svg width="100" height="20" viewBox="0 0 100 20">
+                                            <rect
+                                                class="hp-bar-1"
+                                                x="-5"
+                                                y="0"
+                                                width="5"
+                                                height="20"
+                                            ></rect>
+                                        </svg>
+                                    </div>
+                                    <div class="status-badge status-sleep">SLP</div>
+                                </div>
+                                <div class="catch-probability">
+                                    {{
+                                        getCatchRate(pokemon().catchRate, 1, 1, 'SLP')
+                                            | number: '1.2-2'
+                                    }}%
+                                </div>
+                            </div>
+                            <div class="catch-config">
+                                <div>
+                                    <img src="./assets/img/sprites/items/small/ultra-ball.png" />
+                                    <div class="hp-bar">
+                                        <div class="hp-bar-label">HP</div>
+                                        <svg width="100" height="20" viewBox="0 0 100 20">
+                                            <rect
+                                                class="hp-bar-1"
+                                                x="-5"
+                                                y="0"
+                                                width="5"
+                                                height="20"
+                                            ></rect>
+                                        </svg>
+                                    </div>
+                                    <div class="status-badge status-sleep">SLP</div>
+                                </div>
+                                <div class="catch-probability">
+                                    {{
+                                        getCatchRate(pokemon().catchRate, 2, 1, 'SLP')
+                                            | number: '1.2-2'
+                                    }}%
+                                </div>
+                            </div>
+
+                            <div class="catch-config">
+                                <div>
+                                    <img src="./assets/img/sprites/items/small/level-ball.png" />
+                                    <div class="hp-bar">
+                                        <div class="hp-bar-label">HP</div>
+                                        <svg width="100" height="20" viewBox="0 0 100 20">
+                                            <rect
+                                                class="hp-bar-1"
+                                                x="-5"
+                                                y="0"
+                                                width="5"
+                                                height="20"
+                                            ></rect>
+                                        </svg>
+                                    </div>
+                                    <div class="status-badge status-sleep">SLP</div>
+                                </div>
+                                <div class="catch-probability">
+                                    {{
+                                        getCatchRate(pokemon().catchRate, 8, 1, 'SLP')
+                                            | number: '1.2-2'
+                                    }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-egg-hatching">
+                        <div class="general-header">
+                            <h4>Egg hatching</h4>
+                        </div>
+                        <div class="general-content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="egg-stat-label">Egg cycles</td>
+                                        <td class="egg-stat-value">
+                                            {{ pokemon().eggCycles }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="egg-stat-label">Steps</td>
+                                        <td class="egg-stat-value">
+                                            {{ getEggSteps(pokemon().eggCycles) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="egg-stat-label">Hatch time</td>
+                                        <td class="egg-stat-value">
+                                            {{ getEggHatchingTime(pokemon().eggCycles) }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="flame-body">
+                                Hatch time assumes using a mount or bike. Steps and hatch time are
+                                halved, if a Pokémon with Flame Body or Magma Armor is in the party.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-genderratio">
+                        <div class="general-header">
+                            <h4>Gender Ratio</h4>
+                        </div>
+                        <div class="general-content">
+                            <svg viewBox="0 0 100 10">
+                                @if (pokemon().hasGender) {
+                                    <rect
+                                        class="genderratio-bar-male"
+                                        x="0"
+                                        y="0"
+                                        [attr.width]="pokemon().maleRatio"
+                                        height="20"
+                                    ></rect>
+                                    <rect
+                                        class="genderratio-bar-female"
+                                        [attr.x]="pokemon().maleRatio"
+                                        y="0"
+                                        [attr.width]="pokemon().femaleRatio"
+                                        height="20"
+                                    ></rect>
+                                } @else {
+                                    <rect
+                                        class="genderratio-bar-ungendered"
+                                        x="0"
+                                        y="0"
+                                        width="100"
+                                        height="20"
+                                    ></rect>
+                                }
+                            </svg>
+                            @if (pokemon().hasGender) {
+                                <div class="gender-male-female">
+                                    <div class="gender-male">
+                                        <div>{{ pokemon().maleRatio }}%</div>
+                                        <div>Male</div>
+                                    </div>
+                                    <div class="gender-female">
+                                        <div>{{ pokemon().femaleRatio }}%</div>
+                                        <div>Female</div>
+                                    </div>
+                                </div>
+                            } @else {
+                                <div class="gender-ungendered">Pokémon has no gender.</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-miscellaneous">
+                        <div class="general-header">
+                            <h4>Miscellaneous</h4>
+                        </div>
+                        <div class="general-content">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="misc-stat-label">Exp. yield</td>
+                                        <td class="misc-stat-value">
+                                            {{ pokemon().expYield }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="misc-stat-label">Height</td>
+                                        <td class="misc-stat-value">{{ pokemon().height }}m</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="misc-stat-label">Weight</td>
+                                        <td class="misc-stat-value">{{ pokemon().weight }}kg</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="general-panel general-urls">
+                        <div class="general-header">
+                            <h4>This Pokémon on other sites</h4>
+                        </div>
+                        <div class="general-content">
+                            @for (url of pokemon().urls; track url.name) {
+                                <div class="url-container">
+                                    <a [href]="getFullUrl(url)" target="_blank">
+                                        <img class="url-image" [src]="getUrlIcon(url)" />
+                                        <!-- Use innerHtml to respect &nbsp; in Url names -->
+                                        <div
+                                            class="url-label"
+                                            innerHtml="{{ getUrlDisplayName(url) }}"
+                                        ></div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    @if (pokemon().forms.length > 1) {
+                        <div class="general-forms general-panel">
+                            <div class="general-header">
+                                <h4>Forms</h4>
+                            </div>
+                            <div class="general-forms-container-outer">
+                                @for (form of pokemon().forms; track form.sortIndex) {
+                                    <div class="general-forms-container">
+                                        <div class="sprite-container">
+                                            <img
+                                                [src]="
+                                                    './assets/img/sprites/pokemon/medium/' +
+                                                    form.spriteName
+                                                "
+                                            />
+                                        </div>
+                                        <div class="form-name-container">{{ form.name }}</div>
+                                        <div class="availability-container">
+                                            <div
+                                                class="availability-icon-container"
+                                                [class]="getAvailabilityClass(form.availability)"
+                                            >
+                                                @switch (form.availability) {
+                                                    @case ('Obtainable') {
+                                                        <i class="material-icons md-24">check</i>
+                                                    }
+                                                    @case ('Unobtainable') {
+                                                        <i class="material-icons md-24">clear</i>
+                                                    }
+                                                    @case ('Event-exclusive') {
+                                                        <i class="material-icons md-24">grade</i>
+                                                    }
+                                                    @case ('Removed') {
+                                                        <i class="material-icons md-24"
+                                                            >delete_forever</i
+                                                        >
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="availability-name-container">
+                                                {{ form.availability }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <h2 name="stats">Stats</h2>
+            <div class="no-table-container-outer">
+                <div class="no-table-container-inner">
+                    <pokeoneweb-stat-configuration [pokemon]="pokemon()" />
+                </div>
+            </div>
+
+            <h2 name="effective">Type defense</h2>
+            <table class="main-table" id="type_defense_table">
+                <thead>
+                    <tr>
+                        <th>
+                            <p>4x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                        <th>
+                            <p>2x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                        <th>
+                            <p>1x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                        <th>
+                            <p>0.5x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                        <th>
+                            <p>0.25x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                        <th>
+                            <p>0x</p>
+                            <p class="type-defense-th-subtitle">damage taken</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    4
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    2
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    1
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    0.5
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    0.25
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                        <td>
+                            @for (
+                                type of getDefenseEffectivities(
+                                    pokemon().defenseAttackEffectivities,
+                                    0
+                                );
+                                track type
+                            ) {
+                                <pokeoneweb-type-badge [typeName]="type.typeName" />
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 name="evolution">Evolution</h2>
+            <div class="no-table-container-outer">
+                <div class="no-table-container-inner">
+                    @if (pokemon().evolutions.length > 0) {
+                        <pokeoneweb-evolution-chart [evolutions]="pokemon().evolutions" />
+                    } @else {
+                        <p class="empty">This Pokémon does not evolve</p>
+                    }
+                </div>
+            </div>
+
+            <h2 name="abilities">Abilities</h2>
+            <table class="main-table" id="ability_table">
+                <thead>
+                    <tr>
+                        <th class="col-ability-slot">Slot</th>
+                        <th class="col-ability-name">Name</th>
+                        <th class="col-ability-effect">Effect</th>
+                        @if (pokemon().evolutions.length > 0) {
+                            <th class="col-ability-evolutions">On other evolutions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-ability-slot">Primary</td>
+                        <td class="col-ability-name">{{ pokemon().primaryAbility }}</td>
+                        <td class="col-ability-effect">
+                            <p>{{ pokemon().primaryAbilityEffect }}</p>
+                        </td>
+                        @if (pokemon().evolutions.length > 0) {
+                            <td class="col-ability-evolutions">
+                                <table class="evolution-ability-table">
+                                    <tbody>
+                                        @for (
+                                            evolutionAbility of getPreEvolutionAbilities(
+                                                pokemon().primaryEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {
+                                                        <img
+                                                            [src]="
+                                                                './assets/img/sprites/pokemon/small/' +
+                                                                evolutionAbility.spriteName
+                                                            "
+                                                        />
+                                                    }
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        @for (
+                                            evolutionAbility of getPostEvolutionAbilities(
+                                                pokemon().primaryEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {}
+                                                    <img
+                                                        [src]="
+                                                            './assets/img/sprites/pokemon/small/' +
+                                                            evolutionAbility.spriteName
+                                                        "
+                                                    />
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="col-ability-slot">Secondary</td>
+                        <td class="col-ability-name">
+                            {{ pokemon().secondaryAbility ? pokemon().secondaryAbility : '-' }}
+                        </td>
+                        <td class="col-ability-effect">
+                            <p>{{ pokemon().secondaryAbilityEffect }}</p>
+                        </td>
+                        @if (pokemon().evolutions.length > 0) {
+                            <td class="col-ability-evolutions">
+                                <table class="evolution-ability-table">
+                                    <tbody>
+                                        @for (
+                                            evolutionAbility of getPreEvolutionAbilities(
+                                                pokemon().secondaryEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {
+                                                        <img
+                                                            [src]="
+                                                                './assets/img/sprites/pokemon/small/' +
+                                                                evolutionAbility.spriteName
+                                                            "
+                                                        />
+                                                    }
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        @for (
+                                            evolutionAbility of getPostEvolutionAbilities(
+                                                pokemon().secondaryEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {
+                                                        <img
+                                                            [src]="
+                                                                './assets/img/sprites/pokemon/small/' +
+                                                                evolutionAbility.spriteName
+                                                            "
+                                                        />
+                                                    }
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="col-ability-slot">Hidden</td>
+                        <td class="col-ability-name">
+                            {{ pokemon().hiddenAbility ? pokemon().hiddenAbility : '-' }}
+                        </td>
+                        <td class="col-ability-effect">
+                            <p>{{ pokemon().hiddenAbilityEffect }}</p>
+                        </td>
+                        @if (pokemon().evolutions.length > 0) {
+                            <td class="col-ability-evolutions">
+                                <table class="evolution-ability-table">
+                                    <tbody>
+                                        @for (
+                                            evolutionAbility of getPreEvolutionAbilities(
+                                                pokemon().hiddenEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {
+                                                        <img
+                                                            [src]="
+                                                                './assets/img/sprites/pokemon/small/' +
+                                                                evolutionAbility.spriteName
+                                                            "
+                                                        />
+                                                    }
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+                                        @for (
+                                            evolutionAbility of getPostEvolutionAbilities(
+                                                pokemon().hiddenEvolutionAbilities
+                                            );
+                                            track evolutionAbility.pokemonResourceName
+                                        ) {
+                                            <tr>
+                                                <td class="col-evolution-ability-sprite">
+                                                    @if (evolutionAbility.spriteName) {
+                                                        <img
+                                                            [src]="
+                                                                './assets/img/sprites/pokemon/small/' +
+                                                                evolutionAbility.spriteName
+                                                            "
+                                                        />
+                                                    }
+                                                </td>
+                                                <td class="col-evolution-ability-pokemon">
+                                                    <a
+                                                        [routerLink]="
+                                                            '/' +
+                                                            evolutionAbility.pokemonResourceName
+                                                        "
+                                                        >{{ evolutionAbility.pokemonName }}</a
+                                                    >
+                                                </td>
+                                                <td class="col-evolution-ability-ability">
+                                                    {{ evolutionAbility.abilityName }}
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 name="spawns">Spawns</h2>
+            @if (pokemon().spawns.length > 0) {
+                <pokeoneweb-spawn-list [spawns]="pokemon().spawns" [isLocationPage]="false" />
+            } @else {
+                <div class="no-table-container-outer">
+                    <div class="no-table-container-inner">
+                        <p class="empty">This Pokémon does not have any known spawns in PokéOne.</p>
+                    </div>
+                </div>
+            }
+
+            <h2 name="moves">Learnset</h2>
+            @if (pokemon().learnableMoves.length > 0) {
+                <table class="main-table table-compact" id="learnset_table">
+                    <thead>
+                        <tr>
+                            <th class="col-move-name">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Name, SortDirection.Ascending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Name, SortDirection.Ascending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Name</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Name, SortDirection.Descending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Name, SortDirection.Descending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-move-type">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Type, SortDirection.Ascending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Type, SortDirection.Ascending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Type</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Type, SortDirection.Descending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Type, SortDirection.Descending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-move-class">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Class, SortDirection.Ascending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Class, SortDirection.Ascending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Cat.</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Class,
+                                            SortDirection.Descending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Class, SortDirection.Descending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-power">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(MovesColumn.Power, SortDirection.Ascending)
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Power, SortDirection.Ascending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Pow.</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Power,
+                                            SortDirection.Descending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="sortMoves(MovesColumn.Power, SortDirection.Descending)"
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-accuracy">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Accuracy,
+                                            SortDirection.Ascending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.Accuracy, SortDirection.Ascending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Acc.</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Accuracy,
+                                            SortDirection.Descending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.Accuracy, SortDirection.Descending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-power-points">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.PowerPoints,
+                                            SortDirection.Ascending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.PowerPoints, SortDirection.Ascending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">PP</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.PowerPoints,
+                                            SortDirection.Descending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.PowerPoints, SortDirection.Descending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-priority">
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Priority,
+                                            SortDirection.Ascending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.Priority, SortDirection.Ascending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮝
+                                </div>
+                                <div class="table-header-label">Prio</div>
+                                <div
+                                    [class]="
+                                        areMovesSortedBy(
+                                            MovesColumn.Priority,
+                                            SortDirection.Descending
+                                        )
+                                            ? 'sorted'
+                                            : 'unsorted'
+                                    "
+                                    (click)="
+                                        sortMoves(MovesColumn.Priority, SortDirection.Descending)
+                                    "
+                                    class="table-header-sort"
+                                >
+                                    ⮟
+                                </div>
+                            </th>
+                            <th class="col-move-effect">Effect</th>
+                            <th class="col-move-learn-methods">Learn methods</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (move of sortedLearnableMoves(); track move.moveName) {
+                            <tr
+                                [class]="{
+                                    'move-unavailable': !move.isAvailable,
+                                    'move-event-exclusive': isMoveEventExclusive(move),
+                                }"
+                            >
+                                <td class="col-move-name">
+                                    {{ move.moveName }}<br />
+                                    @if (!move.isAvailable) {
+                                        <span class="move-unavailable-label">Unobtainable</span>
+                                    } @else if (isMoveEventExclusive(move)) {
+                                        <span class="move-event-exclusive-label"
+                                            >Event-exclusive</span
+                                        >
+                                    }
+                                </td>
+                                <td class="col-move-type">
+                                    <pokeoneweb-type-badge [typeName]="move.elementalType" />
+                                </td>
+                                <td class="col-move-class">
+                                    <pokeoneweb-type-badge [typeName]="move.damageClass" />
+                                </td>
+                                <td
+                                    [style]="
+                                        move.effectivePower !== 0
+                                            ? 'background-color: hsl(' +
+                                              getHueForMoveStrength(move.effectivePower) +
+                                              ',100%,70%); color: black;'
+                                            : ''
+                                    "
+                                    class="col-power"
+                                    [class]="{ 'stab-power': move.hasStab }"
+                                >
+                                    <p>{{ move.attackPower !== 0 ? move.attackPower : '-' }}</p>
+                                    @if (move.hasStab && move.effectivePower > 0) {
+                                        <p class="stab">
+                                            {{ move.effectivePower }}
+                                        </p>
+                                        <p class="stab stab-label">(STAB)</p>
+                                    }
+                                </td>
+                                <td
+                                    [style]="
+                                        'background-color: hsl(' +
+                                        getHueForAccuracy(move.accuracy) +
+                                        ',100%,70%); color: black;'
+                                    "
+                                    class="col-accuracy"
+                                >
+                                    {{ move.accuracy }}
+                                </td>
+                                <td
+                                    [style]="
+                                        'background-color: hsl(' +
+                                        getHueForPowerPoints(move.powerPoints) +
+                                        ',100%,70%); color: black;'
+                                    "
+                                    class="col-power-points"
+                                >
+                                    {{ move.powerPoints }}
+                                </td>
+                                <td class="col-priority">{{ move.priority }}</td>
+                                <td
+                                    class="col-move-effect"
+                                    (mouseover)="hoverMoveDescription($index)"
+                                    (mouseout)="hoverMoveDescription(-1)"
+                                >
+                                    @if ($index === moveHoverIndex()) {
+                                        <div>
+                                            {{ move.effectDescription }}
+                                        </div>
+                                    } @else {
+                                        <div>
+                                            {{ getAbbreviatedMoveDescription(move) }}
+                                        </div>
+                                    }
+                                </td>
+                                <td class="col-move-learn-methods">
+                                    @for (learnMethod of move.learnMethods; track $index) {
+                                        <div>
+                                            @switch (learnMethod.availability) {
+                                                @case ('Obtainable') {
+                                                    <div
+                                                        [class]="{
+                                                            'has-tooltip': learnMethod.description,
+                                                        }"
+                                                        class="learnmethod-available nobr"
+                                                    >
+                                                        <p>
+                                                            <i class="material-icons">check</i
+                                                            >{{ learnMethod.learnMethodName }}
+                                                        </p>
+                                                        @if (learnMethod.description) {
+                                                            <span class="tooltip tooltip-left">
+                                                                {{ learnMethod.description }}
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                }
+                                                @case ('Event-exclusive') {
+                                                    <div
+                                                        [class]="{
+                                                            'has-tooltip': learnMethod.description,
+                                                        }"
+                                                        class="learnmethod-event-exclusive nobr"
+                                                    >
+                                                        <p>
+                                                            <i class="material-icons">grade</i
+                                                            >{{ learnMethod.learnMethodName }}
+                                                        </p>
+                                                        @if (learnMethod.description) {
+                                                            <span class="tooltip tooltip-left">
+                                                                {{ learnMethod.description }}
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                }
+                                                @case ('Removed') {
+                                                    <div
+                                                        [class]="{
+                                                            'has-tooltip': learnMethod.description,
+                                                        }"
+                                                        class="learnmethod-removed nobr"
+                                                    >
+                                                        <p>
+                                                            <i class="material-icons"
+                                                                >delete_forever</i
+                                                            >{{ learnMethod.learnMethodName }}
+                                                        </p>
+                                                        @if (learnMethod.description) {
+                                                            <span class="tooltip tooltip-left">
+                                                                {{ learnMethod.description }}
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                }
+                                                @default {
+                                                    <div class="learnmethod-unavailable nobr">
+                                                        <p>
+                                                            <i class="material-icons">clear</i
+                                                            >{{ learnMethod.learnMethodName }}
+                                                        </p>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            } @else {
+                <div class="no-table-container-outer">
+                    <div class="no-table-container-inner">
+                        <p class="empty">
+                            This Pokémon does not have any known learnable moves in PokéOne.
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

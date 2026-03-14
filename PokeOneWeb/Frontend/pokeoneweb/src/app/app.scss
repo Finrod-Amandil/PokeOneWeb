@@ -1,0 +1,160 @@
+// Colors for triple border
+.tb1 {
+    background-color: black;
+    margin: auto;
+}
+
+.tb2 {
+    background-color: #262626;
+    margin: auto;
+}
+
+.tb3 {
+    background-color: black;
+    margin: auto;
+}
+
+// Triple border for header / nav section
+#header .tb1 {
+    width: calc(var(--navbar-outer-width) + 2 * (var(--tb1) + var(--tb2) + var(--tb3)));
+    height: calc(
+        var(--navbar-outer-height) + var(--navbar-title-height) +
+            var(--navbar-last-version-height) + (var(--tb1) + var(--tb2) + var(--tb3))
+    );
+}
+
+#header .tb2 {
+    width: calc(var(--navbar-outer-width) + 2 * (var(--tb2) + var(--tb3)));
+    height: calc(
+        var(--navbar-outer-height) + var(--navbar-title-height) +
+            var(--navbar-last-version-height) + (var(--tb2) + var(--tb3))
+    );
+}
+
+#header .tb3 {
+    width: calc(var(--navbar-outer-width) + 2 * var(--tb3));
+    height: calc(
+        var(--navbar-outer-height) + var(--navbar-title-height) +
+            var(--navbar-last-version-height) + var(--tb3)
+    );
+}
+
+// Header / nav container
+#header_inner {
+    background-color: #707070;
+    width: var(--navbar-outer-width);
+    margin: auto;
+}
+
+#header_container {
+    width: 100%;
+    display: flex;
+    margin-bottom: 50px;
+}
+
+#header {
+    margin: auto;
+}
+
+#header_banner_container {
+    z-index: 99;
+    height: 20px;
+}
+
+#title_container {
+    height: var(--navbar-title-height);
+    width: var(--navbar-outer-width);
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+    font-size: 2.5em;
+    font-weight: 900;
+    color: #262626;
+    text-shadow: 2px 2px black;
+}
+
+#title {
+    padding-top: 15px;
+    line-height: 50px;
+}
+
+.title-poke {
+    color: var(--light-gray);
+}
+
+.title-one {
+    color: var(--text-accent);
+}
+
+.last-update {
+    width: 100%;
+    height: var(--navbar-last-version-height);
+    text-align: center;
+    color: #5efd5e;
+    font-weight: 700;
+}
+
+// Content section
+#content .tb1 {
+    padding-top: var(--tb1);
+    padding-bottom: var(--tb1);
+    width: calc(var(--content-outer-width) + 2 * (var(--tb1) + var(--tb2) + var(--tb3)));
+
+    --clip-width: calc(var(--content-title-height) + 1px);
+}
+
+#content .tb2 {
+    padding-top: var(--tb2);
+    padding-bottom: var(--tb2);
+    width: calc(var(--content-outer-width) + 2 * (var(--tb2) + var(--tb3)));
+
+    --clip-width: calc(var(--content-title-height) - 0.5px);
+}
+
+#content .tb3 {
+    padding-top: var(--tb3);
+    padding-bottom: var(--tb3);
+    width: calc(var(--content-outer-width) + 2 * var(--tb3));
+
+    --clip-width: calc(var(--content-title-height) - 4.5px);
+}
+
+.clip-edges {
+    clip-path: polygon(
+        var(--clip-width) 0%,
+        calc(100% - var(--clip-width)) 0%,
+        100% var(--clip-width),
+        100% 100%,
+        0% 100%,
+        0% calc(100% - var(--clip-width)),
+        0% var(--clip-width)
+    );
+}
+
+#content_container {
+    width: 100%;
+    display: flex;
+}
+
+#content {
+    margin: auto;
+}
+
+#content_inner {
+    position: relative;
+    width: var(--content-outer-width);
+    margin: auto;
+    background-color: #505050;
+    min-height: 800px;
+
+    --clip-width: calc(var(--content-title-height) - 6px);
+}
+
+#content_bg_gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 1000px;
+    background: linear-gradient(#707070, #505050);
+    z-index: -1;
+}

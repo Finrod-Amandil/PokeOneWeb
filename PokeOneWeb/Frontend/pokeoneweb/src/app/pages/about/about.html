@@ -1,0 +1,180 @@
+<pokeoneweb-page-header title="About" />
+
+<div id="content_main_container">
+    <div class="no-table-container-outer">
+        <div class="no-table-container-inner welcome-outer">
+            <img src="./assets/img/welcome.png" />
+            <div class="welcome-right">
+                <p class="welcome-header">Hi and welcome to the Unofficial PokéOne Guide!</p>
+                <p class="welcome-text">
+                    This website is a personal project of me - FinrodAmandil - and attempts to help
+                    you as PokéOne player to quickly look up any information you might need about
+                    the game. This website was born out of the spreadsheet-based Unofficial PokéOne
+                    Guide, which was created all the way back in 2018 as a community effort. The
+                    spreadsheet still exists (<a
+                        href="https://docs.google.com/spreadsheets/d/1ptgBvTzxvzNisK1Sh7dW12IWEotlBpkpi-9TgEC3GuA"
+                        target="_blank"
+                        >Link</a
+                    >) and is still maintained. Some of the guides and data is only available in the
+                    spreadsheet version, while other data is exclusive to this website. Data that is
+                    present in both places (mainly spawns and items) I try to keep in sync.
+                </p>
+                <p class="welcome-text">
+                    If you find any bugs, wrong or missing data points, have a really cool idea for
+                    a new feature or a quality of life improvement, or want to let me know how much
+                    you dislike the design of the site, please do tell me about it! Find me on the
+                    official PokéOne Discord (username Finrod_Amandil) or in PokéOne (usernames
+                    FinrodAmandil, Finrude, Finrod, Findarato)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <h2>Change Logs</h2>
+    <p class="change-logs-explanation">
+        Overview of all notable changes to this website and the underlying data
+    </p>
+    <table class="main-table search-table" id="search_table">
+        <tbody>
+            <tr>
+                <td>Search</td>
+                <td>
+                    <div class="search-input-row">
+                        <div>
+                            <input
+                                [formField]="filterForm.searchTerm"
+                                id="input_search"
+                                class="inline text-input"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <span class="search-option-explanation">
+                                Search change logs by description
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <div>
+                        <ng-select
+                            labelForId="input_category"
+                            class="inline"
+                            [items]="categories()"
+                            [formField]="filterForm.category"
+                            [multiple]="false"
+                            [closeOnSelect]="false"
+                            [clearable]="true"
+                            placeholder="Any"
+                        />
+                    </div>
+                    <div>
+                        <span class="search-option-explanation"> Filter by change category </span>
+                    </div>
+                    <br />
+                    <table id="category_explanation_table">
+                        <tbody>
+                            <tr>
+                                <td class="category-feature">Feature</td>
+                                <td class="category-explanation">
+                                    An all-new feature has been added to this website!
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="category-improvement">Improvement</td>
+                                <td class="category-explanation">
+                                    An existing feature of this website has been improved.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="category-bugfix">Bugfix</td>
+                                <td class="category-explanation">
+                                    Something on this website that was not working as intended has
+                                    been fixed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="category-data-update">Data update</td>
+                                <td class="category-explanation">
+                                    Changes to the underlying data based on recently discovered
+                                    changes that were made to the game. This category can be
+                                    understood as an attempt to create a changelog about PokéOne.
+                                    Note: The date given on the change log entry is the date when
+                                    the change was documented, not when the change happend in the
+                                    game.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="category-data-addition">Data addition</td>
+                                <td class="category-explanation">
+                                    New types of data, or new data points that have not been tracked
+                                    before. The data that was added has been part of PokéOne for a
+                                    longer time already, but has not been documented yet by this
+                                    guide.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="category-spreadsheet-data">Spreadsheet data</td>
+                                <td class="category-explanation">
+                                    Some changes were made to data or guides that are currently only
+                                    available as part of the spreadsheet version of this guide (<a
+                                        href="https://docs.google.com/spreadsheets/d/1ptgBvTzxvzNisK1Sh7dW12IWEotlBpkpi-9TgEC3GuA"
+                                        target="_blank"
+                                        >Link</a
+                                    >).
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (allChangeLogs().length > 0) {
+        <p class="change-log-list-title">
+            Showing {{ filteredChangeLogs().length }} of {{ allChangeLogs().length }} Change log
+            entries
+        </p>
+
+        <div>
+            <table class="main-table" id="change_log_list">
+                <thead>
+                    <tr>
+                        <th class="col-id">#</th>
+                        <th class="col-date">Date</th>
+                        <th class="col-category">Category</th>
+                        <th class="col-description">Description</th>
+                    </tr>
+                </thead>
+                <tbody #container>
+                    @for (
+                        changeLogEntry of filteredChangeLogs();
+                        track changeLogEntry.changeLogId
+                    ) {
+                        <tr>
+                            <td class="col-id">
+                                {{ ('' + changeLogEntry.changeLogId).padStart(3, '0') }}
+                            </td>
+                            <td class="col-date">{{ changeLogEntry.date | date: 'longDate' }}</td>
+                            <td
+                                class="col-category"
+                                [class]="getCategoryClassName(changeLogEntry.category)"
+                            >
+                                {{ changeLogEntry.category }}
+                            </td>
+                            <td class="col-description">{{ changeLogEntry.description }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    } @else {
+        <p class="change-log-list-empty">
+            No Change log entries to display. Try to adjust your search criteria.
+        </p>
+    }
+</div>

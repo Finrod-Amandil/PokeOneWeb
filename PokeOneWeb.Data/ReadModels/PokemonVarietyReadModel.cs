@@ -41,6 +41,8 @@ namespace PokeOneWeb.Data.ReadModels
 
         [NotMapped]
         public int Bulk { get; set; }
+        [NotMapped]
+        public int Offence { get; set; }
 
         public string PrimaryAbility { get; set; }
         public string PrimaryAbilityEffect { get; set; }

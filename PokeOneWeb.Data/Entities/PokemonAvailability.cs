@@ -11,7 +11,7 @@ namespace PokeOneWeb.Data.Entities
     /// Whether / under what conditions a Pokemon can generally be obtained.
     /// </summary>
     [Table("PokemonAvailability")]
-    [Sheet("availabilities")]
+    [Sheet("pokemon_availabilities")]
     public class PokemonAvailability : IHashedEntity, INamedEntity
     {
         public static void ConfigureForDatabase(ModelBuilder builder)

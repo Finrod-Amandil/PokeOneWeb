@@ -1,0 +1,110 @@
+.toggle-unavailable-spawns {
+    margin-bottom: 10px;
+}
+
+.table-compact td {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+#spawn_table {
+    position: relative;
+}
+
+#spawn_table th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+#spawn_table th {
+    text-align: center;
+}
+
+#spawn_table .has-tooltip {
+    border-bottom: 1px dotted var(--light-gray);
+}
+
+#spawn_table img {
+    max-height: 40px;
+}
+
+#spawn_table a {
+    color: var(--light-gray);
+}
+
+#spawn_table a:hover {
+    color: var(--text-accent);
+}
+
+#spawn_table td.col-sprite,
+#spawn_table th.col-syncable,
+#spawn_table td.col-syncable,
+#spawn_table th.col-event,
+#spawn_table td.col-event {
+    padding-left: 0;
+    padding-right: 0;
+    width: 40px;
+}
+
+#spawn_table td.col-region {
+    max-width: 90px;
+    color: var(--dark-gray);
+    font-weight: 700;
+    text-align: center;
+}
+
+#spawn_table td.col-location {
+    min-width: 100px;
+}
+
+#spawn_table td.col-method {
+    min-width: 80px;
+    color: var(--dark-gray);
+    font-weight: 700;
+}
+
+#spawn_table td.col-season,
+#spawn_table td.col-time {
+    width: 90px;
+}
+
+#spawn_table td.col-rarity {
+    text-align: center;
+    font-weight: 700;
+}
+
+#spawn_table td.col-syncable,
+#spawn_table td.col-event {
+    padding-top: 10px;
+    text-align: center;
+}
+
+#spawn_table th.col-syncable .has-tooltip {
+    margin-top: -6px;
+}
+
+#spawn_table .sync-true {
+    background-color: var(--availability-obtainable);
+}
+
+#spawn_table .sync-false {
+    background-color: var(--availability-unobtainable);
+}
+
+.spawn-removed td {
+    background-color: var(--bg-availability-unobtainable);
+}
+
+.spawn-removed td.col-region,
+.spawn-removed td.col-location,
+.spawn-removed td.col-method,
+.spawn-removed td.col-rarity,
+.spawn-removed td.col-notes {
+    text-decoration: line-through;
+}
+
+.spawn-removed td span.spawn-removed-label {
+    color: var(--availability-unobtainable);
+    font-weight: 700;
+}

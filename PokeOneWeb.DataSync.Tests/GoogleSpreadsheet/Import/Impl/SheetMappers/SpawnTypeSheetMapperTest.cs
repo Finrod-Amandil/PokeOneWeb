@@ -167,7 +167,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 x => x.ReportError(
                     nameof(SpawnType),
                     _rowHash.IdHash,
-                    It.IsAny<Exception>()),
+                    It.IsAny<Exception>(),
+                    It.IsAny<string>()),
                 Times.AtLeastOnce);
         }
 
@@ -217,7 +218,8 @@ namespace PokeOneWeb.DataSync.Tests.GoogleSpreadsheet.Import.Impl.SheetMappers
                 x => x.ReportError(
                     nameof(SpawnType),
                     _rowHash.IdHash,
-                    It.IsAny<ParseException>()),
+                    It.IsAny<ParseException>(),
+                    It.IsAny<string>()),
                 Times.AtLeastOnce);
         }
 

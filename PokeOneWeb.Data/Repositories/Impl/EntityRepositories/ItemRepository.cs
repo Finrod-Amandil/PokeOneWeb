@@ -12,7 +12,8 @@ namespace PokeOneWeb.Data.Repositories.Impl.EntityRepositories
 
         protected override List<Func<Item, bool>> PreparationSteps => new()
         {
-            entity => TrySetIdForName<BagCategory>(entity.BagCategoryName, id => entity.BagCategoryId = id)
+            entity => TrySetIdForName<BagCategory>(entity.BagCategoryName, id => entity.BagCategoryId = id),
+            entity => TrySetIdForName<ItemAvailability>(entity.AvailabilityName, id => entity.AvailabilityId = id)
         };
     }
 }

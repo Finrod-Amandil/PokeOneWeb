@@ -1,0 +1,98 @@
+<pokeoneweb-page-header
+    [title]="allLocationGroups().length > 0 ? allLocationGroups()[0].regionName : resourceName()"
+/>
+
+<div id="content_main_container">
+    <table
+        class="main-table search-table"
+        id="search_table"
+        aria-describedby="Filter capabilities for location list page."
+    >
+        <thead>
+            <tr>
+                <th colspan="2">Search and filter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Search</td>
+                <td>
+                    <div>
+                        <input
+                            [formField]="filterForm.searchTerm"
+                            id="input_search"
+                            class="inline text-input"
+                            type="text"
+                        />
+                    </div>
+                    <div>
+                        <span class="search-option-explanation"> Search for Location name</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (allLocationGroups().length > 0) {
+        <p class="location-list-title">
+            Showing {{ filteredLocationGroups().length }} of
+            {{ allLocationGroups().length }} Locations
+        </p>
+
+        <div>
+            <table
+                class="main-table sortable rows-clickable"
+                id="location_list"
+                aria-describedby="Location list for specific region after applying filters."
+            >
+                <thead>
+                    <tr>
+                        <th class="col-name">
+                            <div
+                                [class]="
+                                    isSortedBy(Column.Name, SortDirection.Ascending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.Name, SortDirection.Ascending)"
+                                class="table-header-sort"
+                            >
+                                ⮝
+                            </div>
+                            <div class="table-header-label">Name</div>
+                            <div
+                                [class]="
+                                    isSortedBy(Column.Name, SortDirection.Descending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.Name, SortDirection.Descending)"
+                                class="table-header-sort"
+                            >
+                                ⮟
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody #container>
+                    @for (
+                        locationGroup of filteredLocationGroups();
+                        track locationGroup.sortIndex
+                    ) {
+                        <tr (click)="navigateToDetailPage(locationGroup.resourceName)">
+                            <td class="col-name">
+                                <a [routerLink]="'/' + locationGroup.resourceName">{{
+                                    locationGroup.name
+                                }}</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    } @else {
+        <p class="location-list-empty">
+            No Locations to display. Try to adjust your search criteria.
+        </p>
+    }
+</div>

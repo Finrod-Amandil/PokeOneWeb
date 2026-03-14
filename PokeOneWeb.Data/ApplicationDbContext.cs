@@ -11,6 +11,7 @@ namespace PokeOneWeb.Data
         {
         }
 
+        public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
         public DbSet<Build> Builds { get; set; }
@@ -21,8 +22,10 @@ namespace PokeOneWeb.Data
         public DbSet<Evolution> Evolutions { get; set; }
         public DbSet<HuntingConfiguration> HuntingConfigurations { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemAvailability> ItemAvailabilities { get; set; }
         public DbSet<ItemStatBoost> ItemStatBoosts { get; set; }
         public DbSet<ItemStatBoostPokemon> ItemStatBoostPokemon { get; set; }
+        public DbSet<LearnableMoveLearnMethodAvailability> LearnableMoveLearnMethodAvailabilities { get; set; }
         public DbSet<LearnableMove> LearnableMoves { get; set; }
         public DbSet<LearnableMoveLearnMethod> LearnableMoveLearnMethods { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -67,6 +70,7 @@ namespace PokeOneWeb.Data
             Location.ConfigureForDatabase(builder);
 
             BagCategory.ConfigureForDatabase(builder);
+            ItemAvailability.ConfigureForDatabase(builder);
             Item.ConfigureForDatabase(builder);
             PlacedItem.ConfigureForDatabase(builder);
             Currency.ConfigureForDatabase(builder);
@@ -92,6 +96,7 @@ namespace PokeOneWeb.Data
             MoveLearnMethod.ConfigureForDatabase(builder);
             MoveLearnMethodLocation.ConfigureForDatabase(builder);
             MoveLearnMethodLocationPrice.ConfigureForDatabase(builder);
+            LearnableMoveLearnMethodAvailability.ConfigureForDatabase(builder);
             LearnableMove.ConfigureForDatabase(builder);
             LearnableMoveLearnMethod.ConfigureForDatabase(builder);
 

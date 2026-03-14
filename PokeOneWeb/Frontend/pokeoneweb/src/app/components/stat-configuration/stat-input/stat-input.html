@@ -1,0 +1,278 @@
+<div class="stat-input">
+    <div class="stat-input-col stat-input-col-1">
+        <div>
+            <label for="input_stat_level">Level: </label>
+            <input
+                [formField]="statConfigurationForm.level"
+                id="input_stat_level"
+                class="text-input"
+                type="number"
+            />
+        </div>
+        <div>
+            <label for="input_stat_nature">Nature: </label>
+            <ng-select
+                labelForId="input_stat_nature"
+                [items]="natures()"
+                [formField]="statConfigurationForm.nature"
+                bindLabel="name"
+                [searchFn]="natureSearchFunction"
+                (clear)="clearNature()"
+            >
+                <ng-template ng-option-tmp let-item="item"
+                    >{{ item.name }}
+                    <span class="nature-effect">{{ item.effect }}</span></ng-template
+                >
+                <ng-template ng-label-tmp let-item="item"
+                    >{{ item.name }}
+                    <span class="nature-effect">{{ item.effect }}</span></ng-template
+                >
+            </ng-select>
+        </div>
+        <div>
+            <label for="input_stat_ability">Ability: </label>
+            <ng-select
+                labelForId="input_stat_ability"
+                class="input-stat-extended-options"
+                [items]="abilities()"
+                [formField]="statConfigurationForm.ability"
+                bindLabel="name"
+                (clear)="clearAbility()"
+            >
+                <ng-template ng-option-tmp let-item="item">
+                    <div class="item-option">
+                        <p class="item-option-title">{{ item.name }}</p>
+                        <p class="item-option-description">{{ item.effect }}</p>
+                    </div>
+                </ng-template>
+            </ng-select>
+        </div>
+        <div>
+            <label for="input_stat_item">Item (with stat change): </label>
+            <ng-select
+                labelForId="input_stat_item"
+                class="input-stat-extended-options"
+                [items]="itemBoosts()"
+                [formField]="statConfigurationForm.item"
+                bindLabel="itemName"
+                (clear)="clearItem()"
+            >
+                <ng-template ng-option-tmp let-item="item">
+                    <ng-container>
+                        <div class="item-option">
+                            <p class="item-option-title">{{ item.itemName }}</p>
+                            <p class="item-option-description">{{ item.itemEffect }}</p>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="stat-input-col stat-input-col-2">
+        <div class="stat-input-iv-header">
+            <h4>Individual Values (IV)</h4>
+            <button (click)="setMinIv()">Min</button>
+            <button (click)="setMaxIv()">Max</button>
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_hp">HP</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_hp"
+                [formField]="statConfigurationForm.iv.hitPoints"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_atk">ATK</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_atk"
+                [formField]="statConfigurationForm.iv.attack"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_def">DEF</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_def"
+                [formField]="statConfigurationForm.iv.defense"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_spa">SPA</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_spa"
+                [formField]="statConfigurationForm.iv.specialAttack"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_spd">SPD</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_spd"
+                [formField]="statConfigurationForm.iv.specialDefense"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_iv_spe">SPE</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_iv_spe"
+                [formField]="statConfigurationForm.iv.speed"
+            />
+        </div>
+    </div>
+
+    <div class="stat-input-col stat-input-col-3">
+        <div class="stat-input-ev-header">
+            <h4>Effort Values (EV)</h4>
+            <div>
+                <span
+                    class="total-evs"
+                    [class.ev-above-max]="getStatTotal(statConfiguration().ev) > maxTotalEv"
+                    >{{ getStatTotal(statConfiguration().ev) }}</span
+                >
+                / {{ maxTotalEv }}
+            </div>
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_hp">HP</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_hp"
+                [formField]="statConfigurationForm.ev.hitPoints"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_atk">ATK</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_atk"
+                [formField]="statConfigurationForm.ev.attack"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_def">DEF</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_def"
+                [formField]="statConfigurationForm.ev.defense"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_spa">SPA</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_spa"
+                [formField]="statConfigurationForm.ev.specialAttack"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_spd">SPD</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_spd"
+                [formField]="statConfigurationForm.ev.specialDefense"
+            />
+        </div>
+        <div class="slider-container">
+            <label for="input_stat_ev_spe">SPE</label>
+            <pokeoneweb-slider-input
+                labelForId="input_stat_ev_spe"
+                [formField]="statConfigurationForm.ev.speed"
+            />
+        </div>
+    </div>
+
+    <div class="stat-input-col stat-input-col-4">
+        <h4>Stat modifiers</h4>
+        <div class="stat-modifier-container">
+            <div class="dummy-spacer-stat-input"></div>
+        </div>
+        <div class="stat-modifier-container">
+            <label for="input_stat_modifier_atk">ATK</label>
+            <ng-select
+                class="stat-modifier-select"
+                labelForId="input_stat_modifier_atk"
+                [formField]="statConfigurationForm.statModifiers.attack"
+                [clearable]="false"
+            >
+                @for (statModifier of statModifiers; track statModifier) {
+                    <ng-option [value]="statModifier">{{
+                        statModifier > 0 ? '+' + statModifier : statModifier
+                    }}</ng-option>
+                }
+            </ng-select>
+        </div>
+        <div class="stat-modifier-container">
+            <label for="input_stat_modifier_def">DEF</label>
+            <ng-select
+                class="stat-modifier-select"
+                labelForId="input_stat_modifier_def"
+                [formField]="statConfigurationForm.statModifiers.defense"
+                [clearable]="false"
+            >
+                @for (statModifier of statModifiers; track statModifier) {
+                    <ng-option [value]="statModifier">{{
+                        statModifier > 0 ? '+' + statModifier : statModifier
+                    }}</ng-option>
+                }
+            </ng-select>
+        </div>
+        <div class="stat-modifier-container">
+            <label for="input_stat_modifier_spa">SPA</label>
+            <ng-select
+                class="stat-modifier-select"
+                labelForId="input_stat_modifier_spa"
+                [formField]="statConfigurationForm.statModifiers.specialAttack"
+                [clearable]="false"
+            >
+                @for (statModifier of statModifiers; track statModifier) {
+                    <ng-option [value]="statModifier">{{
+                        statModifier > 0 ? '+' + statModifier : statModifier
+                    }}</ng-option>
+                }
+            </ng-select>
+        </div>
+        <div class="stat-modifier-container">
+            <label for="input_stat_modifier_spd">SPD</label>
+            <ng-select
+                class="stat-modifier-select"
+                labelForId="input_stat_modifier_spd"
+                [formField]="statConfigurationForm.statModifiers.specialDefense"
+                [clearable]="false"
+            >
+                @for (statModifier of statModifiers; track statModifier) {
+                    <ng-option [value]="statModifier">{{
+                        statModifier > 0 ? '+' + statModifier : statModifier
+                    }}</ng-option>
+                }
+            </ng-select>
+        </div>
+        <div class="stat-modifier-container">
+            <label for="input_stat_modifier_spe">SPE</label>
+            <ng-select
+                class="stat-modifier-select"
+                labelForId="input_stat_modifier_spe"
+                [formField]="statConfigurationForm.statModifiers.speed"
+                [clearable]="false"
+            >
+                @for (statModifier of statModifiers; track statModifier) {
+                    <ng-option [value]="statModifier">{{
+                        statModifier > 0 ? '+' + statModifier : statModifier
+                    }}</ng-option>
+                }
+            </ng-select>
+        </div>
+    </div>
+</div>
+
+<div class="field-boost-input">
+    <h4>Active field moves</h4>
+    <div class="field-boost-input-container">
+        @for (fieldBoostForm of statConfigurationForm.fieldBoosts; track $index) {
+            <div class="field-boost">
+                <input
+                    [formField]="fieldBoostForm.active"
+                    class="field-boost-checkbox"
+                    [id]="'input_field_boost_' + $index"
+                    type="checkbox"
+                />
+                <label [for]="'input_field_boost_' + $index">{{
+                    fieldBoostForm.name().controlValue()
+                }}</label>
+            </div>
+        }
+    </div>
+</div>
