@@ -1,0 +1,40 @@
+<div id="navbar">
+    <div id="navbar-item-container">
+        <pokeoneweb-navbar-item
+            menuItemCaption="About"
+            menuItemLink="/"
+            menuItemImage="./assets/img/navbar/about.png"
+        />
+        <pokeoneweb-navbar-item
+            menuItemCaption="Pokédex"
+            menuItemLink="/pokedex"
+            menuItemImage="./assets/img/navbar/pokedex.png"
+        />
+
+        <pokeoneweb-navbar-item
+            menuItemCaption="Items"
+            menuItemLink="/items"
+            menuItemImage="./assets/img/navbar/items.png"
+        />
+
+        <pokeoneweb-navbar-item
+            menuItemCaption="Locations"
+            menuItemLink="/locations"
+            menuItemImage="./assets/img/navbar/locations.png"
+            [subMenuItems]="regionSubmenuItems()"
+        />
+
+        <pokeoneweb-navbar-item
+            menuItemCaption="Daily Quests"
+            menuItemLink="/dailies"
+            menuItemImage="./assets/img/navbar/dailies.png"
+            [hasTwoLineCaption]="true"
+        />
+
+        <pokeoneweb-navbar-item
+            menuItemCaption="Guides"
+            menuItemLink="/guides"
+            menuItemImage="./assets/img/navbar/guides.png"
+        />
+    </div>
+</div>

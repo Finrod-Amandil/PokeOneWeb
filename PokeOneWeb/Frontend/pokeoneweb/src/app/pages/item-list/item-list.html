@@ -1,0 +1,234 @@
+<pokeoneweb-page-header title="Items" />
+
+<div id="content_main_container">
+    <table class="main-table search-table" id="search_table">
+        <thead>
+            <tr>
+                <th colspan="2">Search and filter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Search</td>
+                <td>
+                    <div class="search-input-row">
+                        <div>
+                            <input
+                                [formField]="filterForm.searchTerm"
+                                id="input_search"
+                                class="inline text-input"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <span class="search-option-explanation">
+                                Search for Item name, description and effect
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Bag Category</td>
+                <td>
+                    <div class="search-input-row">
+                        <div>
+                            <ng-select
+                                labelForId="input_bagcategory"
+                                class="inline"
+                                [items]="bagCategories()"
+                                [formField]="filterForm.bagCategory"
+                                [clearable]="true"
+                                [virtualScroll]="true"
+                                placeholder="Any"
+                            />
+                        </div>
+                        <div>
+                            <span class="search-option-explanation">
+                                Only show Items from the selected Bag Category
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Availability</td>
+                <td>
+                    <div>
+                        <ng-select
+                            labelForId="input_availability"
+                            class="inline"
+                            [items]="availabilities()"
+                            [formField]="filterForm.availabilities"
+                            [multiple]="true"
+                            [closeOnSelect]="false"
+                            [clearable]="true"
+                            placeholder="Any"
+                        />
+                    </div>
+                    <div>
+                        <span class="search-option-explanation">
+                            Only show Items with the selected availabilities in PokéOne
+                        </span>
+                    </div>
+                    <br />
+                    <table id="availability_explanation_table">
+                        <tbody>
+                            <tr>
+                                <td class="availability-obtainable">
+                                    <i class="material-icons md-24">check</i>
+                                </td>
+                                <td>Obtainable</td>
+                                <td class="availability-explanation">
+                                    The Item can be currently obtained without having to buy it from
+                                    someone else.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="availability-event">
+                                    <i class="material-icons md-24">grade</i>
+                                </td>
+                                <td>Event-exclusive</td>
+                                <td class="availability-explanation">
+                                    The Item was/is only obtainable during a certain time-limited
+                                    event.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="availability-removed">
+                                    <i class="material-icons md-24">delete_forever</i>
+                                </td>
+                                <td>Removed</td>
+                                <td class="availability-explanation">
+                                    The Item was once obtainable, but is now no longer obtainable
+                                    except by trading.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="availability-unobtainable">
+                                    <i class="material-icons md-24">clear</i>
+                                </td>
+                                <td>Unobtainable</td>
+                                <td class="availability-explanation">
+                                    The Item can not be obtained and has never been obtainable
+                                    before.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (allItems().length > 0) {
+        <p class="item-list-title">
+            Showing {{ filteredItems().length }} of {{ allItems().length }} Items
+        </p>
+
+        <div>
+            <table class="main-table sortable rows-clickable" id="item_list">
+                <thead>
+                    <tr>
+                        <th class="col-availability"></th>
+                        <th class="col-sprite"></th>
+                        <th class="col-name">
+                            <div
+                                [class]="
+                                    isSortedBy(Column.Name, SortDirection.Ascending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.Name, SortDirection.Ascending)"
+                                class="table-header-sort"
+                            >
+                                ⮝
+                            </div>
+                            <div class="table-header-label">Name</div>
+                            <div
+                                [class]="
+                                    isSortedBy(Column.Name, SortDirection.Descending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.Name, SortDirection.Descending)"
+                                class="table-header-sort"
+                            >
+                                ⮟
+                            </div>
+                        </th>
+                        <th class="col-bagcategory">
+                            <div
+                                [class]="
+                                    isSortedBy(Column.BagCategory, SortDirection.Ascending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.BagCategory, SortDirection.Ascending)"
+                                class="table-header-sort"
+                            >
+                                ⮝
+                            </div>
+                            <div class="table-header-label">Category</div>
+                            <div
+                                [class]="
+                                    isSortedBy(Column.BagCategory, SortDirection.Descending)
+                                        ? 'sorted'
+                                        : 'unsorted'
+                                "
+                                (click)="sort(Column.BagCategory, SortDirection.Descending)"
+                                class="table-header-sort"
+                            >
+                                ⮟
+                            </div>
+                        </th>
+                        <th class="col-description">Description</th>
+                        <th class="col-effect">Effect</th>
+                    </tr>
+                </thead>
+                <tbody #container>
+                    @for (item of filteredItems(); track item.sortIndex) {
+                        <tr (click)="navigateToDetailPage(item.resourceName)">
+                            <td
+                                class="col-availability"
+                                [class]="getAvailabilityClass(item.availability)"
+                            >
+                                @switch (item.availability) {
+                                    @case ('Obtainable') {
+                                        <i class="material-icons md-24">check</i>
+                                    }
+                                    @case ('Unobtainable') {
+                                        <i class="material-icons md-24">clear</i>
+                                    }
+                                    @case ('Event-exclusive') {
+                                        <i class="material-icons md-24">grade</i>
+                                    }
+                                    @case ('Removed') {
+                                        <i class="material-icons md-24">delete_forever</i>
+                                    }
+                                }
+                            </td>
+                            <td class="col-sprite">
+                                @if (item.spriteName) {
+                                    <img
+                                        [src]="
+                                            './assets/img/sprites/items/small/' + item.spriteName
+                                        "
+                                    />
+                                }
+                            </td>
+                            <td class="col-name">
+                                <a [routerLink]="'/' + item.resourceName">{{ item.name }}</a>
+                            </td>
+                            <td class="col-bagcategory">{{ item.bagCategoryName }}</td>
+                            <td class="col-description">{{ item.description }}</td>
+                            <td class="col-effect">{{ item.effect }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    } @else {
+        <p class="item-list-empty">No Items to display. Try to adjust your search criteria.</p>
+    }
+</div>

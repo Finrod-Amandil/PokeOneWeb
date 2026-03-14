@@ -394,6 +394,44 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.ToTable("Build");
                 });
 
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ChangeLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ChangeLogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImportSheetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImportSheetId");
+
+                    b.ToTable("ChangeLog");
+                });
+
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Currency", b =>
                 {
                     b.Property<int>("Id")
@@ -2469,6 +2507,17 @@ namespace PokeOneWeb.Data.Migrations.ApplicationDbMigrations
                     b.Navigation("ImportSheet");
 
                     b.Navigation("PokemonVariety");
+                });
+
+            modelBuilder.Entity("PokeOneWeb.Data.Entities.ChangeLog", b =>
+                {
+                    b.HasOne("PokeOneWeb.Data.Entities.ImportSheet", "ImportSheet")
+                        .WithMany()
+                        .HasForeignKey("ImportSheetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportSheet");
                 });
 
             modelBuilder.Entity("PokeOneWeb.Data.Entities.Currency", b =>

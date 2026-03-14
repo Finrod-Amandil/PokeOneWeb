@@ -40,6 +40,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped<ISpreadsheetDataLoader, SpreadsheetDataLoader>();
             services.AddSingleton<ISpreadsheetImportReporter, SpreadsheetImportReporter>();
 
+            services.AddScoped(typeof(SheetImporter<ChangeLog>));
             services.AddScoped(typeof(SheetImporter<Ability>));
             services.AddScoped(typeof(SheetImporter<PokemonAvailability>));
             services.AddScoped(typeof(SheetImporter<ItemAvailability>));
@@ -72,6 +73,7 @@ namespace PokeOneWeb.DataSync
             services.AddScoped(typeof(SheetImporter<SpawnType>));
             services.AddScoped(typeof(SheetImporter<TimeOfDay>));
 
+            services.AddScoped<ISheetMapper<ChangeLog>, ChangeLogSheetMapper>();
             services.AddScoped<ISheetMapper<Ability>, AbilitySheetMapper>();
             services.AddScoped<ISheetMapper<PokemonAvailability>, PokemonAvailabilitySheetMapper>();
             services.AddScoped<ISheetMapper<ItemAvailability>, ItemAvailabilitySheetMapper>();
@@ -106,6 +108,7 @@ namespace PokeOneWeb.DataSync
 
             services.AddScoped<IImportSheetRepository, ImportSheetRepository>();
 
+            services.AddScoped<IHashedEntityRepository<ChangeLog>, ChangeLogRepository>();
             services.AddScoped<IHashedEntityRepository<Ability>, AbilityRepository>();
             services.AddScoped<IHashedEntityRepository<PokemonAvailability>, PokemonAvailabilityRepository>();
             services.AddScoped<IHashedEntityRepository<ItemAvailability>, ItemAvailabilityRepository>();
@@ -140,6 +143,7 @@ namespace PokeOneWeb.DataSync
 
             services.AddScoped<IReadModelUpdateService, JsonReadModelUpdateService>();
 
+            services.AddScoped<IReadModelMapper<ChangeLogReadModel>, ChangeLogReadModelMapper>();
             services.AddScoped<IReadModelMapper<EntityTypeReadModel>, EntityTypeReadModelMapper>();
             services.AddScoped<IReadModelMapper<ItemStatBoostPokemonReadModel>, ItemStatBoostPokemonReadModelMapper>();
             services.AddScoped<IReadModelMapper<SimpleLearnableMoveReadModel>, SimpleLearnableMoveReadModelMapper>();

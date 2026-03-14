@@ -135,6 +135,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 SpawnTypeColor = spawn.SpawnType.Color,
                 IsSyncable = spawn.SpawnType.IsSyncable,
                 IsInfinite = spawn.SpawnType.IsInfinite,
+                IsRemoved = spawn.IsRemoved,
                 LowestLevel = spawn.LowestLevel,
                 HighestLevel = spawn.HighestLevel,
                 TimesOfDay = new List<TimeOfDayReadModel>(),

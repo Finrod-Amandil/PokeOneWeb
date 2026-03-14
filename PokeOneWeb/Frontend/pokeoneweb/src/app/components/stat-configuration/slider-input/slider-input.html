@@ -1,0 +1,20 @@
+<div class="slider-input-container">
+    <div class="mat-slider-container">
+        <mat-slider [max]="max()" [min]="min()">
+            <input
+                [id]="`${labelForId()}_slider`"
+                matSliderThumb
+                [value]="value()"
+                (input)="valueChanged($event)"
+            />
+        </mat-slider>
+    </div>
+    <input
+        [id]="labelForId()"
+        [value]="value()"
+        (input)="valueChanged($event)"
+        type="number"
+        [min]="min()"
+        [max]="max()"
+    />
+</div>

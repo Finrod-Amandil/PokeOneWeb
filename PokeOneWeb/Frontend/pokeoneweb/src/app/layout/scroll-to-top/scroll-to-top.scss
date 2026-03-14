@@ -1,0 +1,38 @@
+.scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+
+    //--scrollPosition: 0;
+}
+
+.scroll-to-top button {
+    background-color: var(--light-gray);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.scroll-to-top i {
+    vertical-align: text-bottom;
+}
+
+.show-scrollTop {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.happiny {
+    margin-right: -20px;
+    transform: translate(0, calc(20px * -1 * max(0, pow(sin(var(--scrollPosition) / 200), 3))));
+}

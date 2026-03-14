@@ -1,0 +1,28 @@
+.app-version-container {
+    position: fixed;
+    bottom: 15px;
+    top: 15px;
+    left: 15px;
+    text-align: center;
+    height: 20px;
+}
+
+.app-version-container-local {
+    @extend .app-version-container;
+    //background-color: rgb(0, 0, 255, 0.5);
+    color: #00fff2;
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.app-version-container-test {
+    @extend .app-version-container;
+    //background-color: rgb(255, 0, 0, 0.5);
+    color: #ffc800;
+}
+
+.app-version-container-prod {
+    @extend .app-version-container;
+    color: white;
+    opacity: 0;
+}

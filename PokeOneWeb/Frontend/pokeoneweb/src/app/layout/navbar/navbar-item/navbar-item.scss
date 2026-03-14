@@ -1,0 +1,120 @@
+.navbar-item {
+    position: relative;
+    width: var(--navbar-item-size);
+    height: var(--navbar-item-size);
+    border: 1px solid black;
+    background-color: #434343;
+    box-shadow: 0 0 8px black;
+    transition: box-shadow 0.2s ease-out;
+}
+
+.hover-overlay,
+.submenu-item-hover-overlay {
+    cursor: pointer;
+    visibility: hidden;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid white;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+
+.navbar-item:hover {
+    box-shadow: none;
+}
+
+.navbar-item:hover .hover-overlay {
+    visibility: visible;
+    opacity: 0.1;
+}
+
+.navbar-item-image-container {
+    width: 100%;
+    padding-top: 10px;
+    height: calc(var(--navbar-item-size) / 2 - 10px);
+    text-align: center;
+}
+
+.navbar-item-image-container img {
+    height: calc(var(--navbar-item-size) * 0.4);
+}
+
+.navbar-item-caption {
+    width: 100%;
+    padding-top: 20px;
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+    color: #dcdcdc;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-shadow: 2px 2px black;
+}
+
+.navbar-item-caption.two-lines {
+    padding-top: 10px;
+}
+
+.navbar-submenu-caption {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    margin: auto;
+    padding-top: 4px;
+}
+
+.navbar-submenu {
+    position: absolute;
+    top: calc(var(--navbar-item-size) - 1px);
+    left: -1px;
+    padding-top: 5px;
+    visibility: hidden;
+    transition: visibility 0s linear 0.1s;
+    z-index: 1000;
+}
+
+.navbar-item:hover .navbar-submenu {
+    visibility: visible;
+}
+
+.navbar-submenu-item {
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    width: calc(1.8 * var(--navbar-item-size));
+
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    font-family: 'Comfortaa', cursive;
+    color: #dcdcdc;
+    font-size: 1em;
+    font-weight: 500;
+    text-shadow: 2px 2px black;
+    visibility: hidden;
+    transition: visibility 0 linear 0.2s;
+}
+
+.navbar-submenu-item-regular {
+    background-color: #434343;
+}
+
+.navbar-submenu-item:last-child {
+    border-bottom: 1px solid black;
+}
+
+.navbar-submenu-item-event {
+    background-color: #512e5f;
+}
+
+.navbar-item:hover .navbar-submenu-item {
+    visibility: visible;
+}
+
+.navbar-submenu-item:hover .submenu-item-hover-overlay {
+    visibility: visible;
+    opacity: 0.1;
+}

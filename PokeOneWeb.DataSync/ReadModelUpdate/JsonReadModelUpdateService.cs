@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using PokeOneWeb.Data;
 using PokeOneWeb.Data.ReadModels;
 using PokeOneWeb.DataSync.Import.Interfaces;
 using PokeOneWeb.DataSync.ReadModelUpdate.Interfaces;
@@ -20,6 +22,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
         private readonly IReadModelMapper<ItemReadModel> _itemMapper;
         private readonly IReadModelMapper<RegionReadModel> _regionMapper;
         private readonly IReadModelMapper<LocationGroupReadModel> _locationGroupMapper;
+        private readonly IReadModelMapper<ChangeLogReadModel> _changeLogMapper;
+        private readonly ApplicationDbContext _dbContext;
         private readonly ISpreadsheetImportReporter _reporter;
 
         public JsonReadModelUpdateService(
@@ -32,6 +36,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             IReadModelMapper<ItemReadModel> itemMapper,
             IReadModelMapper<RegionReadModel> regionMapper,
             IReadModelMapper<LocationGroupReadModel> locationGroupMapper,
+            IReadModelMapper<ChangeLogReadModel> changeLogMapper,
+            ApplicationDbContext dbContext,
             ISpreadsheetImportReporter reporter)
         {
             _entityTypeMapper = entityTypeMapper;
@@ -43,6 +49,8 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             _itemMapper = itemMapper;
             _regionMapper = regionMapper;
             _locationGroupMapper = locationGroupMapper;
+            _changeLogMapper = changeLogMapper;
+            _dbContext = dbContext;
             _reporter = reporter;
         }
 
@@ -78,17 +86,19 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             var itemStats = _itemStatBoostPokemonMapper.MapFromDatabase();
             File.WriteAllText("resources/itemstats.json", JsonSerializer.Serialize(itemStats, serializeOptions));
 
-            // learnable moves
+            // learnable moves (by move)
             Console.WriteLine("generating json files for learnable-moves");
-            var learnableMoves = _simpleLearnableMoveMapper.MapFromDatabase();
-            learnableMoves.
+            var allMoveResourceNames = _dbContext.Moves.AsNoTracking().Select(x => x.ResourceName).ToList();
+
+            var learnableMovesByMove = _simpleLearnableMoveMapper.MapFromDatabase().
                 GroupBy(lmove => lmove.MoveResourceName).
-                ToDictionary(lmove => lmove.Key, lmove => lmove.ToList()).
-                ToList().
-                ForEach(entry =>
-                {
-                    File.WriteAllText("resources/learnable-moves/" + entry.Key + ".json", JsonSerializer.Serialize(entry.Value, serializeOptions));
-                });
+                ToDictionary(lmove => lmove.Key, lmove => lmove.ToList());
+
+            foreach (var moveResourceName in allMoveResourceNames)
+            {
+                var learnableMoves = learnableMovesByMove.ContainsKey(moveResourceName) ? learnableMovesByMove[moveResourceName] : new List<SimpleLearnableMoveReadModel>();
+                File.WriteAllText("resources/learnable-moves/" + moveResourceName + ".json", JsonSerializer.Serialize(learnableMoves, serializeOptions));
+            }
 
             // moves
             Console.WriteLine("generating json files for moves");
@@ -199,6 +209,14 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.Impl
             {
                 File.WriteAllText("resources/location-groups/" + locationGroup.ResourceName + ".json", JsonSerializer.Serialize(locationGroup, serializeOptions));
             }
+
+            // Changelogs
+            Console.WriteLine("generating json file for changelogs");
+            var changelogs = _changeLogMapper.MapFromDatabase();
+            File.WriteAllText("resources/change-logs.json", JsonSerializer.Serialize(changelogs, serializeOptions));
+
+            // Metadata file
+            File.WriteAllText("resources/meta.json", JsonSerializer.Serialize(new MetaDataReadModel { VersionDate = DateTime.UtcNow }, serializeOptions));
         }
 
         private void CreateDirectories()

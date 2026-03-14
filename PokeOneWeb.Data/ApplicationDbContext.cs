@@ -11,6 +11,7 @@ namespace PokeOneWeb.Data
         {
         }
 
+        public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<BagCategory> BagCategories { get; set; }
         public DbSet<Build> Builds { get; set; }

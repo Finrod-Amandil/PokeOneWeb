@@ -1,0 +1,16 @@
+<div
+    class="scroll-to-top"
+    [class]="{ 'show-scrollTop': windowScrolled() }"
+    [style.--scrollPosition]="scrollPosition()"
+>
+    <img class="happiny" src="./assets/img/sprites/pokemon/medium/440.png" />
+    <button
+        type="button"
+        class="btn active"
+        data-toggle="button"
+        aria-pressed="true"
+        (click)="scrollToTop()"
+    >
+        Back to top <i class="material-icons md-24">arrow_upward</i>
+    </button>
+</div>

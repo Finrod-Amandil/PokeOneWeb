@@ -24,6 +24,7 @@ namespace PokeOneWeb.Data.ReadModels
         public string SpawnTypeColor { get; set; }
         public bool IsSyncable { get; set; }
         public bool IsInfinite { get; set; }
+        public bool IsRemoved { get; set; }
         public int LowestLevel { get; set; }
         public int HighestLevel { get; set; }
 

@@ -1,0 +1,9 @@
+@for (season of sortedSeasons(); track season.abbreviation) {
+    <div
+        class="season-badge"
+        [class]="{ 'season-badge-any': season.abbreviation === 'Any' }"
+        [style]="'background-color: ' + season.color + '; color: ' + getTextColor(season.color)"
+    >
+        {{ season.abbreviation }}
+    </div>
+}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -79,7 +80,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
 
                 readModel.DefenseAttackEffectivities = GetAttackEffectivityReadModels(variety);
 
-                var allVarietiesOfEvolutionLine = GetVarietiesOfEvolutionLine(variety);
+                var allVarietiesOfEvolutionLine = GetVarietyIdsOfEvolutionLine(variety);
                 readModel.Spawns = GetSpawnReadModels(allVarietiesOfEvolutionLine);
                 readModel.Evolutions = GetEvolutions(variety);
 
@@ -172,6 +173,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
 
                 StatTotal = variety.Attack + variety.SpecialAttack + variety.Defense + variety.SpecialDefense + variety.Speed + variety.HitPoints,
                 Bulk = variety.Defense + variety.HitPoints + variety.SpecialDefense,
+                Offence = Math.Max(variety.Attack, variety.SpecialAttack) + variety.Speed,
 
                 PrimaryAbility = variety.PrimaryAbility?.Name,
                 PrimaryAbilityEffect = variety.PrimaryAbility?.EffectDescription,
@@ -350,12 +352,13 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
             };
         }
 
-        private List<int> GetVarietiesOfEvolutionLine(PokemonVariety variety)
+        private List<int> GetVarietyIdsOfEvolutionLine(PokemonVariety variety)
         {
-            var allEvolutions = _dbContext.Evolutions.AsNoTracking();
-            var varietyIds = new List<int>();
-
-            varietyIds.Add(variety.Id);
+            var allEvolutions = _dbContext.Evolutions.AsNoTracking().Where(e => e.IsAvailable);
+            var varietyIds = new List<int>
+            {
+                variety.Id
+            };
 
             bool hasFoundNewEvolutions;
 
@@ -459,6 +462,7 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                 SpawnTypeColor = spawn.SpawnType.Color,
                 IsSyncable = spawn.SpawnType.IsSyncable,
                 IsInfinite = spawn.SpawnType.IsInfinite,
+                IsRemoved = spawn.IsRemoved,
                 LowestLevel = spawn.LowestLevel,
                 HighestLevel = spawn.HighestLevel,
                 TimesOfDay = new List<TimeOfDayReadModel>(),
@@ -711,6 +715,11 @@ namespace PokeOneWeb.DataSync.ReadModelUpdate.ReadModelMappers
                     readModel.LearnMethodName = learnMethod.RequiredItem?.Name ?? "TM/HM (unavailable)";
                     readModel.Description = string.Empty;
                     readModel.SortIndex = 1;
+                    break;
+                case "Sketch":
+                    readModel.LearnMethodName = "Sketch";
+                    readModel.Description = string.Empty;
+                    readModel.SortIndex = 5;
                     break;
             }
 
