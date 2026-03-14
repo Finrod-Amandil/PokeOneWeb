@@ -13,11 +13,13 @@ jobs:
         with:
           node-version: "22"
 
+      - run: ls
+
       - run: |
           npm ci
           npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
           npm run build -- --configuration test
-        working-directory: ./PokeOneWeb/Frontend/PokeOneWeb
+        working-directory: Frontend/PokeOneWeb
 
       - uses: appleboy/scp-action@master
         with:
@@ -26,7 +28,7 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: "./PokeOneWeb/Frontend/PokeOneWeb/dist"
+          source: "Frontend/PokeOneWeb/dist"
           target: "/opt/PokeOneWeb.WebApp/test"
           strip_components: 5
           overwrite: true
