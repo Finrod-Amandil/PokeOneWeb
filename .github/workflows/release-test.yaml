@@ -15,7 +15,11 @@ jobs:
 
       - run: ls
       - run: pwd
-      - run: cd PokeOneWeb/Frontend/PokeOneWeb
+      - run: cd PokeOneWeb
+      - run: ls
+      - run: cd Frontend
+      - run: ls
+      - run: cd PokeOneWeb
       - run: ls
       - run: cd ../../..
 
