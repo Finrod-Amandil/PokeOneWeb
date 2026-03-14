@@ -17,7 +17,7 @@ jobs:
           npm ci
           npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
           npm run build -- --configuration production
-        working-directory: PokeOneWeb/Frontend/PokeOneWeb
+        working-directory: ./PokeOneWeb/Frontend/PokeOneWeb
 
       - uses: appleboy/scp-action@master
         with:
