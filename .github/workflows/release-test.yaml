@@ -15,12 +15,15 @@ jobs:
 
       - run: ls
       - run: pwd
+      - run: cd PokeOneWeb/Frontend/PokeOneWeb
+      - run: ls
+      - run: cd ../../..
 
       - run: |
           npm ci
           npm version $GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT.$(date +'%Y-%m-%d')
           npm run build -- --configuration test
-        working-directory: Frontend/PokeOneWeb
+        working-directory: PokeOneWeb/Frontend/PokeOneWeb
 
       - uses: appleboy/scp-action@master
         with:
