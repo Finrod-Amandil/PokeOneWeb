@@ -13,17 +13,16 @@ jobs:
         with:
           node-version: "22"
 
-      - run: ls
-      - run: pwd
-      - run: cd PokeOneWeb
-      - run: ls
-      - run: cd PokeOneWeb
-      - run: ls
-      - run: cd Frontend
-      - run: ls
-      - run: cd PokeOneWeb
-      - run: ls
-      - run: cd ../../..
+      - run: |
+          ls
+          pwd
+          cd PokeOneWeb
+          ls
+          pwd
+          cd Frontend
+          ls
+          cd PokeOneWeb
+          ls
 
       - run: |
           npm ci
